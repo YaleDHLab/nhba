@@ -1,0 +1,65 @@
+/***
+* Cards
+***/
+
+.cards {
+  background: #eee;
+  height: 100%;
+  overflow: scroll;
+  padding: 30px;
+  display: inline-block;
+}
+
+.card-content {
+  width: 100%;
+  padding-bottom: 66%;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/***
+* Search result cards
+***/
+
+.search .card {
+  width: 50%;
+  display: inline-block;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+/***
+* Related buildings cards
+***/
+
+.related .card {
+  width: 250px;
+  height: auto;
+  display: inline-block;
+  padding: 9px;
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: 3px;
+}
+
+/***
+* Card labels
+***/
+
+.card-label {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  color: #666;
+}

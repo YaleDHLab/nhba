@@ -1,0 +1,104 @@
+.building {
+  position: absolute;
+  top: 80px;
+  right: 0px;
+  bottom: 80px;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  overflow: scroll;
+}
+
+.building-content {
+  width: 100%;
+  min-height: 1000px;
+  height: 100%;
+  position: relative;
+  text-align: left;
+  display: inline-block;
+}
+
+/***
+* Top
+***/
+
+.building .top {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 220px;
+  left: 0px;
+  background: #ccc;
+  height: auto;
+}
+
+/***
+* Top left
+***/
+
+.building .top .left {
+  width: 40%;
+  display: inline-block;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.building .top .left .top-left-top {
+  height: 50%;
+  width: 100%;
+}
+
+.building .top .left .top-left-bottom {
+  height: 50%;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+
+/***
+* Top right
+***/
+
+.building .top .right {
+  width: 60%;
+  height: 100%;
+  display: inline-block;
+  background: #eee;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.building .top .right .top-right-top {
+  height: 50%;
+  width: 100%;
+  background: #aaa;
+  position: absolute;
+  top: 0;
+}
+
+.building .top .right .top-right-bottom {
+  height: 50%;
+  width: 100%;
+  background: #eee;
+  position: absolute;
+  bottom: 0;
+}
+
+/***
+* Bottom
+***/
+
+.building .bottom {
+  height: 220px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+}

@@ -1,0 +1,16 @@
+.building-text {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: scroll;
+  border: 20px solid #eee;
+  /* center scroll */
+  padding-right: 14px;
+  border-right: 6px solid #eee;
+}
+
+.building-text h1 {
+  font-size: 1.5em;
+  font-family: Tinos;
+  margin: 20px 0 10px;
+}

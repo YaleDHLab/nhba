@@ -1,0 +1,21 @@
+.related {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  padding: 0 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.related .label {
+  font-size: 1.3em;
+  font-family: Tinos;
+  margin: 12px 0 8px 10px;
+  position: fixed;
+}
+
+.related-buildings {
+  position: absolute;
+  top: 42px;
+}

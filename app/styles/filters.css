@@ -1,0 +1,60 @@
+/***
+* Filters
+***/
+
+.filters {
+  height: 60px;
+  width: 100%;
+  position: relative;
+}
+
+.filters .button {
+  margin: 15px 50px;
+}
+
+.filters input {
+  height: 25px;
+  width: 200px;
+}
+
+.filters .select-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+.filters .select-container select {
+  height: 100%;
+  padding: 0px 25px 0 14px;
+  width: auto;
+  background-color: #fff;
+  background-image: url(/assets/images/caret.png);
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: 93%;
+  border-left: 1px solid lightgray;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  z-index: -1;
+  color: #666;
+  font-size: 0.8em;
+}
+
+.custom-select {
+  padding: 6px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}

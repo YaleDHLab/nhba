@@ -1,0 +1,25 @@
+.app-wrapper {
+  min-height: 100%;
+  margin-bottom: -80px;
+}
+
+.app-wrapper:after {
+  content: '';
+  display: block;
+}
+
+.footer, .app-wrapper:after {
+  height: 80px;
+}
+
+.footer {
+  display: table;
+  width: 100%;
+  background: #444;
+  color: #fff;
+}
+
+.footer .dh-lab-logo {
+  display: inline-block;
+  margin: 10px 0 0 40px;
+}

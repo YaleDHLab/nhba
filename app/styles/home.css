@@ -1,0 +1,59 @@
+.home {
+  height: 100%;
+  width: 100%;
+}
+
+.home .hero-image {
+  height: 400px;
+  width: 100%;
+  background-image: url(/assets/images/new-haven-overhead.jpg);
+}
+
+.home .search {
+  position: absolute;
+  height: 40px;
+  width: 420px;
+  top: 260px;
+  left: 50%;
+  margin-left: -210px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.home .search input {
+  height: 100%;
+  width: 310px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.home .search .search-button {
+  float: right;
+  height: 100%;
+  width: 110px;
+  background-color: orange;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  padding-top: 7px;
+  font-size: 1.1em;
+}
+
+.home .label {
+  font-family: Tinos;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.home .gallery {
+  text-align: center;
+  margin: 12px 0 60px;
+}
+
+.home .gallery-image {
+  width: 20%;
+  padding-bottom: 14%;
+  display: inline-block;
+  margin: 10px;
+}

@@ -1,0 +1,36 @@
+.building-buttons {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.building-button {
+  height: 45px;
+  width: 100%;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+}
+
+.building-buttons .building-button:nth-child(4) {
+  border-bottom: 1px solid #ddd;
+}
+
+.building-button-content {
+  width: 230px;
+  display: inline-block;
+  text-align: left;
+}
+
+.building-button .icon {
+  width: 20px;
+  margin: 12px 15px 0 20px;
+  display: inline-block;
+}
+
+.building-button .label {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 10px;
+}

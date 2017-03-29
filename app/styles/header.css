@@ -1,0 +1,41 @@
+.header {
+  height: 80px;
+  width: 100%;
+  background: #3C2818;
+}
+
+.logo-container {
+  display: table;
+  z-index: 0;
+  height: 100%;
+}
+
+.app-name {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 40px;
+  font-size: 1.5em;
+  color: #fff;
+  font-family: Tinos;
+  background: #3C2818;
+  position: absolute;
+  top: 13px;
+  z-index: 1;
+}
+
+.links {
+  display: table;
+  position: absolute;
+  right: 100px;
+  top: 0;
+  height: 80px;
+  width: 400px;
+  text-align: center;
+}
+
+.links a {
+  color: #fff;
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Arial;
+}

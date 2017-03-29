@@ -1,0 +1,81 @@
+body, html {
+  height: 100%;
+  width: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Open Sans;
+  color: #454545;
+  font-weight: 300;
+}
+
+/***
+* Containers
+***/
+
+#app {
+  height: 100%;
+}
+
+.app-container {
+  height: 100%;
+}
+
+.container {
+  max-width: 900px;
+  display: inline-block;
+  text-align: left;
+  padding: 30px 0;
+}
+
+/***
+* Text
+***/
+
+h1 {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+
+p {
+  margin: 10px 0;
+  font-family: Open Sans;
+  line-height: 1.4em;
+}
+
+a {
+  text-decoration: none;
+}
+
+/***
+* Buttons
+***/
+
+.button {
+  padding: 5px 20px;
+  display: inline-block;
+  background: #ddd;
+  color: #666;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/***
+* Images
+***/
+
+.background-image {
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100%;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}

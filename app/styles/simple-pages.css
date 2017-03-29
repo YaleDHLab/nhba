@@ -1,0 +1,17 @@
+/***
+* Simple Pages
+***/
+
+.simple-page {
+  text-align: center;
+}
+
+.simple-page .hero {
+  height: 300px;
+  width: 100%;
+}
+
+.simple-page .title {
+  padding: 20px 0 10px;
+  text-align: center;
+}

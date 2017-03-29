@@ -1,0 +1,169 @@
+.authenticate {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9;
+  height: auto;
+}
+
+.authenticate .modal {
+  width: 550px;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  margin-left: -225px;
+  z-index: 10;
+}
+
+/***
+* Modal header
+***/
+
+.authenticate .modal .header {
+  color: #fff;
+  box-sizing: border-box;
+  height: 50px;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.authenticate .modal .header .left,
+.authenticate .modal .header .middle,
+.authenticate .modal .header .right {
+  display: inline-block;
+  height: 50px;
+  overflow: hidden;
+  margin-right: 4px;
+  padding: 14px;
+  box-sizing: border-box;
+  background: #999;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.authenticate .modal .header .left {
+  width: 342px;
+  font-family: Tinos;
+  text-align: left;
+  font-size: 1.25em;
+  padding-left: 17px;
+}
+
+.authenticate .modal .header .middle {
+  width: 90px;
+}
+
+.authenticate .modal .header .right {
+  width: 110px;
+  margin-right: 0;
+  max-height: 100%;
+}
+
+.authenticate .modal .header .right .x {
+  margin-right: 3px;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: top;
+  height: 20px;
+  overflow: hidden;
+  margin-top: -2px;
+  font-weight: 100;
+}
+
+/***
+* Modal body
+***/
+
+.authenticate .modal .body {
+  background: #fff;
+  height: 100%;
+  margin-top: 4px;
+  padding: 50px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.authenticate .modal .body h1 {
+  font-weight: 800px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.authenticate .modal input {
+  height: 35px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+  margin: 8px 0;
+  border: none;
+  background: #efefef;
+  border-radius: 4px;
+}
+
+.authenticate .modal .half-width {
+  box-sizing: border-box;
+  width: 217px;
+  text-align: left;
+}
+
+.authenticate .modal .half-width.left {
+  margin-right: 15px;
+}
+
+.authenticate .modal .full-width {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.authenticate .modal .modal-button-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.authenticate .modal .modal-button {
+  background: orange;
+  padding: 8px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/***
+* Sign up
+***/
+
+.authenticate .modal .checkbox {
+  vertical-align: top;
+}
+
+.authenticate .modal .text {
+  display: inline-block;
+  width: 90%;
+  margin: 14px;
+  vertical-align: top;
+}
+
+/***
+* Sign in
+***/
+
+.forgot-password-button {
+  text-align: right;
+  cursor: pointer;
+}
+
+/***
+* Forgot password
+***/
+
+.forgot-password-text {
+  margin: 25px 0;
+}
