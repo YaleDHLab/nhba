@@ -1,7 +1,9 @@
 # dependencies
 
-Node.js
+```
+Node.js # version 7 or higher
 MongoDB
+```
 
 # quickstart
 
