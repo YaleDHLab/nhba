@@ -2,18 +2,16 @@ import React from 'react'
 import request from 'superagent'
 import api from '../../../config'
 
-export default class Login extends React.Component {
+export default class ValidateAccount extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      email: '',
       password: '',
       message: null
     }
 
     this.handleKey = this.handleKey.bind(this)
-    this.updateEmail = this.updateEmail.bind(this)
     this.updatePassword = this.updatePassword.bind(this)
     this.submit = this.submit.bind(this)
     this.handleResponse = this.handleResponse.bind(this)
@@ -25,23 +23,20 @@ export default class Login extends React.Component {
     }
   }
 
-  updateEmail(e) {
-    this.setState({email: e.target.value})
-  }
-
   updatePassword(e) {
     this.setState({password: e.target.value})
   }
 
   submit() {
-    var user = {
-      email: this.state.email,
+    var packet = {
+      email: this.props.location.query.email,
+      token: this.props.location.query.token,
       password: this.state.password
     }
 
     request
-      .post(api.endpoint + 'login')
-      .send(user)
+      .post(api.endpoint + 'validate')
+      .send(packet)
       .set('Accept', 'application/json')
       .end(this.handleResponse)
   }
@@ -60,22 +55,16 @@ export default class Login extends React.Component {
     const message = this.state.message;
 
     return (
-      <div className='login'>
-        <h1>Welcome</h1>
-
-        <input type='text' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updateEmail}
-          placeholder='Email' value={this.state.email} />
+      <div className='validate-account'>
+        <h1>Validate Account</h1>
+        <div className='body-text'>Please enter your password below to validate your account:</div>
 
         <input type='password' className='full-width'
           onKeyPress={this.handleKey} onChange={this.updatePassword}
           placeholder='Password' value={this.state.password} />
 
-        <div className='forgot-password-button'
-          onClick={this.props.forgotPassword}>Forgot password?</div>
-
         <div className='modal-button-container'>
-          <div className='modal-button' onClick={this.submit}>Sign In</div>
+          <div className='modal-button' onClick={this.submit}>Submit</div>
         </div>
 
         {message ? <div className='message'>{message}</div> : null}

@@ -41,20 +41,3 @@
   color: #666;
   font-size: 0.8em;
 }
-
-.custom-select {
-  padding: 6px;
-  border-radius: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  background: transparent;
-  -webkit-user-select: none;
-  -moz-user-select: -moz-none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-}

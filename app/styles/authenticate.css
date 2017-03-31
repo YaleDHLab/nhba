@@ -7,6 +7,7 @@
   background: rgba(0,0,0,0.6);
   z-index: 9;
   height: auto;
+  overflow: scroll;
 }
 
 .authenticate .modal {
@@ -16,6 +17,7 @@
   left: 50%;
   margin-left: -225px;
   z-index: 10;
+  padding: 60px 0;
 }
 
 /***
@@ -127,7 +129,7 @@
 }
 
 .authenticate .modal .modal-button {
-  background: orange;
+  background: #EDA138;
   padding: 8px 40px;
   border-radius: 4px;
   cursor: pointer;
@@ -155,15 +157,25 @@
 * Sign in
 ***/
 
-.forgot-password-button {
+.authenticate .forgot-password-button {
   text-align: right;
   cursor: pointer;
 }
 
 /***
-* Forgot password
+* Body text
 ***/
 
-.forgot-password-text {
-  margin: 25px 0;
+.authenticate .body-text {
+  margin: 25px 0 10px;
+}
+
+/***
+* Messages
+***/
+
+.authenticate .message {
+  font-weight: 600;
+  padding: 20px 20px 0;
+  text-align: center;
 }

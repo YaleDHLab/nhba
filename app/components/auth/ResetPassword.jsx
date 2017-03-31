@@ -2,23 +2,19 @@ import React from 'react'
 import request from 'superagent'
 import api from '../../../config'
 
-export default class ForgotPassword extends React.Component {
+export default class ResetPassword extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      email: '',
-      message: ''
+      password: '',
+      message: null
     }
 
-    this.updateEmail = this.updateEmail.bind(this)
     this.handleKey = this.handleKey.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
     this.submit = this.submit.bind(this)
     this.handleResponse = this.handleResponse.bind(this)
-  }
-
-  updateEmail(e) {
-    this.setState({email: e.target.value})
   }
 
   handleKey(e) {
@@ -27,40 +23,48 @@ export default class ForgotPassword extends React.Component {
     }
   }
 
+  updatePassword(e) {
+    this.setState({password: e.target.value})
+  }
+
   submit() {
     var packet = {
-      email: this.state.email
+      email: this.props.location.query.email,
+      token: this.props.location.query.token,
+      password: this.state.password
     }
 
     request
-      .post(api.endpoint + 'forgotPassword')
+      .post(api.endpoint + 'resetPassword')
       .send(packet)
       .set('Accept', 'application/json')
       .end(this.handleResponse)
   }
 
   handleResponse(err, res) {
-    console.log(res)
     if (err) {console.warn(err)} else {
       if (res.body.message) {
         this.setState({message: res.body.message})
       }
     }
+
+    this.props.getSessionData()
   }
 
   render() {
     const message = this.state.message
 
     return (
-      <div className='forgot-password'>
-        <h1>Forgot Password</h1>
-        <div className='body-text'>Enter the email address associated with your account, and we'll email you a link to reset your password</div>
-        <input className='full-width' placeholder='E-mail address'
-          type='email' value={this.state.email}
-          onKeyPress={this.handleKey} onChange={this.updateEmail} />
+      <div className='reset-password'>
+        <h1>Reset Password</h1>
+        <div className='body-text'>Please enter a new password below</div>
+
+        <input type='password' className='full-width'
+          onKeyPress={this.handleKey} onChange={this.updatePassword}
+          placeholder='Password' value={this.state.password} />
+
         <div className='modal-button-container'>
-          <div className='modal-button'
-            onClick={this.submit}>Send Reset Instructions</div>
+          <div className='modal-button' onClick={this.submit}>Submit</div>
         </div>
 
         {message ? <div className='message'>{message}</div> : null}

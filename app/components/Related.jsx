@@ -18,7 +18,6 @@ export default class Related extends React.Component {
   }
 
   processBuildings(err, res) {
-    console.log(res)
     if (err) { console.warn(err) } else {
       const buildings = res.body;
       this.setState({buildings: buildings})

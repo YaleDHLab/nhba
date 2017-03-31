@@ -1,0 +1,27 @@
+.image-grid {
+  width: 100%;
+  height: 100%;
+}
+
+.image-grid .image-grid-content {
+  display: table-cell;
+  width: 100%;
+  background: #efefef;
+  padding: 7px 0px 2px 4px;
+}
+
+.image-grid .grid-item-container {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  margin: 0px 3px;
+}
+
+.image-grid .grid-item {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

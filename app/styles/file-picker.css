@@ -1,0 +1,37 @@
+/***
+* FilePicker
+***/
+
+.form .file-picker {
+  display: table;
+  width: 100%;
+}
+
+.form .file-picker .file-picker-content {
+  width: 100%;
+}
+
+.form .file-picker .file-picker-row {
+  display: table;
+  width: 100%;
+}
+
+.form .file-picker .file-name-input,
+.form .file-picker .file-display-name-input {
+  display: table-cell;
+}
+
+.form .file-picker .file-name-button-container {
+  display: table-cell;
+  width: 128px;
+}
+
+.form .file-picker .file-name-button {
+  display: inline-block;
+  background: #ddd;
+  font-weight: 600;
+  padding: 5px 20px;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}

@@ -10,5 +10,5 @@ git clone https://github.com/duhaime/nhba
 cd nhba
 npm i
 npm run seed
-npm run start
+npm run production
 ```

@@ -1,0 +1,117 @@
+/***
+* Form elements
+***/
+
+.form {
+  width: 100%;
+  height: 100%;
+  color: #666;
+}
+
+.form .label,
+.form select,
+.form input {
+  display: table-cell;
+  height: 30px;
+  margin: 6px 0;
+}
+
+.form textarea {
+  margin: 8px 0;
+}
+
+.form .label,
+.form h4 {
+  width: 140px;
+  min-width: 140px;
+}
+
+.form .label {
+  vertical-align: top;
+  padding-top: 12px;
+}
+
+.form input,
+.form select {
+  width: 100%;
+}
+
+.form input {
+  border: none;
+  background: #efefef;
+  border-radius: 2px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 0.9em;
+}
+
+.form select {
+  background-color: #efefef;
+  background-image: url(/assets/images/caret.png);
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: 96%;
+  border: none;
+  font-size: 0.9em;
+  padding: 0 10px;
+  color: #666;
+}
+
+.form textarea {
+  background-color: #efefef;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 0.9em;
+  color: #666;
+}
+
+/***
+* Full width
+***/
+
+.form .full-width {
+  display: table;
+  width: 100%;
+}
+
+/***
+* Half width
+***/
+
+.form .half-width {
+  display: table;
+  width: 50%;
+}
+
+.form .half-width.left {
+  float: left;
+}
+
+.form .half-width.right {
+  float: right;
+}
+
+.form .right .label {
+  text-align: right;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+
+/***
+* Labels
+***/
+
+.form .row {
+  display: table;
+  margin: 15px 0;
+  vertical-align: top;
+}
+
+.form h4 {
+  display: table-cell;
+}
+
+.form .style-guide {
+  display: table-cell;
+}

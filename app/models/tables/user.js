@@ -5,7 +5,7 @@ var _ = require('lodash')
 mongoose.Promise = require('bluebird')
 
 // config
-var table = 'building'
+var table = 'user'
 var db = require('../db')
 var config = require('../../../config')
 var capitalized = _.startCase(_.toLower(table))
