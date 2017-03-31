@@ -1,0 +1,56 @@
+/***
+* File Table
+***/
+
+.form .file-table {
+  display: table;
+  width: 100%;
+}
+
+.file-table .label {
+  /* force line break */
+  word-spacing: 140px;
+}
+
+.form .file-table .table {
+  width: 100%;
+  border: 1px solid #efefef;
+  margin: 8px 0;
+}
+
+.form .table .table-row {
+  width: 100%;
+  background: #efefef;
+  padding: 7px 12px;
+  box-sizing: border-box;
+}
+
+.form .table .table-row:nth-child(2n) {
+  background: #fff;
+}
+
+.form .table .table-header,
+.form .table .table-cell {
+  display: inline-block;
+  width: 50%;
+}
+
+.form .table .table-header {
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.form .table .table-header.left {
+  padding: 0px 26px;
+}
+
+.form .minus-icon {
+  width: 12px;
+  margin-right: 15px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.form object {
+  pointer-events: none;
+}

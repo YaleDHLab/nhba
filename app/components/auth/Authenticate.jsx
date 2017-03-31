@@ -2,6 +2,8 @@ import React from 'react'
 import SignUp from './SignUp'
 import Login from './Login'
 import ForgotPassword from './ForgotPassword'
+import ValidateAccount from './ValidateAccount'
+import ResetPassword from './ResetPassword'
 
 export default class Authenticate extends React.Component {
   constructor(props) {
@@ -15,15 +17,17 @@ export default class Authenticate extends React.Component {
     this.forgotPassword = this.forgotPassword.bind(this)
   }
 
+  componentDidMount() {
+    if (this.props.view && this.props.view != this.state.view) {
+      this.setState({view: this.props.view})
+    }
+  }
+
   signUp(e) {
-    e.preventDefault()
-    e.stopPropagation()
     this.setState({view: 'sign-up'})
   }
 
   forgotPassword(e) {
-    e.preventDefault()
-    e.stopPropagation()
     this.setState({view: 'forgot-password'})
   }
 
@@ -31,15 +35,24 @@ export default class Authenticate extends React.Component {
     let view = null;
     switch(this.state.view) {
       case 'login':
-        view = <Login forgotPassword={this.forgotPassword} />;
+        view = <Login {...this.props}
+          forgotPassword={this.forgotPassword} />;
         break;
 
       case 'sign-up':
-        view = <SignUp />;
+        view = <SignUp {...this.props} />;
         break;
 
       case 'forgot-password':
-        view = <ForgotPassword />;
+        view = <ForgotPassword {...this.props} />;
+        break;
+
+      case 'validate':
+        view = <ValidateAccount {...this.props} />
+        break;
+
+      case 'reset-password':
+        view = <ResetPassword {...this.props} />
         break;
     }
 

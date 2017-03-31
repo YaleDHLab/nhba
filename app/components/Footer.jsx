@@ -6,9 +6,13 @@ export default class Footer extends React.Component {
   }
 
   render() {
+    const logo = '/assets/images/dh-wordmark'
+
     return (
       <footer className='footer'>
-        <img className='dh-lab-logo' src='/assets/images/dh-wordmark.png' />
+        <object data={logo + '.svg'} type='image/svg+xml' className='dh-lab-logo'>
+          <img src={logo + '.png'} className='logo' />
+        </object>
       </footer>
     )
   }

@@ -15,10 +15,7 @@ export default class Filters extends React.Component {
   getSelect(type, key) {
     return (
       <select className='custom-select' key={key}>
-        <option value='volvo'>{type}</option>
-        <option value='saab'>Saab</option>
-        <option value='mercedes'>Mercedes</option>
-        <option value='audi'>Audi</option>
+        <option value='select'>{type}</option>
       </select>
     )
   }

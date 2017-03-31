@@ -1,5 +1,14 @@
 var db = {}
 
+db.user = {
+  firstName: String,
+  lastName: String,
+  email: String,
+  password: String,
+  token: String,
+  validated: Boolean
+}
+
 db.building = {
 
   // public profile

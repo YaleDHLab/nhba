@@ -4,13 +4,18 @@
   background: #3C2818;
 }
 
-.logo-container {
+.header .logo-container {
   display: table;
   z-index: 0;
   height: 100%;
 }
 
-.app-name {
+.header .logo {
+  width: 300px;
+  pointer-events: none;
+}
+
+.header .app-name {
   display: table-cell;
   vertical-align: middle;
   padding: 0 40px;
@@ -23,7 +28,7 @@
   z-index: 1;
 }
 
-.links {
+.header .links {
   display: table;
   position: absolute;
   right: 100px;
@@ -33,9 +38,10 @@
   text-align: center;
 }
 
-.links a {
+.header .links a {
   color: #fff;
   display: table-cell;
   vertical-align: middle;
   font-family: Arial;
+  width: 140px;
 }
