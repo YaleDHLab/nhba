@@ -49,6 +49,12 @@
   box-sizing: border-box;
 }
 
+.building .top .left-content {
+  height: 100%;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
 .building .top .left .top-left-top {
   height: 50%;
   width: 100%;
@@ -57,9 +63,33 @@
 .building .top .left .top-left-bottom {
   height: 50%;
   width: 100%;
-  border: 1px solid #ddd;
-  border-top: none;
   box-sizing: border-box;
+  text-align: center;
+}
+
+/***
+* Button to toggle layout
+***/
+
+.building .building-layout-toggle {
+  background: #ddd;
+  height: 30px;
+  margin: 15px 0 10px;
+  display: inline-block;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.building .building-layout-toggle .layout-option {
+  display: inline-block;
+  padding: 4px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.building .building-layout-toggle .layout-option.active {
+  background: #fff;
 }
 
 /***
