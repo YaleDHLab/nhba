@@ -18,6 +18,10 @@ config.endpoint += config.api.host + ':'
 config.endpoint += config.api.port + '/'
 config.endpoint += config.api.prefix + '/'
 
+/***
+* Namespace
+***/
+
 config.db = 'nhba'
 config.brand = 'nhba'
 
@@ -30,6 +34,15 @@ config.get = function(route, callback) {
     .get(config.endpoint + route)
     .set('Accept', 'application/json')
     .end(callback)
+}
+
+/***
+* Certificates
+***/
+
+config.ssl = {
+  key: 'tls/privkey.pem',
+  cert: 'tls/fullchain.pem'
 }
 
 module.exports = config

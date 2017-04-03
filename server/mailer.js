@@ -1,5 +1,6 @@
 // mailer.js
 var nodemailer = require('nodemailer')
+var config = require('../config')
 
 var account = {
   user: process.env['NHBA_EMAIL'],
@@ -21,7 +22,9 @@ var transporter = nodemailer.createTransport(mail.string)
 module.exports = {
 
   send: function(emailAddress, token, params) {
-    var link = 'http://localhost:8080/'
+    var link = config.api.protocol + '://'
+    link += config.api.host + ':'
+    link += config.api.port + '/'
     link += '?token=' + token
     link += '&email=' + emailAddress
     if (params) {

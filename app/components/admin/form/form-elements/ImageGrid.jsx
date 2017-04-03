@@ -1,6 +1,11 @@
 import React from 'react'
 import request from 'superagent'
+import update from 'react/lib/update'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+import ImageGridItem from './ImageGridItem'
 
+@DragDropContext(HTML5Backend)
 export default class ImageGrid extends React.Component {
   constructor(props) {
     super(props)
@@ -9,20 +14,30 @@ export default class ImageGrid extends React.Component {
       images: []
     }
 
-    this.getStyle = this.getStyle.bind(this)
+    this.moveImage = this.moveImage.bind(this)
   }
 
   componentDidMount() {
     let images = [];
-    let url = 'http://lorempixel.com/400/300/city/';
-    _.range(11).forEach((i) => images.push(url + i))
+    let url = 'https://lorempixel.com/400/300/city/';
+    _.range(11).forEach((i) => images.push({
+      id: i,
+      url: url + i
+    }))
     this.setState({images: images})
   }
 
-  getStyle(image) {
-    return {
-      backgroundImage: 'url(' + image + ')'
-    }
+  moveImage(dragIndex, hoverIndex) {
+    const { images } = this.state
+    const dragImage = images[dragIndex]
+    this.setState(update(this.state, {
+      images: {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragImage],
+        ],
+      },
+    }));
   }
 
   render() {
@@ -30,16 +45,15 @@ export default class ImageGrid extends React.Component {
       <div className='image-grid'>
         <div className='label'>{this.props.label}</div>
         <div className='image-grid-content'>
-
           {this.state.images.map((image, i) => {
             return (
-              <div className='grid-item-container' key={i}>
-                <div className='grid-item background-image'
-                  style={this.getStyle(image)} />
-              </div>
-            )
+              <ImageGridItem
+                key={image.id}
+                index={i}
+                id={image.id}
+                image={image.url}
+                moveImage={this.moveImage} />)
           })}
-
         </div>
       </div>
     )
