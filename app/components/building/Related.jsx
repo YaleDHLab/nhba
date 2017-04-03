@@ -1,6 +1,6 @@
 import React from 'react'
-import Card from './Card'
-import api from '../../config'
+import Card from '../Card'
+import api from '../../../config'
 
 export default class Related extends React.Component {
   constructor(props) {
@@ -27,7 +27,6 @@ export default class Related extends React.Component {
   render() {
     return (
       <div className='related'>
-        <h1 className='label'>Related Buildings</h1>
         <div className='related-buildings'>
           {this.state.buildings.length > 0 ?
             this.state.buildings.map((building, i) => {

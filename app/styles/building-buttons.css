@@ -2,15 +2,24 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-weight: 600;
 }
 
 .building-button {
+  display: block;
   height: 45px;
   width: 100%;
   border-top: 1px solid #ddd;
   cursor: pointer;
   text-align: center;
   overflow: hidden;
+  color: #777;
+  fill: #777;
+}
+
+.building-button:hover {
+  color: #EDA138;
+  fill: #EDA138;
 }
 
 .building-buttons .building-button:nth-child(4) {
@@ -18,19 +27,19 @@
 }
 
 .building-button-content {
-  width: 230px;
+  width: 180px;
   display: inline-block;
   text-align: left;
 }
 
-.building-button .icon {
-  width: 20px;
-  margin: 12px 15px 0 20px;
+.building-button .building-button-icon {
+  width: 16px;
+  margin: 16px 8px 0 0;
   display: inline-block;
 }
 
 .building-button .label {
   display: inline-block;
   vertical-align: top;
-  margin-top: 10px;
+  margin-top: 12px;
 }
