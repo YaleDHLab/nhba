@@ -30,7 +30,7 @@
   bottom: 220px;
   left: 0px;
   background: #ccc;
-  height: 670px;
+  height: 770px;
 }
 
 /***
@@ -53,6 +53,7 @@
   height: 100%;
   width: 100%;
   border: 1px solid #ddd;
+  overflow: hidden;
 }
 
 .building .top .left .top-left-top {
@@ -129,7 +130,7 @@
 .building .bottom {
   height: 260px;
   position: absolute;
-  top: 690px;
+  top: 780px;
   right: 0px;
   left: 0px;
 }

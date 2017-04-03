@@ -1,0 +1,13 @@
+.building .suggest-edit a {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #EDA138;
+  color: #fff;
+  border-radius: 6px;
+  margin: 22px 0 17px;
+  font-weight: 600;
+}
+
+.building .suggest-edit div {
+  margin: 0 40px;
+}
