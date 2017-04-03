@@ -46,7 +46,8 @@ for (let i=0; i<nBuildings; i++) {
     streetscape: faker.lorem.paragraph(),
     socialHistory: faker.lorem.paragraph(),
     overview: faker.lorem.paragraph(),
-
+    physicalDescription: faker.lorem.paragraph(),
+    siteHistory: faker.lorem.paragraph(),
 
     tour: faker.lorem.words(),
     storyMapURL: faker.lorem.words(),

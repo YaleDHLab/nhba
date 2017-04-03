@@ -1,20 +1,10 @@
 import React from 'react'
 import BuildingTable from './BuildingTable'
 
-const fields = [
-  {
-    label: 'Description',
-    field: 'description'
-  },
-  {
-    label: 'Streetscape',
-    field: 'streetscape'
-  },
-  {
-    label: 'Social History',
-    field: 'socialHistory'
-  },
-];
+const fieldHrefs = {
+  'description': 'overview',
+
+}
 
 export default class BuildingText extends React.Component {
   constructor(props) {
@@ -29,12 +19,14 @@ export default class BuildingText extends React.Component {
         <BuildingTable building={this.props.building} />
 
         {this.props.building && this.props.building.description ?
-            fields.map((field, i) => {
+            this.props.fields.map((field, i) => {
               return (
-                <div className='field' key={i}>
-                  <h1 className='label'>{field.label}</h1>
-                  <p className='text'>{this.props.building[field.field]}</p>
-                </div>
+                <section id={field.href} key={i}>
+                  <div className='field'>
+                    <h1 className='label'>{field.text.label}</h1>
+                    <p className='text'>{this.props.building[field.text.field]}</p>
+                  </div>
+                </section>
               )
             })
           : <span>hm</span>

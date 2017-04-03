@@ -1,21 +1,9 @@
 .related {
-  height: 100%;
+  height: 220px;
   width: 100%;
-  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
   white-space: nowrap;
-  padding: 0 40px;
   box-sizing: border-box;
   position: relative;
-}
-
-.related .label {
-  font-size: 1.3em;
-  font-family: Tinos;
-  margin: 12px 0 8px 10px;
-  position: fixed;
-}
-
-.related-buildings {
-  position: absolute;
-  top: 42px;
 }
