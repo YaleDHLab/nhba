@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
-var models = require('./app/models/models')
-var config = require('./config')
+var models = require('../app/models/models')
+var config = require('../config')
 var path = require('path')
 
 /***
@@ -59,6 +59,6 @@ module.exports = function(app) {
 
   // send requests to index.html so browserHistory in React Router works
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'))
   })
 }

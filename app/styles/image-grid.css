@@ -10,12 +10,13 @@
   padding: 7px 0px 2px 4px;
 }
 
-.image-grid .grid-item-container {
+.image-grid .image-grid-item {
   width: 100px;
   height: 100px;
   display: inline-block;
   position: relative;
   margin: 0px 3px;
+  background: gray;
 }
 
 .image-grid .grid-item {

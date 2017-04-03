@@ -52,21 +52,21 @@ for (let i=0; i<nBuildings; i++) {
     storyMapURL: faker.lorem.words(),
     archiveDocuments: [
       {
-        url: 'http://lorempixel.com/800/500/city/',
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words()
       },
       {
-        url: 'http://lorempixel.com/800/500/city/',
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words()
       }
     ],
     resources: [
       {
-        url: 'http://lorempixel.com/800/500/city/',
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words()
       },
       {
-        url: 'http://lorempixel.com/800/500/city/',
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words()
       }
     ],
