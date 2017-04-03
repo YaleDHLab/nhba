@@ -1,7 +1,8 @@
 import React from 'react'
+import LayoutToggle from './building/BuildingLayoutToggle'
 import BuildingButtons from './building/BuildingButtons'
 import BuildingText from './building/BuildingText'
-import LayoutToggle from './building/BuildingLayoutToggle'
+import SuggestEdit from './building/SuggestEdit'
 import Related from './building/Related'
 import Map from './Map'
 import api from '../../config'
@@ -107,6 +108,7 @@ export default class Building extends React.Component {
                   <LayoutToggle toggleLayout={this.toggleLayout}
                     layout={this.state.layout} />
                   <BuildingButtons fields={fields} {...this.props} />
+                  <SuggestEdit building={this.state.building} />
                 </div>
               </div>
             </div>
