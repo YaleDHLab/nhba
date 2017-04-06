@@ -1,77 +1,73 @@
 var db = {}
 
 db.user = {
-  firstName: String,
-  lastName: String,
+  firstname: String,
+  lastname: String,
   email: String,
   password: String,
   token: String,
   validated: Boolean
 }
 
+db.select = {
+  field: String,
+  options: [String]
+}
+
 db.building = {
 
-  // public profile
-  name: String,
+  sql_building_id: Number,
+
+  // overview
+  building_name: String,
   address: String,
-  style: String,
-  yearBuilt: String,
-  currentUse: String,
-  historicUse: String,
-  neighborhood: String,
-
-  tour: String,
-  description: String,
-  streetscape: String,
-  socialHistory: String,
-  storyMapURL: String,
-  archiveDocuments: [{
-    url: String,
-    label: String
-  }],
-  resources: [{
-    url: String,
-    label: String
-  }],
-
-  // building history
-  currentTenant: String,
-  pastTenant: String,
+  year_built: String,
+  styles: [String],
+  current_uses: [String],
+  current_tenant: String,
+  neighborhoods: [String],
+  eras: [String],
   architect: String,
   client: String,
   owner: String,
   status: String,
-  streetVisibility: String,
-  accessibility: String,
-  explain: String,
+  tour_ids: [Number],
+  researcher: String,
+  overview_description: String,
+  storymap_url: String,
+
+  // data and history
+  historic_use: String,
+  past_tenants: String,
+  street_visibilities: [String],
+  accessibilities: [String],
   dimensions: String,
-  stories: String,
-  material: String,
-  structure: String,
-  roofType: String,
-  roofMaterial: String,
-  structuralCondition: String,
-  externalCondition: String,
-  threats: String,
-  physicalDescription: String,
+  levels: String,
+  materials: [String],
+  structures: [String],
+  roof_types: [String],
+  roof_materials: [String],
+  structural_conditions: [String],
+  external_conditions: [String],
+  threats: [String],
+  physical_description: String,
   streetscape: String,
-  socialHistory: String,
-  siteHistory: String,
-  additionalInformation: String,
+  social_history: String,
+  site_history: String,
+  archive_documents: [{
+    filename: String,
+    label: String
+  }],
 
-  // media gallery
-  coverPhoto: String,
-  gallery: [String],
-  submissions: [String],
+  // image gallery
+  images: [{
+    filename: String,
+    caption: String
+  }]
 
-  // non-form fields
-  location: {
-    latitude: String,
-    longitude: String
-  },
-
-  // from internal db
-  researcher: String
+  // fields not in admin ui
+  courses: [String],
+  tour_position: Number
 }
 
 module.exports = db
