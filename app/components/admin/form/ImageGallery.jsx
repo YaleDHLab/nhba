@@ -2,7 +2,7 @@ import React from 'react'
 import ImageGrid from './form-elements/ImageGrid'
 import FilePicker from './form-elements/FilePicker'
 
-export default class MediaGallery extends React.Component {
+export default class ImageGallery extends React.Component {
   constructor(props) {
     super(props)
   }
