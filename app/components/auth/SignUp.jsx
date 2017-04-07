@@ -7,8 +7,8 @@ export default class SignUp extends React.Component {
     super(props)
 
     this.state = {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       terms: false,
@@ -25,11 +25,11 @@ export default class SignUp extends React.Component {
   }
 
   updateFirstName(e) {
-    this.setState({firstName: e.target.value})
+    this.setState({firstname: e.target.value})
   }
 
   updateLastName(e) {
-    this.setState({lastName: e.target.value})
+    this.setState({lastname: e.target.value})
   }
 
   updateEmail(e) {
@@ -42,8 +42,8 @@ export default class SignUp extends React.Component {
 
   submit() {
     var user = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password
     }
@@ -79,11 +79,11 @@ export default class SignUp extends React.Component {
         <h1>Sign up</h1>
 
         <input type='text' className='half-width left'
-          placeholder='First Name' value={this.state.firstName}
+          placeholder='First Name' value={this.state.firstname}
           onKeyPress={this.handleKey} onChange={this.updateFirstName} />
 
         <input type='text' className='half-width'
-          placeholder='Last Name' value={this.state.lastName}
+          placeholder='Last Name' value={this.state.lastname}
           onKeyPress={this.handleKey} onChange={this.updateLastName} />
 
         <input type='text' className='full-width'
