@@ -63,7 +63,7 @@ db.building = {
   images: [{
     filename: String,
     caption: String
-  }]
+  }],
 
   // fields not in admin ui
   courses: [String],

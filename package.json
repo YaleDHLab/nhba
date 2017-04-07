@@ -13,7 +13,9 @@
     "build": "webpack",
     "compress": "webpack",
     "production": "npm run build && node server.js",
-    "seed": "node app/models/seeds/seed-db.js"
+    "seed": "node app/models/seeds/seed-db.js",
+    "migrate": "python app/models/migrations/migrate-wp.py",
+    "resize": "node server/resize-all.js"
   },
   "author": "",
   "license": "ISC",

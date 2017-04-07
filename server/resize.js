@@ -3,8 +3,8 @@ var glob = require('glob')
 var path = require('path')
 
 var dirs = {
-  raw: '../build/assets/uploads/raw',
-  resized: '../build/assets/uploads/resized'
+  raw: 'build/assets/uploads/raw',
+  resized: 'build/assets/uploads/resized'
 }
 
 var sizes = {
