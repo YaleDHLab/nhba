@@ -15,7 +15,7 @@ import './styles/styles'
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route component={App}>
-      <Route path='/' component={Home} />
+      <Route path='/' component={Search} />
       <Route path='/about' component={About} />
       <Route path='/glossary' component={Glossary} />
       <Route path='/contact' component={Contact} />
