@@ -9,7 +9,11 @@ export default class Cards extends React.Component {
   }
 
   getStyle() {
-    const url = this.props.building.resources[0].url;
+    const dir = '/assets/uploads/resized/small';
+    const filename = this.props.building.images.length > 0 ?
+        this.props.building.images[0].filename
+      : 'NA'
+    const url = dir + '/' + filename;
     return {backgroundImage: 'url(' + url + ')'}
   }
 

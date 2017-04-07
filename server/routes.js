@@ -29,6 +29,10 @@ module.exports = function(app) {
       query.buildingId= parseInt(req.query.buildingId)
     }
 
+    if (req.query.images && req.query.images == 'true') {
+      query = {$where: 'this.images.length > 0'}
+    }
+
     models.building.find(query,
       (err, data) => {
         if (err) return res.status(500).send({cause: err})
