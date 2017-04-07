@@ -13,8 +13,8 @@ const tabs = [
     position: 'center'
   },
   {
-    key: 'media-gallery',
-    label: 'Media Gallery',
+    key: 'image-gallery',
+    label: 'Image Gallery',
     position: 'right'
   },
 ]
