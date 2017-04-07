@@ -12,9 +12,30 @@
   margin: 15px 50px;
 }
 
+.filters .input-container {
+  display: inline-block;
+  position: relative;
+}
+
+.filters .search-icon {
+  background-image: url(/assets/images/search-icon.png);
+  background-repeat: no-repeat;
+  background-position: 95% 7px;
+  background-size: 20px;
+  display: inline-block;
+  position: absolute;
+  right: 8px;
+  height: 27px;
+  width: 27px;
+  opacity: 0.6;
+}
+
 .filters input {
-  height: 25px;
   width: 200px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 1em;
 }
 
 .filters .select-container {
@@ -40,4 +61,5 @@
   z-index: -1;
   color: #666;
   font-size: 0.8em;
+  width: 100px;
 }

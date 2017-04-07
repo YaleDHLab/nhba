@@ -16,7 +16,7 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
-    api.get('buildings', this.processBuildings)
+    api.get('buildings?images=true', this.processBuildings)
   }
 
   processBuildings(err, res) {
@@ -29,7 +29,7 @@ export default class Search extends React.Component {
   render() {
     return (
       <div className='search'>
-        <Filters />
+        <Filters buildings={this.state.buildings} />
         <Cards buildings={this.state.buildings} />
         <Map buildings={this.state.buildings} />
       </div>

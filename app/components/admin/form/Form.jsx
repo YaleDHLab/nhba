@@ -2,7 +2,7 @@ import React from 'react'
 import Tabs from './Tabs'
 import Overview from './Overview'
 import DataAndHistory from './DataAndHistory'
-import MediaGallery from './MediaGallery'
+import ImageGallery from './ImageGallery'
 import api from '../../../../config'
 
 export default class Form extends React.Component {
@@ -56,8 +56,8 @@ export default class Form extends React.Component {
         view = <DataAndHistory building={this.state.building} />;
         break;
 
-      case 'media-gallery':
-        view = <MediaGallery building={this.state.building} />;
+      case 'image-gallery':
+        view = <ImageGallery building={this.state.building} />;
         break;
     }
 
