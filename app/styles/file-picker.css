@@ -5,6 +5,7 @@
 .form .file-picker {
   display: table;
   width: 100%;
+  margin: 20px 0;
 }
 
 .form .file-picker .file-picker-content {

@@ -126,11 +126,15 @@ export default class DataAndHistory extends React.Component {
         <FileTable {...this.props}
           label={'Archive Documents'} />
 
-        <br />
-
         <FilePicker {...this.props}
           topLabel={'Upload'}
           bottomLabel={'Display Title'} />
+
+        <TextArea {...this.props}
+          width={'full-width'}
+          label={'Footnotes'}
+          field={'footnotes'}
+          rows={10} />
 
       </div>
     )

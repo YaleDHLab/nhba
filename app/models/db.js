@@ -58,6 +58,7 @@ db.building = {
     filename: String,
     label: String
   }],
+  footnotes: String,
 
   // image gallery
   images: [{
