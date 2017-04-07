@@ -21,6 +21,8 @@ db.building = {
   // overview
   building_name: String,
   address: String,
+  latitude: String,
+  longitude: String,
   year_built: String,
   styles: [String],
   current_uses: [String],
