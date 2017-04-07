@@ -23,6 +23,16 @@ export default class Overview extends React.Component {
           field={'buildingName'} />
 
         <TextInput {...this.props}
+          width={'full-width'}
+          label={'Latitude'}
+          field={'latitude'} />
+
+        <TextInput {...this.props}
+          width={'full-width'}
+          label={'Longitude'}
+          field={'longitude'} />
+
+        <TextInput {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Year Built'}
