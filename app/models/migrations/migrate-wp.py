@@ -445,10 +445,9 @@ def get_migrated_buildings():
         else:
           migrated_building[nhba_key] = []
 
-    # add the images to this building
+    # add feature image and all other images to this building
     migrated_building['images'] = building['images_and_documents']
 
-    # preppend the featured image to this building's images
     try:
       featured_image = building_id_to_featured_image[building_id]
       migrated_building['images'] = [featured_image] + migrated_building['images']
@@ -482,7 +481,6 @@ def save_tours():
   '''
   Write the tour json to disk so it's available when we need it
   '''
-
   client = MongoClient('localhost', 27017)
   for i in tour_id_to_tour.iterkeys():
     tour = tour_id_to_tour[i]
@@ -492,8 +490,8 @@ def save_tours():
 if __name__ == '__main__':
 
   # config
-  download_images = True
-  save_records = True
+  download_images = False
+  save_records = False
   client = MongoClient('localhost', 27017)
   db = client['nhba-wp']
 
