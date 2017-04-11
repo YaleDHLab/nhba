@@ -9,22 +9,22 @@ import api from '../../config'
 
 const fields = [
   {
-    text: {label: 'Description', field: 'description'},
+    text: {label: 'Description', field: 'overview_description'},
     button: {label: 'Overview', icon: 'overview'},
     href: 'description'
   },
   {
-    text: {label: 'Site History', field: 'siteHistory'},
+    text: {label: 'Site History', field: 'site_history'},
     button: {label: 'BuildingHistory', icon: 'building'},
     href: 'siteHistory'
   },
   {
-    text: {label: 'Physical Description', field: 'physicalDescription'},
+    text: {label: 'Physical Description', field: 'physical_description'},
     button: {label: 'Structural Data', icon: 'structure'},
     href: 'physicalDescription'
   },
   {
-    text: {label: 'Social History', field: 'socialHistory'},
+    text: {label: 'Social History', field: 'social_history'},
     button: {label: 'Community Stories', icon: 'community'},
     href: 'socialHistory'
   }
@@ -36,13 +36,15 @@ export default class Building extends React.Component {
 
     this.state = {
       building: {},
-      layout: {left: 'Map', 'right': 'Gallery'}
+      layout: {left: 'Map', 'right': 'Gallery'},
+      imageIndex: 0
     }
 
     this.getStyle = this.getStyle.bind(this)
     this.getBuilding = this.getBuilding.bind(this)
     this.toggleLayout = this.toggleLayout.bind(this)
     this.processBuilding = this.processBuilding.bind(this)
+    this.incrementImageIndex = this.incrementImageIndex.bind(this)
   }
 
   componentDidMount() {
@@ -60,11 +62,20 @@ export default class Building extends React.Component {
     }
   }
 
+  processBuilding(err, res) {
+    if (err) { console.warn(err) } else {
+      const building = Object.assign({}, res.body[0])
+      this.setState({building: building})
+    }
+  }
+
   getStyle() {
-    const resources = this.state.building.resources;
-    if (resources) {
+    const images = this.state.building.images;
+    if (images) {
+      const dir = '/assets/uploads/resized/large/'
+      const image = dir + images[this.state.imageIndex].filename;
       return {
-        backgroundImage: 'url(' + resources[0].url + ')',
+        backgroundImage: 'url(' + image + ')',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
         backgroundSize: 'cover'
@@ -72,11 +83,10 @@ export default class Building extends React.Component {
     }
   }
 
-  processBuilding(err, res) {
-    if (err) { console.warn(err) } else {
-      const building = Object.assign({}, res.body[0])
-      this.setState({building: building})
-    }
+  incrementImageIndex() {
+    const imageIndex = this.state.imageIndex;
+    const newIndex = (imageIndex + 1) % this.state.building.images.length;
+    this.setState({imageIndex: newIndex})
   }
 
   toggleLayout() {
@@ -89,9 +99,15 @@ export default class Building extends React.Component {
   render() {
     const style = this.getStyle()
 
+    const gallery = (
+      <div className='top-right-top background-image'
+        style={style}
+        onClick={this.incrementImageIndex} />
+    )
+
     const layout = {
       'Map': <Map />,
-      'Gallery': <div className='top-right-top background-image' style={style} />
+      'Gallery': gallery
     }
 
     return (

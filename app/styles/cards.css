@@ -1,6 +1,6 @@
-/***
+/**
 * Cards
-***/
+**/
 
 .cards {
   background: #eee;
@@ -25,9 +25,9 @@
   left: 0;
 }
 
-/***
+/**
 * Search result cards
-***/
+**/
 
 .search .card {
   width: 50%;
@@ -36,9 +36,25 @@
   box-sizing: border-box;
 }
 
-/***
+/**
+* Search result cards hover
+**/
+
+.search .card:hover .card-content {
+  outline: 3px solid #EDA138;
+}
+
+.search .card:hover .card-name {
+  color: #000;
+}
+
+.search .card:hover .card-details {
+  color: #666;
+}
+
+/**
 * Related buildings cards
-***/
+**/
 
 .related .card {
   width: 250px;
@@ -50,16 +66,31 @@
   padding-top: 3px;
 }
 
-/***
+/**
 * Card labels
-***/
+**/
 
-.card-label {
+.card-text {
   position: absolute;
   bottom: 0;
   width: 100%;
   background: #fff;
   padding: 4px 8px;
   box-sizing: border-box;
-  color: #666;
+  overflow: hidden;
+  height: 45px;
+  line-height: 1.2em;
+}
+
+.card-name {
+  font-weight: 400;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  color: #5a5a5a
+}
+
+.card-details {
+  font-size: 0.75em;
+  color: #999;
 }

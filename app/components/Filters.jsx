@@ -4,8 +4,8 @@ import _ from 'lodash'
 
 const selects = [
   {label: 'Tour', field: 'tour_ids'},
-  {label: 'Building Type', field: 'structures'}, // validate this is the right field
-  {label: 'Use', field: 'current_uses'},
+  {label: 'Previous Use', field: 'structures'}, // validate this is the right field
+  {label: 'Current Use', field: 'current_uses'},
   {label: 'Style', field: 'styles'},
   {label: 'Era', field: 'eras'},
   {label: 'Neighborhood', field: 'neighborhoods'},
@@ -17,22 +17,14 @@ export default class Filters extends React.Component {
     super(props)
 
     this.state = {
-      'tour_ids': [],
-      'building_types': [],
-      'current_uses': [],
-      'styles': [],
-      'eras': [],
-      'neighborhoods': [],
-      'sort': null,
-      'options': {}
+      options: {}
     }
 
     this.getSelectOptions = this.getSelectOptions.bind(this)
-    this.updateSelect = this.updateSelect.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (_.isEqual(this.props.buildings, prevProps.buildings)) {} else {
+    if (!_.isEqual(this.props.buildings, prevProps.buildings)) {
       this.getSelectOptions()
     }
   }
@@ -48,25 +40,42 @@ export default class Filters extends React.Component {
       options[select.field] = new Set()
     })
 
+    // helper to add all options for a given field to an 'options' object
+    const addOption = (building, field, options) => {
+      if (building[field] && building[field].length > 0) {
+
+        // ensure the levels for the current factor are an array
+        const levels = _.isArray(building[field]) ?
+            building[field]
+          : [building[field]]
+
+        // tour id values should be represented by their labels
+        const tourIdToTitle = this.props.tourIdToTitle;
+        if (field == 'tour_ids') {
+          levels.map((level) => {
+            tourIdToTitle && tourIdToTitle[level] ?
+                options[field].add(tourIdToTitle[level])
+              : level
+          })
+        } else {
+          levels.map((level) => {
+            options[field].add(level)
+          })
+        }
+      }
+
+      return options;
+    }
+
     // add each building's value to the options for each field
     const buildings = this.props.buildings;
     buildings.map((building) => {
       selectFields.map((select) => {
-        const field = select.field;
-        if (building[field] && building[field].length > 0) {
-
-          // if this metadata field contains an array of values, add each
-          if (Array.isArray(building[field])) {
-            building[field].map((value) => {
-              options[field].add(value)
-            })
-          } else {
-            options[field].add(building[field])
-          }
-        }
+        options = addOption(building, select.field, options)
       })
     })
 
+    // transform the options to d[selectField] = [options]
     Object.keys(options).map((option) => {
       options[option] = Array.from(options[option])
     })
@@ -74,14 +83,23 @@ export default class Filters extends React.Component {
     this.setState({options: options})
   }
 
-  updateSelect(field, value) {
-    let state = Object.assign({}, this.state)
-    state[field] = value;
-    this.setState(state)
-  }
-
   render() {
-    console.log(selects, this.state.options)
+    const selectFields = (
+      selects.map((select, i) => {
+        const values = this.props[select.field] ?
+            _.toArray(this.props[select.field])
+          : []
+
+        return (
+          <Select
+            key={i}
+            select={select}
+            values={values}
+            options={this.state.options[select.field]}
+            updateSelect={this.props.updateSelect} />
+        )
+      })
+    )
 
     return (
       <div className='filters'>
@@ -91,15 +109,7 @@ export default class Filters extends React.Component {
           <input type='text' className='building-search'></input>
         </div>
         <div className='select-container'>
-          {selects.map((select, i) => {
-            return (
-              <Select
-                key={i}
-                select={select}
-                options={this.state.options[select.field]}
-                updateSelect={this.updateSelect} />
-            )
-          })}
+          {selectFields}
         </div>
       </div>
     )
