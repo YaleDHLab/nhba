@@ -18,11 +18,11 @@ var auth = require('./server/auth')
 var routes = require('./server/routes')
 var models = require('./app/models/models')
 
-/***
+/**
 *
 * Configure Express production server
 *
-***/
+**/
 
 // initialize the server
 var app = express()
@@ -71,27 +71,27 @@ app.use((req, res, next) => {
   next()
 })
 
-/***
+/**
 *
 * Auth
 *
-***/
+**/
 
 auth(app)
 
-/***
+/**
 *
 * Routes
 *
-***/
+**/
 
 routes(app)
 
-/***
+/**
 *
 * Run Environment
 *
-***/
+**/
 
 // check whether we need to initialize a production grade https server
 if (process.env['NHBA_ENVIRONMENT'] == 'production') {

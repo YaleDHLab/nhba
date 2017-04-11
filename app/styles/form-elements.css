@@ -1,6 +1,6 @@
-/***
+/**
 * Form elements
-***/
+**/
 
 .form {
   width: 100%;
@@ -66,18 +66,18 @@
   color: #666;
 }
 
-/***
+/**
 * Full width
-***/
+**/
 
 .form .full-width {
   display: table;
   width: 100%;
 }
 
-/***
+/**
 * Half width
-***/
+**/
 
 .form .half-width {
   display: table;
@@ -98,9 +98,9 @@
   box-sizing: border-box;
 }
 
-/***
+/**
 * Labels
-***/
+**/
 
 .form .row {
   display: table;

@@ -5,7 +5,7 @@ var _ = require('lodash')
 mongoose.Promise = require('bluebird')
 
 // config
-var table = 'tour'
+var table = 'wptour'
 var db = require('../db')
 var config = require('../../../config')
 var capitalized = _.startCase(_.toLower(table))

@@ -20,9 +20,9 @@
   padding: 60px 0;
 }
 
-/***
+/**
 * Modal header
-***/
+**/
 
 .authenticate .modal .header {
   color: #fff;
@@ -77,9 +77,9 @@
   font-weight: 100;
 }
 
-/***
+/**
 * Modal body
-***/
+**/
 
 .authenticate .modal .body {
   background: #fff;
@@ -138,9 +138,9 @@
   margin-top: 10px;
 }
 
-/***
+/**
 * Sign up
-***/
+**/
 
 .authenticate .modal .checkbox {
   vertical-align: top;
@@ -153,26 +153,26 @@
   vertical-align: top;
 }
 
-/***
+/**
 * Sign in
-***/
+**/
 
 .authenticate .forgot-password-button {
   text-align: right;
   cursor: pointer;
 }
 
-/***
+/**
 * Body text
-***/
+**/
 
 .authenticate .body-text {
   margin: 25px 0 10px;
 }
 
-/***
+/**
 * Messages
-***/
+**/
 
 .authenticate .message {
   font-weight: 600;

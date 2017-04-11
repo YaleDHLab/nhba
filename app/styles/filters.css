@@ -1,6 +1,6 @@
-/***
+/**
 * Filters
-***/
+**/
 
 .filters {
   height: 60px;
@@ -30,7 +30,7 @@
   opacity: 0.6;
 }
 
-.filters input {
+.filters .building-search {
   width: 200px;
   border: 1px solid #ddd;
   padding: 8px;
@@ -45,10 +45,21 @@
   height: 100%;
 }
 
-.filters .select-container select {
+/**
+* Multiselect
+**/
+
+.filters .select-container .multiselect {
   height: 100%;
-  padding: 0px 25px 0 14px;
-  width: auto;
+  min-width: 110px;
+  max-width: 130px;
+  position: relative;
+  float: left;
+}
+
+.filters .select-container .select-box {
+  height: 100%;
+  width: 100%;
   background-color: #fff;
   background-image: url(/assets/images/caret.png);
   background-size: 24px;
@@ -61,5 +72,59 @@
   z-index: -1;
   color: #666;
   font-size: 0.8em;
-  width: 100px;
+  display: inline-block;
+  float: left;
+}
+
+.filters .select-container select {
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+
+.filters .select-container .multiselect:focus {
+  outline: none;
+}
+
+.filters .select-container .multiselect .select-decoy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.filters .select-container .multiselect.active .select-decoy {
+  border-bottom: 1px solid #fff;
+}
+
+.filters .select-container .multiselect .select-checkboxes {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: auto;
+  z-index: 1;
+  max-height: 50vh;
+  overflow: scroll;
+  height: 0px;
+}
+
+.filters .select-container .multiselect.active .select-checkboxes {
+  height: auto;
+  background: #fff;
+  border: 1px solid lightgray;
+}
+
+.filters .select-container input {
+  margin: 4px;
+}
+
+.filters .select-container label {
+  white-space: nowrap;
+  display: block;
+  padding: 11px 11px 0;
+}
+
+.filters .select-container label:last-child {
+  padding-bottom: 10px;
 }

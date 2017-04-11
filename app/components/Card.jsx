@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-export default class Cards extends React.Component {
+export default class Card extends React.Component {
   constructor(props) {
     super(props)
   
@@ -17,19 +17,35 @@ export default class Cards extends React.Component {
     return {backgroundImage: 'url(' + url + ')'}
   }
 
+  getHtml(s) {
+    return {__html: s};
+  }
+
   render() {
     const building = this.props.building;
-    const label = this.props.label;
+    const name = building.building_name ? building.building_name : building.address;
+
+    // create the card details with available fields
+    const neighborhood = building.neighborhoods ? building.neighborhoods[0] : ''
+    const style = building.styles ? building.styles[0] : ''
+
+    let details = '';
+    if (neighborhood && style) {
+      details = [neighborhood, style].join(' &#8226; ')
+    } else {
+      details = neighborhood ? neighborhood : style;
+    }
 
     return (
       <div className='card'>
-        <Link to={'/building?id=' + building.buildingId}>
+        <Link to={'/building?id=' + this.props.building._id}>
           <div className='card-content'>
             <div className='background-image card-image' style={this.getStyle()} />
-            {label ?
-                <div className='card-label'>{building[label]}</div>
-              : null
-            }
+            <div className='card-text'>
+              <div className='card-name'>{name}</div>
+              <div className='card-details'
+                dangerouslySetInnerHTML={this.getHtml(details)} />
+            </div>
           </div>
         </Link>
       </div>

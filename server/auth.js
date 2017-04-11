@@ -8,11 +8,11 @@ var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10
 
 module.exports = function(app) {
 
-  /***
+  /**
   *
   * Identify the messages delievered by the auth middleware to client
   *
-  ***/
+  **/
 
   var messages = {
     'emailTaken': 'Sorry, the requested email address is already taken.',
@@ -27,11 +27,11 @@ module.exports = function(app) {
               Please contact an administrator for help.',
   }
 
-  /***
+  /**
   *
   * Regist new users
   *
-  ***/
+  **/
 
   // request made by client when attempting to add a user to the db
   app.post('/api/register', (req, res, next) => {
@@ -40,7 +40,7 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Create and email a token to a user's email for account verification
   *
@@ -50,7 +50,7 @@ module.exports = function(app) {
   *   req: a request object from express
   *   res: a response object from express
   *
-  ***/
+  **/
 
   var initializeUserPassword = (err, doc, req, res) => {
     // if the requested email address is used, inform the client
@@ -88,11 +88,11 @@ module.exports = function(app) {
     })
   }
 
-  /***
+  /**
   *
   * Validate the account token emailed to user
   *
-  ***/
+  **/
 
   app.post('/api/validate', (req, res, next) => {
     var query = {
@@ -105,18 +105,18 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Create a new secure token for account validation
   *
-  ***/
+  **/
 
   var getToken = () => {
     var salt = bcrypt.genSaltSync(saltWorkFactor)
     return bcrypt.hashSync("B4c0/\/", salt)
   }
 
-  /***
+  /**
   *
   * High level authentication check wrapper
   *
@@ -126,7 +126,7 @@ module.exports = function(app) {
   *   req: a request object from express
   *   res: a response object from express
   *
-  ***/
+  **/
 
   var authenticateUser = (err, doc, req, res) => {
     if (err || doc.length == 0) {
@@ -162,11 +162,11 @@ module.exports = function(app) {
     })
   }
 
-  /***
+  /**
   *
   * Log in a user
   *
-  ***/
+  **/
 
   app.post('/api/login', (req, res, next) => {
     models.user.find({email: req.body.email}, (err, doc) => {
@@ -174,11 +174,11 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Make server-side session data available to client
   *
-  ***/
+  **/
 
   app.get('/api/session', (req, res, next) => {
     return res.status(200).send({
@@ -186,11 +186,11 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Log a user out of their current session
   *
-  ***/
+  **/
 
   app.get('/api/logout', (req, res, next) => {
     req.session.authenticated = false
@@ -207,11 +207,11 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Allow users to reset their password via an email
   *
-  ***/
+  **/
 
   app.post('/api/forgotPassword', (req, res, next) => {
     models.user.find({email: req.body.email}, (err, doc) => {
@@ -219,7 +219,7 @@ module.exports = function(app) {
     })
   })
 
-  /***
+  /**
   *
   * Send an email to users so they can reset their password
   *
@@ -229,7 +229,7 @@ module.exports = function(app) {
   *   req: a request object from express
   *   res: a response object from express
   *
-  ***/
+  **/
 
   var requestPasswordReset = (err, doc, req, res) => {
     if (err) {
@@ -264,11 +264,11 @@ module.exports = function(app) {
     })
   }
 
-  /***
+  /**
   *
   * Save a new password for the user
   *
-  ***/
+  **/
 
   app.post('/api/resetPassword', (req, res, next) => {
     models.user.find({email: req.body.email}, (err, doc) => {

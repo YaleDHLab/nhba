@@ -9,9 +9,31 @@ db.user = {
   validated: Boolean
 }
 
-db.select = {
-  field: String,
-  options: [String]
+db.wptour = {
+  post_mime_type : String,
+  post_date_gmt : Date,
+  post_date : Date,
+  post_type : String,
+  post_modified : Date,
+  menu_order : Number,
+  guid : String,
+  post_title : String,
+  post_status : String,
+  comment_count : Number,
+  post_content : String,
+  post_content_filtered : String,
+  tour_id : Number,
+  post_parent : Number,
+  post_password : String,
+  ping_status : String,
+  post_author : Number,
+  comment_status : String,
+  to_ping : String,
+  post_name : String,
+  post_modified_gmt : Date,
+  pre_mongified_id : Number,
+  pinged : String,
+  post_excerpt : String
 }
 
 db.building = {

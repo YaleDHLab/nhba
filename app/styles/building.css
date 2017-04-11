@@ -19,9 +19,9 @@
   max-width: 1100px;
 }
 
-/***
+/**
 * Top
-***/
+**/
 
 .building .top {
   position: absolute;
@@ -33,9 +33,9 @@
   height: 770px;
 }
 
-/***
+/**
 * Top left
-***/
+**/
 
 .building .top .left {
   width: 40%;
@@ -68,9 +68,9 @@
   text-align: center;
 }
 
-/***
+/**
 * Button to toggle layout
-***/
+**/
 
 .building .building-layout-toggle {
   background: #ddd;
@@ -93,9 +93,9 @@
   background: #fff;
 }
 
-/***
+/**
 * Top right
-***/
+**/
 
 .building .top .right {
   width: 60%;
@@ -123,9 +123,9 @@
   bottom: 0;
 }
 
-/***
+/**
 * Bottom
-***/
+**/
 
 .building .bottom {
   height: 260px;
