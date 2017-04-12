@@ -78,13 +78,14 @@ To run your application on HTTPS, just update `nhba/config.js`:
 config.api = {
   protocol: 'https',
   host: 'YOURDOMAIN.EXT',
-  port: 8080,
+  port: 443,
   prefix: 'api'
 }
 ```
 
 #### Store Environment Variables
 
+Add the following variables to `~/.bash_profile`:
 ```
 export NHBA_EMAIL='YOURGMAILACCOUNT'           # e.g. catparty
 export NHBA_EMAIL_PASSWORD='YOURGMAILPASSWORD' # e.g. meow
@@ -92,6 +93,7 @@ export NHBA_SECRET='NHBA_SECRET'               # equivalent to `rake secret`
 export NHBA_SALT_WORK_FACTOR=10                # encryption difficulty
 export NHBA_ENVIRONMENT='production'           # switch to production
 ```
+Then `source ~/.bash_profile`
 
 #### Start Application
 

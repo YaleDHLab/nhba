@@ -1,6 +1,7 @@
 *.swp
 *.pem
 *.DS_Store
+*.tar.gz
 node_modules
 build/bundle.js
 ngrok

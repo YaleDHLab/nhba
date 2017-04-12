@@ -1,3 +1,4 @@
+import './admin-landing-page.css'
 import './authenticate.css'
 import './building.css'
 import './building-buttons.css'

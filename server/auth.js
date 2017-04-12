@@ -325,4 +325,20 @@ module.exports = function(app) {
     })
   }
 
+  /**
+  *
+  * Add middleware that only allows authenticated users to access /admin
+  *
+  **/
+
+  app.use((req, res, next) => {
+    if (req.url.includes('/admin')) {
+      req.session && req.session.authenticated == true ?
+          next()
+        : res.redirect('/?authenticated=false')
+    } else {
+      next()
+    }
+  })
+
 }

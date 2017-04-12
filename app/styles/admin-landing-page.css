@@ -1,0 +1,247 @@
+/**
+* Top
+**/
+
+.admin-landing-page .top {
+  height: 340px;
+  display: block;
+  position: relative;
+}
+
+/**
+* Top Left
+**/
+
+.admin-landing-page .top .left {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  background: #efefef;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.admin-landing-page .tabs-container {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+.admin-landing-page .tabs {
+  padding: 4px 0;
+  display: inline-block;
+  color: #999;
+  font-weight: 600;
+}
+
+.admin-landing-page .tabs .tab,
+.admin-landing-page .tabs .spacer {
+  display: inline-block;
+  box-sizing: border-box;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid lightgray;
+  cursor: pointer;
+  vertical-align: bottom;
+}
+
+.admin-landing-page .tabs .spacer {
+  width: 45px;
+}
+
+.admin-landing-page .tabs .tab.active {
+  border-bottom: 3px solid #EDA138;
+  color: #666;
+}
+
+.admin-landing-page .tabs .tab:nth-child(2) {
+  float: right;
+}
+
+/**
+* Users/Pages Table
+**/
+
+.admin-landing-page .table {
+  background: #fff;
+  color: #666;
+}
+
+.admin-landing-page .table .row {
+  padding: 8px 30px;
+  box-sizing: border-box;
+  font-weight: 600;
+}
+
+.admin-landing-page .table .row:nth-child(2n) {
+  background: #efefef;
+}
+
+.admin-landing-page .table .edit-icon {
+  width: 14px;
+  height: 14px;
+  background: url(/assets/images/edit-icon.png);
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  display: inline-block;
+  margin-right: 10px;
+  opacity: 0.6;
+}
+
+/**
+* User authorization
+**/
+
+.admin-landing-page .users .select-container {
+  display: inline-block;
+  float: right;
+  margin-top: -1px;
+  position: relative;
+}
+
+.admin-landing-page .user-authorization {
+  display: inline-block;
+  padding: 4px 10px;
+  box-sizing: border-box;
+  font-size: 0.7em;
+  border: 1px solid #999;
+  color: #999;
+  border-radius: 4px;
+  padding-right: 24px;
+}
+
+.admin-landing-page .caret {
+  background-image: url(/assets/images/caret.png);
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: -4px 1px;
+}
+
+/**
+* Top Right
+**/
+
+.admin-landing-page .top .right {
+  width: 50%;
+  height: 100%;
+  display: inline-block;
+  background: url(/assets/images/new-haven-overhead.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 10%; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.admin-landing-page .top .right .darker-shade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.3);
+}
+
+.admin-landing-page .right-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+}
+
+.admin-landing-page .right-container h1 {
+  color: #fff;
+  margin-top: 40px;
+  font-family: Tinos;
+}
+
+.admin-landing-page .admin-search-container {
+  text-align: center;
+  width: 100%;
+  margin: 60px 0;
+}
+
+.admin-landing-page .admin-search-content {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  width: 400px;
+  display: inline-block;
+}
+
+.admin-landing-page .admin-search {
+  width: 100%;
+  padding: 10px;
+  height: 40px;
+  border: none;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.admin-landing-page .admin-search-button {
+  background: #EDA138;
+  width: 70px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: url(/assets/images/search-icon.png);
+  background-repeat: no-repeat;
+  background-position: center 6px;
+  background-size: 27px;
+}
+
+.admin-landing-page .add-a-building {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 6px 30px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+/**
+* Filters
+**/
+
+.admin-landing-page .filters .input-container {
+  display: none;
+}
+
+/**
+* Bottom
+**/
+
+.admin-landing-page .bottom {
+  position: absolute;
+  top: 420px;
+  right: 0;
+  bottom: 00px;
+  left: 0;
+  height: auto;
+}
+
+.admin-landing-page .search .cards,
+.admin-landing-page .search .map {
+  top: 60px;
+}
