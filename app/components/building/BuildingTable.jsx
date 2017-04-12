@@ -30,8 +30,10 @@ export default class BuildingTable extends React.Component {
     let tds = [];
     table.rows.map((row, i) => {
       [0,1].map((idx) => {
-        if (this.props.building[row[idx].fied]) {
-          tds.push(<td>{row[idx].label}: {this.props.building[row[idx].field]}</td>)
+        let field = this.props.building[row[idx].field];
+        if ( field && field.length ) {
+          field = _.isArray(field) ? field : [field]
+          tds.push(<td>{row[idx].label}: {field.join(' ')}</td>)
         }
       })
     })

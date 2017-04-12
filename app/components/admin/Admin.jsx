@@ -1,17 +1,14 @@
 import React from 'react'
 import Form from './form/Form'
+import LandingPage from './landing-page/LandingPage'
 
 export default class Admin extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      view: 'form'
+      view: 'landing-page'
     }
-  }
-
-  switchView(view) {
-    this.setState({view: view})
   }
 
   render() {
@@ -19,6 +16,10 @@ export default class Admin extends React.Component {
     switch(this.state.view) {
       case 'form':
         view = <Form {...this.props} />
+        break;
+
+      case 'landing-page':
+        view = <LandingPage {...this.props} />
         break;
     }
 

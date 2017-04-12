@@ -19,6 +19,23 @@ module.exports = function(app) {
 
   /**
   *
+  * User routes
+  *
+  **/
+
+  app.get('/api/users', (req, res) => {
+
+    // remove the hashed password and access token from responses
+    var select = {password: 0, token: 0};
+
+    models.user.find({}, select, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+      return res.status(200).send(data)
+    })
+  })
+
+  /**
+  *
   * Tour routes
   *
   **/

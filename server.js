@@ -101,7 +101,7 @@ if (process.env['NHBA_ENVIRONMENT'] == 'production') {
     cert: fs.readFileSync(config.ssl.cert)
   }
 
-  https.createServer(options, app).listen(8080)
+  https.createServer(options, app).listen(443)
 
   http.createServer((req, res) => {
     res.writeHead(301, {
