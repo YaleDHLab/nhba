@@ -1,16 +1,8 @@
 import React from 'react'
-import Select from './filters/Select'
+import Multiselect from './Multiselect'
+import getSelectOptions from './lib/getSelectOptions'
+import selects from './lib/selects.js'
 import _ from 'lodash'
-
-const selects = [
-  {label: 'Tour', field: 'tour_ids'},
-  {label: 'Previous Use', field: 'structures'}, // validate this is the right field
-  {label: 'Current Use', field: 'current_uses'},
-  {label: 'Style', field: 'styles'},
-  {label: 'Era', field: 'eras'},
-  {label: 'Neighborhood', field: 'neighborhoods'},
-  {label: 'Sort by'},
-];
 
 export default class Filters extends React.Component {
   constructor(props) {
@@ -20,66 +12,19 @@ export default class Filters extends React.Component {
       options: {}
     }
 
-    this.getSelectOptions = this.getSelectOptions.bind(this)
+    this.setSelectOptions = this.setSelectOptions.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!_.isEqual(this.props.buildings, prevProps.buildings)) {
-      this.getSelectOptions()
+      this.setSelectOptions()
     }
   }
 
-  getSelectOptions() {
-    let options = {};
-
-    // identify the select options that have fields (ie all but the sort)
-    const selectFields = _.filter(selects, (select) => select.field)
-
-    // initialize an empty set to contain the options for each field
-    selectFields.map((select) => {
-      options[select.field] = new Set()
-    })
-
-    // helper to add all options for a given field to an 'options' object
-    const addOption = (building, field, options) => {
-      if (building[field] && building[field].length > 0) {
-
-        // ensure the levels for the current factor are an array
-        const levels = _.isArray(building[field]) ?
-            building[field]
-          : [building[field]]
-
-        // tour id values should be represented by their labels
-        const tourIdToTitle = this.props.tourIdToTitle;
-        if (field == 'tour_ids') {
-          levels.map((level) => {
-            tourIdToTitle && tourIdToTitle[level] ?
-                options[field].add(tourIdToTitle[level])
-              : level
-          })
-        } else {
-          levels.map((level) => {
-            options[field].add(level)
-          })
-        }
-      }
-
-      return options;
-    }
-
-    // add each building's value to the options for each field
+  setSelectOptions() {
     const buildings = this.props.buildings;
-    buildings.map((building) => {
-      selectFields.map((select) => {
-        options = addOption(building, select.field, options)
-      })
-    })
-
-    // transform the options to d[selectField] = [options]
-    Object.keys(options).map((option) => {
-      options[option] = Array.from(options[option])
-    })
-
+    const tourIdToTitle = this.props.tourIdToTitle;
+    const options = getSelectOptions(buildings, selects, tourIdToTitle)
     this.setState({options: options})
   }
 
@@ -91,12 +36,13 @@ export default class Filters extends React.Component {
           : []
 
         return (
-          <Select
+          <Multiselect
             key={i}
-            select={select}
+            label={select.label}
+            field={select.field}
             values={values}
             options={this.state.options[select.field]}
-            updateSelect={this.props.updateSelect} />
+            handleChange={this.props.updateSelect} />
         )
       })
     )

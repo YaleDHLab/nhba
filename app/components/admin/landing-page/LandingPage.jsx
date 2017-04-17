@@ -5,6 +5,7 @@ import Users from './Users'
 import Filters from '../../Filters'
 import Search from '../../Search'
 import api from '../../../../config'
+import { Link } from 'react-router'
 
 const pages = [
   {
@@ -67,7 +68,9 @@ export default class LandingPage extends React.Component {
                   <div className='admin-search-button'/>
                 </div>
               </div>
-              <div className='add-a-building'>Add a Building</div>
+              <Link to='/admin/form'>
+                <div className='add-a-building'>Add a Building</div>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react'
-import api from '../../../config'
+import api from '../../config'
 
-export default class Select extends React.Component {
+export default class Multiselect extends React.Component {
   constructor(props) {
     super(props)
 
@@ -27,11 +27,16 @@ export default class Select extends React.Component {
   }
 
   getSelectClass() {
-    return this.state.active ? 'multiselect active' : 'multiselect';
+    const defaultClass = this.props.className ?
+        'multiselect ' + this.props.className
+      : 'multiselect'
+    return this.state.active ?
+        defaultClass + ' active'
+      : defaultClass;
   }
 
   getDecoyClass() {
-    return 'select-decoy ' + this.props.select.field;
+    return 'select-decoy ' + this.props.field;
   }
 
   handlePageClick(e) {
@@ -57,8 +62,9 @@ export default class Select extends React.Component {
   }
 
   handleCheckbox(e) {
+    console.log(this.props.field, e.target.id)
     const option = e.target.id;
-    this.props.updateSelect(this.props.select.field, option)
+    this.props.handleChange(this.props.field, option)
   }
 
   render() {
@@ -82,7 +88,7 @@ export default class Select extends React.Component {
       <div className={this.getSelectClass()} onClick={this.toggleView}>
         <div className='select-box' onClick={this.showOptions}>
           <select className='custom-select'>
-            <option>{this.props.select.label}</option>
+            <option>{this.props.label}</option>
           </select>
           <div className={this.getDecoyClass()}></div>
         </div>

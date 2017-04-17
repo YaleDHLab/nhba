@@ -1,0 +1,35 @@
+/**
+* Multiselect
+**/
+
+.multiselect {
+  cursor: pointer;
+  position: relative;
+}
+
+.multiselect .select-decoy {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.multiselect .select-checkboxes {
+  position: absolute;
+  left: 0;
+  width: auto;
+  z-index: 1;
+  overflow: scroll;
+  height: 0px;
+}
+
+.multiselect.active .select-checkboxes {
+  height: auto;
+  background: #fff;
+}
+
+.multiselect label {
+  white-space: nowrap;
+  display: block;
+}

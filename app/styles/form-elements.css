@@ -45,18 +45,6 @@
   font-size: 0.9em;
 }
 
-.form select {
-  background-color: #efefef;
-  background-image: url(/assets/images/caret.png);
-  background-size: 30px;
-  background-repeat: no-repeat;
-  background-position: 96%;
-  border: none;
-  font-size: 0.9em;
-  padding: 0 10px;
-  color: #666;
-}
-
 .form textarea {
   background-color: #efefef;
   width: 100%;
@@ -64,6 +52,11 @@
   box-sizing: border-box;
   font-size: 0.9em;
   color: #666;
+}
+
+.form input[type=checkbox] {
+  width: 13px;
+  height: auto;
 }
 
 /**
@@ -114,4 +107,43 @@
 
 .form .style-guide {
   display: table-cell;
+}
+
+/**
+* Multiselect form
+**/
+
+.form .multiselect {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.form .multiselect .select-box {
+  background: #efefef;
+  border-radius: 2px;
+}
+
+.form .multiselect select {
+  border: none;
+  padding-left: 8px;
+
+  /* caret styles */
+  background-image: url(/assets/images/caret.png);
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: 96%;
+}
+
+.form .multiselect.active .select-checkboxes {
+  top: 36px;
+  padding: 5px 10px;
+  height: auto;
+  background: #efefef;
+  border-top: none;
+  box-shadow: 0px 4px 5px 0px #888888;
+}
+
+.form .multiselect .select-checkboxes input[type=checkbox] {
+  margin-right: 4px;
 }
