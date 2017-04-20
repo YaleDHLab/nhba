@@ -21,19 +21,22 @@ export default class Select extends React.Component {
   }
 
   render() {
-    const select = {
-      label: this.props.label,
-      field: this.props.field
+    let values = this.props.building[this.props.field] || [];
+
+    if (this.props.valueMap) {
+      values = values.map((v) => this.props.valueMap[v])
     }
+
+    const label = values.join(', ')
 
     return (
       <div className={this.getClass()}>
         <div className='label'>{this.props.label}</div>
 
         <Multiselect
-          label={this.props.label}
+          label={label}
           field={this.props.field}
-          values={this.props.building[this.props.field]}
+          values={values}
           options={this.props.options[this.props.field]}
           handleChange={this.updateField}
           className={'custom-select'} />

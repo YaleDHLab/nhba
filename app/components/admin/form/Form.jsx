@@ -17,7 +17,9 @@ export default class Form extends React.Component {
       options: {},
 
       building: {},
-      activeTab: 'overview'
+      activeTab: 'overview',
+
+      tourIdToTitle: {}
     }
 
     // buildling(s) getters and setters
@@ -25,6 +27,9 @@ export default class Form extends React.Component {
     this.getBuildings = this.getBuildings.bind(this)
     this.processBuilding = this.processBuilding.bind(this)
     this.processBuildings = this.processBuildings.bind(this)
+
+    // tour getter and setter
+    this.getTours = this.getTours.bind(this)
     this.processTours = processTours.bind(this)
 
     // getter and setters for new building form
@@ -48,8 +53,9 @@ export default class Form extends React.Component {
         this.getBuilding(buildingId)
       : this.getNewBuilding()
 
-    // fetch all available buildings so we can populate dropdowns
+    // fetch all buildings & tours so we can populate dropdowns
     this.getBuildings()
+    this.getTours()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,7 +76,6 @@ export default class Form extends React.Component {
 
   getBuildings() {
     api.get('buildings?images=true', this.processBuildings)
-    api.get('wptours', this.processTours)
   }
 
   processBuilding(err, res) {
@@ -83,6 +88,14 @@ export default class Form extends React.Component {
     if (err) { console.warn(err) } else {
       this.setState({buildings: res.body})
     }
+  }
+
+  /**
+  * Get a mapping from tour id to tour label
+  **/
+
+  getTours() {
+    api.get('wptours', this.processTours)
   }
 
   /**
@@ -138,6 +151,11 @@ export default class Form extends React.Component {
 
   updateField(field, value) {
 
+    // convert tour_ids back to ints before operating on them
+    if (field == 'tour_ids') {
+      var value = this.state.tourTitleToId[value];
+    }
+
     // use Object.assign to avoid object mutations
     let building = Object.assign({}, this.state.building)
 
@@ -161,7 +179,8 @@ export default class Form extends React.Component {
         view = <Overview
           building={this.state.building}
           updateField={this.updateField}
-          options={this.state.options} />;
+          options={this.state.options}
+          tourIdToTitle={this.state.tourIdToTitle} />;
         break;
 
       case 'data-and-history':

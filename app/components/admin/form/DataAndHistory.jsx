@@ -124,6 +124,7 @@ export default class DataAndHistory extends React.Component {
           rows={7} />
 
         <FileTable {...this.props}
+          files={this.props.building.archive_documents}
           label={'Archive Documents'} />
 
         <FilePicker {...this.props}
