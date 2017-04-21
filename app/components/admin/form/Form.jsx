@@ -42,8 +42,9 @@ export default class Form extends React.Component {
     // form field navigation
     this.changeTab = this.changeTab.bind(this)
 
-    // state setter
+    // methods to update/replace form fields
     this.updateField = this.updateField.bind(this)
+    this.replaceField = this.replaceField.bind(this)
   }
 
   componentDidMount() {
@@ -146,7 +147,7 @@ export default class Form extends React.Component {
   }
 
   /**
-  * Update a given field in the form
+  * If `value` is missing from `field`, add it to the form, else remove it
   **/
 
   updateField(field, value) {
@@ -172,6 +173,16 @@ export default class Form extends React.Component {
     this.setState({building: building})
   }
 
+  /**
+  * Replace the current value of `field` with `value`
+  **/
+
+  replaceField(field, value) {
+    let building = Object.assign({}, this.state.building)
+    building[field] = value;
+    this.setState({building: building})
+  }
+
   render() {
     let view = null;
     switch (this.state.activeTab) {
@@ -179,6 +190,7 @@ export default class Form extends React.Component {
         view = <Overview
           building={this.state.building}
           updateField={this.updateField}
+          replaceField={this.replaceField}
           options={this.state.options}
           tourIdToTitle={this.state.tourIdToTitle} />;
         break;
@@ -187,6 +199,7 @@ export default class Form extends React.Component {
         view = <DataAndHistory
           building={this.state.building}
           updateField={this.updateField}
+          replaceField={this.replaceField}
           options={this.state.options} />;
         break;
 
@@ -194,6 +207,7 @@ export default class Form extends React.Component {
         view = <ImageGallery
           building={this.state.building}
           updateField={this.updateField}
+          replaceField={this.replaceField}
           options={this.state.options} />;
         break;
     }

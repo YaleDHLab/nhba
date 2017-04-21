@@ -1,4 +1,5 @@
 import React from 'react'
+import FileTableRow from './FileTableRow'
 
 export default class FileTable extends React.Component {
   constructor(props) {
@@ -6,13 +7,6 @@ export default class FileTable extends React.Component {
   }
 
   render() {
-    const minusIconImage = '/assets/images/minus-icon'
-    const minusIcon = (
-      <object data={minusIconImage + '.svg'} type='image/svg+xml'>
-        <img src={minusIconImage + '.png'} className='logo' />
-      </object>
-    )
-
     return (
       <div className='file-table'>
         <div className='label'>{this.props.label}</div>
@@ -23,13 +17,12 @@ export default class FileTable extends React.Component {
           </div>
           {this.props.files.map((file, i) => {
             return (
-              <div className='table-row' key={i}>
-                <div className='table-cell left'>
-                  <div className='minus-icon'>{minusIcon}</div>
-                  {file.filename}
-                </div>
-                <div className='table-cell right'>{file.label}</div>
-              </div>
+              <FileTableRow
+                key={i}
+                file={file}
+                index={i}
+                selectFileToRelabel={this.props.selectFileToRelabel}
+                updateField={this.props.updateField} />
             )
           })}
         </div>
