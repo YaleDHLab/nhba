@@ -13,9 +13,6 @@ export default class ImageGallery extends React.Component {
         <ImageGrid {...this.props}
           label={'Image Gallery'} />
 
-        <br />
-        <br />
-
         <FilePicker {...this.props}
           topLabel={'Select File'}
           bottomLabel={'Caption'} />
