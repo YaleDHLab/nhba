@@ -1,6 +1,7 @@
 .image-grid {
   width: 100%;
   height: 100%;
+  margin: 25px 0 50px;
 }
 
 .image-grid .image-grid-content {
