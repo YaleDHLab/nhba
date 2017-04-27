@@ -12,11 +12,12 @@ export default class DataAndHistory extends React.Component {
     super(props)
 
     this.state = {
-      relabelFileIndex: null
+      fileToRelabel: {} // the file we're relabelling
     }
 
+    // methods for handling building.archive_documents (file uploads)
     this.handleFile = this.handleFile.bind(this)
-    this.changeFileLabel = this.changeFileLabel.bind(this)
+    this.handleLabelChange = this.handleLabelChange.bind(this)
     this.selectFileToRelabel = this.selectFileToRelabel.bind(this)
   }
 
@@ -25,20 +26,33 @@ export default class DataAndHistory extends React.Component {
   **/
 
   selectFileToRelabel(fileIndex) {
-    this.setState({relabelFileIndex: fileIndex})
+    if (fileIndex) {
+      let fileToRelabel = this.props.building.archive_documents[fileIndex];
+      fileToRelabel.index = fileIndex;
+      this.setState({fileToRelabel: fileToRelabel})
+    } else {
+      // allow callers to specify null to remove the file to relabel
+      this.setState({fileToRelabel: null})
+    }
   }
 
   /**
   * Method to actually assign a new label to the file
   **/
 
-  changeFileLabel(fileIndex, newLabel) {
-    const archiveDocuments = this.props.building.archive_documents;
-    let newArchiveDocuments = Object.assign([], archiveDocuments);
-    newArchiveDocuments[fileIndex].label = newLabel;
+  handleLabelChange(e) {
+    const relabelFileIndex = this.state.fileToRelabel.index;
+    if (relabelFileIndex != 'null') {
+      const newLabel = e.target.value;
+      const archiveDocuments = this.props.building.archive_documents;
 
-    // use the replaceField method to quash the old archive documents
-    this.props.replaceField('archive_documents', newArchiveDocuments);
+      // mutate a copy of the extant archive documents
+      let newArchiveDocuments = Object.assign([], archiveDocuments);
+      newArchiveDocuments[relabelFileIndex].label = newLabel;
+
+      // use the replaceField method to quash the old archive documents
+      this.props.replaceField('archive_documents', newArchiveDocuments);
+    }
   }
 
   /**
@@ -47,7 +61,7 @@ export default class DataAndHistory extends React.Component {
 
   handleFile(e) {
     // remove the file we were relabelling (if any)
-    this.setState({relabelFileIndex: null})
+    this.setState({fileToRelabel: null})
 
     var self = this;
     e.preventDefault();
@@ -198,8 +212,8 @@ export default class DataAndHistory extends React.Component {
           topLabel={'Upload'}
           bottomLabel={'Display Title'}
           handleFile={this.handleFile}
-          relabelFileIndex={this.state.relabelFileIndex}
-          changeFileLabel={this.changeFileLabel} />
+          file={this.state.fileToRelabel}
+          handleLabelChange={this.handleLabelChange} />
 
         <TextArea {...this.props}
           width={'full-width'}

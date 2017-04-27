@@ -10,6 +10,7 @@ export default class FileTableRow extends React.Component {
 
   removeFile() {
     this.props.updateField('archive_documents', this.props.file)
+    this.props.selectFileToRelabel(null)
   }
 
   selectFileToRelabel() {
