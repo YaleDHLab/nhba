@@ -27,3 +27,28 @@
   bottom: 0;
   left: 0;
 }
+
+.image-grid .grid-item-delete-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 25px;
+  background: #fff;
+  z-index: 1;
+  cursor: pointer;
+  display: none;
+}
+
+.image-grid .image-grid-item:hover .grid-item-delete-button {
+  display: block;
+}
+
+.image-grid .grid-item-delete-icon {
+  width: 100%;
+  height: 100%;
+  background: url(/assets/images/ios-trash-icon.png);
+  background-size: 19px 17px;
+  background-repeat: no-repeat;
+  background-position: 1px 4px;
+}

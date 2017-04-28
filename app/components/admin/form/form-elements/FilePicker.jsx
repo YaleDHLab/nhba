@@ -7,8 +7,9 @@ export default class FilePicker extends React.Component {
 
   render() {
     // if there's a file to label, pull out its attributes
+    const textField = this.props.textField;
     const filename = this.props.file ? this.props.file.filename : '';
-    const filelabel = this.props.file ? this.props.file.label : '';
+    const filelabel = this.props.file ? this.props.file[textField] : '';
 
     return (
       <div className='file-picker'>
@@ -35,7 +36,7 @@ export default class FilePicker extends React.Component {
             <input
               className='file-display-name-input'
               value={filelabel || ''}
-              onChange={this.props.handleLabelChange} />
+              onChange={this.props.handleTextChange} />
           </div>
 
         </div>

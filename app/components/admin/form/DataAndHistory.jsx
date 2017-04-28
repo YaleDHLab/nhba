@@ -26,7 +26,7 @@ export default class DataAndHistory extends React.Component {
   **/
 
   selectFileToRelabel(fileIndex) {
-    if (fileIndex) {
+    if (fileIndex != null) {
       let fileToRelabel = this.props.building.archive_documents[fileIndex];
       fileToRelabel.index = fileIndex;
       this.setState({fileToRelabel: fileToRelabel})
@@ -63,7 +63,7 @@ export default class DataAndHistory extends React.Component {
     // remove the file we were relabelling (if any)
     this.setState({fileToRelabel: null})
 
-    var self = this;
+    const self = this;
     e.preventDefault();
 
     let files = [];
@@ -74,8 +74,8 @@ export default class DataAndHistory extends React.Component {
     }
 
     _.keys(files).map((k) => {
-      var req = request.post(api.endpoint + 'upload');
-      req.attach('image', files[k], files[k].name)
+      let req = request.post(api.endpoint + 'upload');
+      req.attach('attachment', files[k], files[k].name)
 
       req.end((err, res) => {
         if (err) console.log(err);
@@ -213,7 +213,8 @@ export default class DataAndHistory extends React.Component {
           bottomLabel={'Display Title'}
           handleFile={this.handleFile}
           file={this.state.fileToRelabel}
-          handleLabelChange={this.handleLabelChange} />
+          textField={'label'}
+          handleTextChange={this.handleLabelChange} />
 
         <TextArea {...this.props}
           width={'full-width'}

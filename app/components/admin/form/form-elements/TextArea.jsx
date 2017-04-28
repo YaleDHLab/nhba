@@ -23,6 +23,7 @@ export default class TextArea extends React.Component {
       <div className={this.getClass()}>
         <div className='label'>{this.props.label}</div>
         <textarea className='custom-textarea'
+          onChange={this.updateField}
           rows={this.props.rows}
           placeholder='(200 words) Style guide...'
           value={this.props.building[this.props.field] || ''} />

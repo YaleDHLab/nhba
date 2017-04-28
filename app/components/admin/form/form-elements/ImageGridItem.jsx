@@ -1,6 +1,6 @@
 import React from 'react'
-import { findDOMNode } from 'react-dom';
-import { DragSource, DropTarget } from 'react-dnd';
+import { findDOMNode } from 'react-dom'
+import { DragSource, DropTarget } from 'react-dnd'
 
 const imageSource = {
   beginDrag(props) {
@@ -72,6 +72,8 @@ export default class ImageGridItem extends React.Component {
     super(props)
 
     this.getStyle = this.getStyle.bind(this)
+    this.deleteImage = this.deleteImage.bind(this)
+    this.selectFileToRecaption = this.selectFileToRecaption.bind(this)
   }
 
   getStyle(image) {
@@ -80,11 +82,26 @@ export default class ImageGridItem extends React.Component {
     }
   }
 
+  deleteImage(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.props.deleteImage(this.props.index)
+  }
+
+  selectFileToRecaption() {
+    this.props.selectFileToRecaption(this.props.index)
+  }
+
   render() {
     const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
 
     return connectDragSource(connectDropTarget(
-      <div className='image-grid-item'>
+      <div className='image-grid-item'
+        onClick={this.selectFileToRecaption}>
+        <div className='grid-item-delete-button'
+          onClick={this.deleteImage}>
+          <div className='grid-item-delete-icon' />
+        </div>
         <div className='grid-item background-image'
           style={this.getStyle(this.props.image)} />
       </div>

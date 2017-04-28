@@ -7,6 +7,7 @@ import getSelectOptions from '../../lib/getSelectOptions'
 import processTours from '../../lib/processTours'
 import selects from '../../lib/selects.js'
 import api from '../../../../config'
+import request from 'superagent'
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -45,6 +46,9 @@ export default class Form extends React.Component {
     // methods to update/replace form fields
     this.updateField = this.updateField.bind(this)
     this.replaceField = this.replaceField.bind(this)
+
+    // upsert a building
+    this.saveBuilding = this.saveBuilding.bind(this)
   }
 
   componentDidMount() {
@@ -183,6 +187,19 @@ export default class Form extends React.Component {
     this.setState({building: building})
   }
 
+  /**
+  * Save a new or edited building in the db
+  **/
+
+  saveBuilding() {
+    request.post(api.endpoint + 'building/save')
+      .send(this.state.building)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (err) console.log(err)
+      })
+  }
+
   render() {
     let view = null;
     switch (this.state.activeTab) {
@@ -221,7 +238,7 @@ export default class Form extends React.Component {
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
-            <div className='save-button'>Save</div>
+            <div className='save-button' onClick={this.saveBuilding}>Save</div>
           </div>
           {view}
         </div>
