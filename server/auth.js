@@ -332,7 +332,6 @@ module.exports = function(app) {
   *
   **/
 
-
   if (process.env['NHBA_ENVIRONMENT'] == 'production') {
     app.use((req, res, next) => {
       if (req.url.includes('/admin')) {
