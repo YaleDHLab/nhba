@@ -30,7 +30,7 @@ module.exports = function(app) {
 
     models.user.find({}, select, (err, data) => {
       if (err) return res.status(500).send({cause: err})
-      return res.status(200).send(data)
+        return res.status(200).send(data)
     })
   })
 
@@ -43,7 +43,7 @@ module.exports = function(app) {
   app.get('/api/wptours', (req, res) => {
     models.wptour.find({}, (err, data) => {
       if (err) return res.status(500).send({cause: err})
-      return res.status(200).send(data)
+        return res.status(200).send(data)
     })
   })
 
@@ -90,6 +90,7 @@ module.exports = function(app) {
         queryTerms.push(queryTerm)
       })
 
+      // ensure we only return buildings with 1 or more images
       queryTerms.push({$where: 'this.images.length > 0'})
       var query = {$and: queryTerms}
     }
@@ -97,7 +98,7 @@ module.exports = function(app) {
     models.building.find(query,
       (err, data) => {
         if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+          return res.status(200).send(data)
     })
   })
 
@@ -107,13 +108,46 @@ module.exports = function(app) {
   *
   **/
 
-  app.post('/api/buildings/new', (req, res) => {
+  app.post('/api/building/new', (req, res) => {
     var building = new models.building(req.body);
 
     building.save((err, data) => {
       if (err) return res.status(500).send({cause: err})
-      return res.status(200).send(data)
+        return res.status(200).send(data)
     })
+  })
+
+  /**
+  *
+  * Save building
+  *
+  **/
+
+  app.post('/api/building/save', (req, res) => {
+
+    // grab the building from the post body
+    var building = req.body;
+
+    if (building._id) {
+
+      // specify the query we'll use to find the document to modify
+      var query = {_id: building._id}
+
+      // specify the update params
+      var update = {overwrite: true};
+
+      models.building.findOneAndUpdate(query, building, update, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+
+    } else {
+      var newBuilding = new models.building(building);
+      newBuilding.save((err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+    }
   })
 
   /**

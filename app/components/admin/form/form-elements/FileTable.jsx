@@ -1,19 +1,5 @@
 import React from 'react'
-
-const files = [
-  {
-    name: 'building.pdf',
-    title: '1879 Blueprint'
-  },
-  {
-    name: 'File Name.pdf',
-    title: 'Author title here'
-  },
-  {
-    name: 'File Name.pdf',
-    title: 'Author title here'
-  }
-]
+import FileTableRow from './FileTableRow'
 
 export default class FileTable extends React.Component {
   constructor(props) {
@@ -21,13 +7,6 @@ export default class FileTable extends React.Component {
   }
 
   render() {
-    const minusIconImage = '/assets/images/minus-icon'
-    const minusIcon = (
-      <object data={minusIconImage + '.svg'} type='image/svg+xml'>
-        <img src={minusIconImage + '.png'} className='logo' />
-      </object>
-    )
-
     return (
       <div className='file-table'>
         <div className='label'>{this.props.label}</div>
@@ -36,15 +15,14 @@ export default class FileTable extends React.Component {
             <div className='table-header left'>File Name</div>
             <div className='table-header right'>Document Title</div>
           </div>
-          {files.map((file, i) => {
+          {this.props.files.map((file, i) => {
             return (
-              <div className='table-row' key={i}>
-                <div className='table-cell left'>
-                  <div className='minus-icon'>{minusIcon}</div>
-                  {file.name}
-                </div>
-                <div className='table-cell right'>{file.title}</div>
-              </div>
+              <FileTableRow
+                key={i}
+                file={file}
+                index={i}
+                selectFileToRelabel={this.props.selectFileToRelabel}
+                updateField={this.props.updateField} />
             )
           })}
         </div>

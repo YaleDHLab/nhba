@@ -23,6 +23,7 @@
   background: #efefef;
   padding: 7px 12px;
   box-sizing: border-box;
+  min-height: 38px;
 }
 
 .form .table .table-row:nth-child(2n) {
@@ -33,6 +34,7 @@
 .form .table .table-cell {
   display: inline-block;
   width: 50%;
+  vertical-align: top;
 }
 
 .form .table .table-header {

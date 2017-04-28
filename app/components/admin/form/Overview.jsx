@@ -15,20 +15,22 @@ export default class Overview extends React.Component {
         <TextInput {...this.props}
           width={'full-width'}
           label={'Building Name'}
-          field={'buildingName'} />
+          field={'building_name'} />
 
         <TextInput {...this.props}
           width={'full-width'}
           label={'Address'}
-          field={'buildingName'} />
+          field={'address'} />
 
         <TextInput {...this.props}
-          width={'full-width'}
+          width={'half-width'}
+          position={'left'}
           label={'Latitude'}
           field={'latitude'} />
 
         <TextInput {...this.props}
-          width={'full-width'}
+          width={'half-width'}
+          position={'right'}
           label={'Longitude'}
           field={'longitude'} />
 
@@ -36,37 +38,37 @@ export default class Overview extends React.Component {
           width={'half-width'}
           position={'left'}
           label={'Year Built'}
-          field={'yearBuilt'} />
+          field={'year_built'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Style'}
-          field={'style'} />
+          field={'styles'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Current Use'}
-          field={'currentUse'} />
+          field={'current_uses'} />
 
         <TextInput {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Current Tenant'}
-          field={'currentTenant'} />
+          field={'current_tenant'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Neighborhood'}
-          field={'neighborhood'} />
+          field={'neighborhoods'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Era'}
-          field={'era'} />
+          field={'eras'} />
 
         <TextInput {...this.props}
           width={'half-width'}
@@ -96,7 +98,8 @@ export default class Overview extends React.Component {
           width={'half-width'}
           position={'left'}
           label={'Tour'}
-          field={'tour'} />
+          field={'tour_ids'}
+          valueMap={this.props.tourIdToTitle} />
 
         <TextInput {...this.props}
           width={'half-width'}
@@ -107,13 +110,13 @@ export default class Overview extends React.Component {
         <TextArea {...this.props}
           width={'full-width'}
           label={'Overview Description'}
-          field={'description'}
+          field={'overview_description'}
           rows={20} />
 
         <TextInput {...this.props}
           width={'full-width'}
           label={'Story Map Url'}
-          field={'storymapUrl'} />
+          field={'storymap_url'} />
 
       </div>
     )

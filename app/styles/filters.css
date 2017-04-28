@@ -46,18 +46,21 @@
 }
 
 /**
-* Multiselect
+* Filters multiselect
 **/
 
-.filters .select-container .multiselect {
+.filters .multiselect {
   height: 100%;
   min-width: 110px;
   max-width: 130px;
-  position: relative;
   float: left;
 }
 
-.filters .select-container .select-box {
+.filters .multiselect .custom-select {
+  padding-left: 10px;
+}
+
+.filters .multiselect .select-box {
   height: 100%;
   width: 100%;
   background-color: #fff;
@@ -73,58 +76,39 @@
   color: #666;
   font-size: 0.8em;
   display: inline-block;
-  float: left;
 }
 
-.filters .select-container select {
+.filters .multiselect select {
   height: 100%;
   width: 100%;
   border: none;
 }
 
-.filters .select-container .multiselect:focus {
+.filters .multiselect .multiselect:focus {
   outline: none;
 }
 
-.filters .select-container .multiselect .select-decoy {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.filters .select-container .multiselect.active .select-decoy {
+.filters .multiselect.active .select-decoy {
   border-bottom: 1px solid #fff;
 }
 
-.filters .select-container .multiselect .select-checkboxes {
-  position: absolute;
+.filters .multiselect .select-checkboxes {
   top: 60px;
-  left: 0;
-  width: auto;
-  z-index: 1;
   max-height: 50vh;
-  overflow: scroll;
-  height: 0px;
 }
 
-.filters .select-container .multiselect.active .select-checkboxes {
-  height: auto;
-  background: #fff;
+.filters .multiselect.active .select-checkboxes {
   border: 1px solid lightgray;
 }
 
-.filters .select-container input {
+.filters .multiselect input {
   margin: 4px;
 }
 
-.filters .select-container label {
-  white-space: nowrap;
-  display: block;
+.filters .multiselect label {
   padding: 11px 11px 0;
 }
 
-.filters .select-container label:last-child {
+.filters .multiselect label:last-child {
   padding-bottom: 10px;
 }

@@ -2,6 +2,7 @@
 *.pem
 *.DS_Store
 *.tar.gz
+*.archive
 node_modules
 build/bundle.js
 ngrok

@@ -12,16 +12,19 @@ var http = require('http')
 var fs = require('fs')
 var path = require('path')
 var favicon = require('serve-favicon')
+
+// server extensions
 var mailer = require('./server/mailer')
-var config = require('./config')
 var auth = require('./server/auth')
 var routes = require('./server/routes')
+var uploads = require('./server/uploads')
+
+// config and internals
+var config = require('./config')
 var models = require('./app/models/models')
 
 /**
-*
 * Configure Express production server
-*
 **/
 
 // initialize the server
@@ -72,25 +75,15 @@ app.use((req, res, next) => {
 })
 
 /**
-*
-* Auth
-*
+* Server extensions
 **/
 
 auth(app)
-
-/**
-*
-* Routes
-*
-**/
-
 routes(app)
+uploads(app)
 
 /**
-*
-* Run Environment
-*
+* Server environment
 **/
 
 // check whether we need to initialize a production grade https server

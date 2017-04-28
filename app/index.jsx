@@ -10,6 +10,7 @@ import Search from './components/Search'
 import Building from './components/Building'
 import Authenticate from './components/auth/Authenticate'
 import Admin from './components/admin/Admin'
+import Form from './components/admin/form/Form'
 import './styles/styles'
 
 ReactDOM.render(
@@ -23,6 +24,7 @@ ReactDOM.render(
       <Route path='/building' component={Building} />
       <Route path='/login' component={Authenticate} />
       <Route path='/admin' component={Admin} />
+      <Route path='/admin/form' component={Form} />
     </Route>
   </Router>,
   document.getElementById('app')

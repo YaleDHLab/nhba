@@ -5,6 +5,7 @@ export default class TextInput extends React.Component {
     super(props)
 
     this.getClass = this.getClass.bind(this)
+    this.updateField = this.updateField.bind(this)
   }
 
   getClass() {
@@ -13,11 +14,18 @@ export default class TextInput extends React.Component {
     return ['text-input', width, position].join(' ')
   }
 
+  updateField(e) {
+    this.props.updateField(this.props.field, e.target.value)
+  }
+
   render() {
     return (
       <div className={this.getClass()}>
         <div className='label'>{this.props.label}</div>
-        <input type='text' value={this.props.value} />
+        <input
+          type='text'
+          value={this.props.building[this.props.field] || ''}
+          onChange={this.updateField} />
       </div>
     )
   }

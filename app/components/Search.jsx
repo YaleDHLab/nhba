@@ -3,6 +3,9 @@ import Filters from './Filters'
 import Cards from './Cards'
 import Map from './Map'
 import api from '../../config'
+import processTours from './lib/processTours'
+import selects from './lib/selects.js'
+import _ from 'lodash'
 
 const selectFields = [
   'tour_ids',
@@ -32,7 +35,7 @@ export default class Search extends React.Component {
     }
 
     this.processBuildings = this.processBuildings.bind(this)
-    this.processTours = this.processTours.bind(this)
+    this.processTours = processTours.bind(this)
     this.updateSelect = this.updateSelect.bind(this)
     this.runSearch = this.runSearch.bind(this)
   }
@@ -48,30 +51,11 @@ export default class Search extends React.Component {
     }
   }
 
-  processTours(err, res) {
-    if (err) { console.warn(err) } else {
-      let tourIdToTitle = {}
-      let tourTitleToId = {}
-      res.body.map((tour) => {
-        tourIdToTitle[tour.tour_id] = tour.post_title
-        tourTitleToId[tour.post_title] = tour.tour_id
-      })
-
-      this.setState({
-        tourIdToTitle: tourIdToTitle,
-        tourTitleToId: tourTitleToId
-      })
-    }
-  }
-
   updateSelect(field, option) {
     let state = Object.assign({}, this.state)
-
-    if (state[field].has(option)) {
-      state[field].delete(option)
-    } else {
-      state[field].add(option)
-    }
+    state[field].has(option) ?
+        state[field].delete(option)
+      : state[field].add(option)
 
     this.setState(state, () => {
       this.runSearch()
@@ -92,16 +76,14 @@ export default class Search extends React.Component {
       }
 
       if (values.length > 0) {
-        // Replace ' ' in values with _ so the server can handle whitespace
         var encodedValues = []
         values.map((value) => {
 
-          // handle strings (all but the tour_ids are strings)
-          if ((typeof value) == 'string') {
-            encodedValues.push(value.split(' ').join('_'))
-          } else {
-            encodedValues.push(value)
-          }
+          // Replace ' ' in strings with _ so the server can handle
+          // whitespace. All but the tour_ids are strings.
+          typeof value == 'string' ?
+              encodedValues.push(value.split(' ').join('_'))
+            : encodedValues.push(value)
         })
 
         queryTerms[field] = encodedValues

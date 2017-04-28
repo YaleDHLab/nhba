@@ -4,10 +4,90 @@ import TextArea from './form-elements/TextArea'
 import TextInput from './form-elements/TextInput'
 import FileTable from './form-elements/FileTable'
 import FilePicker from './form-elements/FilePicker'
+import request from 'superagent'
+import api from '../../../../config'
 
 export default class DataAndHistory extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      fileToRelabel: {} // the file we're relabelling
+    }
+
+    // methods for handling building.archive_documents (file uploads)
+    this.handleFile = this.handleFile.bind(this)
+    this.handleLabelChange = this.handleLabelChange.bind(this)
+    this.selectFileToRelabel = this.selectFileToRelabel.bind(this)
+  }
+
+  /**
+  * Method to select a file to relabel
+  **/
+
+  selectFileToRelabel(fileIndex) {
+    if (fileIndex != null) {
+      let fileToRelabel = this.props.building.archive_documents[fileIndex];
+      fileToRelabel.index = fileIndex;
+      this.setState({fileToRelabel: fileToRelabel})
+    } else {
+      // allow callers to specify null to remove the file to relabel
+      this.setState({fileToRelabel: null})
+    }
+  }
+
+  /**
+  * Method to actually assign a new label to the file
+  **/
+
+  handleLabelChange(e) {
+    const relabelFileIndex = this.state.fileToRelabel.index;
+    if (relabelFileIndex != 'null') {
+      const newLabel = e.target.value;
+      const archiveDocuments = this.props.building.archive_documents;
+
+      // mutate a copy of the extant archive documents
+      let newArchiveDocuments = Object.assign([], archiveDocuments);
+      newArchiveDocuments[relabelFileIndex].label = newLabel;
+
+      // use the replaceField method to quash the old archive documents
+      this.props.replaceField('archive_documents', newArchiveDocuments);
+    }
+  }
+
+  /**
+  * Method to save a file to the current building
+  **/
+
+  handleFile(e) {
+    // remove the file we were relabelling (if any)
+    this.setState({fileToRelabel: null})
+
+    const self = this;
+    e.preventDefault();
+
+    let files = [];
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+
+    _.keys(files).map((k) => {
+      let req = request.post(api.endpoint + 'upload');
+      req.attach('attachment', files[k], files[k].name)
+
+      req.end((err, res) => {
+        if (err) console.log(err);
+
+        const doc = {
+          filename: res.body.file.name,
+          label: res.body.file.name
+        }
+
+        self.props.updateField('archive_documents', doc)
+      })
+    })
   }
 
   render() {
@@ -124,11 +204,17 @@ export default class DataAndHistory extends React.Component {
           rows={7} />
 
         <FileTable {...this.props}
-          label={'Archive Documents'} />
+          files={this.props.building.archive_documents}
+          label={'Archive Documents'}
+          selectFileToRelabel={this.selectFileToRelabel} />
 
         <FilePicker {...this.props}
           topLabel={'Upload'}
-          bottomLabel={'Display Title'} />
+          bottomLabel={'Display Title'}
+          handleFile={this.handleFile}
+          file={this.state.fileToRelabel}
+          textField={'label'}
+          handleTextChange={this.handleLabelChange} />
 
         <TextArea {...this.props}
           width={'full-width'}

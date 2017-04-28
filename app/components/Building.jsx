@@ -2,7 +2,7 @@ import React from 'react'
 import LayoutToggle from './building/BuildingLayoutToggle'
 import BuildingButtons from './building/BuildingButtons'
 import BuildingText from './building/BuildingText'
-import SuggestEdit from './building/SuggestEdit'
+import BuildingEditButton from './building/BuildingEditButton'
 import Related from './building/Related'
 import Map from './Map'
 import api from '../../config'
@@ -37,23 +37,26 @@ export default class Building extends React.Component {
     this.state = {
       building: {},
       layout: {left: 'Map', 'right': 'Gallery'},
-      imageIndex: 0
+      imageIndex: 0,
+      admin: false
     }
 
     this.getStyle = this.getStyle.bind(this)
-    this.getBuilding = this.getBuilding.bind(this)
     this.toggleLayout = this.toggleLayout.bind(this)
-    this.processBuilding = this.processBuilding.bind(this)
     this.incrementImageIndex = this.incrementImageIndex.bind(this)
+
+    // getter and setter for building data
+    this.getBuilding = this.getBuilding.bind(this)
+    this.processBuilding = this.processBuilding.bind(this)
+
+    // getter and setter for user admin status
+    this.checkUserStatus = this.checkUserStatus.bind(this)
+    this.processUserStatus = this.processUserStatus.bind(this)
   }
 
   componentDidMount() {
     this.getBuilding()
-  }
-
-  getBuilding() {
-    const buildingId = this.props.location.query.id;
-    api.get('buildings?buildingId=' + buildingId, this.processBuilding)
+    this.checkUserStatus()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -62,12 +65,40 @@ export default class Building extends React.Component {
     }
   }
 
+  /**
+  * Getters and setters for the requested building
+  **/
+
+  getBuilding() {
+    const buildingId = this.props.location.query.id;
+    api.get('buildings?buildingId=' + buildingId, this.processBuilding)
+  }
+
   processBuilding(err, res) {
     if (err) { console.warn(err) } else {
       const building = Object.assign({}, res.body[0])
       this.setState({building: building})
     }
   }
+
+  /**
+  * Check whether the user is an admin or not
+  **/
+
+  checkUserStatus() {
+    api.get('session', this.processUserStatus)
+  }
+
+  processUserStatus(err, res) {
+    if (err) console.warn(err)
+    if (res.body.session.authenticated === true) {
+      this.setState({admin: true})
+    }
+  }
+
+  /**
+  * Layout and style-related functions
+  **/
 
   getStyle() {
     const images = this.state.building.images;
@@ -96,6 +127,10 @@ export default class Building extends React.Component {
     this.setState({layout: layout})
   }
 
+  /**
+  * Main render function
+  **/
+
   render() {
     const style = this.getStyle()
 
@@ -121,10 +156,14 @@ export default class Building extends React.Component {
                   {layout[this.state.layout.left]}
                 </div>
                 <div className='top-left-bottom'>
-                  <LayoutToggle toggleLayout={this.toggleLayout}
+                  <LayoutToggle
+                    toggleLayout={this.toggleLayout}
                     layout={this.state.layout} />
-                  <BuildingButtons fields={fields} {...this.props} />
-                  <SuggestEdit building={this.state.building} />
+                  <BuildingButtons
+                    fields={fields} {...this.props} />
+                  <BuildingEditButton
+                    admin={this.state.admin}
+                    building={this.state.building} />
                 </div>
               </div>
             </div>
@@ -132,7 +171,9 @@ export default class Building extends React.Component {
             <div className='right'>
               {layout[this.state.layout.right]}
               <div className='top-right-bottom'>
-                <BuildingText building={this.state.building} fields={fields} />
+                <BuildingText
+                  building={this.state.building}
+                  fields={fields} />
               </div>
             </div>
 
