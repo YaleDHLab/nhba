@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var models = require('../app/models/models')
 var config = require('../config')
+var geocoder = require('./geocoder')
 var path = require('path')
 var _ = require('lodash')
 
@@ -146,6 +147,41 @@ module.exports = function(app) {
       newBuilding.save((err, data) => {
         if (err) return res.status(500).send({cause: err})
           return res.status(200).send(data)
+      })
+    }
+  })
+
+  /**
+  *
+  * Geocode building
+  *
+  **/
+
+  app.get('/api/geocode', (req, res) => {
+    var buildingId = req.query.buildingId;
+    if (buildingId) {
+      models.building.find({_id: buildingId}, (buildingError, buildingResult) => {
+        if (buildingError) {return res.status(500).send({cause: buildingError})}
+          
+          // pluck out the returned building (if any) and save its address
+          var building = buildingResult[0];
+          if (building) {
+            var address = building.address;
+            geocoder.geocode(buildingId, address, (geocoderError, geocoderResponse) => {
+              if (geocoderError) {
+                return res.status(500).send({cause: geocoderError})
+              }
+
+              var match = geocoderResponse[0];
+              if (match) {
+                building.latitude = match.latitude;
+                building.longitude = match.longitude;
+                building.save()
+
+                return res.status(200).send(match)
+              }
+            })
+          }
       })
     }
   })

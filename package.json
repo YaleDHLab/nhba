@@ -13,9 +13,9 @@
     "build": "webpack",
     "compress": "webpack",
     "production": "npm run build && node server.js",
-    "seed": "node app/models/seeds/seed-db.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
-    "resize": "node server/resize-all.js"
+    "resize": "node server/resize-all.js",
+    "geocode": "node server/geocode-all.js"
   },
   "author": "",
   "license": "ISC",
@@ -37,6 +37,7 @@
     "mongoose-paginate": "^5.0.3",
     "morgan": "^1.7.0",
     "multer": "^1.3.0",
+    "node-geocoder": "^3.16.0",
     "nodemailer": "^3.1.8",
     "react": "^15.3.2",
     "react-bootstrap-multiselect": "^2.3.0",
@@ -45,7 +46,6 @@
     "react-dom": "^15.3.2",
     "react-google-maps": "^6.0.1",
     "react-router": "^3.0.2",
-    "react-select-box": "^3.0.1",
     "serve-favicon": "^2.4.0",
     "sharp": "^0.17.3",
     "superagent": "^3.5.2"

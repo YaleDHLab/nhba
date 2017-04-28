@@ -327,18 +327,21 @@ module.exports = function(app) {
 
   /**
   *
-  * Add middleware that only allows authenticated users to access /admin
+  * Add middleware that only allows authenticated users to access /admin;
+  * Only load this middleware in production environments
   *
   **/
 
-  app.use((req, res, next) => {
-    if (req.url.includes('/admin')) {
-      req.session && req.session.authenticated == true ?
-          next()
-        : res.redirect('/?authenticated=false')
-    } else {
-      next()
-    }
-  })
+  if (process.env['NHBA_ENVIRONMENT'] == 'production') {
+    app.use((req, res, next) => {
+      if (req.url.includes('/admin')) {
+        req.session && req.session.authenticated == true ?
+            next()
+          : res.redirect('/?authenticated=false')
+      } else {
+        next()
+      }
+    })
+  }
 
 }
