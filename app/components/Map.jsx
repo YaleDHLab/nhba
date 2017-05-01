@@ -36,19 +36,14 @@ const config = {
   ]
 }
 
-// given a buliding, find the index position of its first tour id
-const getTourIdx = (building, tourIds) => {
-  try {
-    return tourIds.indexOf(building.tour_ids[0].toString());
-  } catch(err) {
-    return tourIdx = config.colors.length - 1;
-  }
-}
-
 // fetch an icon to represent the current building
-const getIcon = (building, tourIds) => {
-  let tourIdx = getTourIdx(building, tourIds);
-  let color = config.colors[tourIdx % config.colors.length - 1];
+const getIcon = (building, tourIdToIndex) => {
+  const tourId = building.tour_ids ?
+      building.tour_ids[0].toString()
+    : (config.colors.length - 1).toString();
+
+  const tourIndex = tourIdToIndex[tourId];
+  let color = config.colors[tourIndex % config.colors.length - 1];
 
   color = color ? color : 'red';
 
@@ -67,7 +62,7 @@ const MapComponent = withGoogleMap(props => (
   >
     {props.buildings.map((building, idx) => (
       <Marker
-        icon={getIcon(building, props.tourIds)}
+        icon={getIcon(building, props.tourIdToIndex)}
         key={idx}
         position={{
           lat: parseFloat(building.latitude),
@@ -109,7 +104,7 @@ export default class MapContainer extends Component {
             mapElement={ <div style={styles.map} /> }
             onZoomChanged={this.handleZoom}
             buildings={this.props.buildings}
-            tourIds={_.keys(this.props.tourIdToTitle)}
+            tourIdToIndex={this.props.tourIdToIndex}
           />
         </div>
       </div>
