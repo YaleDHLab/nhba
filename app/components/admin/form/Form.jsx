@@ -40,6 +40,9 @@ export default class Form extends React.Component {
     // setter for the available select options
     this.setSelectOptions = this.setSelectOptions.bind(this)
 
+    // callback triggered when users add a new option to a multiselect
+    this.handleNewOption = this.handleNewOption.bind(this)
+
     // form field navigation
     this.changeTab = this.changeTab.bind(this)
 
@@ -143,6 +146,21 @@ export default class Form extends React.Component {
   }
 
   /**
+  * Callback triggered when users add a new option to a multiselect
+  **/
+
+  handleNewOption(field, value) {
+
+    // add this value to the available options
+    let options = Object.assign({}, this.state.options)
+    options[field].push(value);
+    this.setState({options: options})
+
+    // select this value within this record
+    this.updateField(field, value)
+  }
+
+  /**
   * Change the tab of the form currently in view
   **/
 
@@ -209,6 +227,8 @@ export default class Form extends React.Component {
           updateField={this.updateField}
           replaceField={this.replaceField}
           options={this.state.options}
+          allowNewOptions={true}
+          handleNewOption={this.handleNewOption}
           tourIdToTitle={this.state.tourIdToTitle} />;
         break;
 
@@ -217,7 +237,9 @@ export default class Form extends React.Component {
           building={this.state.building}
           updateField={this.updateField}
           replaceField={this.replaceField}
-          options={this.state.options} />;
+          options={this.state.options}
+          allowNewOptions={true}
+          handleNewOption={this.handleNewOption} />;
         break;
 
       case 'image-gallery':
@@ -225,7 +247,9 @@ export default class Form extends React.Component {
           building={this.state.building}
           updateField={this.updateField}
           replaceField={this.replaceField}
-          options={this.state.options} />;
+          options={this.state.options}
+          allowNewOptions={true}
+          handleNewOption={this.handleNewOption} />;
         break;
     }
 

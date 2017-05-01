@@ -140,7 +140,6 @@
 
 .form .multiselect.active .select-checkboxes {
   top: 36px;
-  padding: 5px 10px;
   height: auto;
   background: #efefef;
   border-top: none;
@@ -148,5 +147,5 @@
 }
 
 .form .multiselect .select-checkboxes input[type=checkbox] {
-  margin-right: 4px;
+  margin-right: 8px;
 }
