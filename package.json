@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "new-haven-building-archive",
   "version": "0.1.0",
-  "description": "React quickstart with models, routing, and dev tools",
+  "description": "Archiving New Haven's Architecture",
   "main": "server.js",
   "repository": {
     "type": "git",
