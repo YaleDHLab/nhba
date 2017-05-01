@@ -87,6 +87,10 @@ export default class MapContainer extends Component {
     this.handleZoom = this.handleZoom.bind(this)
   }
 
+  componentWillMount() {
+    console.log(this.props)
+  }
+
   /**
   * Resize markers on zoom
   **/
