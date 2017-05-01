@@ -109,7 +109,8 @@ export default class Search extends React.Component {
           tourIdToTitle={this.state.tourIdToTitle}
           updateSelect={this.updateSelect} />
         <Cards buildings={this.state.buildings} />
-        <Map buildings={this.state.buildings} />
+        <Map buildings={this.state.buildings}
+          tourIdToTitle={this.state.tourIdToTitle} />
       </div>
     )
   }
