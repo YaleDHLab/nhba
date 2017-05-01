@@ -2,6 +2,8 @@
 
 This application requires Node.js (version 6 or higher) and MongoDB.
 
+Data migrations within this application require pymongo (`pip install pymongo`).
+
 ### Runnning Locally
 
 To run this application on your machine, open a terminal and run:

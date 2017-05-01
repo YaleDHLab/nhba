@@ -188,6 +188,33 @@ module.exports = function(app) {
 
   /**
   *
+  * Simple pages routes
+  *
+  **/
+
+  app.get('/api/about', (req, res) => {
+    models.simplepage.find({'route': 'About'}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
+  app.get('/api/contact', (req, res) => {
+    models.simplepage.find({'route': 'Contact'}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
+  app.get('/api/glossary', (req, res) => {
+    models.glossaryterm.find({}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
+  /**
+  *
   * View routes
   *
   **/
