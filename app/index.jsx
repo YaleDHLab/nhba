@@ -11,6 +11,8 @@ import Building from './components/Building'
 import Authenticate from './components/auth/Authenticate'
 import Admin from './components/admin/Admin'
 import Form from './components/admin/form/Form'
+import EditSimplePage from './components/admin/EditSimplePage'
+import EditGlossary from './components/admin/EditGlossary'
 import './styles/styles'
 
 ReactDOM.render(
@@ -25,6 +27,9 @@ ReactDOM.render(
       <Route path='/login' component={Authenticate} />
       <Route path='/admin' component={Admin} />
       <Route path='/admin/form' component={Form} />
+      <Route path='/admin/about' component={EditSimplePage} />
+      <Route path='/admin/contact' component={EditSimplePage} />
+      <Route path='/admin/glossary' component={EditGlossary} />
     </Route>
   </Router>,
   document.getElementById('app')

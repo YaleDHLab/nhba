@@ -58,12 +58,6 @@
 }
 
 .form .save-button {
-  padding: 8px 40px;
-  background: #EDA138;
-  color: #fff;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 4px;
   float: right;
   margin-top: 25px;
 }

@@ -262,7 +262,7 @@ export default class Form extends React.Component {
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
-            <div className='save-button' onClick={this.saveBuilding}>Save</div>
+            <div className='save-button yellow-button' onClick={this.saveBuilding}>Save</div>
           </div>
           {view}
         </div>

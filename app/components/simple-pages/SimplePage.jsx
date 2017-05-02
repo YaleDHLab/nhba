@@ -1,28 +1,55 @@
 import React from 'react'
+import api from '../../../config'
+import request from 'superagent'
 
 export default class SimplePage extends React.Component {
   constructor(props) {
     super(props)
-    this.getStyle = this.getStyle.bind(this)
-  }
 
-  getStyle() {
-    return {
-      backgroundImage: 'url(' + this.props.image + ')'
+    this.state = {
+      paragraphs: [],
+      glossaryterms: []
     }
   }
 
+  /**
+  * Handle eiter flat page (about + contact) or glossary text
+  **/
+
+  componentWillMount() {
+    api.get(this.props.route, (err, res) => {
+      if (err) console.warn(err)
+ 
+      this.props.flat ?
+          this.setState({paragraphs: res.body[0].text.split('\n\n')})
+        : this.setState({glossaryterms: res.body})
+    })
+  }
+
   render() {
+    const bodyText = this.props.flat ?
+        this.state.paragraphs.map((p, i) => {
+          return <p key={i}>{p}</p>
+        })
+
+      : this.state.glossaryterms.map((t, i) => {
+        return (
+          <div key={i}>
+            <b>{t.term}</b>
+            <p>{t.definition}</p>
+          </div>
+        )
+      })
+
     return (
       <div className='simple-page'>
         <div className='hero'>
-          <div className='background-image' style={this.getStyle()} />
+          <div className='background-image'
+            style={{ backgroundImage: 'url(' + this.props.image + ')'}} />
         </div>
         <div className='container'>
           <h1 className='title'>{this.props.title}</h1>
-          <div className='body-text'>{this.props.text.map((p, i) => {
-            return <p key={i}>{p}</p>
-          })}</div>
+          <div className='body-text'>{bodyText}</div>
         </div>
       </div>
     )

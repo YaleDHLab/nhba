@@ -1,5 +1,15 @@
 var db = {}
 
+db.simplepage = {
+  route: String,
+  text: String
+}
+
+db.glossaryterm = {
+  term: String,
+  definition: String
+}
+
 db.user = {
   firstname: String,
   lastname: String,
