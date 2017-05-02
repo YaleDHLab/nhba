@@ -23,7 +23,7 @@ export default class SimplePage extends React.Component {
  
       this.props.flat ?
           this.setState({ paragraphs: res.body[0].text.split('\n\n') })
-        : this.setState({ glossaryterms: _.sortBy(res.body, 'term').reverse() })
+        : this.setState({ glossaryterms: _.sortBy(res.body, 'term') })
     })
   }
 
