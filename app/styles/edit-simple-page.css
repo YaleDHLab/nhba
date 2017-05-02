@@ -1,0 +1,17 @@
+/**
+* Edit simple page
+*  @extends: form and form-elements
+**/
+
+.edit-simple-page .instructions {
+  margin-bottom: 10px;
+}
+
+.edit-simple-page .center-save-button {
+  text-align: center;
+}
+
+.edit-simple-page .center-save-button .yellow-button {
+  float: none;
+  margin-left: 150px;
+}

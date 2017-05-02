@@ -1,0 +1,34 @@
+/**
+* Edit glossary
+*  @extends: form and form-elements 
+**/
+
+.edit-glossary .glossary-item {
+  width: 100%;
+}
+
+.edit-glossary .instructions {
+  margin-bottom: 10px;
+}
+
+.edit-glossary .edit-glossary-term {
+  width: 140px;
+  display: inline-block;
+  margin: 3px 0;
+}
+
+.edit-glossary .edit-glossary-definition {
+  width: 530px;
+  margin: 3px 0 3px 10px;
+  display: inline-block;
+}
+
+.edit-glossary .gray-button,
+.edit-glossary .yellow-button {
+  float: right;
+  margin-top: 30px;
+}
+
+.edit-glossary .add-new-button {
+  margin-right: 10px;
+}

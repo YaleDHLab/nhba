@@ -1,0 +1,14 @@
+/**
+* Glossary item
+**/
+
+.glossary-item {
+  position: relative;
+}
+
+.glossary-item .delete-icon {
+  width: 24px;
+  position: absolute;
+  top: 44px;
+  right: -40px;
+}

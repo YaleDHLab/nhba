@@ -199,8 +199,28 @@ module.exports = function(app) {
     })
   })
 
+  app.post('/api/about/save', (req, res) => {
+    var query = {'route': 'About'};
+    var options = {upsert: true};
+
+    models.simplepage.findOneAndUpdate(query, req.body, options, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
   app.get('/api/contact', (req, res) => {
     models.simplepage.find({'route': 'Contact'}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
+  app.post('/api/contact/save', (req, res) => {
+    var query = {'route': 'Contact'};
+    var options = {upsert: true};
+
+    models.simplepage.findOneAndUpdate(query, req.body, options, (err, data) => {
       if (err) return res.status(500).send({cause: err})
         return res.status(200).send(data)
     })
@@ -211,6 +231,27 @@ module.exports = function(app) {
       if (err) return res.status(500).send({cause: err})
         return res.status(200).send(data)
     })
+  })
+
+  app.post('/api/glossary/save', (req, res) => {
+    var options = {upsert: true};
+    var results = [];
+
+    // remove all glossary terms then save each new glossary term
+    models.glossaryterm.remove({}, () => {
+      req.body.map((doc) => {
+
+        var term = new models.glossaryterm(doc);
+        term.save((err, term) => {
+          results.push(err ? err : term)
+
+          if (results.length == req.body.length) {
+            return res.status(200).send(results)
+          }
+        })
+      })
+    })
+
   })
 
   /**

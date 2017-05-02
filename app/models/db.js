@@ -6,8 +6,8 @@ db.simplepage = {
 }
 
 db.glossaryterm = {
-  label: String,
-  text: String
+  term: String,
+  definition: String
 }
 
 db.user = {

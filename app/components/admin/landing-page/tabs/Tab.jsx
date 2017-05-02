@@ -8,10 +8,6 @@ export default class Tab extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidUpdate() {
-    console.log(this.props)
-  }
-
   getClass() {
     const defaultClass = 'tab';
     return this.props.tab.value == this.props.activeTab ?

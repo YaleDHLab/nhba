@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default class Pages extends React.Component {
   constructor(props) {
@@ -11,10 +12,12 @@ export default class Pages extends React.Component {
         <div className='table'>
           {this.props.pages.map((page, i) => {
             return (
-              <div className='row' key={i}>
-                <div className='edit-icon' />
-                {page.label}
-              </div>
+              <Link to={page.route} key={i}>
+                <div className='row'>
+                  <div className='edit-icon' />
+                  {page.label}
+                </div>
+              </Link>
             )
           })}
         </div>

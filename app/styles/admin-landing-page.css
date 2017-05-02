@@ -67,6 +67,10 @@
 
 .admin-landing-page .table {
   background: #fff;
+}
+
+.admin-landing-page .table a {
+  text-decoration: none;
   color: #666;
 }
 
@@ -209,16 +213,6 @@
   background-repeat: no-repeat;
   background-position: center 6px;
   background-size: 27px;
-}
-
-.admin-landing-page .add-a-building {
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid #fff;
-  color: #fff;
-  padding: 6px 30px;
-  display: inline-block;
-  border-radius: 4px;
-  font-weight: 800;
 }
 
 /**

@@ -9,14 +9,17 @@ import { Link } from 'react-router'
 
 const pages = [
   {
-    label: 'About'
+    label: 'About',
+    route: '/admin/about'
   },
   {
-    label: 'Glossary'
+    label: 'Contact',
+    route: '/admin/contact'
   },
   {
-    label: 'Contact'
-  }
+    label: 'Glossary',
+    route: '/admin/glossary'
+  },
 ]
 
 export default class LandingPage extends React.Component {
@@ -69,7 +72,7 @@ export default class LandingPage extends React.Component {
                 </div>
               </div>
               <Link to='/admin/form'>
-                <div className='add-a-building'>Add a Building</div>
+                <div className='gray-button add-a-building'>Add a Building</div>
               </Link>
             </div>
           </div>
