@@ -38,6 +38,8 @@ export default class Select extends React.Component {
           field={this.props.field}
           values={values}
           options={this.props.options[this.props.field]}
+          allowNewOptions={this.props.allowNewOptions}
+          onNewOption={this.props.handleNewOption}
           handleChange={this.updateField}
           className={'custom-select'} />
       </div>

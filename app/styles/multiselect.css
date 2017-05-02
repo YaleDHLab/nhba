@@ -32,4 +32,29 @@
 .multiselect label {
   white-space: nowrap;
   display: block;
+  margin: 10px 14px;
+}
+
+/**
+* Add new option input field
+**/
+
+.add-new-option {
+  border-top: 1px solid #aaa;
+}
+
+.multiselect .add-new-option img {
+  width: 16px;
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+}
+
+.multiselect .add-new-option input {
+  margin: 0;
+  width: 140px;
+  display: inline-block;
+  padding: 3px 6px 5px 6px;
+  box-sizing: content-box;
+  margin-left: 30px;
 }
