@@ -23,6 +23,7 @@ export default class Search extends React.Component {
     this.state = {
       buildings: [],
       tourIdToTitle: {},
+      tourIdToIndex: {},
 
       // select fields
       'tour_ids': new Set(),
@@ -109,7 +110,8 @@ export default class Search extends React.Component {
           tourIdToTitle={this.state.tourIdToTitle}
           updateSelect={this.updateSelect} />
         <Cards buildings={this.state.buildings} />
-        <Map buildings={this.state.buildings} />
+        <Map buildings={this.state.buildings}
+          tourIdToIndex={this.state.tourIdToIndex} />
       </div>
     )
   }

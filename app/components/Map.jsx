@@ -1,5 +1,5 @@
 import { default as React, Component } from 'react'
-import {  withGoogleMap, GoogleMap, Circle } from 'react-google-maps';
+import {  withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import _ from 'lodash';
 
 const config = {
@@ -10,28 +10,64 @@ const config = {
       lng: -72.9278493
     },
   },
-  circle: {
-    strokeColor: '#ff7b00',
+
+  icon: {
+    path: 'M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0',
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: '#ff7b00',
-    fillOpacity: 0.35,
-  }
+    fillOpacity: 0.5,
+    scale: 0.3
+  },
+
+  colors: [ // d3.category20 scale
+    '#1f77b4',
+    '#aec7e8',
+    '#ff7f0e',
+    '#ffbb78',
+    '#2ca02c',
+    '#98df8a',
+    '#d62728',
+    '#ff9896',
+    '#9467bd',
+    '#c5b0d5',
+    '#8c564b',
+    '#c49c94',
+    '#e377c2'
+  ]
+}
+
+// fetch an icon to represent the current building
+const getIcon = (building, tourIdToIndex) => {
+  const tourId = building.tour_ids ?
+      building.tour_ids[0].toString()
+    : (config.colors.length - 1).toString();
+
+  const tourIndex = tourIdToIndex[tourId];
+  let color = config.colors[tourIndex % config.colors.length - 1];
+
+  color = color ? color : 'red';
+
+  // set the icon colors
+  let markerIcon = Object.assign({}, config.icon);
+  markerIcon.strokeColor = color;
+  markerIcon.fillColor = color;
+  return markerIcon;
 }
 
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
-    ref={props.onMapLoad}
     defaultZoom={config.map.zoom}
     defaultCenter={config.map.location}
-    onClick={props.onMapClick}
+    onZoomChanged={props.onZoomChanged}
   >
-    {props.markers.map(marker => (
-      <Circle {...marker}
-        center={marker.position}
-        radius={30}
-        options={config.circle}
-        onRightClick={() => props.onMarkerRightClick(marker)} />
+    {props.buildings.map((building, idx) => (
+      <Marker
+        icon={getIcon(building, props.tourIdToIndex)}
+        key={idx}
+        position={{
+          lat: parseFloat(building.latitude),
+          lng: parseFloat(building.longitude)
+        }} />
     ))}
   </GoogleMap>
 ));
@@ -45,41 +81,22 @@ export default class MapContainer extends Component {
         position: config.map.location,
         key: 'new-haven',
         defaultAnimation: 2,
-      }],
+      }]
     }
 
-    this.handleMapLoad = this.handleMapLoad.bind(this);
-    this.handleMapClick = this.handleMapClick.bind(this);
-    this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
+    this.handleZoom = this.handleZoom.bind(this)
   }
 
-  handleMapLoad(map) {
-
+  componentWillMount() {
+    console.log(this.props)
   }
 
-  /***
-  * Append a new marker to the state onclick
-  ***/
+  /**
+  * Resize markers on zoom
+  **/
 
-  handleMapClick(event) {
-    const nextMarkers = [
-      ...this.state.markers,
-      {
-        position: event.latLng,
-        defaultAnimation: 2,
-        key: Date.now(),
-      },
-    ];
-    this.setState({markers: nextMarkers});
-  }
-
-  /***
-  * Remove a marker on rightclick
-  ***/
-
-  handleMarkerRightClick(targetMarker) {
-    const nextMarkers = this.state.markers.filter(marker => marker !== targetMarker);
-    this.setState({markers: nextMarkers});
+  handleZoom() {
+    console.log('zoomed')
   }
 
   render() {
@@ -89,10 +106,9 @@ export default class MapContainer extends Component {
           <MapComponent
             containerElement={ <div style={styles.map} /> }
             mapElement={ <div style={styles.map} /> }
-            onMapLoad={this.handleMapLoad}
-            onMapClick={this.handleMapClick}
-            markers={this.state.markers}
-            onMarkerRightClick={this.handleMarkerRightClick}
+            onZoomChanged={this.handleZoom}
+            buildings={this.props.buildings}
+            tourIdToIndex={this.props.tourIdToIndex}
           />
         </div>
       </div>
