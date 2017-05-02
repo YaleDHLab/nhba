@@ -5,7 +5,7 @@ import DataAndHistory from './DataAndHistory'
 import ImageGallery from './ImageGallery'
 import getSelectOptions from '../../lib/getSelectOptions'
 import processTours from '../../lib/processTours'
-import selects from '../../lib/selects.js'
+import allSelects from '../../lib/allSelects.js'
 import api from '../../../../config'
 import request from 'superagent'
 
@@ -141,7 +141,7 @@ export default class Form extends React.Component {
   setSelectOptions() {
     const buildings = this.state.buildings;
     const tourIdToTitle = this.state.tourIdToTitle;
-    const options = getSelectOptions(buildings, selects, tourIdToTitle)
+    const options = getSelectOptions(buildings, allSelects, tourIdToTitle)
     this.setState({options: options})
   }
 
@@ -153,7 +153,9 @@ export default class Form extends React.Component {
 
     // add this value to the available options
     let options = Object.assign({}, this.state.options)
-    options[field].push(value);
+    options[field] ?
+        options[field].push(value)
+      : options[field] = [value]
     this.setState({options: options})
 
     // select this value within this record

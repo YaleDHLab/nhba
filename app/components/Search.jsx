@@ -4,7 +4,6 @@ import Cards from './Cards'
 import Map from './Map'
 import api from '../../config'
 import processTours from './lib/processTours'
-import selects from './lib/selects.js'
 import _ from 'lodash'
 
 const selectFields = [
