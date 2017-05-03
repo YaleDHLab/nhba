@@ -37,7 +37,9 @@ export default class Header extends React.Component {
           <Link to='/about'>About</Link>
           <Link to='/glossary'>Glossary</Link>
           <Link to='/contact'>Contact</Link>
-          <Link to='/admin'>Admin</Link>
+
+          {/* Use a tag to trigger server request & auth check */}
+          <a href='/admin'>Admin</a>
           {link}
         </div>
       </header>
