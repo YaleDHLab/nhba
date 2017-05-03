@@ -23,25 +23,28 @@ export default class AppWrapper extends React.Component {
     this.processSession = this.processSession.bind(this)
   }
 
-  /***
-  *
+  /**
   * Initialize the authentication modal if necessary
-  *
-  ***/
+  **/
 
   componentDidMount() {
     const query = this.props.location.query
-    if (query.token) this.setState({modal: 'validate'})
-    if (query.resetPassword) this.setState({modal: 'reset-password'})
+    if (query.token) {
+      this.setState({modal: 'validate'})
+    }
+    if (query.resetPassword) {
+      this.setState({modal: 'reset-password'})
+    }
+    if (query.authenticated && query.authenticated === 'false') {
+      this.setState({modal: 'unauthorized'})
+    }
 
     this.getSessionData()
   }
 
-  /***
-  *
+  /**
   * Show/hide the authentication modal
-  *
-  ***/
+  **/
 
   login() {
     this.setState({modal: 'login'})
@@ -51,11 +54,9 @@ export default class AppWrapper extends React.Component {
     this.setState({modal: null})
   }
 
-  /***
-  *
+  /**
   * Fetch user authentication status from server
-  *
-  ***/
+  **/
 
   getSessionData() {
     request
@@ -71,11 +72,9 @@ export default class AppWrapper extends React.Component {
       : this.setState({authenticated: false})
   }
 
-  /***
-  *
+  /**
   * Handle logout
-  *
-  ***/
+  **/
 
   logout() {
     request
@@ -88,11 +87,9 @@ export default class AppWrapper extends React.Component {
     err ? console.warn(err) : this.setState({authenticated: false})
   }
 
-  /***
-  *
+  /**
   * Render
-  *
-  ***/
+  **/
 
   render() {
     const modal = this.state.modal ?

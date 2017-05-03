@@ -1,6 +1,7 @@
 import React from 'react'
 import SignUp from './SignUp'
 import Login from './Login'
+import Unauthorized from './Unauthorized'
 import ForgotPassword from './ForgotPassword'
 import ValidateAccount from './ValidateAccount'
 import ResetPassword from './ResetPassword'
@@ -36,6 +37,11 @@ export default class Authenticate extends React.Component {
     switch(this.state.view) {
       case 'login':
         view = <Login {...this.props}
+          forgotPassword={this.forgotPassword} />;
+        break;
+
+      case 'unauthorized':
+        view = <Unauthorized {...this.props}
           forgotPassword={this.forgotPassword} />;
         break;
 
