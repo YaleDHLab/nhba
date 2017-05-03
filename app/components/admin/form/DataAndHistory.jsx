@@ -98,25 +98,25 @@ export default class DataAndHistory extends React.Component {
           width={'half-width'}
           position={'left'}
           label={'Historic Use'}
-          field={'historicUse'} />
+          field={'historic_use'} />
 
         <TextInput {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Past Tenants'}
-          field={'previousTenants'} />
+          field={'past_tenants'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Street Visibility'}
-          field={'streetVisibility'} />
+          field={'street_visibilities'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Accessibility'}
-          field={'accessibility'} />
+          field={'accessibilities'} />
 
         <TextInput {...this.props}
           width={'half-width'}
@@ -134,37 +134,37 @@ export default class DataAndHistory extends React.Component {
           width={'half-width'}
           position={'left'}
           label={'Material'}
-          field={'material'} />
+          field={'materials'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Structure'}
-          field={'structure'} />
+          field={'structures'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Roof Type'}
-          field={'roofType'} />
+          field={'roof_types'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'Roof Material'}
-          field={'roofMaterial'} />
+          field={'roof_materials'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Structural Condition'}
-          field={'structuralCondition'} />
+          field={'structural_conditions'} />
 
         <Select {...this.props}
           width={'half-width'}
           position={'right'}
           label={'External Condition'}
-          field={'externalCondition'} />
+          field={'external_conditions'} />
 
         <Select {...this.props}
           width={'half-width'}
@@ -182,7 +182,7 @@ export default class DataAndHistory extends React.Component {
         <TextArea {...this.props}
           width={'full-width'}
           label={'Physical Description'}
-          field={'physicalDescription'}
+          field={'physical_description'}
           rows={7} />
 
         <TextArea {...this.props}
@@ -194,13 +194,13 @@ export default class DataAndHistory extends React.Component {
         <TextArea {...this.props}
           width={'full-width'}
           label={'Social History'}
-          field={'socialHistory'}
+          field={'social_history'}
           rows={7} />
 
         <TextArea {...this.props}
           width={'full-width'}
           label={'Site History'}
-          field={'siteHistory'}
+          field={'site_history'}
           rows={7} />
 
         <FileTable {...this.props}

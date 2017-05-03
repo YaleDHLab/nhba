@@ -1,7 +1,7 @@
 import React from 'react'
 import Multiselect from './Multiselect'
 import getSelectOptions from './lib/getSelectOptions'
-import selects from './lib/selects.js'
+import filterSelects from './lib/filterSelects.js'
 import _ from 'lodash'
 
 export default class Filters extends React.Component {
@@ -24,13 +24,13 @@ export default class Filters extends React.Component {
   setSelectOptions() {
     const buildings = this.props.buildings;
     const tourIdToTitle = this.props.tourIdToTitle;
-    const options = getSelectOptions(buildings, selects, tourIdToTitle)
+    const options = getSelectOptions(buildings, filterSelects, tourIdToTitle)
     this.setState({options: options})
   }
 
   render() {
     const selectFields = (
-      selects.map((select, i) => {
+      filterSelects.map((select, i) => {
         const values = this.props[select.field] ?
             _.toArray(this.props[select.field])
           : []

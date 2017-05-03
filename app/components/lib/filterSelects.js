@@ -1,12 +1,12 @@
 /**
 * @exports:
 *   an array of objects that identify the label and fields
-*   for all available selects
+*   for all selects used in the filter views
 **/
 
 module.exports = [
   {label: 'Tour', field: 'tour_ids'},
-  {label: 'Previous Use', field: 'structures'}, // validate this is the right field
+  {label: 'Materials', field: 'materials'},
   {label: 'Current Use', field: 'current_uses'},
   {label: 'Style', field: 'styles'},
   {label: 'Era', field: 'eras'},

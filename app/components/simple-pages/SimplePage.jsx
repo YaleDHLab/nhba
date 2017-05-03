@@ -1,6 +1,7 @@
 import React from 'react'
 import api from '../../../config'
 import request from 'superagent'
+import _ from 'lodash'
 
 export default class SimplePage extends React.Component {
   constructor(props) {
@@ -21,8 +22,8 @@ export default class SimplePage extends React.Component {
       if (err) console.warn(err)
  
       this.props.flat ?
-          this.setState({paragraphs: res.body[0].text.split('\n\n')})
-        : this.setState({glossaryterms: res.body})
+          this.setState({ paragraphs: res.body[0].text.split('\n\n') })
+        : this.setState({ glossaryterms: _.sortBy(res.body, 'term').reverse() })
     })
   }
 
