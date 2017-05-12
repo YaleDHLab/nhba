@@ -6,7 +6,6 @@
 
 module.exports = [
   {label: 'Tour', field: 'tour_ids'},
-  {label: 'Materials', field: 'materials'},
   {label: 'Current Use', field: 'current_uses'},
   {label: 'Style', field: 'styles'},
   {label: 'Era', field: 'eras'},
