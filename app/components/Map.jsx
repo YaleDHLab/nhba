@@ -3,14 +3,6 @@ import {  withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import _ from 'lodash';
 
 const config = {
-  map: {
-    zoom: 15,
-    location: {
-      lat: 41.3075931,
-      lng: -72.9278493
-    },
-  },
-
   icon: {
     path: 'M-20,0a20,20 0 1,0 40,0a20,20 0 1,0 -40,0',
     strokeOpacity: 0.8,
@@ -56,8 +48,9 @@ const getIcon = (building, tourIdToIndex) => {
 
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
-    defaultZoom={config.map.zoom}
-    defaultCenter={config.map.location}
+    defaultZoom={props.mapConfig.zoom}
+    center={props.mapConfig.location}
+    defaultCenter={props.mapConfig.location}
     onZoomChanged={props.onZoomChanged}
   >
     {props.buildings.map((building, idx) => (
@@ -75,31 +68,20 @@ const MapComponent = withGoogleMap(props => (
 export default class MapContainer extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      markers: [{
-        position: config.map.location,
-        key: 'new-haven',
-        defaultAnimation: 2,
-      }]
-    }
-
-    this.handleZoom = this.handleZoom.bind(this)
-  }
-
-  componentWillMount() {
-    console.log(this.props)
-  }
-
-  /**
-  * Resize markers on zoom
-  **/
-
-  handleZoom() {
-    console.log('zoomed')
   }
 
   render() {
+    const initialLocation = this.props.initialLocation;
+
+    const defaultLocation = {
+      lat: 41.3075931,
+      lng: -72.9278493
+    }
+    const mapConfig = {
+      zoom: 15,
+      location: initialLocation ? initialLocation : defaultLocation
+    }
+
     return (
       <div className='map'>
         <div className='map-content'>
@@ -109,6 +91,7 @@ export default class MapContainer extends Component {
             onZoomChanged={this.handleZoom}
             buildings={this.props.buildings}
             tourIdToIndex={this.props.tourIdToIndex}
+            mapConfig={mapConfig}
           />
         </div>
       </div>
