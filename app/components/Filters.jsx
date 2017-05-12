@@ -49,9 +49,9 @@ export default class Filters extends React.Component {
 
     return (
       <div className='filters'>
-        <div className='button'>Add a Building</div>
         <div className='input-container'>
-          <div className='search-icon' />
+          <div className='search-icon'
+            onClick={this.props.runFulltextSearch} />
           <input type='text' className='building-search'></input>
         </div>
         <div className='select-container'>

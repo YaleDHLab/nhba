@@ -51,7 +51,6 @@ const MapComponent = withGoogleMap(props => (
     defaultZoom={props.mapConfig.zoom}
     center={props.mapConfig.location}
     defaultCenter={props.mapConfig.location}
-    onZoomChanged={props.onZoomChanged}
   >
     {props.buildings.map((building, idx) => (
       <Marker
@@ -77,6 +76,7 @@ export default class MapContainer extends Component {
       lat: 41.3075931,
       lng: -72.9278493
     }
+
     const mapConfig = {
       zoom: 15,
       location: initialLocation ? initialLocation : defaultLocation
@@ -88,7 +88,6 @@ export default class MapContainer extends Component {
           <MapComponent
             containerElement={ <div style={styles.map} /> }
             mapElement={ <div style={styles.map} /> }
-            onZoomChanged={this.handleZoom}
             buildings={this.props.buildings}
             tourIdToIndex={this.props.tourIdToIndex}
             mapConfig={mapConfig}

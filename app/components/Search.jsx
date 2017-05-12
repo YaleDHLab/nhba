@@ -4,6 +4,7 @@ import Cards from './Cards'
 import Map from './Map'
 import api from '../../config'
 import processTours from './lib/processTours'
+import getBuildingQueryUrl from './lib/getBuildingQueryUrl'
 import _ from 'lodash'
 
 const selectFields = [
@@ -34,9 +35,15 @@ export default class Search extends React.Component {
       'sort': null
     }
 
+    // getters and setters for buildings and tours
     this.processBuildings = this.processBuildings.bind(this)
     this.processTours = processTours.bind(this)
+
+    // setters for search components
     this.updateSelect = this.updateSelect.bind(this)
+
+    // methods that execute search
+    this.runFulltextSearch = this.runFulltextSearch.bind(this)
     this.runSearch = this.runSearch.bind(this)
   }
 
@@ -62,44 +69,21 @@ export default class Search extends React.Component {
     })
   }
 
+  runFulltextSearch() {
+    // get the query url containing select filters data
+    let url = getBuildingQueryUrl(this.state, selectFields);
+
+    // add the full text search to the query
+    const textSearch = document.querySelector('.building-search').value;
+    url += 'fulltext=' + encodeURIComponent(textSearch);
+
+    // run the search and process the results
+    api.get(url, this.processBuildings);
+  }
+
   runSearch() {
-    let queryTerms = {}
-    selectFields.map((field) => {
-      let values = Array.from(this.state[field])
-
-      if (field == 'tour_ids') {
-        let tourValues = []
-        values.map((value) => {
-          tourValues.push(this.state.tourTitleToId[value])
-        })
-        values = tourValues;
-      }
-
-      if (values.length > 0) {
-        var encodedValues = []
-        values.map((value) => {
-
-          // Replace ' ' in strings with _ so the server can handle
-          // whitespace. All but the tour_ids are strings.
-          typeof value == 'string' ?
-              encodedValues.push(value.split(' ').join('_'))
-            : encodedValues.push(value)
-        })
-
-        queryTerms[field] = encodedValues
-      }
-    })
-
-    let url = 'buildings';
-
-    if (queryTerms) {
-      url += '?filter=true&'
-      _.keys(queryTerms).map((field) => {
-        url += field + '=' + queryTerms[field].join('+') + '&'
-      })
-    }
-
-    api.get(url, this.processBuildings)
+    const url = getBuildingQueryUrl(this.state, selectFields);
+    api.get(url, this.processBuildings);
   }
 
   render() {
@@ -107,7 +91,9 @@ export default class Search extends React.Component {
       <div className='search'>
         <Filters {...this.state}
           tourIdToTitle={this.state.tourIdToTitle}
-          updateSelect={this.updateSelect} />
+          updateSelect={this.updateSelect}
+          updateFulltextSearch={this.updateFulltextSearch}
+          runFulltextSearch={this.runFulltextSearch} />
         <Cards buildings={this.state.buildings} />
         <Map buildings={this.state.buildings}
           tourIdToIndex={this.state.tourIdToIndex} />
