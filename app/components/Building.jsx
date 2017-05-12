@@ -141,7 +141,7 @@ export default class Building extends React.Component {
 
   render() {
     const gallery = (
-      <div className='top-right-top background-image'
+      <div className='background-image'
         style={this.getStyle()}
         onClick={this.incrementImageIndex} />
     )
@@ -193,7 +193,9 @@ export default class Building extends React.Component {
             </div>
 
             <div className='right'>
-              {layout[this.state.layout.right]}
+              <div className='top-right-top'>
+                {layout[this.state.layout.right]}
+              </div>
               <div className='top-right-bottom'>
                 <BuildingText
                   building={this.state.building}
