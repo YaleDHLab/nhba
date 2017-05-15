@@ -89,6 +89,16 @@ a {
   cursor: pointer;
 }
 
+.white-button {
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 6px 30px;
+  display: inline-block;
+  border-radius: 4px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 /**
 * Images
 **/
