@@ -16,7 +16,9 @@ module.exports = (tableFields, building) => {
   tableFields.map((f, i) => {
     let value = building[f.field];
     let valueString = Array.isArray(value) ? value.join(' ') : value;
-    if (value) cells.push ( <td key={i}>{f.label}: {valueString}</td> )
+    if (value && value.length > 0) {
+      cells.push ( <td key={i}>{f.label}: {valueString}</td> )
+    }
   })
 
   let rows = [];
@@ -28,7 +30,7 @@ module.exports = (tableFields, building) => {
       rowCells = [];
     }
 
-    if (i+1 === cells.length && rowCells) {
+    if (i+1 === cells.length && rowCells.length > 0) {
       rows.push(<tr key={i+1}>{rowCells}</tr>)
     }
   })
