@@ -15,6 +15,8 @@
 .filters .input-container {
   display: inline-block;
   position: relative;
+  top: 12px;
+  left: 36px;
 }
 
 .filters .search-icon {
@@ -28,7 +30,7 @@
   height: 36px;
   width: 34px;
   opacity: 0.6;
-  top: 12px;
+  top: 0px;
   cursor: pointer;
 }
 
@@ -38,8 +40,6 @@
   padding: 8px 30px 8px 8px;
   box-sizing: border-box;
   font-size: 1em;
-  margin-top: 12px;
-  margin-left: 35px;
 }
 
 .filters .select-container {

@@ -67,12 +67,12 @@ export default class LandingPage extends React.Component {
               <h1>View Buildings</h1>
               <div className='admin-search-container'>
                 <div className='admin-search-content'>
-                  <input className='admin-search' placeholder='Search'></input>
+                  <input className='admin-search building-search' placeholder='Search'></input>
                   <div className='admin-search-button'/>
                 </div>
               </div>
               <Link to='/admin/form'>
-                <div className='gray-button add-a-building'>Add a Building</div>
+                <div className='white-button add-a-building'>Add a Building</div>
               </Link>
             </div>
           </div>
