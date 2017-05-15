@@ -6,6 +6,13 @@ export default class Cards extends React.Component {
     super(props)
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (_.isEqual(nextProps.buildings, this.props.buildings)) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     return (
       <div className='cards'>

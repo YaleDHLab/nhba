@@ -20,22 +20,26 @@
 .filters .search-icon {
   background-image: url(/assets/images/search-icon.png);
   background-repeat: no-repeat;
-  background-position: 95% 7px;
+  background-position: 56% 7px;
   background-size: 20px;
   display: inline-block;
   position: absolute;
-  right: 8px;
-  height: 27px;
-  width: 27px;
+  right: 1px;
+  height: 36px;
+  width: 34px;
   opacity: 0.6;
+  top: 12px;
+  cursor: pointer;
 }
 
 .filters .building-search {
   width: 200px;
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 8px 30px 8px 8px;
   box-sizing: border-box;
   font-size: 1em;
+  margin-top: 12px;
+  margin-left: 35px;
 }
 
 .filters .select-container {

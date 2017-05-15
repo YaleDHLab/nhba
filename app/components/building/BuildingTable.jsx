@@ -1,4 +1,5 @@
 import React from 'react'
+import getBuildingTable from '../lib/getBuildingTable'
 
 const tableFields = [
   {label: 'Style', field: 'styles'},
@@ -17,28 +18,7 @@ export default class BuildingTable extends React.Component {
   }
 
   render() {
-
-    // some tableFields are missing from buildings; ensure
-    // each row in the table has two cells if possible
-
-    let cells = []
-    tableFields.map((f, i) => {
-      let value = this.props.building[f.field];
-      let valueString = Array.isArray(value) ? value.join(' ') : value;
-      if (value) cells.push ( <td key={i}>{f.label}: {valueString}</td> )
-    })
-
-    let rows = [];
-    let rowCells = [];
-    cells.map((c, i) => {
-      rowCells.push(c);
-      if (rowCells.length % 2 == 0) {
-        rows.push(<tr key={i}>{rowCells}</tr>)
-        rowCells = [];
-      }
-
-      if (i+1 === cells.length && rowCells) rows.push(<tr key={i}>{rowCells}</tr>)
-    })
+    const rows = getBuildingTable(tableFields, this.props.building)
 
     return (
       <table className='building-table'>

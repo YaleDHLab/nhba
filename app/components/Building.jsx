@@ -11,7 +11,7 @@ import api from '../../config'
 
 const fields = [
   {
-    text: {label: 'Description', field: 'overview_description'},
+    text: {label: 'Overview', field: 'overview_description'},
     button: {label: 'Overview', icon: 'overview'},
     href: 'description'
   },
@@ -140,18 +140,27 @@ export default class Building extends React.Component {
   **/
 
   render() {
-    const style = this.getStyle()
-
     const gallery = (
-      <div className='top-right-top background-image'
-        style={style}
+      <div className='background-image'
+        style={this.getStyle()}
         onClick={this.incrementImageIndex} />
     )
 
+    const building = this.state.building;
+    const location = building &&
+      building.latitude &&
+      building.longitude ?
+        {
+          lat: parseFloat(building.latitude),
+          lng: parseFloat(building.longitude)
+        }
+      : null
+
     const map = (
-      this.state.tourIdToIndex && this.state.building ?
+      this.state.tourIdToIndex && building ?
           <Map buildings={[this.state.building]}
-            tourIdToIndex={this.state.tourIdToIndex} />
+            tourIdToIndex={this.state.tourIdToIndex}
+            initialLocation={location} />
         : <Loader />
     )
 
@@ -184,7 +193,9 @@ export default class Building extends React.Component {
             </div>
 
             <div className='right'>
-              {layout[this.state.layout.right]}
+              <div className='top-right-top'>
+                {layout[this.state.layout.right]}
+              </div>
               <div className='top-right-bottom'>
                 <BuildingText
                   building={this.state.building}

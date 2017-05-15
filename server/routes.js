@@ -63,19 +63,23 @@ module.exports = function(app) {
 
     if (req.query.images && req.query.images == 'true') {
       var imageQuery = {$where: 'this.images.length > 0'}
-      query = {
-        $and: [
-          query,
-          imageQuery
-        ]
-      }
+      query = { $and: [ query, imageQuery ] }
     }
 
+    // all queries sent from filter component pass this flag
     if (req.query.filter && req.query.filter == 'true') {
       var queryTerms = [];
 
-      // remove filter from the list of query terms
-      var keys = _.pull(Object.keys(req.query), 'filter');
+      // remove filter and fulltext from the list of query terms
+      var keys = _.filter(_.keys(req.query), (k) => {
+        return !_.includes(['filter', 'fulltext'], k)
+      })
+
+      if (req.query.fulltext) {
+        queryTerms.push({
+          'overview_description': {$regex: req.query.fulltext}
+        })
+      }
 
       keys.map((key) => {
         var queryTerm = {}
@@ -188,7 +192,7 @@ module.exports = function(app) {
 
   /**
   *
-  * Simple pages routes
+  * About routes
   *
   **/
 
@@ -209,6 +213,12 @@ module.exports = function(app) {
     })
   })
 
+  /**
+  *
+  * Contact routes
+  *
+  **/
+
   app.get('/api/contact', (req, res) => {
     models.simplepage.find({'route': 'Contact'}, (err, data) => {
       if (err) return res.status(500).send({cause: err})
@@ -225,6 +235,12 @@ module.exports = function(app) {
         return res.status(200).send(data)
     })
   })
+
+  /**
+  *
+  * Glossary routes
+  *
+  **/
 
   app.get('/api/glossary', (req, res) => {
     models.glossaryterm.find({}, (err, data) => {
@@ -251,7 +267,6 @@ module.exports = function(app) {
         })
       })
     })
-
   })
 
   /**
