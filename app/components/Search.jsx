@@ -16,6 +16,10 @@ const selectFields = [
   'neighborhoods'
 ]
 
+const getAdminSearchButton = () => {
+  return document.querySelector('.admin-search-button');
+}
+
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
@@ -52,13 +56,13 @@ export default class Search extends React.Component {
     api.get('wptours', this.processTours)
 
     // bind an event listener to the admin search button
-    document.querySelector('.admin-search-button')
-      .addEventListener('click', this.runFulltextSearch)
+    var adminSearch = getAdminSearchButton()
+    if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch)
   }
 
   componentWillUnmount() {
-    document.querySelector('.admin-search-button')
-      .addEventListener('click', this.runFulltextSearch)
+    var adminSearch = getAdminSearchButton()
+    if (adminSearch) adminSearch.removeEventListener('click', this.runFulltextSearch)
   }
 
   processBuildings(err, res) {
