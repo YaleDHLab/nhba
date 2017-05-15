@@ -48,6 +48,9 @@ export default class Building extends React.Component {
 
     this.getStyle = this.getStyle.bind(this)
     this.toggleLayout = this.toggleLayout.bind(this)
+
+    // pagination buttons for images
+    this.decrementImageIndex = this.decrementImageIndex.bind(this)
     this.incrementImageIndex = this.incrementImageIndex.bind(this)
 
     // getter and setter for building data
@@ -128,6 +131,14 @@ export default class Building extends React.Component {
     this.setState({imageIndex: newIndex})
   }
 
+  decrementImageIndex() {
+    const imageIndex = this.state.imageIndex;
+    const newIndex = imageIndex > 0 ?
+        imageIndex-1
+      : this.state.building.images.length-1;
+    this.setState({imageIndex: newIndex})
+  }
+
   toggleLayout() {
     const layout = this.state.layout.left == 'Map' ?
         {left: 'Gallery', right: 'Map'}
@@ -142,8 +153,12 @@ export default class Building extends React.Component {
   render() {
     const gallery = (
       <div className='background-image'
-        style={this.getStyle()}
-        onClick={this.incrementImageIndex} />
+        style={this.getStyle()}>
+        <div className='image-index-button decrement'
+          onClick={this.decrementImageIndex}/>
+        <div className='image-index-button increment'
+          onClick={this.incrementImageIndex}/>
+      </div>
     )
 
     const building = this.state.building;
