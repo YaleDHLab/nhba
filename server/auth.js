@@ -29,7 +29,7 @@ module.exports = function(app) {
 
   /**
   *
-  * Regist new users
+  * Register new users
   *
   **/
 
@@ -74,6 +74,8 @@ module.exports = function(app) {
         user.password = hash
         user.token = getToken()
         user.validated = false
+        user.admin = false
+        user.superadmin = false
 
         // email the user a validation token
         mailer.send(user.email, user.token, null)
@@ -113,7 +115,7 @@ module.exports = function(app) {
 
   var getToken = () => {
     var salt = bcrypt.genSaltSync(saltWorkFactor)
-    return bcrypt.hashSync("B4c0/\/", salt)
+    return bcrypt.hashSync('B4c0/\/', salt)
   }
 
   /**
@@ -146,10 +148,7 @@ module.exports = function(app) {
 
       // save the user's auth status to the session data
       if (isMatch) {
-        req.session.authenticated = true;
-        req.session.save((err) => {
-          if (err) console.warn('could not save session', err)
-        })
+        loginSessionData(user, req)
 
         return res.status(200).send({
           message: messages.loginSuccess
@@ -159,6 +158,24 @@ module.exports = function(app) {
       return res.status(200).send({
         message: messages.loginFail
       })
+    })
+  }
+
+  /**
+  * Store the user's authentication status in the session data
+  *
+  * @args:
+  *   {obj} user: the result of a query for the current user
+  *   {obj} req: the current request object
+  **/
+
+  var loginSessionData = (user, req) => {
+    req.session.authenticated = true;
+    if (user.admin) req.session.admin = true;
+    if (user.superadmin) req.session.superadmin = true;
+
+    req.session.save((err) => {
+      if (err) console.warn('could not save session', err)
     })
   }
 
@@ -194,6 +211,8 @@ module.exports = function(app) {
 
   app.get('/api/logout', (req, res, next) => {
     req.session.authenticated = false
+    req.session.admin = false
+    req.session.superadmin = false
     req.session.save((err) => {
       if (err) {
         return res.status(200).send({
@@ -292,10 +311,7 @@ module.exports = function(app) {
     }
 
     // authenticate the user in the session store
-    req.session.authenticated = true;
-    req.session.save((err) => {
-      if (err) console.warn('could not save session', err)
-    })
+    loginSessionData(user, req)
 
     user.password = req.body.password
 
@@ -335,7 +351,7 @@ module.exports = function(app) {
   if (process.env['NHBA_ENVIRONMENT'] == 'production') {
     app.use((req, res, next) => {
       if (req.url.includes('/admin')) {
-        req.session && req.session.authenticated == true ?
+        req.session && req.session.authenticated && req.session.admin ?
             next()
           : res.redirect('/?authenticated=false')
       } else {
