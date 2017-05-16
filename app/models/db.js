@@ -16,7 +16,9 @@ db.user = {
   email: String,
   password: String,
   token: String,
-  validated: Boolean
+  validated: Boolean,
+  admin: Boolean,
+  superadmin: Boolean
 }
 
 db.wptour = {
