@@ -9,12 +9,28 @@ Data migrations within this application require pymongo (`pip install pymongo`).
 To run this application on your machine, open a terminal and run:
 
 ```
+# obtain application source and enter repository
 git clone https://github.com/duhaime/nhba
 cd nhba
+
+# load database
+wget https://goo.gl/Sifmjv -O nhba.archive
+mongorestore --db nhba --archive=nhba.archive
+
+# obtain images
+wget https://goo.gl/JNxVDa -O build.tar.gz
+tar -zxf build.tar.gz
+
+# install dependencies
 npm install --no-optional
-npm run seed
+
+# start production server
 npm run production
 ```
+
+The application will then be available on `localhost:8080`.
+
+You can optionally open another terminal window, cd into the nhba directory, and run `npm run start` to start a development server on 8081. This development server depends on the production server, but features hot module reloading for quicker development speed.
 
 ### Deploying to EC2
 
@@ -23,6 +39,7 @@ To deploy this app on an Amazon Linux instance on EC2, one must:
  - [ ] obtain ssl certificates
  - [ ] configure the app for https
  - [ ] store required environment variables
+ - [ ] provision superadmin users
  - [ ] and then start the application
 
 #### Install Dependencies
@@ -97,6 +114,17 @@ export NHBA_ENVIRONMENT='production'           # switch to production
 ```
 Then `source ~/.bash_profile`
 
+#### Provision superadmin users
+
+Only superadmin users can appoint other admin users. Superadmin users must be appointed at the command line level:
+
+```
+# enter nhba db
+mongo nhba
+
+# find a user by their userId and make them a superadmin
+db.users.update({'userId': 6}, {$set: {'superadmin': true}})
+```
 #### Start Application
 
 ```
