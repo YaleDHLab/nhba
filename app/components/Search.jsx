@@ -46,6 +46,9 @@ export default class Search extends React.Component {
     // setters for search components
     this.updateSelect = this.updateSelect.bind(this)
 
+    // method that handles keydown events in input box
+    this.handleInputKeys = this.handleInputKeys.bind(this)
+
     // methods that execute search
     this.runFulltextSearch = this.runFulltextSearch.bind(this)
     this.runSearch = this.runSearch.bind(this)
@@ -82,6 +85,10 @@ export default class Search extends React.Component {
     })
   }
 
+  handleInputKeys(e) {
+    if (e.keyCode == 13) this.runFulltextSearch()
+  }
+
   runFulltextSearch() {
     // get the query url containing select filters data
     let url = getBuildingQueryUrl(this.state, selectFields);
@@ -106,7 +113,8 @@ export default class Search extends React.Component {
           tourIdToTitle={this.state.tourIdToTitle}
           updateSelect={this.updateSelect}
           updateFulltextSearch={this.updateFulltextSearch}
-          runFulltextSearch={this.runFulltextSearch} />
+          runFulltextSearch={this.runFulltextSearch}
+          handleInputKeys={this.handleInputKeys} />
         <Cards buildings={this.state.buildings} />
         <Map buildings={this.state.buildings}
           tourIdToIndex={this.state.tourIdToIndex} />
