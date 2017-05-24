@@ -45,9 +45,10 @@
 
 .multiselect .add-new-option img {
   width: 16px;
-  position: absolute;
   bottom: 12px;
   left: 10px;
+  padding: 10px 9px;
+  float: left;
 }
 
 .multiselect .add-new-option input {
@@ -56,5 +57,4 @@
   display: inline-block;
   padding: 3px 6px 5px 6px;
   box-sizing: content-box;
-  margin-left: 30px;
 }
