@@ -151,15 +151,15 @@ export default class Building extends React.Component {
   **/
 
   render() {
-    const gallery = (
-      <div className='background-image'
-        style={this.getStyle()}>
-        <div className='image-index-button decrement'
+    const gallery = this.state.building.images &&
+      this.state.building.images.length > 1 ?
+        <div className='background-image' style={this.getStyle()}>
+          <div className='image-index-button decrement'
           onClick={this.decrementImageIndex}/>
-        <div className='image-index-button increment'
-          onClick={this.incrementImageIndex}/>
-      </div>
-    )
+          <div className='image-index-button increment'
+            onClick={this.incrementImageIndex}/>
+        </div>
+      : <div className='background-image' style={this.getStyle()} />
 
     const building = this.state.building;
     const location = building &&
