@@ -174,6 +174,12 @@ export default class Building extends React.Component {
   **/
 
   render() {
+    const caption = this.state.building.images ?
+        <div className='image-caption'>
+          {this.state.building.images[this.state.imageIndex].caption}
+        </div>
+      : null;
+
     const gallery = this.state.building.images &&
       this.state.building.images.length > 1 ?
         <div className='background-image' style={this.getStyle()}>
@@ -181,6 +187,7 @@ export default class Building extends React.Component {
           onClick={this.decrementImageIndex}/>
           <div className='image-index-button increment'
             onClick={this.incrementImageIndex}/>
+          {caption}
         </div>
       : <div className='background-image' style={this.getStyle()} />
 
