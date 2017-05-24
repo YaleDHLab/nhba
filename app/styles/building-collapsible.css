@@ -1,0 +1,41 @@
+/**
+* Collapsible regions of the building text
+**/
+
+.building-text .building-collapsible h1 {
+  padding: 20px 0;
+  margin: 0;
+}
+
+.building-collapsible {
+  margin-top: -1px;
+  max-height: 99999px;
+  transition: max-height 0.5s;
+  overflow: hidden;
+}
+
+.building-collapsible.collapsed {
+  max-height: 70px;
+}
+
+.building-collapsible-header {
+  position: relative;
+  cursor: pointer;
+}
+
+.building-collapsible .expand-icon {
+  width: 50px;
+  position: absolute;
+  right: 0px;
+  top: 9px;
+  transform: rotate(180deg);
+  transition: transform .3s;
+}
+
+.building-collapsible.collapsed .expand-icon {
+  transform: rotate(0deg);
+}
+
+.building-collapsible-push {
+  margin-bottom: 20px;
+}

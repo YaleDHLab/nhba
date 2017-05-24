@@ -10,7 +10,13 @@
 }
 
 .building-text h1 {
-  font-size: 1.5em;
   font-family: Tinos;
+  font-size: 1.5em;
   margin: 20px 0 10px;
+}
+
+.building-text h2 {
+  font-family: Open Sans;
+  margin: 20px 0 7px;
+  font-size: 1.05em;
 }
