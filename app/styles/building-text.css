@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 20px solid #eee;
   /* center scroll */
   padding-right: 14px;

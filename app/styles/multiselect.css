@@ -20,7 +20,7 @@
   left: 0;
   width: auto;
   z-index: 1;
-  overflow: scroll;
+  overflow: auto;
   height: 0px;
 }
 

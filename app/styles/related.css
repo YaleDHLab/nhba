@@ -1,7 +1,7 @@
 .related {
   height: 180px;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   box-sizing: border-box;

@@ -7,7 +7,7 @@
   background: rgba(0,0,0,0.6);
   z-index: 9;
   height: auto;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .authenticate .modal {
