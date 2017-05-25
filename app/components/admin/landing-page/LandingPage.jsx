@@ -1,5 +1,5 @@
 import React from 'react'
-import SuperadminTop from './SuperadminTop'
+import SuperAdminTop from './SuperAdminTop'
 import AdminTop from './AdminTop'
 import Search from '../../Search'
 import api from '../../../../config'
@@ -22,7 +22,7 @@ export default class LandingPage extends React.Component {
   }
 
   render() {
-    const top = this.state.superadmin ? <SuperadminTop /> : <AdminTop />
+    const top = this.state.superadmin ? <SuperAdminTop /> : <AdminTop />
 
     return (
       <div className='admin-landing-page'>
