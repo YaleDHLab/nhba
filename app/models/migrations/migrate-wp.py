@@ -498,7 +498,7 @@ if __name__ == '__main__':
   # a list of fields to store as list fields
   list_fields = get_list_fields()
 
-  # internal db field mappings mappings
+  # internal db field mappings
   nhba_to_wp = get_nhba_to_wp()
   wp_to_nhba = get_nhba_to_wp()
 
