@@ -174,7 +174,8 @@ export default class Building extends React.Component {
   **/
 
   render() {
-    const caption = this.state.building.images ?
+    const caption = this.state.building.images &&
+      this.state.building.images[this.state.imageIndex].caption ?
         <div className='image-caption'>
           {this.state.building.images[this.state.imageIndex].caption}
         </div>
@@ -218,7 +219,6 @@ export default class Building extends React.Component {
       <div className='building'>
         <div className='building-content'>
           <div className='top'>
-
             <div className='left'>
               <div className='left-content'>
                 <div className='top-left-top'>
@@ -236,7 +236,6 @@ export default class Building extends React.Component {
                 </div>
               </div>
             </div>
-
             <div className='right'>
               <div className='top-right-top'>
                 {layout[this.state.layout.right]}
@@ -247,7 +246,6 @@ export default class Building extends React.Component {
                   fields={this.getTextFields()} />
               </div>
             </div>
-
           </div>
           <div className='bottom'>
             <h1 className='label'>Related Buildings</h1>

@@ -1,3 +1,7 @@
+.building .suggest-edit {
+  padding-bottom: 20px;
+}
+
 .building .suggest-edit a {
   display: inline-block;
   padding: 8px 20px;

@@ -38,7 +38,7 @@ export default class Card extends React.Component {
 
     return (
       <div className='card'>
-        <Link to={'/building?id=' + this.props.building._id}>
+        <Link to={'/building?id=' + this.props.building._id + '#'}>
           <div className='card-content'>
             <div className='background-image card-image' style={this.getStyle()} />
             <div className='card-text'>

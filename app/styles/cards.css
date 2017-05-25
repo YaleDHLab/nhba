@@ -8,6 +8,7 @@
   overflow-y: auto;
   padding: 30px;
   display: inline-block;
+  box-sizing: border-box;
 }
 
 .card-content {

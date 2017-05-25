@@ -1,18 +1,27 @@
+/**
+* Search
+**/
+
+.search {
+  background: #eee
+}
+
 .search .cards {
   width: 50%;
-  position: absolute;
-  top: 140px;
-  bottom: 80px;
-  left: 0;
   height: auto;
-  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 140px;
+  right: 50%;
+  bottom: 80px;
 }
 
 .search .map {
-  position: absolute;
+  width: 50%;
+  position: fixed;
+  height: auto;
+  right: 0;
   top: 140px;
   bottom: 80px;
-  height: auto;
-  width: 50%;
-  right: 0;
+  left: 50%;
 }

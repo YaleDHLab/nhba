@@ -10,7 +10,7 @@ export default class BuildingButton extends React.Component {
 
   scrollToElem() {
     const elem = document.getElementById(this.props.field.href);
-    const container = document.querySelector('.building-text');
+    const container = document.querySelector('body');
     container.scrollTop = elem.offsetTop - 20;
   }
 

@@ -68,8 +68,8 @@ export default class AppWrapper extends React.Component {
   processSession(err, res) {
     if (err) console.warn(err)
     res.body.session.authenticated == true ?
-        this.setState({authenticated: true})
-      : this.setState({authenticated: false})
+        this.setState({authenticated: true, session: res.body.session})
+      : this.setState({authenticated: false, session: res.body.session})
   }
 
   /**
