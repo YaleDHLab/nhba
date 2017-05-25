@@ -1,7 +1,6 @@
 import React from 'react'
 import SuperadminTop from './SuperadminTop'
 import AdminTop from './AdminTop'
-import Filters from '../../Filters'
 import Search from '../../Search'
 import api from '../../../../config'
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import LayoutToggle from './building/BuildingLayoutToggle'
 import BuildingButtons from './building/BuildingButtons'
-import BuildingText from './building/BuildingText'
 import BuildingEditButton from './building/BuildingEditButton'
 import Related from './building/Related'
 import Loader from './Loader'
@@ -9,28 +8,12 @@ import Map from './Map'
 import processTours from './lib/processTours'
 import api from '../../config'
 
-const fields = [
-  {
-    text: {label: 'Overview', field: 'overview_description'},
-    button: {label: 'Overview', icon: 'overview'},
-    href: 'description'
-  },
-  {
-    text: {label: 'Site History', field: 'site_history'},
-    button: {label: 'BuildingHistory', icon: 'building'},
-    href: 'siteHistory'
-  },
-  {
-    text: {label: 'Physical Description', field: 'physical_description'},
-    button: {label: 'Structural Data', icon: 'structure'},
-    href: 'physicalDescription'
-  },
-  {
-    text: {label: 'Social History', field: 'social_history'},
-    button: {label: 'Community Stories', icon: 'community'},
-    href: 'socialHistory'
-  }
-]
+// Building Text components
+import BuildingText from './building/BuildingText'
+import BuildingOverview from './building/BuildingOverview'
+import BuildingHistory from './building/BuildingHistory'
+import BuildingStructuralData from './building/BuildingStructuralData'
+import BuildingResources from './building/BuildingResources'
 
 export default class Building extends React.Component {
   constructor(props) {
@@ -48,6 +31,9 @@ export default class Building extends React.Component {
 
     this.getStyle = this.getStyle.bind(this)
     this.toggleLayout = this.toggleLayout.bind(this)
+
+    // getter for the text fields for a building
+    this.getTextFields = this.getTextFields.bind(this)
 
     // pagination buttons for images
     this.decrementImageIndex = this.decrementImageIndex.bind(this)
@@ -147,6 +133,43 @@ export default class Building extends React.Component {
   }
 
   /**
+  * Retrieve the fields required for creating building table and action buttons
+  **/
+
+  getTextFields() {
+    return [
+      {
+        label: 'Overview',
+        button: {label: 'Overview', icon: 'overview'},
+        href: 'description',
+        component: <BuildingOverview building={this.state.building} />,
+        collapsible: false
+      },
+      {
+        label: 'Building History',
+        button: {label: 'Building History', icon: 'building'},
+        href: 'buildingHistory',
+        component: <BuildingHistory building={this.state.building} />,
+        collapsible: true
+      },
+      {
+        label: 'Structural Data',
+        button: {label: 'Structural Data', icon: 'structure'},
+        href: 'structuralData',
+        component: <BuildingStructuralData building={this.state.building} />,
+        collapsible: true
+      },
+      {
+        label: 'Resources',
+        button: {label: 'Resources', icon: 'community'},
+        href: 'resources',
+        component: <BuildingResources building={this.state.building} />,
+        collapsible: true
+      }
+    ]
+  }
+
+  /**
   * Main render function
   **/
 
@@ -157,16 +180,16 @@ export default class Building extends React.Component {
         </div>
       : null;
 
-    const gallery = (
-      <div className='background-image'
-        style={this.getStyle()}>
-        <div className='image-index-button decrement'
+    const gallery = this.state.building.images &&
+      this.state.building.images.length > 1 ?
+        <div className='background-image' style={this.getStyle()}>
+          <div className='image-index-button decrement'
           onClick={this.decrementImageIndex}/>
-        <div className='image-index-button increment'
-          onClick={this.incrementImageIndex}/>
-        {caption}
-      </div>
-    )
+          <div className='image-index-button increment'
+            onClick={this.incrementImageIndex}/>
+          {caption}
+        </div>
+      : <div className='background-image' style={this.getStyle()} />
 
     const building = this.state.building;
     const location = building &&
@@ -206,7 +229,7 @@ export default class Building extends React.Component {
                     toggleLayout={this.toggleLayout}
                     layout={this.state.layout} />
                   <BuildingButtons
-                    fields={fields} {...this.props} />
+                    fields={this.getTextFields()} {...this.props} />
                   <BuildingEditButton
                     admin={this.state.admin}
                     building={this.state.building} />
@@ -221,7 +244,7 @@ export default class Building extends React.Component {
               <div className='top-right-bottom'>
                 <BuildingText
                   building={this.state.building}
-                  fields={fields} />
+                  fields={this.getTextFields()} />
               </div>
             </div>
 

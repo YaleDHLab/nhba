@@ -52,7 +52,9 @@ export default class Filters extends React.Component {
         <div className='input-container'>
           <div className='search-icon'
             onClick={this.props.runFulltextSearch} />
-          <input type='text' className='building-search'></input>
+          <input type='text'
+            className='building-search'
+            onKeyDown={this.props.handleInputKeys}></input>
         </div>
         <div className='select-container'>
           {selectFields}

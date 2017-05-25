@@ -76,9 +76,18 @@ module.exports = function(app) {
       })
 
       if (req.query.fulltext) {
-        queryTerms.push({
-          'overview_description': {$regex: req.query.fulltext}
-        })
+        var textQuery = {
+          '$or': [
+            {
+              'overview_description': {$regex: req.query.fulltext}
+            },
+            {
+              'address': {$regex: req.query.fulltext}
+            }
+          ]
+        };
+
+        queryTerms.push(textQuery)
       }
 
       keys.map((key) => {

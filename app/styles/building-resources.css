@@ -1,0 +1,20 @@
+/**
+* Building Resources
+**/
+
+.building-resources .archive-document,
+.building-resources .footnotes {
+  margin: 0 15px;
+}
+
+.building-resources .archive-document img {
+  width: 18px;
+  opacity: 0.8;
+}
+
+.building-resources .archive-document a {
+  text-decoration: none;
+  vertical-align: top;
+  margin-left: 12px;
+  color: inherit;
+}
