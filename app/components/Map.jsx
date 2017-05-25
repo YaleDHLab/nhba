@@ -51,6 +51,9 @@ const MapComponent = withGoogleMap(props => (
     defaultZoom={props.mapConfig.zoom}
     center={props.mapConfig.location}
     defaultCenter={props.mapConfig.location}
+    defaultOptions={{
+      scrollwheel: false,
+    }}
   >
     {props.buildings.map((building, idx) => (
       <Marker

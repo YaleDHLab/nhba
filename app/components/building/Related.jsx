@@ -29,7 +29,7 @@ export default class Related extends React.Component {
       <div className='related'>
         <div className='related-buildings'>
           {this.state.buildings.length > 0 ?
-            this.state.buildings.map((building, i) => {
+            _.take(this.state.buildings, 8).map((building, i) => {
               return (<Card building={building} key={i} label={'address'} />)
             })
             : null
