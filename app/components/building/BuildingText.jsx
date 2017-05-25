@@ -24,12 +24,18 @@ export default class BuildingText extends React.Component {
       this.props.fields.map((field, i) => {
         if (field.collapsible) {
           fields.push(
-            <BuildingCollapsible
-              childComponent={field.component}
-              label={field.label} />
+            <div key={i} id={field.href}>
+              <BuildingCollapsible
+                childComponent={field.component}
+                label={field.label} />
+            </div>
           );
         } else {
-          fields.push(field.component)
+          fields.push(
+            <div key={i} id={field.href}>
+              {field.component}
+            </div>
+          )
         }
       })
     }
@@ -37,14 +43,10 @@ export default class BuildingText extends React.Component {
     return (
       <div className='building-text'>
         <h1 className='address'>{name}</h1>
-
         <BuildingTable
           building={this.props.building}
           tableFields={tableFields} />
-
-        {fields.map((field, i) => {
-          return <div key={i}>{field}</div>
-        })}
+        {fields}
       </div>
     )
   }

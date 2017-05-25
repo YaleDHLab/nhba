@@ -1,36 +1,14 @@
 .building {
-  position: absolute;
-  top: 80px;
-  right: 0px;
-  bottom: 80px;
-  left: 0px;
-  width: 100%;
-  height: auto;
   text-align: center;
-  overflow-y: auto;
+  max-width: 100%;
+  overflow: auto;
 }
 
 .building .building-content {
-  width: 100%;
-  min-height: 1000px;
   position: relative;
   text-align: left;
   display: inline-block;
-  max-width: 1100px;
-}
-
-/**
-* Top
-**/
-
-.building .top {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 220px;
-  left: 0px;
-  background: #ccc;
-  height: 770px;
+  width: 1100px;
 }
 
 /**
@@ -41,23 +19,19 @@
   width: 40%;
   display: inline-block;
   background: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
   padding: 0 10px;
   box-sizing: border-box;
+  vertical-align: top;
 }
 
 .building .top .left-content {
-  height: 100%;
   width: 100%;
   border: 1px solid #ddd;
   overflow: hidden;
 }
 
 .building .top .left .top-left-top {
-  height: 50%;
+  height: 360px;
   width: 100%;
   position: relative;
 }
@@ -100,41 +74,28 @@
 
 .building .top .right {
   width: 60%;
-  height: 100%;
   display: inline-block;
   background: #eee;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 
 .building .top .right .top-right-top {
-  height: 50%;
+  height: 360px;
   width: 100%;
   background: #aaa;
-  position: absolute;
-  top: 0;
+  position: relative;
 }
 
 .building .top .right .top-right-bottom {
-  height: 50%;
+  height: auto;
   width: 100%;
   background: #eee;
-  position: absolute;
   bottom: 0;
+  top: 500px;
 }
 
 /**
 * Bottom
 **/
-
-.building .bottom {
-  height: 260px;
-  position: absolute;
-  top: 780px;
-  right: 0px;
-  left: 0px;
-}
 
 .building .bottom .label {
   font-size: 1.3em;

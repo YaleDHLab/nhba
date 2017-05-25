@@ -31,6 +31,8 @@
   background-color: transparent;
   white-space: nowrap;
   overflow: hidden;
+  position: absolute;
+  top: 0;
 }
 
 .authenticate .modal .header .left,
@@ -84,7 +86,7 @@
 .authenticate .modal .body {
   background: #fff;
   height: 100%;
-  margin-top: 4px;
+  margin-top: 54px;
   padding: 50px;
   box-sizing: border-box;
   overflow: hidden;

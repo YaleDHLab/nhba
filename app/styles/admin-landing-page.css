@@ -152,8 +152,14 @@
   height: auto;
 }
 
+.admin-landing-page .filters {
+  position: absolute;
+  top: 0;
+}
+
 .admin-landing-page .search .cards,
 .admin-landing-page .search .map {
+  position: absolute;
   top: 60px;
   bottom: 0;
 }

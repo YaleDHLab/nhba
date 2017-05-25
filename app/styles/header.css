@@ -2,6 +2,9 @@
   height: 80px;
   width: 100%;
   background: #3C2818;
+  position: fixed;
+  top: 0;
+  z-index: 1;
 }
 
 .header .logo-container {

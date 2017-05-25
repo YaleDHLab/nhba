@@ -137,36 +137,81 @@ export default class Building extends React.Component {
   **/
 
   getTextFields() {
-    return [
+    const fields = [
       {
         label: 'Overview',
         button: {label: 'Overview', icon: 'overview'},
         href: 'description',
         component: <BuildingOverview building={this.state.building} />,
-        collapsible: false
+        collapsible: false,
+        contentFields: [
+          'overview_description'
+        ]
       },
       {
         label: 'Building History',
         button: {label: 'Building History', icon: 'building'},
         href: 'buildingHistory',
         component: <BuildingHistory building={this.state.building} />,
-        collapsible: true
+        collapsible: true,
+        contentFields: [
+          'physical_description',
+          'streetscape',
+          'social_history',
+          'site_history'
+        ]
       },
       {
         label: 'Structural Data',
         button: {label: 'Structural Data', icon: 'structure'},
         href: 'structuralData',
         component: <BuildingStructuralData building={this.state.building} />,
-        collapsible: true
+        collapsible: true,
+        contentFields: [
+          'historic_use',
+          'street_visibilities',
+          'dimensions',
+          'materials',
+          'roof_types',
+          'structural_conditions',
+          'past_tenants',
+          'accessibilities',
+          'levels',
+          'structures',
+          'roof_materials'
+        ]
       },
       {
         label: 'Resources',
         button: {label: 'Resources', icon: 'community'},
         href: 'resources',
         component: <BuildingResources building={this.state.building} />,
-        collapsible: true
+        collapsible: true,
+        contentFields: [
+          'archive_documents',
+          'footnotes'
+        ]
       }
-    ]
+    ];
+
+    // only return fields if one or more of their contentFields are populated
+    // in the current building
+    let extantFields = [];
+    if (!this.state.building) return;
+
+    fields.map((field) => {
+      let kept = false;
+      field.contentFields.map((contentField) => {
+        if (this.state.building[contentField] &&
+            this.state.building[contentField].length &&
+            !kept) {
+          extantFields.push(field);
+          kept = true;
+        }
+      })
+    })
+
+    return extantFields;
   }
 
   /**
@@ -174,7 +219,8 @@ export default class Building extends React.Component {
   **/
 
   render() {
-    const caption = this.state.building.images ?
+    const caption = this.state.building.images &&
+      this.state.building.images[this.state.imageIndex].caption ?
         <div className='image-caption'>
           {this.state.building.images[this.state.imageIndex].caption}
         </div>
@@ -218,7 +264,6 @@ export default class Building extends React.Component {
       <div className='building'>
         <div className='building-content'>
           <div className='top'>
-
             <div className='left'>
               <div className='left-content'>
                 <div className='top-left-top'>
@@ -236,7 +281,6 @@ export default class Building extends React.Component {
                 </div>
               </div>
             </div>
-
             <div className='right'>
               <div className='top-right-top'>
                 {layout[this.state.layout.right]}
@@ -247,7 +291,6 @@ export default class Building extends React.Component {
                   fields={this.getTextFields()} />
               </div>
             </div>
-
           </div>
           <div className='bottom'>
             <h1 className='label'>Related Buildings</h1>

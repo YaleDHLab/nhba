@@ -5,14 +5,24 @@ import Search from '../../Search'
 import api from '../../../../config'
 
 export default class LandingPage extends React.Component {
+  constructor(props) {
+    super(props)
 
-  // Protect resources to which only superadmins have access
-  render() {
-    let top = null;
+    this.state = {
+      superadmin: false
+    }
+  }
+
+  componentWillMount() {
+    const self = this;
     api.get('session', (err, res) => {
       if (err) console.warn(err)
-      top = res.body.session.superadmin ? <SuperadminTop /> : <AdminTop />
+      self.setState({superadmin: res.body.session.superadmin})
     })
+  }
+
+  render() {
+    const top = this.state.superadmin ? <SuperadminTop /> : <AdminTop />
 
     return (
       <div className='admin-landing-page'>
