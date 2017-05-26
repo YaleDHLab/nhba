@@ -1,5 +1,6 @@
 import { default as React, Component } from 'react'
 import {  withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 
 const config = {
@@ -46,6 +47,11 @@ const getIcon = (building, tourIdToIndex) => {
   return markerIcon;
 }
 
+const handleMarkerClick = (building) => {
+  const buildingId = building._id;
+  browserHistory.push('/building?id=' + buildingId);
+}
+
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={props.mapConfig.zoom}
@@ -59,6 +65,7 @@ const MapComponent = withGoogleMap(props => (
       <Marker
         icon={getIcon(building, props.tourIdToIndex)}
         key={idx}
+        onClick={() => {handleMarkerClick(building)}}
         position={{
           lat: parseFloat(building.latitude),
           lng: parseFloat(building.longitude)
