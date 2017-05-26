@@ -294,7 +294,7 @@ export default class Building extends React.Component {
           </div>
           <div className='bottom'>
             <h1 className='label'>Related Buildings</h1>
-            <Related />
+            <Related building={this.state.building} />
           </div>
         </div>
       </div>

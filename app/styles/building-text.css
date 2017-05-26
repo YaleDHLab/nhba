@@ -3,6 +3,7 @@
   width: 100%;
   box-sizing: border-box;
   border: 20px solid #eee;
+  word-break: break-all;
 }
 
 .building-text h1 {
