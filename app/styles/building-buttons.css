@@ -16,6 +16,10 @@
   fill: #777;
 }
 
+.building-button:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
 .building-button:hover {
   color: #EDA138;
   fill: #EDA138;
