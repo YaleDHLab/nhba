@@ -7,21 +7,21 @@
 }
 
 .search .cards {
-  width: 50%;
+  width: 25%;
   height: auto;
   position: fixed;
   left: 0;
   top: 140px;
-  right: 50%;
+  right: 75%;
   bottom: 80px;
 }
 
 .search .map {
-  width: 50%;
+  width: 75%;
   position: fixed;
   height: auto;
   right: 0;
   top: 140px;
   bottom: 80px;
-  left: 50%;
+  left: 25%;
 }
