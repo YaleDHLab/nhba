@@ -19,7 +19,7 @@ export default class Cards extends React.Component {
       const windowHeight = window.innerHeight;
       const scrollDistance = document.querySelector('.cards').scrollTop;
       if (windowHeight - scrollDistance < 1000) self.addCards()
-    }, 100)
+    }, 50)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
