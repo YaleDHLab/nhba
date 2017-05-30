@@ -31,7 +31,7 @@ const config = {
 
 // fetch an icon to represent the current building
 const getIcon = (building, tourIdToIndex) => {
-  const tourId = building.tour_ids ?
+  const tourId = building.tour_ids && building.tour_ids.length ?
       building.tour_ids[0].toString()
     : (config.colors.length - 1).toString();
 
