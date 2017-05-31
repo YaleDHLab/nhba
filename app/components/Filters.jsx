@@ -16,7 +16,8 @@ export default class Filters extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(this.props.buildings, prevProps.buildings)) {
+    if (!_.isEqual(prevProps.buildings, this.props.buildings) ||
+       (!_.isEqual(prevProps.tourIdToTitle, this.props.tourIdToTitle))) {
       this.setSelectOptions()
     }
   }
