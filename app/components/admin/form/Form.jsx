@@ -20,7 +20,9 @@ export default class Form extends React.Component {
       building: {},
       activeTab: 'overview',
 
-      tourIdToTitle: {}
+      tourIdToTitle: {},
+
+      unsavedChanges: false
     }
 
     // buildling(s) getters and setters
@@ -49,6 +51,9 @@ export default class Form extends React.Component {
     // methods to update/replace form fields
     this.updateField = this.updateField.bind(this)
     this.replaceField = this.replaceField.bind(this)
+
+    // returns styles that indicate whether the form is dirty
+    this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
 
     // upsert a building
     this.saveBuilding = this.saveBuilding.bind(this)
@@ -180,7 +185,10 @@ export default class Form extends React.Component {
       building[field] = value;
     }
 
-    this.setState({building: building})
+    this.setState({
+      building: building,
+      unsavedChanges: true
+    })
   }
 
   /**
@@ -204,6 +212,17 @@ export default class Form extends React.Component {
       .end((err, res) => {
         if (err) console.log(err)
       })
+    this.setState({unsavedChanges: false})
+  }
+
+  /**
+  * Return styles that indicate whether the form is dirty or not
+  **/
+
+  getSaveButtonStyle() {
+    return this.state.unsavedChanges ?
+        'save-button yellow-button unsaved-changes'
+      : 'save-button yellow-button no-unsaved-changes'
   }
 
   render() {
@@ -250,7 +269,7 @@ export default class Form extends React.Component {
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
-            <div className='save-button yellow-button' onClick={this.saveBuilding}>Save</div>
+            <div className={this.getSaveButtonStyle()} onClick={this.saveBuilding}>Save</div>
           </div>
           {view}
         </div>

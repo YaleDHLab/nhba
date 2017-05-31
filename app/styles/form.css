@@ -61,3 +61,11 @@
   float: right;
   margin-top: 25px;
 }
+
+.form .save-button.unsaved-changes {
+  opacity: 1;
+}
+
+.form .save-button.no-unsaved-changes {
+  opacity: 0.5;
+}
