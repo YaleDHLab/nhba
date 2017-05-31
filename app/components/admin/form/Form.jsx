@@ -112,26 +112,12 @@ export default class Form extends React.Component {
   **/
 
   getNewBuilding() {
-    api.get('buildings', this.processNewBuilding)
+    api.get('building/new', this.processNewBuilding)
   }
 
   processNewBuilding(err, res) {
     if (err) console.warn(err)
-
-    let building = res.body[0];
-    _.keys(building).map((key) => {
-      if (typeof building[key] === 'string') {
-        building[key] = ''
-      }
-      if (typeof building[key] === 'number') {
-        building[key] = null
-      }
-      if (Array.isArray(building[key])) {
-        building[key] = []
-      }
-      delete building._id;
-    })
-    this.setState({building: res.body[0]})
+    this.setState({building: res.body})
   }
 
   /**

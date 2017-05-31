@@ -122,9 +122,8 @@ module.exports = function(app) {
   *
   **/
 
-  app.post('/api/building/new', (req, res) => {
-    var building = new models.building(req.body);
-
+  app.get('/api/building/new', (req, res) => {
+    var building = new models.building({});
     building.save((err, data) => {
       if (err) return res.status(500).send({cause: err})
         return res.status(200).send(data)
