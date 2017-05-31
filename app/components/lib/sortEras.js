@@ -6,6 +6,8 @@
 * @args:
 *   {array} eras: an array of all era strings, each of which should
 *     have the form 'x-y'
+* @returns:
+*   {array}: an array of the extant eras, sorted by their first year
 **/
 
 module.exports = (eras) => {

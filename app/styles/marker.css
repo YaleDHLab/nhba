@@ -1,0 +1,24 @@
+/**
+* Marker overlay styles
+**/
+
+.marker-overlay {
+  padding: 15px 15px 10px;
+  background: #fff;
+  height: auto;
+  width: 280px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.marker-overlay .building-title {
+  font-size: 17px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 0;
+  color: #5a5a5a;
+}
+
+.marker-overlay .building-image {
+  height: 200px;
+}
