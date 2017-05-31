@@ -122,10 +122,6 @@
   display: none;
 }
 
-.building .top .background-image:hover .image-index-button {
-  display: block;
-}
-
 .building .image-index-button.decrement {
   left: 0px;
   -webkit-transform: rotate(90deg);
@@ -147,10 +143,16 @@
 .building .image-caption {
   position: absolute;
   bottom: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.5);
   color: #fff;
   padding: 22px;
   font-size: 18px;
   width: 100%;
   box-sizing: border-box;
+  display: none;
+}
+
+.building .top .background-image:hover .image-index-button,
+.building .top .background-image:hover .image-caption {
+  display: block;
 }
