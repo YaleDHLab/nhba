@@ -8,12 +8,13 @@
 **/
 
 import _ from 'lodash'
+import sortEras from './sortEras'
 
 module.exports = function(buildings, selects, tourIdToTitle) {
   let options = {};
 
   // identify the select options that have fields (ie all but the sort)
-  const selectFields = _.filter(selects, (select) => select.field)
+  const selectFields = _.filter(selects, (select) => select.field);
 
   // initialize an empty set to contain the options for each field
   selectFields.map((select) => {
@@ -57,6 +58,9 @@ module.exports = function(buildings, selects, tourIdToTitle) {
   Object.keys(options).map((option) => {
     options[option] = Array.from(options[option])
   })
+
+  // perform any required sorting
+  options.eras = sortEras(options.eras)
 
   return options;
 }
