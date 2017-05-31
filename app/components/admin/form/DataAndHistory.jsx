@@ -75,7 +75,8 @@ export default class DataAndHistory extends React.Component {
 
     _.keys(files).map((k) => {
       let req = request.post(api.endpoint + 'upload');
-      req.attach('attachment', files[k], files[k].name)
+      let filename = files[k].name.split(' ').join('-');
+      req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
         if (err) console.log(err);
