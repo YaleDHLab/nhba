@@ -5,6 +5,7 @@ import BuildingEditButton from './building/BuildingEditButton'
 import Related from './building/Related'
 import Loader from './Loader'
 import Map from './Map'
+import getBackgroundImageStyle from './lib/getBackgroundImageStyle'
 import processTours from './lib/processTours'
 import api from '../../config'
 
@@ -102,12 +103,7 @@ export default class Building extends React.Component {
     if (images) {
       const dir = '/assets/uploads/resized/large/'
       const image = dir + images[this.state.imageIndex].filename;
-      return {
-        backgroundImage: 'url(' + image + ')',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        backgroundSize: 'cover'
-      }
+      return getBackgroundImageStyle(image);
     }
   }
 
