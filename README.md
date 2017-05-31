@@ -39,6 +39,7 @@ To deploy this app on an Amazon Linux instance on EC2, one must:
  - [ ] obtain ssl certificates
  - [ ] configure the app for https
  - [ ] store required environment variables
+ - [ ] create file upload directory
  - [ ] provision superadmin users
  - [ ] and then start the application
 
@@ -113,6 +114,11 @@ export NHBA_SALT_WORK_FACTOR=10                # encryption difficulty
 export NHBA_ENVIRONMENT='production'           # switch to production
 ```
 Then `source ~/.bash_profile`
+
+#### Create file upload directory
+
+Create a directory in which user uploads can be kept:
+mkdir build/assets/uploads/files
 
 #### Provision superadmin users
 

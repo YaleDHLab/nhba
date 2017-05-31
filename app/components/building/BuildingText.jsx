@@ -20,7 +20,7 @@ export default class BuildingText extends React.Component {
       : this.props.building.address;
 
     let fields = [];
-    if (this.props.building && this.props.building.overview_description) {
+    if (this.props.building) {
       this.props.fields.map((field, i) => {
         if (field.collapsible) {
           fields.push(
