@@ -55,16 +55,18 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
-    api.get('buildings?images=true', this.processBuildings)
-    api.get('wptours', this.processTours)
+    api.get('buildings?images=true', this.processBuildings);
+    api.get('wptours', this.processTours);
+  }
 
+  componentDidUpdate() {
     // bind an event listener to the admin search button
-    var adminSearch = getAdminSearchButton()
+    const adminSearch = getAdminSearchButton();
     if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch)
   }
 
   componentWillUnmount() {
-    var adminSearch = getAdminSearchButton()
+    const adminSearch = getAdminSearchButton();
     if (adminSearch) adminSearch.removeEventListener('click', this.runFulltextSearch)
   }
 
