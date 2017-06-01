@@ -63,13 +63,13 @@ export default class Authenticate extends React.Component {
     }
 
     return (
-      <div className='authenticate'>
+      <div className='authenticate dark-modal-backdrop'>
         <div className='modal'>
           <div className='header'>
-            <div className='left'>New Haven Building Archive</div>
-            <div className='middle' onClick={this.signUp}>Sign up</div>
-            <div className='right' onClick={this.props.hideAuth}>
-              <div className='x'>&times;</div>
+            <div className='brand modal-header-text'>New Haven Building Archive</div>
+            <div className='middle modal-header-text' onClick={this.signUp}>Sign up</div>
+            <div className='close-text modal-header-text' onClick={this.props.hideAuth}>
+              <div className='close-icon'>&times;</div>
               Close
             </div>
           </div>
