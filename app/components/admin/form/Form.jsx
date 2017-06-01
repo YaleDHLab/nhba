@@ -54,7 +54,7 @@ export default class Form extends React.Component {
     this.updateField = this.updateField.bind(this)
     this.replaceField = this.replaceField.bind(this)
 
-    // returns styles that indicate whether the form is dirty
+    // sets styles to indicate whether the form is dirty
     this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
 
     // upsert or delete buildings
@@ -201,7 +201,10 @@ export default class Form extends React.Component {
   replaceField(field, value) {
     let building = Object.assign({}, this.state.building)
     building[field] = value;
-    this.setState({building: building})
+    this.setState({
+      building: building,
+      unsavedChanges: true
+    })
   }
 
   /**
