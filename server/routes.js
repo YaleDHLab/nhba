@@ -79,10 +79,16 @@ module.exports = function(app) {
         var textQuery = {
           '$or': [
             {
-              'overview_description': {$regex: req.query.fulltext}
+              'overview_description': {
+                $regex: req.query.fulltext,
+                $options: 'i'
+              }
             },
             {
-              'address': {$regex: req.query.fulltext}
+              'address': {
+                $regex: req.query.fulltext,
+                $options: 'i'
+              }
             }
           ]
         };
