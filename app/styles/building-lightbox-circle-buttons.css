@@ -1,0 +1,26 @@
+/**
+* Building lightbox circle buttons
+**/
+
+.building-lightbox-circle-buttons {
+  position: absolute;
+  bottom: -38px;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.building-lightbox-circle-button {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 100%;
+  display: inline-block;
+  margin: 3px 6px;
+  cursor: pointer;
+}
+
+.building-lightbox-circle-button.active {
+  background: #EDA138;
+}

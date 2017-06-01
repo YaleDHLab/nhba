@@ -1,15 +1,3 @@
-.authenticate {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9;
-  height: auto;
-  overflow: auto;
-}
-
 .authenticate .modal {
   width: 550px;
   position: absolute;
@@ -24,73 +12,17 @@
 * Modal header
 **/
 
-.authenticate .modal .header {
-  color: #fff;
-  box-sizing: border-box;
-  height: 50px;
-  background-color: transparent;
-  white-space: nowrap;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-}
-
-.authenticate .modal .header .left,
-.authenticate .modal .header .middle,
-.authenticate .modal .header .right {
-  display: inline-block;
-  height: 50px;
-  overflow: hidden;
-  margin-right: 4px;
-  padding: 14px;
-  box-sizing: border-box;
-  background: #999;
-  text-align: center;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.authenticate .modal .header .left {
+.authenticate .modal .header .brand {
   width: 342px;
-  font-family: Tinos;
-  text-align: left;
-  font-size: 1.25em;
-  padding-left: 17px;
 }
 
 .authenticate .modal .header .middle {
   width: 90px;
 }
 
-.authenticate .modal .header .right {
-  width: 110px;
-  margin-right: 0;
-  max-height: 100%;
-}
-
-.authenticate .modal .header .right .x {
-  margin-right: 3px;
-  display: inline-block;
-  font-size: 20px;
-  vertical-align: top;
-  height: 20px;
-  overflow: hidden;
-  margin-top: -2px;
-  font-weight: 100;
-}
-
 /**
 * Modal body
 **/
-
-.authenticate .modal .body {
-  background: #fff;
-  height: 100%;
-  margin-top: 54px;
-  padding: 50px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
 
 .authenticate .modal .body h1 {
   font-weight: 800px;

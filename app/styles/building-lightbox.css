@@ -1,0 +1,64 @@
+/**
+* Building lightbox
+**/
+
+.building-lightbox .modal {
+  width: 70%;
+  top: 7%;
+  height: 80%;
+  left: 15%;
+  position: absolute;
+  max-height: 550px;
+}
+
+.building-lightbox .modal .brand {
+  /* calc fallback */
+  width: 100%;
+  width: calc(100% - 114px);
+}
+
+/**
+* Body contenet
+**/
+
+.building-lightbox .modal .body {
+  height: 100%;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.9);
+  position: relative;
+}
+
+.building-lightbox .lightbox-image {
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  margin: 0 auto;
+}
+
+/**
+* Image pagination buttons
+**/
+
+.building-lightbox .image-pagination-button {
+  position: absolute;
+  top: 50%;
+  height: 30px;
+  width: 30px;
+  margin-top: -15px;
+  background: url(/assets/images/image-paginate-icon.png);
+  background-repeat: no-repeat;
+  background-size: 30px;
+  cursor: pointer;
+}
+
+.building-lightbox .image-pagination-button.previous-image {
+  left: -50px;
+  transform: rotate(180deg);
+}
+
+.building-lightbox .image-pagination-button.next-image {
+  right: -50px;
+}

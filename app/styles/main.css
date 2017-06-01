@@ -118,6 +118,77 @@ a {
 }
 
 /**
+* Modals
+**/
+
+.dark-modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9;
+  height: auto;
+  overflow: auto;
+}
+
+.modal .header {
+  color: #fff;
+  box-sizing: border-box;
+  height: 50px;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+}
+
+.modal .header .modal-header-text {
+  display: inline-block;
+  height: 50px;
+  overflow: hidden;
+  margin-right: 4px;
+  padding: 14px;
+  box-sizing: border-box;
+  background: #999;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.modal .header .modal-header-text.brand {
+  font-family: Tinos;
+  text-align: left;
+  font-size: 1.25em;
+  padding-left: 27px;
+}
+
+.modal .header .close-text {
+  width: 110px;
+  margin-right: 0;
+  max-height: 100%;
+}
+
+.modal .header .close-text .close-icon {
+  margin-right: 3px;
+  display: inline-block;
+  font-size: 20px;
+  vertical-align: top;
+  height: 20px;
+  overflow: hidden;
+  margin-top: -2px;
+  font-weight: 100;
+}
+
+.modal .body {
+  background: #fff;
+  margin-top: 54px;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+/**
 * Global form styles
 **/
 
