@@ -147,25 +147,54 @@ module.exports = function(app) {
     // grab the building from the post body
     var building = req.body;
 
-    if (building._id) {
+    // validate the user has permissions to add to the db
+    if (req.session.admin) {
 
-      // specify the query we'll use to find the document to modify
-      var query = {_id: building._id}
+      if (building._id) {
 
-      // specify the update params
-      var update = {overwrite: true};
+        // specify the query we'll use to find the document to modify
+        var query = {_id: building._id};
 
-      models.building.findOneAndUpdate(query, building, update, (err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
-      })
+        // specify the update params
+        var update = {overwrite: true};
 
+        models.building.findOneAndUpdate(query, building, update, (err, data) => {
+          if (err) return res.status(500).send({cause: err})
+            return res.status(200).send(data)
+        })
+
+      } else {
+        var newBuilding = new models.building(building);
+        newBuilding.save((err, data) => {
+          if (err) return res.status(500).send({cause: err})
+            return res.status(200).send(data)
+        })
+      }
     } else {
-      var newBuilding = new models.building(building);
-      newBuilding.save((err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
-      })
+      return res.status(403).send({cause: 'Insufficient permissions to complete this action'})
+    }
+  })
+
+  /**
+  *
+  * Delete building
+  *
+  **/
+
+  app.post('/api/building/delete', (req, res) => {
+    var building = req.body;
+    if (building._id) {
+      var query = {_id: building._id};
+
+      // validate the user has permission to delete buildings
+      if (req.session.admin) {
+        models.building.remove(query, (err, data) => {
+          if (err) return res.status(500).send({cause: err})
+            res.status(200).send(data)
+        })
+      } else {
+        res.status(403).send({cause: 'Insufficient permissions to complete this action'})
+      }
     }
   })
 

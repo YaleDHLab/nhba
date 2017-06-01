@@ -67,7 +67,6 @@ export default class Search extends React.Component {
     // bind an event listener to the admin search button
     const adminSearch = getAdminSearchButton(),
         adminInput = getAdminSearchInput();
-    console.log(adminSearch, adminInput);
     if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch);
     if (adminInput) adminInput.addEventListener('keydown', this.handleInputKeys);
   }

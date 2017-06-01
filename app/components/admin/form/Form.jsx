@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import Tabs from './Tabs'
 import Overview from './Overview'
 import DataAndHistory from './DataAndHistory'
@@ -7,6 +8,7 @@ import getSelectOptions from '../../lib/getSelectOptions'
 import processTours from '../../lib/processTours'
 import allSelects from '../../lib/allSelects.js'
 import api from '../../../../config'
+import Loader from '../../Loader'
 import request from 'superagent'
 
 export default class Form extends React.Component {
@@ -55,8 +57,9 @@ export default class Form extends React.Component {
     // returns styles that indicate whether the form is dirty
     this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
 
-    // upsert a building
+    // upsert or delete buildings
     this.saveBuilding = this.saveBuilding.bind(this)
+    this.deleteBuilding = this.deleteBuilding.bind(this)
   }
 
   componentDidMount() {
@@ -216,6 +219,21 @@ export default class Form extends React.Component {
   }
 
   /**
+  * Delete the current building and return the admin to the admin page
+  **/
+
+  deleteBuilding() {
+    request.post(api.endpoint + 'building/delete')
+      .send(this.state.building)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        console.log(err, res)
+        if (err) console.log(err)
+      })
+    browserHistory.push('/admin');
+  }
+
+  /**
   * Return styles that indicate whether the form is dirty or not
   **/
 
@@ -227,49 +245,58 @@ export default class Form extends React.Component {
 
   render() {
     let view = null;
-    switch (this.state.activeTab) {
-      case 'overview':
-        view = <Overview
-          building={this.state.building}
-          updateField={this.updateField}
-          replaceField={this.replaceField}
-          options={this.state.options}
-          allowNewOptions={true}
-          handleNewOption={this.handleNewOption}
-          tourIdToTitle={this.state.tourIdToTitle} />;
-        break;
 
-      case 'data-and-history':
-        view = <DataAndHistory
-          building={this.state.building}
-          updateField={this.updateField}
-          replaceField={this.replaceField}
-          options={this.state.options}
-          allowNewOptions={true}
-          handleNewOption={this.handleNewOption} />;
-        break;
+    if (this.state.building) {
+      switch (this.state.activeTab) {
+        case 'overview':
+          view = <Overview
+            building={this.state.building}
+            updateField={this.updateField}
+            replaceField={this.replaceField}
+            options={this.state.options}
+            allowNewOptions={true}
+            handleNewOption={this.handleNewOption}
+            tourIdToTitle={this.state.tourIdToTitle} />;
+          break;
 
-      case 'image-gallery':
-        view = <ImageGallery
-          building={this.state.building}
-          updateField={this.updateField}
-          replaceField={this.replaceField}
-          options={this.state.options}
-          allowNewOptions={true}
-          handleNewOption={this.handleNewOption} />;
-        break;
+        case 'data-and-history':
+          view = <DataAndHistory
+            building={this.state.building}
+            updateField={this.updateField}
+            replaceField={this.replaceField}
+            options={this.state.options}
+            allowNewOptions={true}
+            handleNewOption={this.handleNewOption} />;
+          break;
+
+        case 'image-gallery':
+          view = <ImageGallery
+            building={this.state.building}
+            updateField={this.updateField}
+            replaceField={this.replaceField}
+            options={this.state.options}
+            allowNewOptions={true}
+            handleNewOption={this.handleNewOption} />;
+          break;
+      }
+    } else {
+      view = <Loader />
     }
 
     const building = this.state.building;
+    const address = building && building.address ?
+        building.address
+      : 'New Building'
 
     return (
       <div className='form'>
         <div className='form-content'>
-          <h1>{building.address || 'New Building'}</h1>
+          <h1>{address}</h1>
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
             <div className={this.getSaveButtonStyle()} onClick={this.saveBuilding}>Save</div>
+            <div className='delete-button red-button' onClick={this.deleteBuilding}>Delete</div>
           </div>
           {view}
         </div>
