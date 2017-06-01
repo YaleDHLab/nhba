@@ -2,10 +2,12 @@ import React from 'react'
 import LayoutToggle from './building/BuildingLayoutToggle'
 import BuildingButtons from './building/BuildingButtons'
 import BuildingEditButton from './building/BuildingEditButton'
+import Gallery from './building/BuildingGallery'
 import Related from './building/Related'
 import Loader from './Loader'
 import Map from './Map'
-import getBackgroundImageStyle from './lib/getBackgroundImageStyle'
+
+// helpers
 import processTours from './lib/processTours'
 import api from '../../config'
 
@@ -23,22 +25,16 @@ export default class Building extends React.Component {
     this.state = {
       building: {},
       layout: {left: 'Map', 'right': 'Gallery'},
-      imageIndex: 0,
       admin: false,
 
       // tour data for mapping
       tourIdToIndex: {}
     }
 
-    this.getStyle = this.getStyle.bind(this)
     this.toggleLayout = this.toggleLayout.bind(this)
 
     // getter for the text fields for a building
     this.getTextFields = this.getTextFields.bind(this)
-
-    // pagination buttons for images
-    this.decrementImageIndex = this.decrementImageIndex.bind(this)
-    this.incrementImageIndex = this.incrementImageIndex.bind(this)
 
     // getter and setter for building data
     this.getBuilding = this.getBuilding.bind(this)
@@ -95,31 +91,8 @@ export default class Building extends React.Component {
   }
 
   /**
-  * Layout and style-related functions
+  * Allow users to swap building and map positions
   **/
-
-  getStyle() {
-    const images = this.state.building.images;
-    if (images) {
-      const dir = '/assets/uploads/resized/large/'
-      const image = dir + images[this.state.imageIndex].filename;
-      return getBackgroundImageStyle(image);
-    }
-  }
-
-  incrementImageIndex() {
-    const imageIndex = this.state.imageIndex;
-    const newIndex = (imageIndex + 1) % this.state.building.images.length;
-    this.setState({imageIndex: newIndex})
-  }
-
-  decrementImageIndex() {
-    const imageIndex = this.state.imageIndex;
-    const newIndex = imageIndex > 0 ?
-        imageIndex-1
-      : this.state.building.images.length-1;
-    this.setState({imageIndex: newIndex})
-  }
 
   toggleLayout() {
     const layout = this.state.layout.left == 'Map' ?
@@ -215,24 +188,6 @@ export default class Building extends React.Component {
   **/
 
   render() {
-    const caption = this.state.building.images &&
-      this.state.building.images[this.state.imageIndex].caption ?
-        <div className='image-caption'>
-          {this.state.building.images[this.state.imageIndex].caption}
-        </div>
-      : null;
-
-    const gallery = this.state.building.images &&
-      this.state.building.images.length > 1 ?
-        <div className='background-image' style={this.getStyle()}>
-          <div className='image-index-button decrement'
-          onClick={this.decrementImageIndex}/>
-          <div className='image-index-button increment'
-            onClick={this.incrementImageIndex}/>
-          {caption}
-        </div>
-      : <div className='background-image' style={this.getStyle()} />
-
     const building = this.state.building;
     const location = building &&
       building.latitude &&
@@ -253,7 +208,7 @@ export default class Building extends React.Component {
 
     const layout = {
       'Map': map,
-      'Gallery': gallery
+      'Gallery': <Gallery building={this.state.building} />
     }
 
     return (
