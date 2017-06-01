@@ -44,6 +44,7 @@ p {
   margin: 10px 0;
   font-family: Open Sans;
   line-height: 1.4em;
+  word-break: break-word;
 }
 
 a {
