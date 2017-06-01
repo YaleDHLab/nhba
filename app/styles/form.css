@@ -22,7 +22,6 @@
 **/
 
 .form .form-tabs {
-  width: 500px;
   display: inline-block;
   margin: 30px 0 15px;
 }
@@ -57,9 +56,18 @@
   color: #222;
 }
 
-.form .save-button {
+/**
+* Form buttons
+**/
+
+.form .save-button,
+.form .delete-button {
   float: right;
   margin-top: 25px;
+}
+
+.form .delete-button {
+  margin-right: 13px;
 }
 
 .form .save-button.unsaved-changes {

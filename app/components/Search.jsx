@@ -20,6 +20,10 @@ const getAdminSearchButton = () => {
   return document.querySelector('.admin-search-button');
 }
 
+const getAdminSearchInput = () => {
+  return document.querySelector('input.admin-search');
+}
+
 export default class Search extends React.Component {
   constructor(props) {
     super(props)
@@ -61,13 +65,17 @@ export default class Search extends React.Component {
 
   componentDidUpdate() {
     // bind an event listener to the admin search button
-    const adminSearch = getAdminSearchButton();
-    if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch)
+    const adminSearch = getAdminSearchButton(),
+        adminInput = getAdminSearchInput();
+    if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch);
+    if (adminInput) adminInput.addEventListener('keydown', this.handleInputKeys);
   }
 
   componentWillUnmount() {
-    const adminSearch = getAdminSearchButton();
-    if (adminSearch) adminSearch.removeEventListener('click', this.runFulltextSearch)
+    const adminSearch = getAdminSearchButton(),
+        adminInput = getAdminSearchInput();
+    if (adminSearch) adminSearch.removeEventListener('click', this.runFulltextSearch);
+    if (adminInput) adminInput.removeEventListener('keydown', this.handleInputKeys);
   }
 
   processBuildings(err, res) {
