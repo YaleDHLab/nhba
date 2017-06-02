@@ -17,6 +17,9 @@ cd nhba
 wget https://goo.gl/g76t4D -O nhba.clean.archive
 mongorestore --db nhba --archive=nhba.clean.archive
 
+# create geospatial index for records
+npm run index
+
 # obtain images
 wget https://goo.gl/JNxVDa -O build.tar.gz
 tar -zxf build.tar.gz

@@ -16,6 +16,28 @@ mongoose.connection.on('error', (err) => {
   console.log(err)
 })
 
+/**
+* Helper that adds a building location in geojson to building
+**/
+
+const getLocation = (lng, lat) => {
+  return lng && lat ?
+      {
+        'type': 'Point',
+        'coordinates': [lng, lat]
+      }
+    : undefined;
+}
+
+const updateBuildingFields = (building) => {
+  building.updated_at = new Date();
+  building.location = getLocation(
+    building.longitude,
+    building.latitude
+  );
+  return building;
+}
+
 module.exports = function(app) {
 
   /**
@@ -129,6 +151,12 @@ module.exports = function(app) {
   **/
 
   app.get('/api/building/new', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        res.status(403).send('This action could not be completed')
+      }
+    }
+
     var building = new models.building({});
     building.save((err, data) => {
       if (err) return res.status(500).send({cause: err})
@@ -143,35 +171,29 @@ module.exports = function(app) {
   **/
 
   app.post('/api/building/save', (req, res) => {
-
-    // grab the building from the post body
-    var building = req.body;
-
-    // validate the user has permissions to add to the db
-    if (req.session.admin) {
-
-      if (building._id) {
-
-        // specify the query we'll use to find the document to modify
-        var query = {_id: building._id};
-
-        // specify the update params
-        var update = {overwrite: true};
-
-        models.building.findOneAndUpdate(query, building, update, (err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            return res.status(200).send(data)
-        })
-
-      } else {
-        var newBuilding = new models.building(building);
-        newBuilding.save((err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            return res.status(200).send(data)
-        })
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        res.status(403).send('This action could not be completed')
       }
+    }
+
+    // update buildings that have ids
+    var building = req.body;
+    if (building._id) {
+      building = updateBuildingFields(building);
+      models.building.update({_id: building._id}, {$set: building},
+          {overwrite: true}, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+
     } else {
-      return res.status(403).send({cause: 'Insufficient permissions to complete this action'})
+      var newBuilding = new models.building(building);
+      newBuilding.created_at = new Date();
+      newBuilding.save((err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
     }
   })
 
@@ -182,19 +204,18 @@ module.exports = function(app) {
   **/
 
   app.post('/api/building/delete', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        res.status(403).send('This action could not be completed')
+      }
+    }
+
     var building = req.body;
     if (building._id) {
-      var query = {_id: building._id};
-
-      // validate the user has permission to delete buildings
-      if (req.session.admin) {
-        models.building.remove(query, (err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            res.status(200).send(data)
-        })
-      } else {
-        res.status(403).send({cause: 'Insufficient permissions to complete this action'})
-      }
+      models.building.remove({_id: building._id}, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          res.status(200).send(data)
+      })
     }
   })
 
@@ -204,33 +225,39 @@ module.exports = function(app) {
   *
   **/
 
-  app.get('/api/geocode', (req, res) => {
-    var buildingId = req.query.buildingId;
-    if (buildingId) {
-      models.building.find({_id: buildingId}, (buildingError, buildingResult) => {
-        if (buildingError) {return res.status(500).send({cause: buildingError})}
-          
-          // pluck out the returned building (if any) and save its address
-          var building = buildingResult[0];
-          if (building) {
-            var address = building.address;
-            geocoder.geocode(buildingId, address, (geocoderError, geocoderResponse) => {
-              if (geocoderError) {
-                return res.status(500).send({cause: geocoderError})
-              }
-
-              var match = geocoderResponse[0];
-              if (match) {
-                building.latitude = match.latitude;
-                building.longitude = match.longitude;
-                building.save()
-
-                return res.status(200).send(match)
-              }
-            })
-          }
-      })
+  app.post('/api/geocode', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        res.status(403).send('This action could not be completed')
+      }
     }
+
+    var building = req.body;
+    geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
+      if (geoErr) res.status(500).send({cause: geoErr})
+      var match = geoRes ? geoRes[0] : null;
+      if (match) {
+        var lat = parseFloat(match.latitude),
+            lng = parseFloat(match.longitude);
+        building.latitude = lat;
+        building.longitude = lng;
+        building.location = getLocation(lng, lat);
+
+        // configure the update
+        var query = {_id: building._id};
+        var update = {$set: building};
+
+        models.building.update(query, update, (saveErr, saveData) => {
+          if (saveErr) return res.status(500).send({cause: saveErr})
+            return res.status(200).send({
+              latitude: lat,
+              longitude: lng
+            })
+        })
+      } else {
+        return res.status(200).send('address not found')
+      }
+    })
   })
 
   /**
