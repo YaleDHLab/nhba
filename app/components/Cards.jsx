@@ -16,18 +16,18 @@ export default class Cards extends React.Component {
   componentWillMount() {
     const self = this;
     this.handleScroll = _.debounce(function(event) {
-      const windowHeight = window.innerHeight;
-      const scrollDistance = document.querySelector('.cards').scrollTop;
-      if (windowHeight - scrollDistance < 1000) self.addCards()
+      const cards = document.querySelector('.cards');
+      if (!cards) return;
+      const scrollDistance = cards.scrollTop;
+      if (window.innerHeight - scrollDistance < 1000) self.addCards()
     }, 50)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.isEqual(nextProps.buildings, this.props.buildings) &&
-        this.state.cardsLoaded === nextState.cardsLoaded) {
-      return false;
-    }
-    return true;
+    return _.isEqual(nextProps.buildings, this.props.buildings) &&
+          this.state.cardsLoaded === nextState.cardsLoaded ?
+        false
+      : true
   }
 
   addCards() {
