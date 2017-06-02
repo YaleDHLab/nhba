@@ -1,8 +1,8 @@
 /**
 * @args:
 *   buildings: an array of building objects
-*   tourIdToTitle: an object mapping tourId values to their labels
 *   selects: an array of select objects with label and field keys
+*   tourIdToTitle: an object mapping tourId values to their labels
 * @returns:
 *   options: an object mapping each select field to its options
 **/
