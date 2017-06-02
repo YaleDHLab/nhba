@@ -59,6 +59,15 @@ export default class Filters extends React.Component {
         </div>
         <div className='select-container'>
           {selectFields}
+
+          <select value={this.props.sort}
+            onChange={this.props.updateSort}
+            className='sortby custom-select'>
+            <option disabled>Sort by</option>
+            <option value='proximity'>Proximity to me</option>
+            <option value='updated'>Updated</option>
+          </select>
+
         </div>
       </div>
     )
