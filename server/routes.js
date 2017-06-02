@@ -1,9 +1,10 @@
-var mongoose = require('mongoose')
-var models = require('../app/models/models')
-var config = require('../config')
-var geocoder = require('./geocoder')
-var path = require('path')
-var _ = require('lodash')
+var mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
+var models = require('../app/models/models');
+var config = require('../config');
+var geocoder = require('./geocoder');
+var path = require('path');
+var _ = require('lodash');
 
 /**
 *
@@ -17,7 +18,74 @@ mongoose.connection.on('error', (err) => {
 })
 
 /**
-* Helper that adds a building location in geojson to building
+* Retrieve the text portion of a building query
+*   @args:
+*     {obj} req: an express request
+*   @returns:
+*     {obj}: an object that defines a regex query for all fulltext fields
+**/
+
+const getTextQuery = (req) => {
+  return {
+    '$or': [
+      {
+        'overview_description': {
+          $regex: req.query.fulltext,
+          $options: 'i'
+        }
+      },
+      {
+        'address': {
+          $regex: req.query.fulltext,
+          $options: 'i'
+        }
+      }
+    ]
+  };
+}
+
+/**
+* Retrieve the text portion of a building query
+*   @args:
+*     {array} queryTerms: a list of mongo query objects; e.g. [{_id: 1}]
+*     {obj} req: an express request
+*   @returns:
+*     {array} the input queryTerms array plus query terms from the filters
+*       within the Search component
+**/
+
+const applyFilters = (queryTerms, req) => {
+  var keys = _.chain(req.query)
+    .keys()
+    .without('filter', 'fulltext')
+    .value();
+
+  keys.map((key) => {
+    // values with ' ' use _ as whitespace separator in query
+    var values = []
+    req.query[key].split(' ').map((value) => {
+      values.push(value.split('_').join(' '))
+    })
+
+    // ensure returned records have all of the selected levels
+    var queryTerm = {}
+    queryTerm[key] = { $all: values }
+    queryTerms.push(queryTerm)
+  })
+
+  // ensure we only return buildings with 1 or more images
+  queryTerms.push({$where: 'this.images.length > 0'});
+  return queryTerms;
+}
+
+/**
+* Return a geojson object used for geospatial queries in the db
+*   @args:
+*     {float} lng: a building's longitude
+*     {float} lat: a building's latitude
+*   @returns:
+*     {obj}: an geojson object with the specified lat,lng if available
+*       else, undefined
 **/
 
 const getLocation = (lng, lat) => {
@@ -28,6 +96,14 @@ const getLocation = (lng, lat) => {
       }
     : undefined;
 }
+
+/**
+* Return a geojson object used for geospatial queries in the db
+*   @args:
+*     {obj} building: an instance of the building model
+*   @returns:
+*     {obj}: the same building with a new timestamp and location
+**/
 
 const updateBuildingFields = (building) => {
   building.updated_at = new Date();
@@ -72,75 +148,43 @@ module.exports = function(app) {
 
   /**
   *
-  * Data routes
+  * Building query routes
   *
   **/
 
   app.get('/api/buildings', (req, res) => {
-    var query = {}
+    var query = {};
+    var queryTerms = [];
 
+    // query by building id
     if (req.query.buildingId) {
-      query._id= req.query.buildingId
+      query._id = req.query.buildingId;
     }
 
+    // query for buildings with images
     if (req.query.images && req.query.images == 'true') {
-      var imageQuery = {$where: 'this.images.length > 0'}
-      query = { $and: [ query, imageQuery ] }
+      queryTerms.push({$where: 'this.images.length > 0'})
+    }
+
+    // fulltext query
+    if (req.query.fulltext) {
+      queryTerms.push(getTextQuery(req));
     }
 
     // all queries sent from filter component pass this flag
-    if (req.query.filter && req.query.filter == 'true') {
-      var queryTerms = [];
+    if (req.query.filter) {
+      queryTerms = applyFilters(queryTerms, req);
+    }
 
-      // remove filter and fulltext from the list of query terms
-      var keys = _.filter(_.keys(req.query), (k) => {
-        return !_.includes(['filter', 'fulltext'], k)
-      })
-
-      if (req.query.fulltext) {
-        var textQuery = {
-          '$or': [
-            {
-              'overview_description': {
-                $regex: req.query.fulltext,
-                $options: 'i'
-              }
-            },
-            {
-              'address': {
-                $regex: req.query.fulltext,
-                $options: 'i'
-              }
-            }
-          ]
-        };
-
-        queryTerms.push(textQuery)
-      }
-
-      keys.map((key) => {
-        var queryTerm = {}
-
-        // values with ' ' use _ as whitespace separator in query
-        var values = []
-        req.query[key].split(' ').map((value) => {
-          values.push(value.split('_').join(' '))
-        })
-
-        // ensure returned records have all of the selected levels
-        queryTerm[key] = { $all: values }
-        queryTerms.push(queryTerm)
-      })
-
-      // ensure we only return buildings with 1 or more images
-      queryTerms.push({$where: 'this.images.length > 0'})
+    // combine the queries if necessary
+    if (queryTerms.length) {
+      queryTerms.push(query);
       var query = {$and: queryTerms}
     }
 
-    models.building.find(query,
-      (err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
+    models.building.find(query, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
     })
   })
 
