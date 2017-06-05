@@ -33,6 +33,7 @@ export default class SuperadminTop extends React.Component {
     }
 
     this.changeTab = this.changeTab.bind(this)
+    this.getUsers = this.getUsers.bind(this)
     this.processUsers = this.processUsers.bind(this)
   }
 
@@ -41,6 +42,10 @@ export default class SuperadminTop extends React.Component {
   }
 
   componentDidMount() {
+    this.getUsers()
+  }
+
+  getUsers() {
     api.get('users', this.processUsers)
   }
 
@@ -51,7 +56,7 @@ export default class SuperadminTop extends React.Component {
 
   render() {
     const view = this.state.tab == 'users' ?
-        <Users users={this.state.users} />
+        <Users users={this.state.users} getUsers={this.getUsers} />
       : <Pages pages={pages} />
 
     return (
