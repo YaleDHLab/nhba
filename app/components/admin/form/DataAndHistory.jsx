@@ -134,7 +134,7 @@ export default class DataAndHistory extends React.Component {
         <Select {...this.props}
           width={'half-width'}
           position={'left'}
-          label={'Material'}
+          label={'Materials'}
           field={'materials'} />
 
         <Select {...this.props}
@@ -184,24 +184,28 @@ export default class DataAndHistory extends React.Component {
           width={'full-width'}
           label={'Physical Description'}
           field={'physical_description'}
+          placeholder={'Describe building form, materials, design, and style.  Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant.  Highlight glossary terms.'}
           rows={7} />
 
         <TextArea {...this.props}
           width={'full-width'}
           label={'Streetscape'}
           field={'streetscape'}
+          placeholder={'Describe the building’s broader urban context and the interrelationship of building and surroundings.'}
           rows={7} />
 
         <TextArea {...this.props}
           width={'full-width'}
           label={'Social History'}
           field={'social_history'}
+          placeholder={'Describe ownership and tenancy of the building over time.  Draw from city directories, atlases, Sanborn maps, etc.  Can you suggest the roles this building has played in the city’s broader social history?  What social groups or functions has it housed over time?'}
           rows={7} />
 
         <TextArea {...this.props}
           width={'full-width'}
           label={'Site History'}
           field={'site_history'}
+          placeholder={'More additional information on the history of this site, including ownership and land use prior to the current structure.'}
           rows={7} />
 
         <FileTable {...this.props}
@@ -221,6 +225,7 @@ export default class DataAndHistory extends React.Component {
           width={'full-width'}
           label={'Footnotes'}
           field={'footnotes'}
+          placeholder={'Please note sources, including maps, documents, and secondary sources.'}
           rows={10} />
 
       </div>
