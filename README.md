@@ -1,4 +1,4 @@
-### Dependencies
+### Dependencie
 
 This application requires Node.js (version 6 or higher) and MongoDB.
 
