@@ -21,36 +21,10 @@ module.exports = function(buildings, selects, tourIdToTitle) {
     options[select.field] = new Set()
   })
 
-  // helper to add all options for a given field to an 'options' object
-  const addOption = (building, field, options) => {
-    if (building[field] && building[field].length > 0) {
-
-      // ensure the levels for the current factor are an array
-      const levels = _.isArray(building[field]) ?
-          building[field]
-        : [building[field]]
-
-      // tour id values should be represented by their labels
-      if (field == 'tour_ids') {
-        levels.map((level) => {
-          tourIdToTitle && tourIdToTitle[level] ?
-              options[field].add(tourIdToTitle[level])
-            : level
-        })
-      } else {
-        levels.map((level) => {
-          options[field].add(level)
-        })
-      }
-    }
-
-    return options;
-  }
-
   // add each building's value to the options for each field
   buildings.map((building) => {
     selectFields.map((select) => {
-      options = addOption(building, select.field, options)
+      options = addOption(building, select.field, options, tourIdToTitle)
     })
   })
 
@@ -61,6 +35,32 @@ module.exports = function(buildings, selects, tourIdToTitle) {
 
   // perform any required sorting
   options.eras = sortEras(options.eras)
+
+  return options;
+}
+
+// helper to add all options for a given field to an 'options' object
+const addOption = (building, field, options, tourIdToTitle) => {
+  if (building[field] && building[field].length > 0) {
+
+    // ensure the levels for the current factor are an array
+    const levels = _.isArray(building[field]) ?
+        building[field]
+      : [building[field]]
+
+    // tour id values should be represented by their labels
+    if (field == 'tour_ids') {
+      levels.map((level) => {
+        tourIdToTitle && tourIdToTitle[level] ?
+            options[field].add(tourIdToTitle[level])
+          : level
+      })
+    } else {
+      levels.map((level) => {
+        options[field].add(level)
+      })
+    }
+  }
 
   return options;
 }
