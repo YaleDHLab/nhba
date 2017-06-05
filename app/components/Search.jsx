@@ -181,7 +181,8 @@ export default class Search extends React.Component {
           updateSort={this.updateSort} />
         <Cards buildings={this.state.buildings} />
         <Map buildings={this.state.buildings}
-          tourIdToIndex={this.state.tourIdToIndex} />
+          tourIdToIndex={this.state.tourIdToIndex}
+          userLocation={this.state.userLocation} />
       </div>
     )
   }
