@@ -25,7 +25,7 @@ export default class TextArea extends React.Component {
         <textarea className='custom-textarea'
           onChange={this.updateField}
           rows={this.props.rows}
-          placeholder='(200 words) Style guide...'
+          placeholder={this.props.placeholder || ''}
           value={this.props.building[this.props.field] || ''} />
       </div>
     )

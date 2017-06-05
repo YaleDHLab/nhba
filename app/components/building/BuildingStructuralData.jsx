@@ -23,7 +23,6 @@ export default class BuildingStructuralData extends React.Component {
   render() {
     return (
       <div className='building-structural-data'>
-        <h2>Facts</h2>
         <BuildingTable
           building={this.props.building}
           tableFields={tableFields} />
