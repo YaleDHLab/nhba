@@ -2,6 +2,7 @@
 var bcrypt = require('bcryptjs')
 var models = require('../app/models/models')
 var mailer = require('./mailer')
+var _ = require('lodash')
 
 // specify the encryption level
 var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10
@@ -9,9 +10,7 @@ var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10
 module.exports = function(app) {
 
   /**
-  *
   * Identify the messages delievered by the auth middleware to client
-  *
   **/
 
   var messages = {
@@ -25,12 +24,10 @@ module.exports = function(app) {
     'passwordUpdated': 'Success! Your password has been updated.',
     'error': 'Sorry, we could not process your request. \
               Please contact an administrator for help.',
-  }
+  };
 
   /**
-  *
   * Register new users
-  *
   **/
 
   // request made by client when attempting to add a user to the db
@@ -41,7 +38,6 @@ module.exports = function(app) {
   })
 
   /**
-  *
   * Create and email a token to a user's email for account verification
   *
   * @args:
@@ -49,7 +45,6 @@ module.exports = function(app) {
   *   doc: the result of a mongoose query for a user
   *   req: a request object from express
   *   res: a response object from express
-  *
   **/
 
   var initializeUserPassword = (err, doc, req, res) => {
@@ -57,18 +52,18 @@ module.exports = function(app) {
     if (doc.length > 0) {
       return res.status(200).send({
         message: messages.emailTaken
-      })
+      });
     }
 
     // else, create a new user with that email address
-    var user = new models.user(req.body)
+    var user = new models.user(req.body);
 
     bcrypt.genSalt(saltWorkFactor, (err, salt) => {
-      if (err) return next(err)
+      if (err) return next(err);
 
       // hash the password and the new salt
       bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) return next(err)
+        if (err) return next(err);
 
         // store the salted password, not the cleartext password
         user.password = hash
@@ -84,16 +79,14 @@ module.exports = function(app) {
           if (err) return res.status(500).send({cause: err})
           return res.status(200).send({
             message: messages.checkEmail
-          })
+          });
         })
       })
     })
   }
 
   /**
-  *
   * Validate the account token emailed to user
-  *
   **/
 
   app.post('/api/validate', (req, res, next) => {
@@ -102,24 +95,22 @@ module.exports = function(app) {
       token: req.body.token,
     }
 
+    // find and validate the user
     models.user.find(query, (err, doc) => {
       authenticateUser(err, doc, req, res)
     })
   })
 
   /**
-  *
   * Create a new secure token for account validation
-  *
   **/
 
   var getToken = () => {
-    var salt = bcrypt.genSaltSync(saltWorkFactor)
-    return bcrypt.hashSync('B4c0/\/', salt)
+    var salt = bcrypt.genSaltSync(saltWorkFactor);
+    return bcrypt.hashSync('B4c0/\/', salt);
   }
 
   /**
-  *
   * High level authentication check wrapper
   *
   * @args:
@@ -127,37 +118,70 @@ module.exports = function(app) {
   *   doc: the result of a mongoose query for a user
   *   req: a request object from express
   *   res: a response object from express
-  *
   **/
 
   var authenticateUser = (err, doc, req, res) => {
     if (err || doc.length == 0) {
       return res.status(200).send({
         message: messages.error
-      })
+      });
     }
 
-    var user = doc[0]
+    var user = doc[0];
 
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-      if (err) {
-        return res.status(200).send({
-          message: messages.error
-        })
-      }
+      if (err) return res.status(200).send({
+        message: messages.error
+      });
 
-      // save the user's auth status to the session data
+      // validate the user, update their credentials, and log them in
       if (isMatch) {
-        loginSessionData(user, req)
+        validateUser(user, req, res)
+      } else {
+        return res.status(200).send({
+          message: messages.loginFail
+        });
+      }
+    })
+  }
 
+  /**
+  * Validate a user and update their status if they're included in
+  * the admin environment variable
+  *
+  * @args:
+  *   {user}: an instance of the User table
+  *   {req}: the current Express request
+  *   {res}: the current Express response
+  **/
+
+  var validateUser = (user, req, res) => {
+    var adminEmails = process.env['NHBA_ADMIN_EMAILS'];
+    var superadminEmails = process.env['NHBA_SUPERADMIN_EMAILS'];
+    adminEmails = adminEmails ? adminEmails.split(' ') : [];
+    superadminEmails = superadminEmails ? superadminEmails.split(' ') : [];
+
+    if (_.includes(adminEmails, user.email)) {
+      user.admin = true;
+    };
+
+    if (_.includes(superadminEmails, user.email)) {
+      user.superadmin = true;
+    };
+
+    user.validated = true;
+
+    models.user.update({_id: user._id}, {$set: user},
+      {overwrite: true}, (err, data) => {
+        if (err) console.warn(err)
+
+        // update the user's session state
+        loginSessionData(user, req);
+
+        // inform the user they're logged in
         return res.status(200).send({
           message: messages.loginSuccess
-        })
-      }
-
-      return res.status(200).send({
-        message: messages.loginFail
-      })
+        });
     })
   }
 
@@ -200,7 +224,7 @@ module.exports = function(app) {
   app.get('/api/session', (req, res, next) => {
     return res.status(200).send({
       session: req.session
-    })
+    });
   })
 
   /**
@@ -217,11 +241,11 @@ module.exports = function(app) {
       if (err) {
         return res.status(200).send({
           message: messages.logoutFail
-        })
+        });
       } else {
         return res.status(200).send({
           message: messages.logoutSuccess
-        })
+        });
       }
     })
   })
@@ -254,19 +278,19 @@ module.exports = function(app) {
     if (err) {
       return res.status(200).send({
         message: messages.error
-      })
+      });
     }
 
-    var user = doc[0]
+    var user = doc[0];
 
     if (!user) {
       return res.status(200).send({
         message: messages.loginFail
-      })
+      });
     }
 
-    user.token = getToken()
-    user.validated = false
+    user.token = getToken();
+    user.validated = false;
 
     // email the user a new validation token
     mailer.send(user.email, user.token, '&resetPassword=true')
@@ -279,7 +303,7 @@ module.exports = function(app) {
       if (err) return res.status(500).send({cause: err})
       return res.status(200).send({
         message: messages.checkEmail
-      })
+      });
     })
   }
 
@@ -302,7 +326,7 @@ module.exports = function(app) {
       })
     }
 
-    var user = doc[0]
+    var user = doc[0];
 
     if (!user) {
       return res.status(200).send({
@@ -311,41 +335,39 @@ module.exports = function(app) {
     }
 
     // authenticate the user in the session store
-    loginSessionData(user, req)
+    loginSessionData(user, req);
 
-    user.password = req.body.password
+    user.password = req.body.password;
 
     bcrypt.genSalt(saltWorkFactor, (err, salt) => {
-      if (err) return next(err)
+      if (err) return next(err);
 
       // hash the password and the new salt
       bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) return next(err)
+        if (err) return next(err);
 
         // store the salted password, not the cleartext password
-        user.password = hash
-        user.validated = true
+        user.password = hash;
+        user.validated = true;
 
         var query = {
           email: user.email,
           token: user.token
-        }
+        };
 
         models.user.findOneAndUpdate(query, user, {upsert: true}, (err, doc) => {
           if (err) return res.status(500).send({cause: err})
           return res.status(200).send({
             message: messages.passwordUpdated
-          })
+          });
         })
       })
     })
   }
 
   /**
-  *
-  * Add middleware that only allows authenticated users to access /admin;
-  * Only load this middleware in production environments
-  *
+  * Middleware that only allows authenticated users to access /admin;
+  * NB: This middleware is only loaded in production environments
   **/
 
   if (process.env['NHBA_ENVIRONMENT'] === 'production') {
