@@ -1,5 +1,6 @@
 import { default as React, Component } from 'react'
 import {  withGoogleMap, GoogleMap } from 'react-google-maps';
+import UserMarker from './map/UserMarker'
 import MapMarker from './map/Marker'
 import _ from 'lodash';
 
@@ -11,6 +12,8 @@ const MapComponent = withGoogleMap(props => (
     defaultOptions={{
       scrollwheel: false,
     }}>
+
+    <UserMarker userLocation={props.userLocation} />
 
     {props.buildings.map((building, idx) => {
       const lat = parseFloat(building.latitude);
@@ -45,17 +48,15 @@ export default class MapContainer extends Component {
   }
 
   render() {
-    const initialLocation = this.props.initialLocation;
-
-    const defaultLocation = {
-      lat: 41.3075931,
-      lng: -72.9278493
-    }
-
-    const mapConfig = {
-      zoom: 15,
-      location: initialLocation ? initialLocation : defaultLocation
-    }
+    const initialLocation = this.props.initialLocation,
+        defaultLocation = {
+          lat: 41.3075931,
+          lng: -72.9278493
+        },
+        mapConfig = {
+          zoom: 15,
+          location: initialLocation ? initialLocation : defaultLocation
+        };
 
     return (
       <div className='map'>
@@ -66,6 +67,7 @@ export default class MapContainer extends Component {
             buildings={this.props.buildings}
             tourIdToIndex={this.props.tourIdToIndex}
             mapConfig={mapConfig}
+            userLocation={this.props.userLocation}
           />
         </div>
       </div>

@@ -14,8 +14,11 @@ git clone https://github.com/duhaime/nhba
 cd nhba
 
 # load database
-wget https://goo.gl/g76t4D -O nhba.clean.archive
-mongorestore --db nhba --archive=nhba.clean.archive
+wget https://goo.gl/1byWWm -O nhba.geo.archive
+mongorestore --db nhba --archive=nhba.geo.archive
+
+# create geospatial index for records
+npm run index
 
 # obtain images
 wget https://goo.gl/JNxVDa -O build.tar.gz

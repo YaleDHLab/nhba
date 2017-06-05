@@ -6,6 +6,7 @@ export default class TextInput extends React.Component {
 
     this.getClass = this.getClass.bind(this)
     this.updateField = this.updateField.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
   }
 
   getClass() {
@@ -18,6 +19,10 @@ export default class TextInput extends React.Component {
     this.props.updateField(this.props.field, e.target.value)
   }
 
+  handleBlur() {
+    this.props.onBlur ? this.props.onBlur() : {}
+  }
+
   render() {
     return (
       <div className={this.getClass()}>
@@ -25,7 +30,8 @@ export default class TextInput extends React.Component {
         <input
           type='text'
           value={this.props.building[this.props.field] || ''}
-          onChange={this.updateField} />
+          onChange={this.updateField}
+          onBlur={this.handleBlur} />
       </div>
     )
   }

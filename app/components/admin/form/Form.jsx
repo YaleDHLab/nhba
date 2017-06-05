@@ -54,6 +54,9 @@ export default class Form extends React.Component {
     this.updateField = this.updateField.bind(this)
     this.replaceField = this.replaceField.bind(this)
 
+    // method to request lat long data
+    this.geocode = this.geocode.bind(this)
+
     // sets styles to indicate whether the form is dirty
     this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
 
@@ -199,12 +202,32 @@ export default class Form extends React.Component {
   **/
 
   replaceField(field, value) {
-    let building = Object.assign({}, this.state.building)
+    let building = Object.assign({}, this.state.building);
     building[field] = value;
     this.setState({
       building: building,
       unsavedChanges: true
     })
+  }
+
+  /**
+  * Fetch lat,lng coordinates for a building
+  **/
+
+  geocode() {
+    request.post(api.endpoint + 'geocode')
+      .send(this.state.building)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        const result = res.body,
+            latitude = result.latitude,
+            longitude = result.longitude;
+        if (latitude && longitude) {
+          this.updateField('latitude', latitude)
+          this.updateField('longitude', longitude)
+        }
+        if (err) console.log(err)
+      })
   }
 
   /**
@@ -259,7 +282,8 @@ export default class Form extends React.Component {
             options={this.state.options}
             allowNewOptions={true}
             handleNewOption={this.handleNewOption}
-            tourIdToTitle={this.state.tourIdToTitle} />;
+            tourIdToTitle={this.state.tourIdToTitle}
+            geocode={this.geocode} />;
           break;
 
         case 'data-and-history':

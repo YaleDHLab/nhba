@@ -50,13 +50,12 @@ db.wptour = {
 
 db.building = {
 
+  // mapping to the building's mysql id in wordpress
   sql_building_id: Number,
 
   // overview
   building_name: String,
   address: String,
-  latitude: String,
-  longitude: String,
   year_built: String,
   styles: [String],
   current_uses: [String],
@@ -101,6 +100,25 @@ db.building = {
     filename: String,
     caption: String
   }],
+
+  // geospatial fields
+  longitude: Number,
+  latitude: Number,
+  location: {
+    type: {
+      type: String,
+      enum: 'Point',
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      default: [0,0]
+    }
+  },
+
+  // timestamp fields
+  created_at: Number,
+  updated_at: Number,
 
   // fields not in admin ui
   courses: [String],

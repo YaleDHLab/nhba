@@ -1,9 +1,10 @@
-var mongoose = require('mongoose')
-var models = require('../app/models/models')
-var config = require('../config')
-var geocoder = require('./geocoder')
-var path = require('path')
-var _ = require('lodash')
+var mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
+var models = require('../app/models/models');
+var config = require('../config');
+var geocoder = require('./geocoder');
+var path = require('path');
+var _ = require('lodash');
 
 /**
 *
@@ -15,6 +16,140 @@ mongoose.connect('mongodb://localhost/' + config.db)
 mongoose.connection.on('error', (err) => {
   console.log(err)
 })
+
+/**
+* Return the time since epoch in millisconds
+**/
+
+const getTime = () => {
+  return Date.now() / 1000;
+}
+
+/**
+* Retrieve the text portion of a building query
+*   @args:
+*     {obj} req: an express request
+*   @returns:
+*     {obj}: an object that defines a regex query for all fulltext fields
+**/
+
+const getTextQuery = (req) => {
+  return {
+    '$or': [
+      {
+        'overview_description': {
+          $regex: req.query.fulltext,
+          $options: 'i'
+        }
+      },
+      {
+        'address': {
+          $regex: req.query.fulltext,
+          $options: 'i'
+        }
+      }
+    ]
+  };
+}
+
+/**
+* Retrieve the text portion of a building query
+*   @args:
+*     {array} queryTerms: a list of mongo query objects; e.g. [{_id: 1}]
+*     {obj} req: an express request
+*   @returns:
+*     {array} the input queryTerms array plus query terms from the filters
+*       within the Search component
+**/
+
+const addFilterTerms = (queryTerms, req) => {
+  var keys = _.chain(req.query)
+    .keys()
+    .without('filter', 'fulltext', 'sort',
+      'userLatitude', 'userLongitude')
+    .value();
+
+  keys.map((key) => {
+    // values with ' ' use _ as whitespace separator in query
+    var values = []
+    req.query[key].split(' ').map((value) => {
+      values.push(value.split('_').join(' '))
+    })
+
+    // ensure returned records have all of the selected levels
+    var queryTerm = {}
+    queryTerm[key] = { $all: values }
+    queryTerms.push(queryTerm)
+  })
+
+  // ensure we only return buildings with 1 or more images
+  queryTerms.push({$where: 'this.images.length > 0'});
+  return queryTerms;
+}
+
+/**
+* Return a geojson object used for geospatial queries in the db
+*   @args:
+*     {float} lng: a building's longitude
+*     {float} lat: a building's latitude
+*   @returns:
+*     {obj}: an geojson object with the specified lat,lng if available
+*       else, undefined
+**/
+
+const getLocation = (lng, lat) => {
+  return lng && lat ?
+      {
+        'type': 'Point',
+        'coordinates': [
+          parseFloat(lng),
+          parseFloat(lat)
+        ]
+      }
+    : undefined;
+}
+
+/**
+* Add a proximity term to a mongo query
+*   @args:
+*     {array} queryTerms: a list of mongo query objects; e.g. [{_id: 1}]
+*     {obj} req: an express request
+*   @returns:
+*     {array} the input queryTerms array plus a $near query
+**/
+
+const addProximityTerms = (queryTerms, req) => {
+  var userLng = req.query.userLongitude;
+  var userLat = req.query.userLatitude;
+
+  var nearQuery = {
+    location: {
+      $near: {
+        $geometry: getLocation(userLng, userLat)
+      }
+    }
+  }
+
+  queryTerms.push(nearQuery);
+  return queryTerms;
+}
+
+/**
+* Return a geojson object used for geospatial queries in the db
+*   @args:
+*     {obj} building: an instance of the building model
+*   @returns:
+*     {obj}: the same building with a new timestamp and location
+**/
+
+const updateBuildingFields = (building) => {
+  building.updated_at = getTime();
+  building.location = getLocation(
+    building.longitude,
+    building.latitude
+  );
+  return building;
+}
 
 module.exports = function(app) {
 
@@ -50,76 +185,58 @@ module.exports = function(app) {
 
   /**
   *
-  * Data routes
+  * Building query routes
   *
   **/
 
   app.get('/api/buildings', (req, res) => {
-    var query = {}
+    var query = {};
+    var queryTerms = [];
 
+    // query by building id
     if (req.query.buildingId) {
-      query._id= req.query.buildingId
+      query._id = req.query.buildingId;
     }
 
+    // query for buildings with images
     if (req.query.images && req.query.images == 'true') {
-      var imageQuery = {$where: 'this.images.length > 0'}
-      query = { $and: [ query, imageQuery ] }
-    }
-
-    // all queries sent from filter component pass this flag
-    if (req.query.filter && req.query.filter == 'true') {
-      var queryTerms = [];
-
-      // remove filter and fulltext from the list of query terms
-      var keys = _.filter(_.keys(req.query), (k) => {
-        return !_.includes(['filter', 'fulltext'], k)
-      })
-
-      if (req.query.fulltext) {
-        var textQuery = {
-          '$or': [
-            {
-              'overview_description': {
-                $regex: req.query.fulltext,
-                $options: 'i'
-              }
-            },
-            {
-              'address': {
-                $regex: req.query.fulltext,
-                $options: 'i'
-              }
-            }
-          ]
-        };
-
-        queryTerms.push(textQuery)
-      }
-
-      keys.map((key) => {
-        var queryTerm = {}
-
-        // values with ' ' use _ as whitespace separator in query
-        var values = []
-        req.query[key].split(' ').map((value) => {
-          values.push(value.split('_').join(' '))
-        })
-
-        // ensure returned records have all of the selected levels
-        queryTerm[key] = { $all: values }
-        queryTerms.push(queryTerm)
-      })
-
-      // ensure we only return buildings with 1 or more images
       queryTerms.push({$where: 'this.images.length > 0'})
-      var query = {$and: queryTerms}
     }
 
-    models.building.find(query,
-      (err, data) => {
+    // query for fulltet
+    if (req.query.fulltext) {
+      queryTerms.push(getTextQuery(req));
+    }
+
+    // queries from the filter component pass this flag
+    if (req.query.filter) {
+      queryTerms = addFilterTerms(queryTerms, req);
+    }
+
+    // query by geospatial location
+    if (req.query.sort && req.query.sort == 'proximity') {
+      queryTerms = addProximityTerms(queryTerms, req);
+    }
+
+    // combine the queries if necessary
+    if (queryTerms.length) {
+      queryTerms.push(query);
+      var query = {$and: queryTerms};
+    }
+
+    if (req.query.sort && req.query.sort !== 'proximity') {
+      var sort = {};
+      sort[req.query.sort] = -1;
+      models.building.find(query).sort(sort).exec((err, data) => {
         if (err) return res.status(500).send({cause: err})
           return res.status(200).send(data)
-    })
+      })
+    } else {
+      models.building.find(query, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+    }
   })
 
   /**
@@ -129,6 +246,12 @@ module.exports = function(app) {
   **/
 
   app.get('/api/building/new', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        return res.status(403).send('This action could not be completed')
+      }
+    }
+
     var building = new models.building({});
     building.save((err, data) => {
       if (err) return res.status(500).send({cause: err})
@@ -143,35 +266,29 @@ module.exports = function(app) {
   **/
 
   app.post('/api/building/save', (req, res) => {
-
-    // grab the building from the post body
-    var building = req.body;
-
-    // validate the user has permissions to add to the db
-    if (req.session.admin) {
-
-      if (building._id) {
-
-        // specify the query we'll use to find the document to modify
-        var query = {_id: building._id};
-
-        // specify the update params
-        var update = {overwrite: true};
-
-        models.building.findOneAndUpdate(query, building, update, (err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            return res.status(200).send(data)
-        })
-
-      } else {
-        var newBuilding = new models.building(building);
-        newBuilding.save((err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            return res.status(200).send(data)
-        })
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        return res.status(403).send('This action could not be completed')
       }
+    }
+
+    // update buildings that have ids
+    var building = req.body;
+    if (building._id) {
+      building = updateBuildingFields(building);
+      models.building.update({_id: building._id}, {$set: building},
+          {overwrite: true}, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+
     } else {
-      return res.status(403).send({cause: 'Insufficient permissions to complete this action'})
+      var newBuilding = new models.building(building);
+      newBuilding.created_at = getTime();
+      newBuilding.save((err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
     }
   })
 
@@ -182,19 +299,18 @@ module.exports = function(app) {
   **/
 
   app.post('/api/building/delete', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        return res.status(403).send('This action could not be completed')
+      }
+    }
+
     var building = req.body;
     if (building._id) {
-      var query = {_id: building._id};
-
-      // validate the user has permission to delete buildings
-      if (req.session.admin) {
-        models.building.remove(query, (err, data) => {
-          if (err) return res.status(500).send({cause: err})
-            res.status(200).send(data)
-        })
-      } else {
-        res.status(403).send({cause: 'Insufficient permissions to complete this action'})
-      }
+      models.building.remove({_id: building._id}, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
     }
   })
 
@@ -204,33 +320,44 @@ module.exports = function(app) {
   *
   **/
 
-  app.get('/api/geocode', (req, res) => {
-    var buildingId = req.query.buildingId;
-    if (buildingId) {
-      models.building.find({_id: buildingId}, (buildingError, buildingResult) => {
-        if (buildingError) {return res.status(500).send({cause: buildingError})}
-          
-          // pluck out the returned building (if any) and save its address
-          var building = buildingResult[0];
-          if (building) {
-            var address = building.address;
-            geocoder.geocode(buildingId, address, (geocoderError, geocoderResponse) => {
-              if (geocoderError) {
-                return res.status(500).send({cause: geocoderError})
-              }
+  app.post('/api/geocode', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        return res.status(403).send('This action could not be completed')
+      }
+    }
 
-              var match = geocoderResponse[0];
-              if (match) {
-                building.latitude = match.latitude;
-                building.longitude = match.longitude;
-                building.save()
+    var building = req.body;
+    geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
+      if (geoErr) {
+        return res.status(500).send({cause: geoErr})
+      }
+      var match = geoRes ? geoRes[0] : null;
+      if (match) {
+        var lat = parseFloat(match.latitude),
+            lng = parseFloat(match.longitude);
+        building.latitude = lat;
+        building.longitude = lng;
+        building.location = getLocation(lng, lat);
 
-                return res.status(200).send(match)
-              }
+        // configure the update
+        var query = {_id: building._id};
+        var update = {$set: building};
+
+        models.building.update(query, update, (saveErr, saveData) => {
+          if (saveErr) {
+            return res.status(500).send({cause: saveErr})
+          } else {
+            return res.status(200).send({
+              latitude: lat,
+              longitude: lng
             })
           }
-      })
-    }
+        })
+      } else {
+        return res.status(200).send('address not found')
+      }
+    })
   })
 
   /**

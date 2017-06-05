@@ -9,6 +9,5 @@ module.exports = [
   {label: 'Current Use', field: 'current_uses'},
   {label: 'Style', field: 'styles'},
   {label: 'Era', field: 'eras'},
-  {label: 'Neighborhood', field: 'neighborhoods'},
-  {label: 'Sort by'},
+  {label: 'Neighborhood', field: 'neighborhoods'}
 ];

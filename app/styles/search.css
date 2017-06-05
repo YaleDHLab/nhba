@@ -8,12 +8,14 @@
 
 .search .cards {
   width: 25%;
-  height: auto;
   position: fixed;
+  height: auto;
   left: 0;
   top: 140px;
   right: 75%;
   bottom: 80px;
+  min-width: 300px;
+  z-index: 2;
 }
 
 .search .map {

@@ -20,7 +20,8 @@ export default class Overview extends React.Component {
         <TextInput {...this.props}
           width={'full-width'}
           label={'Address'}
-          field={'address'} />
+          field={'address'}
+          onBlur={this.props.geocode} />
 
         <TextInput {...this.props}
           width={'half-width'}

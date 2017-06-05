@@ -1,5 +1,6 @@
 import React from 'react'
 import Multiselect from './Multiselect'
+import Sort from './Sort'
 import getSelectOptions from './lib/getSelectOptions'
 import filterSelects from './lib/filterSelects.js'
 import _ from 'lodash'
@@ -35,7 +36,6 @@ export default class Filters extends React.Component {
         const values = this.props[select.field] ?
             _.toArray(this.props[select.field])
           : []
-
         return (
           <Multiselect
             key={i}
@@ -59,9 +59,11 @@ export default class Filters extends React.Component {
         </div>
         <div className='select-container'>
           {selectFields}
+          <Sort sort={this.props.sort}
+            updateSort={this.props.updateSort}
+            userLocation={this.props.userLocation} />
         </div>
       </div>
     )
   }
 }
-

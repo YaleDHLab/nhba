@@ -15,7 +15,8 @@
     "production": "npm run build && node server.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
     "resize": "node server/resize-all.js",
-    "geocode": "node server/geocode-all.js"
+    "geocode": "node server/geocode-all.js",
+    "index": "mongo nhba --eval \"db.buildings.createIndex({location: '2dsphere'})\""
   },
   "author": "",
   "license": "ISC",

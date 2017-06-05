@@ -7,13 +7,10 @@ const centerOverlay = (width, height) => {
 }
 
 const getBuildingTitle = (building) => {
-  if (building.building_name) {
-    return building.building_name;
-  } else if (building.address) {
-    return building.address;
-  } else {
-    return 'New Haven Building';
-  }
+  let title = 'New Haven Building';
+  if (building.address) title = building.address;
+  if (building.building_name) title = building.building_name;
+  return title;
 }
 
 const getBuildingImage = (building) => {

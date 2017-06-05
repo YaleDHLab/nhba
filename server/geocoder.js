@@ -1,4 +1,5 @@
 var NodeGeocoder = require('node-geocoder')
+var request = require('superagent')
 var api = require('../config')
 var fs = require('fs')
 
@@ -11,36 +12,38 @@ var geocoder = NodeGeocoder({
 var writeFile = (filename, content) => {
   fs.writeFile(filename, JSON.stringify(content), (err) => {
     if (err) {console.log('could not write', filename)}
-      console.log(' * wrote', filename)
+      console.log(' * wrote', filename);
   })
 }
 
 var geocode = (buildingId, address, callback) => {
   geocoder.geocode(address, (err, res) => {
     var filename = 'server/geocode-responses/' + buildingId + '.json';
-    writeFile(filename, res)
-
-    callback(err, res)
+    writeFile(filename, res);
+    callback(err, res);
   })
 }
 
 var geocodeAll = () => {
   api.get('buildings', (buildingError, buildingResponse) => {
-    if (buildingError) {console.log('geocode call failed with', buildingError)}
+    if (buildingError) console.log('geocode call failed with', buildingError)
       buildingResponse.body.map((building, buildingIndex) => {
 
         // sleep between requests
         setTimeout(() => {
-          var buildingId = building._id;
-          var geocodeUrl = 'geocode?buildingId=' + buildingId;
-
-          api.get(geocodeUrl, (geocodeError, geocodeResponse) => {
-            if (geocodeError) {console.log('geocoding failed for', buildingId, geocodeError)}
-              console.log(' * geocoded building id', buildingId)
-          })
-        }, buildingIndex * 3000)
-      })
-  })
+          request.post(api.endpoint + 'geocode')
+            .send(building)
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+              if (err) {
+                console.warn('geocoding failed for', building._id, err)
+              } else {
+                console.log('geocoding succeeded for', building._id)
+              }
+            })
+        }, buildingIndex * 4000);
+      });
+  });
 }
 
 module.exports = {

@@ -11,21 +11,28 @@ const config = {
     scale: 0.3
   },
 
-  colors: [ // d3.category20 scale
-    '#1f77b4',
-    '#aec7e8',
-    '#ff7f0e',
-    '#ffbb78',
-    '#2ca02c',
-    '#98df8a',
-    '#d62728',
-    '#ff9896',
-    '#9467bd',
-    '#c5b0d5',
-    '#8c564b',
-    '#c49c94',
-    '#e377c2'
-  ]
+  colors: [ // d3.category20b scale
+    '#393b79',
+    '#5254a3',
+    '#6b6ecf',
+    '#9c9ede',
+    '#637939',
+    '#8ca252',
+    '#b5cf6b',
+    '#cedb9c',
+    '#8c6d31',
+    '#bd9e39',
+    '#e6550d',
+    '#fd8d3c',
+    '#fdae6b',
+    '#fdd0a2',
+    '#e7ba52',
+    '#e7cb94',
+    '#843c39',
+    '#ad494a',
+    '#d6616b',
+    '#e7969c'
+  ],
 }
 
 const handleMarkerClick = (building) => {
@@ -41,7 +48,7 @@ const getIcon = (building, tourIdToIndex) => {
   const tourIndex = tourIdToIndex[tourId];
   let color = config.colors[tourIndex % config.colors.length - 1];
 
-  color = color ? color : 'red';
+  color = color ? color : '#a55194';
 
   // set the icon colors
   let markerIcon = Object.assign({}, config.icon);
