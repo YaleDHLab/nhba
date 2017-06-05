@@ -1,5 +1,6 @@
 import React from 'react'
 import api from '../../config'
+import _ from 'lodash'
 
 export default class Multiselect extends React.Component {
   constructor(props) {
@@ -37,6 +38,13 @@ export default class Multiselect extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.handlePageClick, false)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return ( _.isEqual(nextProps, this.props) &&
+      _.isEqual(nextState, this.state) ) ?
+        false
+      : true
   }
 
   /**
