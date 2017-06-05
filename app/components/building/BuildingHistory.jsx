@@ -1,4 +1,5 @@
 import React from 'react'
+import getNewlineMarkup from '../lib/getNewlineMarkup'
 
 const buildingHistoryFields = [
   {field: 'physical_description', label: 'Physical Description'},
@@ -8,10 +9,6 @@ const buildingHistoryFields = [
 ];
 
 export default class BuildingHistory extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <div className='building-history'>
@@ -19,9 +16,9 @@ export default class BuildingHistory extends React.Component {
           return this.props.building && this.props.building[field.field] ?
               <div key={i}>
                 <h2 className='subfield'>{field.label}</h2>
-                <div>
-                  {this.props.building[field.field]}
-                </div>
+                <div dangerouslySetInnerHTML={
+                  getNewlineMarkup(this.props.building[field.field])
+                } />
               </div>
             : null
         })}
