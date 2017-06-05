@@ -50,10 +50,6 @@ db.wptour = {
 
 db.building = {
 
-  // timestamp fields
-  created_at: String,
-  updated_at: String,
-
   // mapping to the building's mysql id in wordpress
   sql_building_id: Number,
 
@@ -119,6 +115,10 @@ db.building = {
       default: [0,0]
     }
   },
+
+  // timestamp fields
+  created_at: Number,
+  updated_at: Number,
 
   // fields not in admin ui
   courses: [String],

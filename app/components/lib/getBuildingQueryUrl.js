@@ -12,7 +12,8 @@
 module.exports = (state, selectFields) => {
   let queryTerms = {}
   queryTerms = addSelectQueryTerms(state, selectFields, queryTerms);
-  queryTerms = addSortQueryTerm(state, queryTerms);
+  queryTerms = addSortQueryTerms(state, queryTerms);
+  queryTerms = addUserLocationQueryTerms(state, queryTerms);
   return buildQueryUrl(queryTerms);
 }
 
@@ -95,8 +96,29 @@ const getTourIds = (state, values) => {
 *   {obj}: returns the updated query terms
 **/
 
-const addSortQueryTerm = (state, queryTerms) => {
-  if (state.sort) queryTerms.sort = [state.sort];
+const addSortQueryTerms = (state, queryTerms) => {
+  if (state.sort && state.sort !== 'Sort by') {
+    queryTerms.sort = state.sort;
+  }
+  return queryTerms;
+}
+
+/**
+* Add the user's location to the queryTerms if available
+*
+* @args:
+*   {obj} state: a state object from the Search component
+*   {obj} queryTerms: each key is a query field, and the value's value
+*     is a list of values for that field
+* @returns:
+*   {obj}: returns the updated query terms
+**/
+
+const addUserLocationQueryTerms = (state, queryTerms) => {
+  if (state.userLocation) {
+    queryTerms.userLatitude = state.userLocation.latitude;
+    queryTerms.userLongitude = state.userLocation.longitude;
+  }
   return queryTerms;
 }
 
@@ -115,7 +137,11 @@ const buildQueryUrl = (queryTerms) => {
   if (queryTerms) {
     url += '?filter=true&'
     _.keys(queryTerms).map((field) => {
-      url += field + '=' + queryTerms[field].join('+') + '&'
+      if (Array.isArray(queryTerms[field])) {
+        url += field + '=' + queryTerms[field].join('+') + '&'
+      } else {
+        url += field + '=' + queryTerms[field] + '&'
+      }
     })
   }
   return url;

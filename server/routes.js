@@ -18,6 +18,14 @@ mongoose.connection.on('error', (err) => {
 })
 
 /**
+* Return the time since epoch in millisconds
+**/
+
+const getTime = () => {
+  return Date.now() / 1000;
+}
+
+/**
 * Retrieve the text portion of a building query
 *   @args:
 *     {obj} req: an express request
@@ -54,10 +62,11 @@ const getTextQuery = (req) => {
 *       within the Search component
 **/
 
-const applyFilters = (queryTerms, req) => {
+const addFilterTerms = (queryTerms, req) => {
   var keys = _.chain(req.query)
     .keys()
-    .without('filter', 'fulltext')
+    .without('filter', 'fulltext', 'sort',
+      'userLatitude', 'userLongitude')
     .value();
 
   keys.map((key) => {
@@ -92,9 +101,37 @@ const getLocation = (lng, lat) => {
   return lng && lat ?
       {
         'type': 'Point',
-        'coordinates': [lng, lat]
+        'coordinates': [
+          parseFloat(lng),
+          parseFloat(lat)
+        ]
       }
     : undefined;
+}
+
+/**
+* Add a proximity term to a mongo query
+*   @args:
+*     {array} queryTerms: a list of mongo query objects; e.g. [{_id: 1}]
+*     {obj} req: an express request
+*   @returns:
+*     {array} the input queryTerms array plus a $near query
+**/
+
+const addProximityTerms = (queryTerms, req) => {
+  var userLng = req.query.userLongitude;
+  var userLat = req.query.userLatitude;
+
+  var nearQuery = {
+    location: {
+      $near: {
+        $geometry: getLocation(userLng, userLat)
+      }
+    }
+  }
+
+  queryTerms.push(nearQuery);
+  return queryTerms;
 }
 
 /**
@@ -106,7 +143,7 @@ const getLocation = (lng, lat) => {
 **/
 
 const updateBuildingFields = (building) => {
-  building.updated_at = new Date();
+  building.updated_at = getTime();
   building.location = getLocation(
     building.longitude,
     building.latitude
@@ -166,26 +203,40 @@ module.exports = function(app) {
       queryTerms.push({$where: 'this.images.length > 0'})
     }
 
-    // fulltext query
+    // query for fulltet
     if (req.query.fulltext) {
       queryTerms.push(getTextQuery(req));
     }
 
-    // all queries sent from filter component pass this flag
+    // queries from the filter component pass this flag
     if (req.query.filter) {
-      queryTerms = applyFilters(queryTerms, req);
+      queryTerms = addFilterTerms(queryTerms, req);
+    }
+
+    // query by geospatial location
+    if (req.query.sort && req.query.sort == 'proximity') {
+      queryTerms = addProximityTerms(queryTerms, req);
     }
 
     // combine the queries if necessary
     if (queryTerms.length) {
       queryTerms.push(query);
-      var query = {$and: queryTerms}
+      var query = {$and: queryTerms};
     }
 
-    models.building.find(query, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
-    })
+    if (req.query.sort && req.query.sort !== 'proximity') {
+      var sort = {};
+      sort[req.query.sort] = -1;
+      models.building.find(query).sort(sort).exec((err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+    } else {
+      models.building.find(query, (err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+    }
   })
 
   /**
@@ -197,7 +248,7 @@ module.exports = function(app) {
   app.get('/api/building/new', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        res.status(403).send('This action could not be completed')
+        return res.status(403).send('This action could not be completed')
       }
     }
 
@@ -217,7 +268,7 @@ module.exports = function(app) {
   app.post('/api/building/save', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        res.status(403).send('This action could not be completed')
+        return res.status(403).send('This action could not be completed')
       }
     }
 
@@ -233,7 +284,7 @@ module.exports = function(app) {
 
     } else {
       var newBuilding = new models.building(building);
-      newBuilding.created_at = new Date();
+      newBuilding.created_at = getTime();
       newBuilding.save((err, data) => {
         if (err) return res.status(500).send({cause: err})
           return res.status(200).send(data)
@@ -250,7 +301,7 @@ module.exports = function(app) {
   app.post('/api/building/delete', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        res.status(403).send('This action could not be completed')
+        return res.status(403).send('This action could not be completed')
       }
     }
 
@@ -258,7 +309,7 @@ module.exports = function(app) {
     if (building._id) {
       models.building.remove({_id: building._id}, (err, data) => {
         if (err) return res.status(500).send({cause: err})
-          res.status(200).send(data)
+          return res.status(200).send(data)
       })
     }
   })
@@ -272,13 +323,15 @@ module.exports = function(app) {
   app.post('/api/geocode', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        res.status(403).send('This action could not be completed')
+        return res.status(403).send('This action could not be completed')
       }
     }
 
     var building = req.body;
     geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
-      if (geoErr) res.status(500).send({cause: geoErr})
+      if (geoErr) {
+        return res.status(500).send({cause: geoErr})
+      }
       var match = geoRes ? geoRes[0] : null;
       if (match) {
         var lat = parseFloat(match.latitude),
@@ -292,11 +345,14 @@ module.exports = function(app) {
         var update = {$set: building};
 
         models.building.update(query, update, (saveErr, saveData) => {
-          if (saveErr) return res.status(500).send({cause: saveErr})
+          if (saveErr) {
+            return res.status(500).send({cause: saveErr})
+          } else {
             return res.status(200).send({
               latitude: lat,
               longitude: lng
             })
+          }
         })
       } else {
         return res.status(200).send('address not found')
