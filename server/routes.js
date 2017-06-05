@@ -441,6 +441,33 @@ module.exports = function(app) {
 
   /**
   *
+  * User routes
+  *
+  **/
+
+  app.post('/api/users/update', (req, res) => {
+    if (!req.body._id) {
+      return res.status(400).send('missing one or more required params')
+    }
+
+    if (req.body.admin === true) {
+      var status = {admin: true};
+    } else if (req.body.contributor === true) {
+      var status = {admin: false, contributor: true};
+    } else {
+      var status = {};
+    }
+
+    models.user.update({_id: req.body._id}, {$set: status},
+        {overwrite: true}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+
+  })
+
+  /**
+  *
   * View routes
   *
   **/
