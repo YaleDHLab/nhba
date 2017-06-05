@@ -115,6 +115,8 @@ export NHBA_EMAIL_PASSWORD='YOURGMAILPASSWORD' # e.g. meow
 export NHBA_SECRET='NHBA_SECRET'               # equivalent to `rake secret`
 export NHBA_SALT_WORK_FACTOR=10                # encryption difficulty
 export NHBA_ENVIRONMENT='production'           # switch to production
+export NHBA_ADMIN_EMAILS='so@gm.com go@gm.com' # space separated emails
+export NHBA_SUPERADMIN_EMAILS='so@gm.com'      # space separated emails
 ```
 Then `source ~/.bash_profile`
 
