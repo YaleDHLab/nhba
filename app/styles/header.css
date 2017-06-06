@@ -14,15 +14,14 @@
 }
 
 .header .logo {
-  width: 300px;
-  height: 60px;
+  width: 540px;
   pointer-events: none;
 }
 
 .header .app-name {
   display: table-cell;
   vertical-align: middle;
-  padding: 0 40px;
+  padding: 12px 40px;
   font-size: 1.5em;
   color: #fff;
   font-family: Tinos;
@@ -35,10 +34,10 @@
 .header .links {
   display: table;
   position: absolute;
-  right: 100px;
+  right: 60px;
   top: 0;
   height: 80px;
-  width: 484px;
+  width: 500px;
   text-align: center;
 }
 
@@ -47,6 +46,8 @@
   display: table-cell;
   vertical-align: middle;
   font-family: Helvetica Neue;
+  font-weight: 500;
+  letter-spacing: .5px;
   width: 140px;
   letter-spacing: 1px;
 }
