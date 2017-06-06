@@ -86,14 +86,14 @@ db.building = {
   external_conditions: [String],
   threats: [String],
   physical_description: String,
-  streetscape: String,
+  urban_setting: String,
   social_history: String,
   site_history: String,
   archive_documents: [{
     filename: String,
     label: String
   }],
-  footnotes: String,
+  sources: String,
 
   // image gallery
   images: [{

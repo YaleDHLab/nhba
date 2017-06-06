@@ -189,8 +189,8 @@ export default class DataAndHistory extends React.Component {
 
         <TextArea {...this.props}
           width={'full-width'}
-          label={'Streetscape'}
-          field={'streetscape'}
+          label={'Urban Settings'}
+          field={'urban_settings'}
           placeholder={'Describe the building’s broader urban context and the interrelationship of building and surroundings.'}
           rows={7} />
 
@@ -223,8 +223,8 @@ export default class DataAndHistory extends React.Component {
 
         <TextArea {...this.props}
           width={'full-width'}
-          label={'Footnotes'}
-          field={'footnotes'}
+          label={'Sources'}
+          field={'sources'}
           placeholder={'Please note sources, including maps, documents, and secondary sources.'}
           rows={10} />
 
