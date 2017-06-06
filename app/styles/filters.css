@@ -59,14 +59,13 @@
 .filters .multiselect,
 .filters .sortby {
   height: 100%;
-  min-width: 120px;
-  max-width: 130px;
   float: left;
 }
 
 .filters .multiselect .custom-select,
 .filters .sortby {
-  padding-left: 10px;
+  padding-left: 25px;
+  padding-right: 50px;
   color: #666;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 500;
@@ -81,7 +80,7 @@
   background-image: url(/assets/images/caret.png);
   background-size: 24px;
   background-repeat: no-repeat;
-  background-position: 93%;
+  background-position: right 25px center;
   border-left: 1px solid lightgray;
   border-right: none;
   border-top: none;
@@ -95,7 +94,7 @@
 }
 
 .filters .sortby {
-  width: 120px;
+  width: 117px;
   margin-left: 1px;
 }
 
