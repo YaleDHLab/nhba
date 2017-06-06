@@ -67,6 +67,9 @@
 .filters .multiselect .custom-select,
 .filters .sortby {
   padding-left: 10px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .filters .multiselect .select-box,
@@ -84,7 +87,9 @@
   border-bottom: none;
   z-index: -1;
   color: #666;
-  font-size: 11px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
   display: inline-block;
 }
 
@@ -110,6 +115,9 @@
 .filters .multiselect .select-checkboxes {
   top: 60px;
   max-height: 50vh;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .filters .multiselect.active .select-checkboxes {
@@ -117,7 +125,7 @@
 }
 
 .filters .multiselect input {
-  margin: 4px;
+  margin: 4px 8px 4px 4px;
 }
 
 .filters .multiselect label {
