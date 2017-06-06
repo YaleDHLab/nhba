@@ -8,7 +8,6 @@ import Loader from './Loader'
 import Map from './Map'
 
 // helpers
-import processTours from './lib/processTours'
 import api from '../../config'
 
 // Building Text components
@@ -28,7 +27,7 @@ export default class Building extends React.Component {
       admin: false,
 
       // tour data for mapping
-      tourIdToIndex: {}
+      tourNameToIndex: {}
     }
 
     this.toggleLayout = this.toggleLayout.bind(this)
@@ -43,9 +42,6 @@ export default class Building extends React.Component {
     // getter and setter for user admin status
     this.checkUserStatus = this.checkUserStatus.bind(this)
     this.processUserStatus = this.processUserStatus.bind(this)
-
-    // setter for mappings from building to tour Id for mapping
-    this.processTours = processTours.bind(this)
   }
 
   componentDidMount() {
@@ -199,9 +195,9 @@ export default class Building extends React.Component {
       : null
 
     const map = (
-      this.state.tourIdToIndex && building ?
+      this.state.tourNameToIndex && building ?
           <Map buildings={[this.state.building]}
-            tourIdToIndex={this.state.tourIdToIndex}
+            tourNameToIndex={this.state.tourNameToIndex}
             initialLocation={location} />
         : <Loader />
     )

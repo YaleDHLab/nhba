@@ -145,6 +145,8 @@
   background: #efefef;
   border-top: none;
   box-shadow: 0px 4px 5px 0px #888888;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .form .multiselect .select-checkboxes input[type=checkbox] {

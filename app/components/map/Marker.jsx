@@ -38,7 +38,7 @@ export default class MapMarker extends React.Component {
           building={this.props.building}
           handleMouseOver={this.handleMouseOver}
           handleMouseOut={this.handleMouseOut}
-          tourIdToIndex={this.props.tourIdToIndex} />
+          tourNameToIndex={this.props.tourNameToIndex} />
         {overlay}
       </div>
     )

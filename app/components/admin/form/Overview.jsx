@@ -99,8 +99,7 @@ export default class Overview extends React.Component {
           width={'half-width'}
           position={'left'}
           label={'Tour'}
-          field={'tour_ids'}
-          valueMap={this.props.tourIdToTitle} />
+          field={'tours'} />
 
         <TextInput {...this.props}
           width={'half-width'}

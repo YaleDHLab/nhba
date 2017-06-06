@@ -65,7 +65,7 @@ export default class MapContainer extends Component {
             containerElement={ <div style={styles.map} /> }
             mapElement={ <div style={styles.map} /> }
             buildings={this.props.buildings}
-            tourIdToIndex={this.props.tourIdToIndex}
+            tourNameToIndex={this.props.tourNameToIndex}
             mapConfig={mapConfig}
             userLocation={this.props.userLocation}
           />

@@ -17,16 +17,14 @@ export default class Filters extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(prevProps.buildings, this.props.buildings) ||
-       (!_.isEqual(prevProps.tourIdToTitle, this.props.tourIdToTitle))) {
+    if (!_.isEqual(prevProps.buildings, this.props.buildings)) {
       this.setSelectOptions()
     }
   }
 
   setSelectOptions() {
     const buildings = this.props.buildings;
-    const tourIdToTitle = this.props.tourIdToTitle;
-    const options = getSelectOptions(buildings, filterSelects, tourIdToTitle)
+    const options = getSelectOptions(buildings, filterSelects)
     this.setState({options: options})
   }
 
