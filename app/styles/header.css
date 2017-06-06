@@ -38,7 +38,7 @@
   right: 100px;
   top: 0;
   height: 80px;
-  width: 400px;
+  width: 484px;
   text-align: center;
 }
 
@@ -48,4 +48,5 @@
   vertical-align: middle;
   font-family: Helvetica Neue;
   width: 140px;
+  letter-spacing: 1px;
 }

@@ -48,8 +48,8 @@
 .filters .select-container {
   position: absolute;
   top: 0;
-  right: 0;
   height: 100%;
+  left: 25%;
 }
 
 /**
@@ -59,14 +59,17 @@
 .filters .multiselect,
 .filters .sortby {
   height: 100%;
-  min-width: 110px;
-  max-width: 130px;
   float: left;
 }
 
 .filters .multiselect .custom-select,
 .filters .sortby {
-  padding-left: 10px;
+  padding-left: 25px;
+  padding-right: 50px;
+  color: #666;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 .filters .multiselect .select-box,
@@ -77,19 +80,21 @@
   background-image: url(/assets/images/caret.png);
   background-size: 24px;
   background-repeat: no-repeat;
-  background-position: 93%;
+  background-position: right 25px center;
   border-left: 1px solid lightgray;
   border-right: none;
   border-top: none;
   border-bottom: none;
   z-index: -1;
   color: #666;
-  font-size: 11px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
   display: inline-block;
 }
 
 .filters .sortby {
-  width: 120px;
+  width: 117px;
   margin-left: 1px;
 }
 
@@ -110,6 +115,9 @@
 .filters .multiselect .select-checkboxes {
   top: 60px;
   max-height: 50vh;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .filters .multiselect.active .select-checkboxes {
@@ -117,7 +125,7 @@
 }
 
 .filters .multiselect input {
-  margin: 4px;
+  margin: 4px 8px 4px 4px;
 }
 
 .filters .multiselect label {
