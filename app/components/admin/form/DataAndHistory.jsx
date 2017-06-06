@@ -189,8 +189,8 @@ export default class DataAndHistory extends React.Component {
 
         <TextArea {...this.props}
           width={'full-width'}
-          label={'Urban Settings'}
-          field={'urban_settings'}
+          label={'Urban Setting'}
+          field={'urban_setting'}
           placeholder={'Describe the building’s broader urban context and the interrelationship of building and surroundings.'}
           rows={7} />
 
