@@ -17,8 +17,8 @@ export default class BuildingResources extends React.Component {
         })
       : <span />
 
-    const footnotes = this.props.building && this.props.building.footnotes ?
-        <div className='footnotes'>{this.props.building.footnotes}</div>
+    const sources = this.props.building && this.props.building.sources ?
+        <div className='footnotes'>{this.props.building.sources}</div>
       : <span />
 
     return (
@@ -26,7 +26,7 @@ export default class BuildingResources extends React.Component {
         <h2>Documents</h2>
         {archiveDocuments}
         <h2>References</h2>
-        {footnotes}
+        {sources}
       </div>
     )
   }

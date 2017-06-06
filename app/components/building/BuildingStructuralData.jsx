@@ -2,7 +2,7 @@ import React from 'react'
 import BuildingTable from './BuildingTable'
 
 const tableFields = [
-  {label: 'Historic Use', field: 'historic_use'},
+  {label: 'Historic Use', field: 'historic_uses'},
   {label: 'Street Visibility', field: 'street_visibilities'},
   {label: 'Dimensions', field: 'dimensions'},
   {label: 'Material', field: 'materials'},

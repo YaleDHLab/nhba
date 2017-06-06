@@ -1,12 +1,15 @@
 /**
 * @exports:
 *   an array of objects that identify the label and fields
-*   for all available selects
+*   for all available selects. Uset to populate the select
+*   options on the admin form
 **/
 
 module.exports = [
   {label: 'Style', field: 'styles'},
   {label: 'Current Uses', field: 'current_uses'},
+  {label: 'Historic Uses', field: 'historic_uses'},
+  {label: 'Related Outbuildings', field: 'related_outbuildings'},
   {label: 'Neighborhoods', field: 'neighborhoods'},
   {label: 'Eras', field: 'eras'},
   {label: 'Tour', field: 'tours'},

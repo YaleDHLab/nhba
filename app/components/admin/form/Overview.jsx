@@ -89,11 +89,11 @@ export default class Overview extends React.Component {
           label={'Owner'}
           field={'owner'} />
 
-        <TextInput {...this.props}
+        <Select {...this.props}
           width={'half-width'}
           position={'right'}
-          label={'Status'}
-          field={'status'} />
+          label={'Related Outbuildings'}
+          field={'related_outbuildings'} />
 
         <Select {...this.props}
           width={'half-width'}

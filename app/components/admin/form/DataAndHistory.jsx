@@ -95,11 +95,11 @@ export default class DataAndHistory extends React.Component {
     return (
       <div className='data-and-history'>
 
-        <TextInput {...this.props}
+        <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Historic Use'}
-          field={'historic_use'} />
+          field={'historic_uses'} />
 
         <TextInput {...this.props}
           width={'half-width'}
@@ -189,8 +189,8 @@ export default class DataAndHistory extends React.Component {
 
         <TextArea {...this.props}
           width={'full-width'}
-          label={'Streetscape'}
-          field={'streetscape'}
+          label={'Urban Setting'}
+          field={'urban_setting'}
           placeholder={'Describe the building’s broader urban context and the interrelationship of building and surroundings.'}
           rows={7} />
 
@@ -223,8 +223,8 @@ export default class DataAndHistory extends React.Component {
 
         <TextArea {...this.props}
           width={'full-width'}
-          label={'Footnotes'}
-          field={'footnotes'}
+          label={'Sources'}
+          field={'sources'}
           placeholder={'Please note sources, including maps, documents, and secondary sources.'}
           rows={10} />
 

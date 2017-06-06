@@ -133,7 +133,6 @@ export default class Form extends React.Component {
   **/
 
   updateField(field, value) {
-    console.log(field, value)
 
     // use Object.assign to avoid object mutations
     let building = Object.assign({}, this.state.building)

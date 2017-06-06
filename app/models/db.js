@@ -65,14 +65,14 @@ db.building = {
   architect: String,
   client: String,
   owner: String,
-  status: String,
+  related_outbuildings: [String],
   tours: [String],
   researcher: String,
   overview_description: String,
   storymap_url: String,
 
   // data and history
-  historic_use: String,
+  historic_uses: [String],
   past_tenants: String,
   street_visibilities: [String],
   accessibilities: [String],
@@ -86,14 +86,14 @@ db.building = {
   external_conditions: [String],
   threats: [String],
   physical_description: String,
-  streetscape: String,
+  urban_setting: String,
   social_history: String,
   site_history: String,
   archive_documents: [{
     filename: String,
     label: String
   }],
-  footnotes: String,
+  sources: String,
 
   // image gallery
   images: [{
