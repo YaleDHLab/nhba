@@ -9,8 +9,8 @@ html {
 }
 
 @font-face {
-    font-family: SonderSans;
-    src: url("/assets/fonts/sondersans-blackrough-webfont.woff") format("woff");
+  font-family: SonderSans;
+  src: url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff');
 }
 
 

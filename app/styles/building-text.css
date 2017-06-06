@@ -1,13 +1,13 @@
 .building-text {
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    border: 20px solid #eee;
-    word-break: break-all;
-    font-size: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
-    line-height: 1.5em;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border: 20px solid #eee;
+  word-break: break-all;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 1.5em;
 }
 
 .building-text h1 {
