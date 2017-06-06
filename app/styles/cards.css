@@ -84,7 +84,8 @@
 }
 
 .card-name {
-  font-weight: 400;
+  font-weight: 500;
+  font-size: .95em;
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
@@ -93,5 +94,6 @@
 
 .card-details {
   font-size: 0.75em;
+  font-weight: 400;
   color: #999;
 }
