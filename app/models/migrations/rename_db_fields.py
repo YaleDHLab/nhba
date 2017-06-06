@@ -13,5 +13,6 @@ if __name__ == '__main__':
     '$rename': {
       'streetscape': 'urban_setting',
       'footnotes': 'sources',
+      'status': 'related_outbuildings'
     }
   }, upsert=False, multi=True)

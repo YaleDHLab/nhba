@@ -65,14 +65,14 @@ db.building = {
   architect: String,
   client: String,
   owner: String,
-  status: String,
+  related_outbuildings: [String],
   tours: [String],
   researcher: String,
   overview_description: String,
   storymap_url: String,
 
   // data and history
-  historic_use: String,
+  historic_uses: [String],
   past_tenants: String,
   street_visibilities: [String],
   accessibilities: [String],

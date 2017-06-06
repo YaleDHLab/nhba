@@ -14,8 +14,9 @@ git clone https://github.com/duhaime/nhba
 cd nhba
 
 # load database
-wget https://goo.gl/1byWWm -O nhba.geo.archive
-mongorestore --db nhba --archive=nhba.geo.archive
+wget https://goo.gl/ru2NOA -O nhba.archive
+mongo nhba --eval "db.dropDatabase()"
+mongorestore --db nhba --archive=nhba.archive
 
 # obtain images
 wget https://goo.gl/JNxVDa -O build.tar.gz

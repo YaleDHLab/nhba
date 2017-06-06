@@ -95,11 +95,11 @@ export default class DataAndHistory extends React.Component {
     return (
       <div className='data-and-history'>
 
-        <TextInput {...this.props}
+        <Select {...this.props}
           width={'half-width'}
           position={'left'}
           label={'Historic Use'}
-          field={'historic_use'} />
+          field={'historic_uses'} />
 
         <TextInput {...this.props}
           width={'half-width'}

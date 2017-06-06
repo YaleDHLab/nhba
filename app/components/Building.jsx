@@ -121,7 +121,7 @@ export default class Building extends React.Component {
         collapsible: true,
         contentFields: [
           'physical_description',
-          'streetscape',
+          'urban_setting',
           'social_history',
           'site_history'
         ]
@@ -133,7 +133,7 @@ export default class Building extends React.Component {
         component: <BuildingStructuralData building={this.state.building} />,
         collapsible: true,
         contentFields: [
-          'historic_use',
+          'historic_uses',
           'street_visibilities',
           'dimensions',
           'materials',
@@ -154,7 +154,7 @@ export default class Building extends React.Component {
         collapsible: true,
         contentFields: [
           'archive_documents',
-          'footnotes'
+          'sources'
         ]
       }
     ];
