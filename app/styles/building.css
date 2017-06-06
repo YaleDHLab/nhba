@@ -16,7 +16,7 @@
 **/
 
 .building .top .left {
-  width: 40%;
+  width: 25%;
   display: inline-block;
   background: #fff;
   padding: 0 10px;
@@ -31,7 +31,7 @@
 }
 
 .building .top .left .top-left-top {
-  height: 360px;
+  height: 240px;
   width: 100%;
   position: relative;
 }
@@ -73,13 +73,13 @@
 **/
 
 .building .top .right {
-  width: 60%;
+  width: 75%;
   display: inline-block;
   background: #eee;
 }
 
 .building .top .right .top-right-top {
-  height: 360px;
+  height: 480px;
   width: 100%;
   background: #aaa;
   position: relative;
