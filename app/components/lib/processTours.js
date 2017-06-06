@@ -11,14 +11,14 @@
 
 import _ from 'lodash'
 
-module.exports = function(err, res) {
+module.exports = function(err, res, callback) {
   if (err) { console.warn(err) } else {
-    let tourIdToTitle = {}
-    let tourIdToIndex = {}
-    let tourTitleToId = {}
+    let tourIdToTitle = {};
+    let tourIdToIndex = {};
+    let tourTitleToId = {};
     res.body.map((tour) => {
-      tourIdToTitle[tour.tour_id] = tour.post_title
-      tourTitleToId[tour.post_title] = tour.tour_id
+      tourIdToTitle[tour.tour_id] = tour.post_title;
+      tourTitleToId[tour.post_title] = tour.tour_id;
     })
 
     _.keys(tourIdToTitle).map((tourId, idx) => {
@@ -29,6 +29,8 @@ module.exports = function(err, res) {
       tourIdToTitle: tourIdToTitle,
       tourIdToIndex: tourIdToIndex,
       tourTitleToId: tourTitleToId
+    }, () => {
+      if (callback) callback()
     })
   }
 }

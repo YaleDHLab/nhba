@@ -18,34 +18,26 @@ export default class Form extends React.Component {
     this.state = {
       buildings: [],
       options: {},
-
       building: {},
       activeTab: 'overview',
-
       tourIdToTitle: {},
-
       unsavedChanges: false
     }
 
     // buildling(s) getters and setters
     this.getBuilding = this.getBuilding.bind(this)
+    this.getNewBuilding = this.getNewBuilding.bind(this)
     this.getBuildings = this.getBuildings.bind(this)
-    this.processBuilding = this.processBuilding.bind(this)
-    this.processBuildings = this.processBuildings.bind(this)
 
     // tour getter and setter
     this.getTours = this.getTours.bind(this)
     this.processTours = processTours.bind(this)
 
-    // getter and setters for new building form
-    this.getNewBuilding = this.getNewBuilding.bind(this)
-    this.processNewBuilding = this.processNewBuilding.bind(this)
-
-    // setter for the available select options
+    // getters and setters for select options
     this.setSelectOptions = this.setSelectOptions.bind(this)
-
-    // callback triggered when users add a new option to a multiselect
     this.handleNewOption = this.handleNewOption.bind(this)
+    this.handleNewTour = this.handleNewTour.bind(this)
+    this.addNewTourToBuilding = this.addNewTourToBuilding.bind(this)
 
     // form field navigation
     this.changeTab = this.changeTab.bind(this)
@@ -57,10 +49,8 @@ export default class Form extends React.Component {
     // method to request lat long data
     this.geocode = this.geocode.bind(this)
 
-    // sets styles to indicate whether the form is dirty
-    this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
-
     // upsert or delete buildings
+    this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
     this.saveBuilding = this.saveBuilding.bind(this)
     this.deleteBuilding = this.deleteBuilding.bind(this)
   }
@@ -88,47 +78,91 @@ export default class Form extends React.Component {
   * Building & Buildings getters and setters
   **/
 
+  getNewBuilding() {
+    api.get('building/new', (err, res) => {
+      if (err) console.warn(err)
+      this.setState({building: res.body})
+    })
+  }
+
   getBuilding(buildingId) {
+    const self = this;
     const url = 'buildings?buildingId=' + buildingId;
-    api.get(url, this.processBuilding)
+    api.get(url, (err, res) => {
+      if (err) {console.warn(err)} else {
+        self.setState({building: res.body[0]})
+      }
+    })
   }
 
   getBuildings() {
-    api.get('buildings?images=true', this.processBuildings)
-  }
-
-  processBuilding(err, res) {
-    if (err) {console.warn(err)} else {
-      this.setState({building: res.body[0]})
-    }
-  }
-
-  processBuildings(err, res) {
-    if (err) { console.warn(err) } else {
-      this.setState({buildings: res.body})
-    }
+    const self = this;
+    api.get('buildings?images=true', (err, res) => {
+      if (err) { console.warn(err) } else {
+        self.setState({buildings: res.body})
+      }
+    })
   }
 
   /**
-  * Get a mapping from tour id to tour label
+  * Tour getters and setters
   **/
 
-  getTours() {
+  getTours(callback) {
     api.get('wptours', this.processTours)
   }
 
-  /**
-  * Prepare a new building in the app state. This method ensures
-  * that each field for the building has the appropriate data type
-  **/
-
-  getNewBuilding() {
-    api.get('building/new', this.processNewBuilding)
+  handleNewTour(tourTitle) {
+    api.get('wptours/new', (err, res) => {
+      if (err) console.warn(err);
+      let tour = res.body;
+      tour.post_title = tourTitle;
+      this.saveNewTour(tour);
+    })
   }
 
-  processNewBuilding(err, res) {
-    if (err) console.warn(err)
-    this.setState({building: res.body})
+  saveNewTour(tour) {
+    const self = this;
+
+    request.post(api.endpoint + 'wptours/save')
+      .send(tour)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if (err) console.warn(err)
+        self.addNewTourToBuilding(tour)
+      })
+  }
+
+  // here we need to update the tour mappings,
+  // add the new tour title to the tour options
+  // and add the new tour id to the building's tour
+  // ids
+  addNewTourToBuilding(tour) {
+    const self = this;
+
+    let options = Object.assign({}, this.state.options);
+    if (options.tour_ids) {
+      options.tour_ids.push(tour.post_title)
+    } else {
+      options.tour_ids = [tour.post_title];
+    }
+
+    let building = Object.assign({}, this.state.building);
+    if (building.tour_ids) {
+      building.tour_ids.push(tour.tour_id)
+    } else {
+      building.tour_ids = [tour.tour_id]
+    }
+
+    api.get('wptours', (err, res) => {
+      this.processTours(err, res, () => {
+        self.setState({
+          options: options,
+          building: building,
+          unsavedChanges: true
+        })
+      })
+    })
   }
 
   /**
@@ -138,7 +172,7 @@ export default class Form extends React.Component {
   setSelectOptions() {
     const buildings = this.state.buildings;
     const tourIdToTitle = this.state.tourIdToTitle;
-    const options = getSelectOptions(buildings, allSelects, tourIdToTitle)
+    const options = getSelectOptions(buildings, allSelects, tourIdToTitle);
     this.setState({options: options})
   }
 
@@ -147,16 +181,20 @@ export default class Form extends React.Component {
   **/
 
   handleNewOption(field, value) {
+    // new tour ids require custom logic as they have table lookups
+    if (field === 'tour_ids') {
+      this.handleNewTour(value)
+    } else {
+      // add this value to the available options
+      let options = Object.assign({}, this.state.options);
+      options[field] ?
+          options[field].push(value)
+        : options[field] = [value]
+      this.setState({options: options})
 
-    // add this value to the available options
-    let options = Object.assign({}, this.state.options)
-    options[field] ?
-        options[field].push(value)
-      : options[field] = [value]
-    this.setState({options: options})
-
-    // select this value within this record
-    this.updateField(field, value)
+      // select this value within this record
+      this.updateField(field, value)
+    }
   }
 
   /**
@@ -172,7 +210,6 @@ export default class Form extends React.Component {
   **/
 
   updateField(field, value) {
-
     // convert tour_ids back to ints before operating on them
     if (field == 'tour_ids') {
       var value = this.state.tourTitleToId[value];
@@ -181,8 +218,7 @@ export default class Form extends React.Component {
     // use Object.assign to avoid object mutations
     let building = Object.assign({}, this.state.building)
 
-    // if the user has clicked or unclicked an option, update
-    // the appropriate array accordingly
+    // remove/add the selected value when users un/select values
     if (Array.isArray(building[field])) {
       _.includes(building[field], value) ?
           _.pull(building[field], value)
@@ -226,7 +262,7 @@ export default class Form extends React.Component {
           this.updateField('latitude', latitude)
           this.updateField('longitude', longitude)
         }
-        if (err) console.log(err)
+        if (err) console.warn(err)
       })
   }
 
@@ -239,7 +275,7 @@ export default class Form extends React.Component {
       .send(this.state.building)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        if (err) console.log(err)
+        if (err) console.warn(err)
       })
     this.setState({unsavedChanges: false})
   }
@@ -253,8 +289,7 @@ export default class Form extends React.Component {
       .send(this.state.building)
       .set('Accept', 'application/json')
       .end((err, res) => {
-        console.log(err, res)
-        if (err) console.log(err)
+        if (err) console.warn(err)
       })
     browserHistory.push('/admin');
   }
