@@ -3,12 +3,12 @@ import Filters from './Filters'
 import Cards from './Cards'
 import Map from './Map'
 import api from '../../config'
-import processTours from './lib/processTours'
+import getTourNameToIndex from './lib/getTourNameToIndex'
 import getBuildingQueryUrl from './lib/getBuildingQueryUrl'
 import _ from 'lodash'
 
 const selectFields = [
-  'tour_ids',
+  'tours',
   'building_types',
   'current_uses',
   'styles',
@@ -30,11 +30,10 @@ export default class Search extends React.Component {
 
     this.state = {
       buildings: [],
-      tourIdToTitle: {},
-      tourIdToIndex: {},
+      tourNameToIndex: {},
 
       // select fields
-      'tour_ids': new Set(),
+      'tours': new Set(),
       'building_types': new Set(),
       'current_uses': new Set(),
       'styles': new Set(),
@@ -47,9 +46,9 @@ export default class Search extends React.Component {
       'watchId': null
     }
 
-    // getters and setters for buildings and tours
+    // getters and setters for buildings and tour color mappings
     this.processBuildings = this.processBuildings.bind(this)
-    this.processTours = processTours.bind(this)
+    this.getTourNameToIndex = getTourNameToIndex.bind(this)
 
     // setters for search selects and input
     this.updateSelect = this.updateSelect.bind(this)
@@ -67,7 +66,6 @@ export default class Search extends React.Component {
 
   componentDidMount() {
     api.get('buildings?images=true', this.processBuildings);
-    api.get('wptours', this.processTours);
     this.watchUserLocation();
   }
 
@@ -90,6 +88,7 @@ export default class Search extends React.Component {
   processBuildings(err, res) {
     if (err) { console.warn(err) } else {
       this.setState({buildings: res.body})
+      this.setState({tourNameToIndex: this.getTourNameToIndex(res.body)})
     }
   }
 
@@ -173,7 +172,6 @@ export default class Search extends React.Component {
     return (
       <div className='search'>
         <Filters {...this.state}
-          tourIdToTitle={this.state.tourIdToTitle}
           updateSelect={this.updateSelect}
           updateFulltextSearch={this.updateFulltextSearch}
           runFulltextSearch={this.runFulltextSearch}
@@ -181,7 +179,7 @@ export default class Search extends React.Component {
           updateSort={this.updateSort} />
         <Cards buildings={this.state.buildings} />
         <Map buildings={this.state.buildings}
-          tourIdToIndex={this.state.tourIdToIndex}
+          tourNameToIndex={this.state.tourNameToIndex}
           userLocation={this.state.userLocation} />
       </div>
     )

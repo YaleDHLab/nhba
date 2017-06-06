@@ -33,14 +33,7 @@ module.exports = (state, selectFields) => {
 const addSelectQueryTerms = (state, selectFields, queryTerms) => {
   selectFields.map((field) => {
     let values = Array.from(state[field]);
-
-    if (field == 'tour_ids') {
-      values = getTourIds(state, values);
-    }
-
-    if (values.length) {
-      queryTerms[field] = encodeValues(values)
-    }
+    if (values.length) queryTerms[field] = encodeValues(values)
   })
   return queryTerms;
 }
@@ -58,31 +51,9 @@ const addSelectQueryTerms = (state, selectFields, queryTerms) => {
 const encodeValues = (values) => {
   let encodedValues = [];
   values.map((value) => {
-
-    // all values are strings except tour ids
-    typeof value == 'string' ?
-        encodedValues.push(value.split(' ').join('_'))
-      : encodedValues.push(value)
+    encodedValues.push(value.split(' ').join('_'))
   })
   return encodedValues;
-}
-
-/**
-* Get the list of selected tour ids
-*
-* @args:
-*   {obj} state: a state object from the Search component
-*   [array] values: an array of selected tour titles
-* @returns:
-*   [array]: an array of selected tour ids
-**/
-
-const getTourIds = (state, values) => {
-  let tourValues = [];
-  values.map((value) => {
-    tourValues.push(state.tourTitleToId[value])
-  });
-  return tourValues;
 }
 
 /**

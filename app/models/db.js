@@ -66,7 +66,7 @@ db.building = {
   client: String,
   owner: String,
   status: String,
-  tour_ids: [Number],
+  tours: [String],
   researcher: String,
   overview_description: String,
   storymap_url: String,

@@ -40,14 +40,12 @@ const handleMarkerClick = (building) => {
 }
 
 // fetch an icon to represent the current building
-const getIcon = (building, tourIdToIndex) => {
-  const tourId = building.tour_ids && building.tour_ids.length ?
-      building.tour_ids[0].toString()
-    : (config.colors.length - 1).toString();
+const getIcon = (building, tourNameToIndex) => {
+  const tourIndex = building.tours && building.tours.length ?
+      tourNameToIndex[ building.tours[0] ]
+    : config.colors.length -1;
 
-  const tourIndex = tourIdToIndex[tourId];
   let color = config.colors[tourIndex % config.colors.length - 1];
-
   color = color ? color : '#a55194';
 
   // set the icon colors
@@ -65,7 +63,7 @@ export default class BuildingCircle extends React.Component {
   render() {
     return (
       <Marker
-        icon={getIcon(this.props.building, this.props.tourIdToIndex)}
+        icon={getIcon(this.props.building, this.props.tourNameToIndex)}
         onMouseOver={this.props.handleMouseOver}
         onMouseOut={this.props.handleMouseOut}
         onClick={() => {handleMarkerClick(this.props.building)}}

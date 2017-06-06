@@ -9,7 +9,7 @@ module.exports = [
   {label: 'Current Uses', field: 'current_uses'},
   {label: 'Neighborhoods', field: 'neighborhoods'},
   {label: 'Eras', field: 'eras'},
-  {label: 'Tour', field: 'tour_ids'},
+  {label: 'Tour', field: 'tours'},
   {label: 'Street Visibilities', field: 'street_visibilities'},
   {label: 'Accessibilities', field: 'accessibilities'},
   {label: 'Materials', field: 'materials'},
