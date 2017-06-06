@@ -183,6 +183,36 @@ module.exports = function(app) {
     })
   })
 
+  app.get('/api/wptours/new', (req, res) => {
+
+    // assign the tour the next available tour_id integer
+    models.wptour.find({}).sort({tour_id: -1}).exec((tourErr, tourRes) => {
+      if (tourErr) return res.status(500).send({cause: tourErr});
+
+      var wptour = new models.wptour({});
+      wptour.tour_id = _.first(tourRes).tour_id + 1;
+      wptour.save((err, data) => {
+        if (err) return res.status(500).send({cause: err})
+          return res.status(200).send(data)
+      })
+    })
+  })
+
+  app.post('/api/wptours/save', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin) {
+        return res.status(403).send('This action could not be completed')
+      }
+    }
+
+    var tour = req.body;
+    models.wptour.update({_id: tour._id}, {$set: tour},
+        {overwrite: true}, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
   /**
   *
   * Building query routes
