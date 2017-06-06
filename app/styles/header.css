@@ -1,7 +1,7 @@
 .header {
   height: 80px;
   width: 100%;
-  background: #3C2818;
+  background: #4F6077;
   position: fixed;
   top: 0;
   z-index: 1;
@@ -26,7 +26,7 @@
   font-size: 1.5em;
   color: #fff;
   font-family: Tinos;
-  background: #3C2818;
+  background: #4F6077;
   position: absolute;
   top: 13px;
   z-index: 1;
@@ -46,7 +46,7 @@
   color: #fff;
   display: table-cell;
   vertical-align: middle;
-  font-family: Arial;
+  font-family: Helvetica Neue;
   width: 140px;
   letter-spacing: 1px;
 }

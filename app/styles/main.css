@@ -8,10 +8,16 @@ html {
   width: 100%;
 }
 
+@font-face {
+  font-family: SonderSans;
+  src: url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff');
+}
+
+
 body {
-  font-family: Open Sans;
-  color: #454545;
-  font-weight: 300;
+  font-family: Helvetica Neue;
+  color: #444;
+  font-weight: 400;
   font-size: 16px;
   min-height: 100%;
 }
@@ -36,14 +42,15 @@ body {
 **/
 
 h1 {
-  font-size: 1.5em;
-  font-weight: 400;
+  font-size: 1.6em;
+  font-family: SonderSans;
+  color: #4F6077;
+  letter-spacing: 1px;
 }
 
 p {
   margin: 10px 0;
-  font-family: Open Sans;
-  line-height: 1.4em;
+  line-height: 1.5em;
   word-break: break-word;
 }
 

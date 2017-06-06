@@ -4,16 +4,18 @@
   box-sizing: border-box;
   border: 20px solid #eee;
   word-break: break-all;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  line-height: 1.5em;
 }
 
 .building-text h1 {
-  font-family: Tinos;
-  font-size: 1.5em;
   margin: 20px 0 10px;
 }
 
 .building-text h2 {
-  font-family: Open Sans;
   margin: 20px 0 7px;
-  font-size: 1.05em;
+  font-family: SonderSans;
+  font-size: 1.25em;
 }

@@ -5,7 +5,6 @@ import Overview from './Overview'
 import DataAndHistory from './DataAndHistory'
 import ImageGallery from './ImageGallery'
 import getSelectOptions from '../../lib/getSelectOptions'
-import processTours from '../../lib/processTours'
 import allSelects from '../../lib/allSelects.js'
 import api from '../../../../config'
 import Loader from '../../Loader'
@@ -20,7 +19,6 @@ export default class Form extends React.Component {
       options: {},
       building: {},
       activeTab: 'overview',
-      tourIdToTitle: {},
       unsavedChanges: false
     }
 
@@ -29,15 +27,9 @@ export default class Form extends React.Component {
     this.getNewBuilding = this.getNewBuilding.bind(this)
     this.getBuildings = this.getBuildings.bind(this)
 
-    // tour getter and setter
-    this.getTours = this.getTours.bind(this)
-    this.processTours = processTours.bind(this)
-
     // getters and setters for select options
     this.setSelectOptions = this.setSelectOptions.bind(this)
     this.handleNewOption = this.handleNewOption.bind(this)
-    this.handleNewTour = this.handleNewTour.bind(this)
-    this.addNewTourToBuilding = this.addNewTourToBuilding.bind(this)
 
     // form field navigation
     this.changeTab = this.changeTab.bind(this)
@@ -62,14 +54,12 @@ export default class Form extends React.Component {
         this.getBuilding(buildingId)
       : this.getNewBuilding()
 
-    // fetch all buildings & tours so we can populate dropdowns
+    // fetch all buildings so we can populate dropdowns
     this.getBuildings()
-    this.getTours()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!_.isEqual(this.state.buildings, prevState.buildings) ||
-        !_.isEqual(this.state.tourIdToTitle, prevState.tourIdToTitle)) {
+    if (!_.isEqual(this.state.buildings, prevState.buildings)) {
       this.setSelectOptions()
     }
   }
@@ -105,74 +95,12 @@ export default class Form extends React.Component {
   }
 
   /**
-  * Tour getters and setters
-  **/
-
-  getTours(callback) {
-    api.get('wptours', this.processTours)
-  }
-
-  handleNewTour(tourTitle) {
-    api.get('wptours/new', (err, res) => {
-      if (err) console.warn(err);
-      let tour = res.body;
-      tour.post_title = tourTitle;
-      this.saveNewTour(tour);
-    })
-  }
-
-  saveNewTour(tour) {
-    const self = this;
-
-    request.post(api.endpoint + 'wptours/save')
-      .send(tour)
-      .set('Accept', 'application/json')
-      .end((err, res) => {
-        if (err) console.warn(err)
-        self.addNewTourToBuilding(tour)
-      })
-  }
-
-  // here we need to update the tour mappings,
-  // add the new tour title to the tour options
-  // and add the new tour id to the building's tour
-  // ids
-  addNewTourToBuilding(tour) {
-    const self = this;
-
-    let options = Object.assign({}, this.state.options);
-    if (options.tour_ids) {
-      options.tour_ids.push(tour.post_title)
-    } else {
-      options.tour_ids = [tour.post_title];
-    }
-
-    let building = Object.assign({}, this.state.building);
-    if (building.tour_ids) {
-      building.tour_ids.push(tour.tour_id)
-    } else {
-      building.tour_ids = [tour.tour_id]
-    }
-
-    api.get('wptours', (err, res) => {
-      this.processTours(err, res, () => {
-        self.setState({
-          options: options,
-          building: building,
-          unsavedChanges: true
-        })
-      })
-    })
-  }
-
-  /**
   * Get available select options
   **/
 
   setSelectOptions() {
     const buildings = this.state.buildings;
-    const tourIdToTitle = this.state.tourIdToTitle;
-    const options = getSelectOptions(buildings, allSelects, tourIdToTitle);
+    const options = getSelectOptions(buildings, allSelects);
     this.setState({options: options})
   }
 
@@ -181,20 +109,15 @@ export default class Form extends React.Component {
   **/
 
   handleNewOption(field, value) {
-    // new tour ids require custom logic as they have table lookups
-    if (field === 'tour_ids') {
-      this.handleNewTour(value)
-    } else {
-      // add this value to the available options
-      let options = Object.assign({}, this.state.options);
-      options[field] ?
-          options[field].push(value)
-        : options[field] = [value]
-      this.setState({options: options})
+    // add this value to the available options
+    let options = Object.assign({}, this.state.options);
+    options[field] ?
+        options[field].push(value)
+      : options[field] = [value]
+    this.setState({options: options})
 
-      // select this value within this record
-      this.updateField(field, value)
-    }
+    // select this value within this record
+    this.updateField(field, value)
   }
 
   /**
@@ -210,10 +133,7 @@ export default class Form extends React.Component {
   **/
 
   updateField(field, value) {
-    // convert tour_ids back to ints before operating on them
-    if (field == 'tour_ids') {
-      var value = this.state.tourTitleToId[value];
-    }
+    console.log(field, value)
 
     // use Object.assign to avoid object mutations
     let building = Object.assign({}, this.state.building)
@@ -317,7 +237,6 @@ export default class Form extends React.Component {
             options={this.state.options}
             allowNewOptions={true}
             handleNewOption={this.handleNewOption}
-            tourIdToTitle={this.state.tourIdToTitle}
             geocode={this.geocode} />;
           break;
 
