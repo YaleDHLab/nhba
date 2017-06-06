@@ -227,6 +227,10 @@ export default class Building extends React.Component {
                     building={this.state.building} />
                 </div>
               </div>
+              <div className='bottom'>
+                <h1 className='label'>Related Buildings</h1>
+                <Related building={this.state.building} />
+              </div>
             </div>
             <div className='right'>
               <div className='top-right-top'>
@@ -238,10 +242,6 @@ export default class Building extends React.Component {
                   fields={this.getTextFields()} />
               </div>
             </div>
-          </div>
-          <div className='bottom'>
-            <h1 className='label'>Related Buildings</h1>
-            <Related building={this.state.building} />
           </div>
         </div>
       </div>
