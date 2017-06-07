@@ -82,7 +82,7 @@
   background-repeat: no-repeat;
   background-position: right 25px center;
   border-left: 1px solid lightgray;
-  border-right: none;
+  border-right: 1px solid lightgray;
   border-top: none;
   border-bottom: none;
   z-index: -1;
