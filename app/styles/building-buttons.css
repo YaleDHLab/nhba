@@ -12,8 +12,10 @@
   cursor: pointer;
   text-align: center;
   overflow: hidden;
-  color: #777;
-  fill: #777;
+  color: #888;
+  fill: #888;
+  font-weight:500;
+  letter-spacing: .25px;
 }
 
 .building-button:last-child {
@@ -37,7 +39,7 @@
 
 .building-button .building-button-icon {
   width: 16px;
-  margin: 16px 8px 0 0;
+  margin: 14px 10px 0 0;
   display: inline-block;
 }
 
