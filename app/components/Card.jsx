@@ -50,23 +50,29 @@ export default class Card extends React.Component {
     }, 10);
   }
 
-  getHtml(s) {
-    return {__html: s};
-  }
-
   render() {
     const building = this.props.building;
-    const name = building.building_name ? building.building_name : building.address;
 
-    // create the card details with available fields
-    const neighborhood = building.neighborhoods ? building.neighborhoods[0] : ''
-    const style = building.styles ? building.styles[0] : ''
+    // parse out the large and small card text
+    let bigtext = '',
+        smalltext = '';
 
-    let details = '';
-    if (neighborhood && style) {
-      details = [neighborhood, style].join(' &#8226; ')
+    if (building.building_name) {
+      bigtext = building.building_name;
+      smalltext = building.address;
     } else {
-      details = neighborhood ? neighborhood : style;
+      bigtext = building.address;
+      if (bigtext && bigtext.includes(', New Haven')) {
+        let splitaddress = bigtext.split(', New Haven');
+        bigtext = splitaddress[0];
+
+        // parse out the small text
+        if (splitaddress[1].substring(0,1) == ',') {
+          smalltext = 'New Haven, ' + splitaddress[1].substring(1).trim();
+        } else {
+          smalltext = 'New Haven, ' + splitaddress[1].trim();
+        }
+      }
     }
 
     return (
@@ -75,9 +81,8 @@ export default class Card extends React.Component {
           <div className='card-content'>
             <div className='background-image card-image' style={this.getStyle()} />
             <div className='card-text'>
-              <div className='card-name'>{name}</div>
-              <div className='card-details'
-                dangerouslySetInnerHTML={this.getHtml(details)} />
+              <div className='card-name'>{bigtext}</div>
+              <div className='card-details'>{smalltext}</div>
             </div>
           </div>
         </Link>
