@@ -16,6 +16,7 @@
   padding-bottom: 66%;
   position: relative;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .card-image {
@@ -58,10 +59,9 @@
 **/
 
 .related .card {
-  width: 250px;
+  width: 255px;
   height: auto;
   display: inline-block;
-  padding: 9px;
   box-sizing: border-box;
   height: 100%;
   padding-top: 3px;
