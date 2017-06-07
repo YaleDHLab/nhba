@@ -1,8 +1,9 @@
 import { default as React, Component } from 'react'
-import {  withGoogleMap, GoogleMap } from 'react-google-maps';
+import {  withGoogleMap, GoogleMap } from 'react-google-maps'
 import UserMarker from './map/UserMarker'
 import MapMarker from './map/Marker'
-import _ from 'lodash';
+import _ from 'lodash'
+import MapStyles from './map/MapStyles'
 
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
@@ -11,6 +12,7 @@ const MapComponent = withGoogleMap(props => (
     defaultCenter={props.mapConfig.location}
     defaultOptions={{
       scrollwheel: false,
+      styles: MapStyles,
     }}>
 
     <UserMarker userLocation={props.userLocation} />

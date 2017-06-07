@@ -65,7 +65,13 @@ export default class Card extends React.Component {
       if (bigtext && bigtext.includes(', New Haven')) {
         let splitaddress = bigtext.split(', New Haven');
         bigtext = splitaddress[0];
-        smalltext = 'New Haven, ' + splitaddress[1].substring(2);
+
+        // parse out the small text
+        if (splitaddress[1].substring(0,1) == ',') {
+          smalltext = 'New Haven, ' + splitaddress[1].substring(1).trim();
+        } else {
+          smalltext = 'New Haven, ' + splitaddress[1].trim();
+        }
       }
     }
 
