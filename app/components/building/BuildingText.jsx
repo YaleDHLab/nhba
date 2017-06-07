@@ -2,15 +2,16 @@ import React from 'react'
 import BuildingTable from './BuildingTable'
 import BuildingCollapsible from './BuildingCollapsible'
 
-const tableFields = [
+let tableFields = [
+  {label: 'Year Built', field: 'year_built'},
+  {label: 'Era', field: 'era'},
+  {label: 'Functions', field: 'current_uses'},
   {label: 'Style', field: 'styles'},
   {label: 'Architect', field: 'architect'},
-  {label: 'Built', field: 'year_built'},
   {label: 'Client', field: 'client'},
-  {label: 'Use', field: 'current_uses'},
-  {label: 'Current Tenant', field: 'current_tenant'},
   {label: 'Neighborhood', field: 'neighborhoods'},
-  {label: 'Researcher', field: 'researcher'}
+  {label: 'Tour', field: 'tours'},
+  {label: 'Researcher', field: 'researcher'},
 ]
 
 export default class BuildingText extends React.Component {
@@ -37,6 +38,13 @@ export default class BuildingText extends React.Component {
             </div>
           )
         }
+      })
+    }
+
+    if (this.props.building.building_name) {
+      tableFields.unshift({
+        label: 'Address',
+        field: 'address'
       })
     }
 

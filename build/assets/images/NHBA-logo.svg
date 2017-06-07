@@ -2,13 +2,13 @@
   <defs>
     <style>
     @font-face {
-      font-family: SonderSansRough;
-      src: url('/assets/fonts/SonderSans-BlackRough.otf')
+      font-family: SonderSans;
+      src: url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff');
     }
     .cls-1{
       font-size:24px;
       fill:#fff;
-      font-family: SonderSansRough;
+      font-family: SonderSans;
       letter-spacing:0.04999em;
     }
     </style>
