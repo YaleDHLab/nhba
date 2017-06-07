@@ -97,8 +97,8 @@
 * Bottom
 **/
 
-.building .bottom{
-  width: calc(100% + 2px);
+.building .bottom {
+  width: 100%;
 }
 
 .building .bottom .label {

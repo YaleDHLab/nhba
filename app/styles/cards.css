@@ -16,6 +16,7 @@
   padding-bottom: 66%;
   position: relative;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .card-image {
