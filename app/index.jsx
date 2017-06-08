@@ -22,6 +22,7 @@ ReactDOM.render(
       <Route path='/about' component={About} />
       <Route path='/glossary' component={Glossary} />
       <Route path='/contact' component={Contact} />
+      <Route path='/cards' component={Search} />
       <Route path='/search' component={Search} />
       <Route path='/building' component={Building} />
       <Route path='/login' component={Authenticate} />

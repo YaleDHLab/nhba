@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  word-break: break-word;
 }
 
 html {
@@ -31,6 +32,12 @@ body {
 
 .app-content {
   padding-top: 80px;
+}
+
+@media(max-width: 1150px) {
+  .app-content {
+    padding-top: 50px;
+  }
 }
 
 .container {
@@ -237,4 +244,12 @@ a {
 
 .clear-both {
   clear: both;
+}
+
+/**
+* Show/hide
+**/
+
+.hidden {
+  display: none;
 }

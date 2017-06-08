@@ -228,6 +228,21 @@ module.exports = function(app) {
 
   /**
   *
+  * First building in db for mobiles
+  *
+  **/
+
+  app.get('/api/buildings/random', (req, res) => {
+    var query = {$where: 'this.images.length > 0'};
+    models.building.findOne(query, (err, data) => {
+      if (err) return res.status(500).send({cause: err})
+        return res.status(200).send(data)
+    })
+  })
+
+
+  /**
+  *
   * New records
   *
   **/

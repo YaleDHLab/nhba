@@ -24,3 +24,27 @@
   margin: 20px 0 0 40px;
   width: 300px;
 }
+
+@media(max-width: 1150px) {
+  .app-wrapper {
+    margin-bottom: -60px;
+  }
+
+  .footer, .app-wrapper:after {
+    height: 60px;
+  }
+
+  .footer {
+    background: #fff;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    z-index: 3;
+  }
+
+  .footer .dh-lab-logo {
+    display: none;
+  }
+}
