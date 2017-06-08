@@ -35,13 +35,14 @@ export default class MobileIcons extends React.Component {
 
     elems.map((d) => {
       if (d.elem) {
-        d.elem.forEach((e) => {
+        for (var i=0; i<d.elem.length; i++) {
+          const e = d.elem[i];
           if (d.label !== label) {
             e.style.display = 'none'
           } else {
             e.style.display = 'block'
           }
-        })
+        }
       }
     })
   }
