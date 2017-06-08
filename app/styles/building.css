@@ -138,5 +138,11 @@
 
   .building .top .right {
     width: 100%;
+    background: #fff;
+  }
+
+  .building .top .right .top-right-bottom {
+    width: 100%;
+    background: #fff;
   }
 }
