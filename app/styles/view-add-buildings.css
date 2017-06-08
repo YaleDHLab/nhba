@@ -47,7 +47,10 @@
 .view-add-buildings h1 {
   color: #fff;
   margin-top: 50px;
-  font-family: Tinos;
+  font-family: Helvetica Neue;
+  font-weight:500;
+  font-size: 1.5em;
+
 }
 
 .view-add-buildings .admin-search-container {
@@ -71,11 +74,13 @@
 .view-add-buildings .admin-search {
   width: 100%;
   padding: 10px;
+  padding-left:12px;
   padding-right: 78px;
   height: 40px;
   border: none;
   font-size: 1em;
   box-sizing: border-box;
+  letter-spacing: 0px;
 }
 
 .view-add-buildings .admin-search-button {
