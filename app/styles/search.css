@@ -27,3 +27,30 @@
   bottom: 80px;
   left: 25%;
 }
+
+@media(max-width: 1150px) {
+  .search {
+    display: none;
+  }
+
+  .mobile-search .search {
+    display: block;
+  }
+
+  .mobile-search .search .cards {
+    width: 100%;
+    top: 50px;
+    right: 0;
+    bottom: 60px;
+    background: #fff;
+    z-index: 0;
+  }
+
+  .mobile-search .search .map {
+    width: 100%;
+    top: 50px;
+    bottom: 60px;
+    left: 0;
+    z-index: 1;
+  }
+}

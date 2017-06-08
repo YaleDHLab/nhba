@@ -3,6 +3,11 @@
   word-break: break-word;
 }
 
+.building-table .table-label {
+  display: inline-block;
+  font-weight: 800;
+}
+
 .building-table tr {
   height: 20px;
 }
@@ -11,4 +16,13 @@
   width: 50%;
   padding: 0px !important;
   height: 20px;
+  vertical-align: top;
+}
+
+@media(max-width: 1150px) {
+  .building-table td {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 }

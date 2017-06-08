@@ -8,27 +8,14 @@
   overflow: hidden;
 }
 
-.header .logo-container {
-  display: table;
-  z-index: 0;
-  height: 100%;
-}
-
-.header .logo {
-  width: 540px;
-  pointer-events: none;
-}
-
 .header .app-name {
-  display: table-cell;
-  vertical-align: middle;
-  padding: 12px 40px;
-  font-size: 1.5em;
+  margin: 26px 40px;
+  font-family: SonderSans;
+  letter-spacing: 0.04em;
+  font-size: 2em;
   color: #fff;
-  font-family: Tinos;
   background: #4F6077;
   position: absolute;
-  top: 13px;
   z-index: 1;
 }
 
@@ -51,4 +38,31 @@
   font-weight: 500;
   letter-spacing: .5px;
   width: 140px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 1150px) {
+  .header {
+    height: 50px;
+    text-align: center;
+  }
+
+  .header .app-name {
+    width: 100%;
+    font-size: 1.4em;
+    display: block;
+    margin: 0;
+    margin-top: 16px;
+  }
+
+  .header .links {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .header .app-name {
+    font-size: 1em;
+    margin-top: 18px;
+  }
 }

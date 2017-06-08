@@ -60,8 +60,12 @@ export default class Building extends React.Component {
   **/
 
   getBuilding() {
-    const buildingId = this.props.location.query.id;
-    api.get('buildings?buildingId=' + buildingId, this.processBuilding)
+    if (this.props.location.query.id) {
+      const buildingId = this.props.location.query.id;
+      api.get('buildings?buildingId=' + buildingId, this.processBuilding);
+    } else if (this.props.location.query.random === 'true') {
+      api.get('buildings/random', this.processBuilding);
+    }
   }
 
   processBuilding(err, res) {

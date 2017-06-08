@@ -117,3 +117,26 @@
   font-weight: 500;
   letter-spacing: .25px;
 }
+
+/**
+* Building mobile styles
+**/
+
+@media(max-width: 1150px) {
+  .building {
+    position: relative;
+    z-index: 2;
+  }
+
+  .building .building-content {
+    width: 100%;
+  }
+
+  .building .top .left {
+    display: none;
+  }
+
+  .building .top .right {
+    width: 100%;
+  }
+}

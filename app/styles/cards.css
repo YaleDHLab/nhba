@@ -89,11 +89,45 @@
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  color: #5a5a5a
+  color: #4F6077;
 }
 
 .card-details {
   font-size: 0.75em;
   font-weight: 400;
   color: #999;
+}
+
+/**
+* Mobile search cards
+**/
+
+@media(max-width: 1150px) and (min-width: 600px) {
+  .search .card {
+    width: 50%;
+  }
+}
+
+@media(max-width: 600px) {
+  .search .card {
+    width: 100%;
+    border: none;
+  }
+}
+
+@media(max-width: 1150px) {
+  .cards {
+    padding: 0;
+  }
+
+  .search .card-content {
+    border: none;
+    padding-bottom: 75%;
+  }
+
+  .search .card-text {
+    padding: 10px;
+    height: 65px;
+    font-size: 1.3em;
+  }
 }

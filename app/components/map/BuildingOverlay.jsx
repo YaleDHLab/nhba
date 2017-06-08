@@ -32,6 +32,7 @@ export default class BuildingOverlay extends React.Component {
 
         // render the marker to a mouse-accessible layer of the map
         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+        defaultMapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
 
         // center the marker overlay over the marker
         getPixelPositionOffset={centerOverlay}>
