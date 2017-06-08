@@ -25,7 +25,7 @@ export default class BuildingCollapsible extends React.Component {
         <div className='building-collapsible-header'
           onClick={this.toggleCollapsed}>
           <hr />
-          <h1>{this.props.label}</h1>
+          <h2>{this.props.label}</h2>
           <img src='/assets/images/caret.png' className='expand-icon' />
           <hr className='push' />
         </div>

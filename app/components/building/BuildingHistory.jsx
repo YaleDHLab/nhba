@@ -15,7 +15,7 @@ export default class BuildingHistory extends React.Component {
         {buildingHistoryFields.map((field, i) => {
           return this.props.building && this.props.building[field.field] ?
               <div key={i}>
-                <h2 className='subfield'>{field.label}</h2>
+                <h3 className='subfield'>{field.label}</h3>
                 <div dangerouslySetInnerHTML={
                   getNewlineMarkup(this.props.building[field.field])
                 } />
