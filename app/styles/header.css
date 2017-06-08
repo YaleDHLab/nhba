@@ -22,11 +22,12 @@
 .header .links {
   display: table;
   position: absolute;
-  right: 60px;
+  right: 75px;
   top: 0;
   height: 80px;
-  width: 500px;
+  width: 475px;
   text-align: center;
+  font-size: 15px;
 }
 
 .header .links a {

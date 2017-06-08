@@ -38,11 +38,14 @@
 }
 
 .filters .building-search {
-  width: 200px;
+  width: 20vw;
+  margin: 0 -1px;
   border: 1px solid #ddd;
-  padding: 8px 30px 8px 8px;
+  border-radius: 10px;
+  padding: 11px 30px 8px 8px;
   box-sizing: border-box;
-  font-size: 1em;
+  font-size: .75em;
+  background: #efefef;
 }
 
 .filters .select-container {
@@ -69,7 +72,7 @@
   color: #666;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .filters .multiselect .select-box,
@@ -114,7 +117,7 @@
 
 .filters .multiselect .select-checkboxes {
   top: 60px;
-  max-height: 50vh;
+  max-height: 60vh;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -125,15 +128,15 @@
 }
 
 .filters .multiselect input {
-  margin: 4px 8px 4px 4px;
+  margin: 4px 12px 4px 4px;
 }
 
 .filters .multiselect label {
-  padding: 11px 11px 0;
+  padding: 4px 8px 0px 0px;
 }
 
 .filters .multiselect label:last-child {
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 @media (max-width: 1150px) {
