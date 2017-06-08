@@ -1,3 +1,7 @@
+/**
+* main.css style
+**/
+
 * {
   margin: 0;
   padding: 0;
@@ -171,23 +175,25 @@ a {
   margin-right: 4px;
   padding: 14px;
   box-sizing: border-box;
-  background: #999;
+  background: #4F6077;
   text-align: center;
   cursor: pointer;
   font-size: 1em;
 }
 
 .modal .header .modal-header-text.brand {
-  font-family: Tinos;
+  font-family: SonderSans;
   text-align: left;
-  font-size: 1.25em;
+  font-size: 1.6em;
   padding-left: 27px;
+  letter-spacing: 1px;
 }
 
 .modal .header .close-text {
   width: 110px;
   margin-right: 0;
   max-height: 100%;
+  padding-top:16px;
 }
 
 .modal .header .close-text .close-icon {

@@ -12,11 +12,13 @@
 }
 
 .marker-overlay .building-title {
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   margin-top: 5px;
   margin-bottom: 0;
   color: #5a5a5a;
+  font-family: Helvetica Neue;
+  letter-spacing: .25px;
 }
 
 .marker-overlay .building-image {
