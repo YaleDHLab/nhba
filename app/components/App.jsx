@@ -145,6 +145,12 @@ export default class AppWrapper extends React.Component {
           getSessionData={this.getSessionData} />
       : null
 
+    const isMobile = window.innerWidth < 1150,
+        isBuilding = this.props.location.pathname.includes('building'),
+        routeView = isMobile && !isBuilding ?
+          <MobileSearch {...this.props} />
+        : this.props.children;
+
     return (
       <div className='app-container'>
         <div className='app-wrapper'>
@@ -154,8 +160,7 @@ export default class AppWrapper extends React.Component {
             authenticated={this.state.authenticated} />
           <div className='app-content'>
             {modal}
-            <MobileSearch {...this.props} />
-            {this.props.children}
+            {routeView}
           </div>
         </div>
         <Footer />
