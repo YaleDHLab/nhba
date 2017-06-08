@@ -9,12 +9,16 @@ export default class Footer extends React.Component {
         'footer hidden'
       : 'footer'
 
+    const mobileFooter = window.innerWidth < 1150 ?
+        <MobileFooter location={this.props.location} />
+      : null;
+
     return (
       <footer className={className}>
         <object data={logo + '.svg'} type='image/svg+xml' className='dh-lab-logo'>
           <img src={logo + '.png'} className='logo' />
         </object>
-        <MobileFooter location={this.props.location} />
+        {mobileFooter}
       </footer>
     )
   }
