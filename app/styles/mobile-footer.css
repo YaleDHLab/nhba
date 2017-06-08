@@ -1,50 +1,50 @@
 /**
-* Mobile icons
+* Mobile footer
 **/
 
-.mobile-icons {
+.mobile-footer {
   display: none;
 }
 
 @media(max-width: 1150px) {
-  .mobile-icons {
+  .mobile-footer {
     width: 100%;
     text-align: center;
     display: block;
   }
 
-  .mobile-icons .mobile-icon-container {
+  .mobile-footer .mobile-footer-icon-container {
     display: inline-block;
     margin-top: 10px;
     color: #666;
   }
 
-  .mobile-icons .mobile-icon {
+  .mobile-footer .mobile-footer-icon {
     display: inline-block;
     margin: 0 25px;
     cursor: pointer;
     opacity: 0.5;
   }
 
-  .mobile-icons .mobile-icon.active {
+  .mobile-footer .mobile-footer-icon.active {
     opacity: 1;
   }
 
-  .mobile-icons object,
-  .mobile-icons img {
+  .mobile-footer object,
+  .mobile-footer img {
     width: 20px;
     opacity: 0.8;
     pointer-events: none;
   }
 
-  .mobile-icons .icon-search {
+  .mobile-footer .icon-search {
     margin-left: -5px;
   }
 }
 
 
 @media(max-width: 400px) {
-  .mobile-icons .mobile-icon {
+  .mobile-footer .mobile-footer-icon {
     margin: 0 12px;
   }
 }

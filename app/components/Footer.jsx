@@ -1,5 +1,5 @@
 import React from 'react'
-import MobileIcons from './MobileIcons'
+import MobileFooter from './MobileFooter'
 
 export default class Footer extends React.Component {
 
@@ -14,7 +14,7 @@ export default class Footer extends React.Component {
         <object data={logo + '.svg'} type='image/svg+xml' className='dh-lab-logo'>
           <img src={logo + '.png'} className='logo' />
         </object>
-        <MobileIcons />
+        <MobileFooter location={this.props.location} />
       </footer>
     )
   }

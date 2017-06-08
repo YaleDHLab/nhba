@@ -163,7 +163,7 @@ export default class AppWrapper extends React.Component {
             {routeView}
           </div>
         </div>
-        <Footer />
+        <Footer location={this.props.location} />
       </div>
     )
   }

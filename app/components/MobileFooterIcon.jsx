@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class MobileIcon extends React.Component {
+export default class MobileFooterIcon extends React.Component {
   constructor(props) {
     super(props)
 
@@ -12,9 +12,9 @@ export default class MobileIcon extends React.Component {
   }
 
   render() {
-    const className = this.props.view === this.props.label ?
-        'mobile-icon active'
-      : 'mobile-icon';
+    const className = this.props.currentRoute === this.props.route ?
+        'mobile-footer-icon active'
+      : 'mobile-footer-icon';
 
     return (
       <div className={className} onClick={this.handleClick}>
