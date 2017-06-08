@@ -35,11 +35,12 @@
 .header .links {
   display: table;
   position: absolute;
-  right: 60px;
+  right: 75px;
   top: 0;
   height: 80px;
-  width: 500px;
+  width: 475px;
   text-align: center;
+  font-size: 15px;
 }
 
 .header .links a {
@@ -50,5 +51,4 @@
   font-weight: 500;
   letter-spacing: .5px;
   width: 140px;
-  letter-spacing: 1px;
 }

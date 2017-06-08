@@ -65,6 +65,7 @@
   box-sizing: border-box;
   height: 100%;
   padding-top: 3px;
+  padding-bottom: 12px;
 }
 
 /**
