@@ -1,8 +1,8 @@
 .authenticate .modal {
-  width: 550px;
+  width: 700px;
   position: absolute;
   top: 15%;
-  left: 50%;
+  left: 40%;
   margin-left: -225px;
   z-index: 10;
   padding-bottom: 60px;
@@ -13,7 +13,7 @@
 **/
 
 .authenticate .modal .header .brand {
-  width: 342px;
+  width: 492px;
 }
 
 .authenticate .modal .header .middle {
@@ -25,7 +25,6 @@
 **/
 
 .authenticate .modal .body h1 {
-  font-weight: 800px;
   text-align: center;
   margin-bottom: 15px;
 }
@@ -53,7 +52,8 @@
 
 .authenticate .modal .full-width {
   display: inline-block;
-  width: 100%;
+  margin-left: 15%;
+  width: 70%;
   box-sizing: border-box;
 }
 
@@ -93,7 +93,10 @@
 
 .authenticate .forgot-password-button {
   text-align: right;
+  margin-right: 15%;
   cursor: pointer;
+  color: #999;
+  font-size: .9em;
 }
 
 /**
