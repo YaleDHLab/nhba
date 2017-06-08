@@ -5,7 +5,7 @@ export default class BuildingOverview extends React.Component {
   render() {
     return this.props.building ?
       <div className='building-overview'>
-        <h1>Overview</h1>
+        <h2>Overview</h2>
         <p dangerouslySetInnerHTML={
           getNewlineMarkup(this.props.building.overview_description)
         } />

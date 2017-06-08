@@ -23,9 +23,9 @@ export default class BuildingResources extends React.Component {
 
     return (
       <div className='building-resources'>
-        <h2>Documents</h2>
+        <h3>Documents</h3>
         {archiveDocuments}
-        <h2>References</h2>
+        <h3>References</h3>
         {sources}
       </div>
     )

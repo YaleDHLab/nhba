@@ -1,6 +1,7 @@
 .building-table {
   width: 100%;
   word-break: break-word;
+  margin-bottom: 30px;
 }
 
 .building-table .table-label {
