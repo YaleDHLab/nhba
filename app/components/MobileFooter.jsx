@@ -16,10 +16,9 @@ export default class MobileFooter extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps, this.props)
     if (prevProps.location != this.props.location) {
       let route = this.props.location.pathname;
-      route = route[0] === '/' ? route.substring(1) : route;
+      route = route[0] === '/' && route.length > 1 ? route.substring(1) : route;
       this.toggleView(route)
     }
   }
@@ -34,7 +33,7 @@ export default class MobileFooter extends React.Component {
       },
       {
         elem: document.querySelectorAll('.map'),
-        route: 'search'
+        route: '/'
       },
       {
         elem: document.querySelectorAll('.cards'),
@@ -65,7 +64,7 @@ export default class MobileFooter extends React.Component {
   }
 
   showSearch() {
-    browserHistory.push('/search');
+    browserHistory.push('/');
   }
 
   showCards() {
@@ -79,7 +78,7 @@ export default class MobileFooter extends React.Component {
           <MobileFooterIcon {...this.state}
             filename='icon-map'
             label='Map'
-            route='search'
+            route='/'
             handleClick={this.showSearch} />
           <MobileFooterIcon {...this.state}
             filename='icon-list'
