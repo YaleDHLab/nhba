@@ -13,7 +13,7 @@
   left: 0;
   top: 140px;
   right: 75%;
-  bottom: 80px;
+  bottom: 0px;
   min-width: 300px;
   z-index: 2;
 }
@@ -24,7 +24,7 @@
   height: auto;
   right: 0;
   top: 140px;
-  bottom: 80px;
+  bottom: 0px;
   left: 25%;
 }
 

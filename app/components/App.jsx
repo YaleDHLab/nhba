@@ -1,10 +1,11 @@
 import React from 'react'
 import Header from './Header'
-import Footer from './Footer'
+import MobileFooter from './MobileFooter'
 import Authenticate from './auth/Authenticate'
+import MobileSearch from './MobileSearch'
+import Shield from './Shield'
 import request from 'superagent'
 import api from '../../config'
-import MobileSearch from './MobileSearch'
 import _ from 'lodash'
 
 export default class AppWrapper extends React.Component {
@@ -137,6 +138,9 @@ export default class AppWrapper extends React.Component {
   **/
 
   render() {
+    const isMobile = window.innerWidth < 1150;
+    const isBuilding = this.props.location.pathname.includes('building');
+
     const modal = this.state.modal ?
         <Authenticate
           {...this.props}
@@ -145,11 +149,17 @@ export default class AppWrapper extends React.Component {
           getSessionData={this.getSessionData} />
       : null
 
-    const isMobile = window.innerWidth < 1150,
-        isBuilding = this.props.location.pathname.includes('building'),
-        routeView = isMobile && !isBuilding ?
-          <MobileSearch {...this.props} />
-        : this.props.children;
+    const routeView = isMobile && !isBuilding ?
+            <MobileSearch {...this.props} />
+          : this.props.children;
+
+    const mobileFooter = isMobile ?
+        <MobileFooter location={this.props.location} />
+      : null
+
+    const shield = isMobile ?
+        null
+      : <Shield />
 
     return (
       <div className='app-container'>
@@ -163,7 +173,8 @@ export default class AppWrapper extends React.Component {
             {routeView}
           </div>
         </div>
-        <Footer location={this.props.location} />
+        {mobileFooter}
+        {shield}
       </div>
     )
   }

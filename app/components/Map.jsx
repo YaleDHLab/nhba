@@ -10,9 +10,10 @@ const MapComponent = withGoogleMap(props => (
     defaultZoom={props.mapConfig.zoom}
     center={props.mapConfig.location}
     defaultCenter={props.mapConfig.location}
+    controlPosition={google.maps.ControlPosition.TOP_LEFT}
     defaultOptions={{
       scrollwheel: false,
-      styles: MapStyles,
+      styles: MapStyles
     }}>
 
     <UserMarker userLocation={props.userLocation} />

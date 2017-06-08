@@ -12,3 +12,12 @@
   width: 100%;
   position: absolute;
 }
+
+/**
+* Override google map styles
+**/
+
+.gm-bundled-control {
+  bottom: 166px !important;
+  right: 43px !important;
+}

@@ -1,0 +1,13 @@
+/**
+* Shield styles
+**/
+
+.shield {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+}
+
+.shield img {
+  width: 40px;
+}
