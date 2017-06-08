@@ -12,10 +12,17 @@
 
 .building-text h1 {
   margin: 20px 0 10px;
+  word-break: break-word;
 }
 
 .building-text h2 {
   margin: 20px 0 7px;
   font-family: SonderSans;
   font-size: 1.25em;
+}
+
+@media(max-width: 1150px) {
+  .building-text {
+    border: none;
+  }
 }

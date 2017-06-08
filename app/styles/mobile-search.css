@@ -1,0 +1,13 @@
+/**
+* Mobile search
+**/
+
+.mobile-search {
+  display: none;
+}
+
+@media(max-width: 1150px) {
+  .mobile-search {
+    display: block;
+  }
+}

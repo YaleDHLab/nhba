@@ -33,6 +33,12 @@ body {
   padding-top: 80px;
 }
 
+@media(max-width: 1150px) {
+  .app-content {
+    padding-top: 50px;
+  }
+}
+
 .container {
   max-width: 900px;
   display: inline-block;
@@ -237,4 +243,12 @@ a {
 
 .clear-both {
   clear: both;
+}
+
+/**
+* Show/hide
+**/
+
+.hidden {
+  display: none;
 }

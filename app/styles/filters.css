@@ -135,3 +135,9 @@
 .filters .multiselect label:last-child {
   padding-bottom: 10px;
 }
+
+@media (max-width: 1150px) {
+  .filters {
+    display: none;
+  }
+}

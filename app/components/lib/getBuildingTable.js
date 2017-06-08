@@ -17,7 +17,7 @@ module.exports = (tableFields, building) => {
     let value = building[f.field];
     let valueString = Array.isArray(value) ? value.join(', ') : value;
     if (value && value.length > 0) {
-      cells.push ( <td key={i}>{f.label}: {valueString}</td> )
+      cells.push ( <td key={i}><div className='table-label'>{f.label}</div>: {valueString}</td> )
     }
   })
 

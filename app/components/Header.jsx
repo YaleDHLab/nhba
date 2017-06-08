@@ -24,15 +24,9 @@ export default class Header extends React.Component {
 
     return (
       <header className='header'>
-        <div className='logo-container'>
-          <Link to='/#' className='app-name'>
-            <div>
-              <object data={logo + '.svg'} type='image/svg+xml' className='logo'>
-                <img src={logo + '.png'} className='logo' />
-              </object>
-            </div>
-          </Link>
-        </div>
+        <Link to='/#' className='app-name'>
+          New Haven Building Archive
+        </Link>
         <div className='links'>
           <Link to='/about'>About</Link>
           <Link to='/glossary'>Glossary</Link>
