@@ -6,8 +6,8 @@
   width: 700px;
   position: absolute;
   top: 15%;
-  left: 40%;
-  margin-left: -225px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
   padding-bottom: 60px;
 }
@@ -119,4 +119,25 @@
   font-weight: 600;
   padding: 20px 20px 0;
   text-align: center;
+}
+
+@media(max-width: 900px) {
+  .authenticate .modal {
+    width: 80%;
+    left: 10%;
+    margin-left: 0;
+    transform: none;
+  }
+
+  .authenticate .close-text.modal-header-text * {
+    margin-left: -100px;
+  }
+
+  .authenticate .forgot-password-button {
+    text-align: center;
+    margin-right: 0px;
+    cursor: pointer;
+    color: #999;
+    font-size: .9em;
+  }
 }

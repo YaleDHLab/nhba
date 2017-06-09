@@ -220,6 +220,20 @@ a {
   box-sizing: border-box;
 }
 
+@media(max-width: 900px) {
+  .modal .header .modal-header-text.brand {
+    display: none;
+  }
+
+  .modal .header .close-text {
+    width: 100%;
+  }
+
+  .modal .body {
+    padding: 20px;
+  }
+}
+
 /**
 * Global form styles
 **/

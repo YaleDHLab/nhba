@@ -146,6 +146,10 @@
     background: #fff;
   }
 
+  .building .top .right .top-right-top {
+    height: 300px;
+  }
+
   .building .top .right .top-right-bottom {
     width: 100%;
     background: #fff;
