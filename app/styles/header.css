@@ -49,7 +49,6 @@
   .header {
     height: 50px;
     text-align: center;
-    position: initial;
   }
 
   .header .app-name {
