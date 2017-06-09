@@ -158,6 +158,12 @@
   }
 }
 
+@media(max-width: 750px) {
+  .building .top .right .top-right-top {
+    height: 300px;
+  }
+}
+
 @media(max-width: 600px) {
   .building .top .right .top-right-top {
     height: 210px;

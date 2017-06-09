@@ -7,7 +7,8 @@ export default class Cards extends React.Component {
     super(props)
 
     this.state = {
-      cardsLoaded: 12
+      cardsLoaded: window.innerWidth < 600 ? 5 : 12,
+      cardsPerLoad: window.innerWidth < 600 ? 5 : 12
     }
 
     this.addCards = this.addCards.bind(this)
@@ -18,9 +19,8 @@ export default class Cards extends React.Component {
     this.handleScroll = _.debounce(function(event) {
       const cards = document.querySelector('.cards');
       if (!cards) return;
-      const scrollDistance = cards.scrollTop;
-      if (window.innerHeight - scrollDistance < 1000) self.addCards()
-    }, 50)
+      if (cards.clientHeight - cards.scrollTop < 300) self.addCards()
+    }, 200)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -32,7 +32,7 @@ export default class Cards extends React.Component {
 
   addCards() {
     const cardsLoaded = this.state.cardsLoaded;
-    this.setState({cardsLoaded: cardsLoaded + 12})
+    this.setState({cardsLoaded: cardsLoaded + this.state.cardsPerLoad})
   }
 
   render() {

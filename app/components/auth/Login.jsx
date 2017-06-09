@@ -61,17 +61,19 @@ export default class Login extends React.Component {
       <div className='login'>
         <h1>Welcome</h1>
 
-        <input type='text' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updateEmail}
-          placeholder='Email' value={this.state.email} />
+        <div className='authenticate-input-container'>
+          <input type='text' className='full-width'
+            onKeyPress={this.handleKey} onChange={this.updateEmail}
+            placeholder='Email' value={this.state.email} />
 
-        <input
-          type='password'
-          className='full-width'
-          onKeyPress={this.handleKey}
-          onChange={this.updatePassword}
-          placeholder='Password'
-          value={this.state.password} />
+          <input
+            type='password'
+            className='full-width'
+            onKeyPress={this.handleKey}
+            onChange={this.updatePassword}
+            placeholder='Password'
+            value={this.state.password} />
+        </div>
 
         <div className='forgot-password-button'
           onClick={this.props.forgotPassword}>Forgot password?</div>
