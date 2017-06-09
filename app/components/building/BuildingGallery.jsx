@@ -89,22 +89,50 @@ export default class BuildingGallery extends React.Component {
         </div>
       : null;
 
-    const gallery = this.props.building.images &&
-      this.props.building.images.length > 1 ?
-        <div className='background-image'
-          style={this.getStyle()}
-          onClick={this.toggleLightbox}>
-          <div className='image-index-button decrement'
-          onClick={this.decrementImageIndex}/>
-          <div className='image-index-button increment'
-            onClick={this.incrementImageIndex}/>
-          {caption}
-        </div>
-      : <div className='background-image'
-          style={this.getStyle()}
-          onClick={this.toggleLightbox}>
-          {caption}
-        </div>
+    const expandIcon = (
+      <div className='expand-image-icon-container'>
+        <img className='expand-image-icon'
+          src='/assets/images/icon-expand.png' />
+      </div>
+    )
+
+    let gallery = null;
+    if (this.props.building.images) {
+      if (this.props.layout.right === 'Gallery') {
+        if (this.props.building.images.length > 1) {
+          gallery = (
+            <div className='background-image'
+              style={this.getStyle()}
+              onClick={this.toggleLightbox}>
+              <div className='image-index-button decrement'
+              onClick={this.decrementImageIndex}/>
+              <div className='image-index-button increment'
+                onClick={this.incrementImageIndex}/>
+              {caption}
+              {expandIcon}
+            </div>
+          )
+        } else {
+          gallery = (
+            <div className='background-image'
+              style={this.getStyle()}
+              onClick={this.toggleLightbox}>
+              {caption}
+              {expandIcon}
+            </div>
+          )
+        }
+      } else {
+        gallery = (
+          <div className='background-image'
+            style={this.getStyle()}
+            onClick={this.toggleLightbox}>
+            {caption}
+            {expandIcon}
+          </div>
+        )
+      }
+    }
 
     const lightbox = this.state.showLightbox ?
         <Lightbox

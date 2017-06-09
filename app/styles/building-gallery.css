@@ -54,9 +54,27 @@
   width: 100%;
   box-sizing: border-box;
   display: none;
+  z-index: 1;
 }
 
 .building .top .background-image:hover .image-index-button,
 .building .top .background-image:hover .image-caption {
   display: block;
+}
+
+.building .expand-image-icon-container {
+  width: 50px;
+  height: 44px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  z-index: 0;
+}
+
+.building .expand-image-icon {
+  width: 30px;
+  margin: 7px 10px;
+  transform: rotate(90deg);
 }
