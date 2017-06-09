@@ -3,8 +3,7 @@ import SimplePage from './SimplePage'
 
 export default class Glossary extends React.Component {
   render() {
-
-    let page = {
+    const page = {
       image: '/assets/images/jeffrey-kerekes.jpg',
       title: 'Glossary',
       route: 'glossary',

@@ -12,7 +12,6 @@ export default class MobileFooter extends React.Component {
 
     this.toggleView = this.toggleView.bind(this)
     this.showAuth = this.showAuth.bind(this)
-    this.showSearch = this.showSearch.bind(this)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,12 +43,9 @@ export default class MobileFooter extends React.Component {
     elems.map((d) => {
       if (d.elem) {
         for (var i=0; i<d.elem.length; i++) {
-          const e = d.elem[i];
-          if (d.route !== currentRoute) {
-            e.style.display = 'none'
-          } else {
-            e.style.display = 'block'
-          }
+          d.elem[i].style.display = d.route !== currentRoute ?
+              'none'
+            : 'block'
         }
       }
     })
@@ -63,14 +59,6 @@ export default class MobileFooter extends React.Component {
     browserHistory.push(route + queryParam);
   }
 
-  showSearch() {
-    browserHistory.push('/');
-  }
-
-  showCards() {
-    browserHistory.push('/cards');
-  }
-
   render() {
     return (
       <div className='mobile-footer'>
@@ -79,12 +67,12 @@ export default class MobileFooter extends React.Component {
             filename='icon-map'
             label='Map'
             route='/'
-            handleClick={this.showSearch} />
+            handleClick={() => { browserHistory.push('/') }} />
           <MobileFooterIcon {...this.state}
             filename='icon-list'
             label='List'
             route='cards'
-            handleClick={this.showCards} />
+            handleClick={() => { browserHistory.push('/cards') }} />
           <MobileFooterIcon {...this.state}
             filename='icon-login'
             label='Login'
