@@ -44,9 +44,13 @@ export default class BuildingLightbox extends React.Component {
           <div className='body'>
             <img className='lightbox-image' src={image}></img>
             <div className='previous-image image-pagination-button'
-              onClick={this.props.decrementImageIndex} />
+              onClick={this.props.decrementImageIndex}>
+              <img src='/assets/images/image-paginate-icon.svg' />
+            </div>
             <div className='next-image image-pagination-button'
-              onClick={this.props.incrementImageIndex} />
+              onClick={this.props.incrementImageIndex}>
+              <img src='/assets/images/image-paginate-icon.svg' />
+            </div>
             {bottom}
           </div>
         </div>
