@@ -35,11 +35,9 @@ export default class Card extends React.Component {
 
   scrollTo(to, duration) {
     const self = this;
-
     if (duration <= 0) return;
     const doc = document.documentElement;
-    const scrolled = (window.pageYOffset || doc.scrollTop) -
-        (doc.clientTop || 0);
+    const scrolled = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
     const difference = to - scrolled;
     const perTick = difference / duration * 10;
 

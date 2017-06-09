@@ -3,8 +3,7 @@ import SimplePage from './SimplePage'
 
 export default class Contact extends React.Component {
   render() {
-
-    let page = {
+    const page = {
       image: '/assets/images/new-haven-overhead.jpg',
       title: 'Contact',
       route: 'contact',

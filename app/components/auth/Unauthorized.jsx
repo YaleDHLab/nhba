@@ -64,13 +64,21 @@ export default class Unauthorized extends React.Component {
         <h1>Admin Login Required</h1>
         <div className='body-text'>To access this page, please log in as as admin or contact the site owner to manage user preferences.</div>
 
-        <input type='text' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updateEmail}
-          placeholder='Email' value={this.state.email} />
+        <input
+          type='text'
+          className='full-width'
+          onKeyPress={this.handleKey}
+          onChange={this.updateEmail}
+          placeholder='Email'
+          value={this.state.email} />
 
-        <input type='password' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updatePassword}
-          placeholder='Password' value={this.state.password} />
+        <input
+          type='password'
+          className='full-width'
+          onKeyPress={this.handleKey}
+          onChange={this.updatePassword}
+          placeholder='Password'
+          value={this.state.password} />
 
         <div className='forgot-password-button'
           onClick={this.props.forgotPassword}>Forgot password?</div>
