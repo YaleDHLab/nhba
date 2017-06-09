@@ -53,14 +53,16 @@ export default class ForgotPassword extends React.Component {
     return (
       <div className='forgot-password'>
         <h1>Forgot Password</h1>
-        <div className='body-text'>Enter the email address associated with your account, and we'll email you a link to reset your password</div>
-        <input
-          className='full-width'
-          placeholder='E-mail address'
-          type='email'
-          value={this.state.email}
-          onKeyPress={this.handleKey}
-          onChange={this.updateEmail} />
+        <div className='authenticate-input-container'>
+          <div className='body-text'>Enter the email address associated with your account, and we'll email you a link to reset your password</div>
+          <input
+            className='full-width'
+            placeholder='E-mail address'
+            type='email'
+            value={this.state.email}
+            onKeyPress={this.handleKey}
+            onChange={this.updateEmail} />
+        </div>
         <div className='modal-button-container'>
           <div className='modal-button'
             onClick={this.submit}>Send Reset Instructions</div>

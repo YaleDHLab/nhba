@@ -33,6 +33,10 @@
   margin-bottom: 15px;
 }
 
+.authenticate .authenticate-input-container {
+  padding: 0 70px;
+}
+
 .authenticate .modal input {
   height: 35px;
   padding: 10px;
@@ -46,7 +50,7 @@
 
 .authenticate .modal .half-width {
   box-sizing: border-box;
-  width: 217px;
+  width: 222px;
   text-align: left;
 }
 
@@ -56,8 +60,7 @@
 
 .authenticate .modal .full-width {
   display: inline-block;
-  margin-left: 15%;
-  width: 70%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -142,6 +145,10 @@
     font-size: .9em;
   }
 
+  .authenticate .authenticate-input-container {
+    padding: 0;
+  }
+
   .authenticate .modal .half-width,
   .authenticate .modal .full-width {
     margin: 7px 0;
@@ -152,5 +159,4 @@
     width: 75%;
     margin: 0px 16px;
   }
-
 }

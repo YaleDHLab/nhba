@@ -78,39 +78,41 @@ export default class SignUp extends React.Component {
       <div className='sign-up'>
         <h1>Sign up</h1>
 
-        <input
-          type='text'
-          className='half-width left'
-          placeholder='First Name'
-          value={this.state.firstname}
-          onKeyPress={this.handleKey}
-          onChange={this.updateFirstName} />
+        <div className='authenticate-input-container'>
+          <input
+            type='text'
+            className='half-width left'
+            placeholder='First Name'
+            value={this.state.firstname}
+            onKeyPress={this.handleKey}
+            onChange={this.updateFirstName} />
 
-        <input
-          type='text'
-          className='half-width'
-          placeholder='Last Name'
-          value={this.state.lastname}
-          onKeyPress={this.handleKey}
-          onChange={this.updateLastName} />
+          <input
+            type='text'
+            className='half-width'
+            placeholder='Last Name'
+            value={this.state.lastname}
+            onKeyPress={this.handleKey}
+            onChange={this.updateLastName} />
 
-        <input type='text'
-          className='full-width'
-          placeholder='E-mail address'
-          value={this.state.email}
-          onKeyPress={this.handleKey}
-          onChange={this.updateEmail} />
+          <input type='text'
+            className='full-width'
+            placeholder='E-mail address'
+            value={this.state.email}
+            onKeyPress={this.handleKey}
+            onChange={this.updateEmail} />
 
-        <input type='password'
-          className='full-width'
-          placeholder='Password'
-          value={this.state.password}
-          onKeyPress={this.handleKey}
-          onChange={this.updatePassword} />
+          <input type='password'
+            className='full-width'
+            placeholder='Password'
+            value={this.state.password}
+            onKeyPress={this.handleKey}
+            onChange={this.updatePassword} />
 
-        <div className='agreement'>
-          <input type='checkbox' />
-          <div className='text'>By submitting this form you agree to the terms and conditions of this website</div>
+            <div className='agreement'>
+            <input type='checkbox' />
+            <div className='text'>By submitting this form you agree to the terms and conditions of this website</div>
+          </div>
         </div>
 
         <div className='modal-button-container'>

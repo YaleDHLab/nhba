@@ -59,13 +59,15 @@ export default class ResetPassword extends React.Component {
         <h1>Reset Password</h1>
         <div className='body-text'>Please enter a new password below</div>
 
-        <input
-          type='password'
-          className='full-width'
-          onKeyPress={this.handleKey}
-          onChange={this.updatePassword}
-          placeholder='Password'
-          value={this.state.password} />
+        <div className='authenticate-input-container'>
+          <input
+            type='password'
+            className='full-width'
+            onKeyPress={this.handleKey}
+            onChange={this.updatePassword}
+            placeholder='Password'
+            value={this.state.password} />
+        </div>
 
         <div className='modal-button-container'>
           <div className='modal-button' onClick={this.submit}>Submit</div>
