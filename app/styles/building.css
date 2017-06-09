@@ -66,12 +66,13 @@
 
 .building .building-layout-toggle .layout-option {
   display: inline-block;
-  padding: 4px 18px 5px 18px;
+  padding: 6px 18px;
   border-radius: 9px;
   cursor: pointer;
-  font-weight:500;
+  font-weight: 500;
   color: #888;
   font-size: 14px;
+  line-height: 14px;
 }
 
 .building .building-layout-toggle .layout-option.active {
