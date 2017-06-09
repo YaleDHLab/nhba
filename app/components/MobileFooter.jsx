@@ -52,11 +52,17 @@ export default class MobileFooter extends React.Component {
   }
 
   showAuth() {
-    const route = window.location.pathname.substring(1);
-    const queryParam = window.location.search ? 
-        window.location.search + '&login=true'
-      : '?login=true';
-    browserHistory.push(route + queryParam);
+    const location = Object.assign({}, window.location);
+    const route = location.pathname.substring(1);
+    if (location.search.includes('login')) {
+      browserHistory.push(route + location.search)
+    } else {
+      if (location.search.length) {
+        browserHistory.push('&login=true')
+      } else {
+        browserHistory.push('?login=true')
+      }
+    }
   }
 
   render() {
