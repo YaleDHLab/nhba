@@ -194,10 +194,12 @@ a {
 }
 
 .modal .header .close-text {
+  height: 50px;
   width: 110px;
   margin-right: 0;
   max-height: 100%;
   padding-top:16px;
+  display: inline-block;
 }
 
 .modal .header .close-text .close-icon {

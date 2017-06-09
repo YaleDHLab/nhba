@@ -62,3 +62,18 @@
 .building-lightbox .image-pagination-button.next-image {
   right: -50px;
 }
+
+/**
+* Lightbox caption
+**/
+
+.building-lightbox .lightbox-caption {
+  position: absolute;
+  bottom: -48px;
+  color: #fff;
+  padding: 15px 30px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  background: inherit;
+}

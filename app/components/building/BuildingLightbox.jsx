@@ -18,7 +18,15 @@ export default class BuildingLightbox extends React.Component {
   render() {
     const imageDir = '/assets/uploads/resized/large/',
         imageFile = this.props.building.images[this.props.imageIndex].filename,
+        imageCaption = this.props.building.images[this.props.imageIndex].caption,
         image = imageDir + imageFile;
+
+    const bottom = imageCaption ?
+        <div className='lightbox-caption'>
+          {imageCaption}
+          <BuildingLightboxCircles {...this.props} />
+        </div>
+      : <BuildingLightboxCircles {...this.props} />;
 
     return (
       <div className='building-lightbox dark-modal-backdrop'
@@ -39,7 +47,7 @@ export default class BuildingLightbox extends React.Component {
               onClick={this.props.decrementImageIndex} />
             <div className='next-image image-pagination-button'
               onClick={this.props.incrementImageIndex} />
-            <BuildingLightboxCircles {...this.props} />
+            {bottom}
           </div>
         </div>
       </div>
