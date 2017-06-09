@@ -35,7 +35,7 @@
 
 .authenticate .modal input {
   height: 35px;
-  padding: 10px;
+  padding: 0 10px;
   box-sizing: border-box;
   font-size: 1em;
   margin: 8px 0;

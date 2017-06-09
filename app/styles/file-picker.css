@@ -24,14 +24,14 @@
 
 .form .file-picker .file-name-button-container {
   display: table-cell;
-  width: 128px;
+  width: 135px;
 }
 
 .form .file-picker .file-name-button {
   display: inline-block;
   background: #ddd;
   font-weight: 600;
-  padding: 5px 20px;
+  padding: 6px 20px;
   border-radius: 4px;
   margin-left: 10px;
   cursor: pointer;
