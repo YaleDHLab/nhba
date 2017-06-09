@@ -17,10 +17,6 @@
   margin: 6px 0;
 }
 
-.form textarea {
-  margin: 8px 0;
-}
-
 .form .label,
 .form h4 {
   width: 140px;
@@ -28,20 +24,22 @@
 }
 
 .form .label {
-  vertical-align: top;
-  padding-top: 12px;
+  vertical-align: middle;
+  height: 45px;
 }
 
 .form input,
 .form select {
   width: 100%;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .form input {
   border: none;
   background: #efefef;
   border-radius: 2px;
-  padding: 10px;
+  padding: 0 10px;
   box-sizing: border-box;
   font-size: 0.9em;
 }
@@ -53,6 +51,8 @@
   box-sizing: border-box;
   font-size: 0.9em;
   color: #666;
+  margin: 8px 0;
+  font-family: inherit;
 }
 
 .form input[type=checkbox] {
@@ -121,22 +121,24 @@
 }
 
 .form .multiselect .select-box {
-  background: #efefef;
   border-radius: 2px;
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .form .multiselect select {
   border: none;
+  font-size: 0.9em;
+  padding-right: 33px;
   padding-left: 8px;
+}
 
-  /* caret styles */
+.form .multiselect select.custom-select {
+  background: #efefef;
   background-image: url(/assets/images/caret.png);
   background-size: 30px;
   background-repeat: no-repeat;
   background-position: 96%;
-
-  font-size: 0.9em;
-  padding-right: 33px;
 }
 
 .form .multiselect.active .select-checkboxes {

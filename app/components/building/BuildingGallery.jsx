@@ -127,7 +127,6 @@ export default class BuildingGallery extends React.Component {
           <div className='background-image'
             style={this.getStyle()}
             onClick={this.toggleLightbox}>
-            {caption}
             {expandIcon}
           </div>
         )
