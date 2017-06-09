@@ -11,6 +11,17 @@
   max-height: 550px;
 }
 
+@media(max-width: 900px) {
+  .building-lightbox .modal {
+    width: 70%;
+    top: 5%;
+    height: 71%;
+    left: 15%;
+    position: absolute;
+    max-height: 550px;
+  }
+}
+
 .building-lightbox .modal .brand {
   /* calc fallback */
   width: 100%;

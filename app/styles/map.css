@@ -17,7 +17,9 @@
 * Override google map styles
 **/
 
-.gm-bundled-control {
-  bottom: 166px !important;
-  right: 43px !important;
+@media(min-width: 1151px) {
+  .gm-bundled-control {
+    bottom: 166px !important;
+    right: 43px !important;
+  }
 }
