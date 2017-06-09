@@ -20,9 +20,7 @@ export default class Login extends React.Component {
   }
 
   handleKey(e) {
-    if (e.charCode == 13) {
-      this.submit()
-    }
+    if (e.charCode == 13) this.submit()
   }
 
   updateEmail(e) {
@@ -67,9 +65,13 @@ export default class Login extends React.Component {
           onKeyPress={this.handleKey} onChange={this.updateEmail}
           placeholder='Email' value={this.state.email} />
 
-        <input type='password' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updatePassword}
-          placeholder='Password' value={this.state.password} />
+        <input
+          type='password'
+          className='full-width'
+          onKeyPress={this.handleKey}
+          onChange={this.updatePassword}
+          placeholder='Password'
+          value={this.state.password} />
 
         <div className='forgot-password-button'
           onClick={this.props.forgotPassword}>Forgot password?</div>

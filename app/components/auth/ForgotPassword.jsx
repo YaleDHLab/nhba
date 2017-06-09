@@ -40,7 +40,6 @@ export default class ForgotPassword extends React.Component {
   }
 
   handleResponse(err, res) {
-    console.log(res)
     if (err) {console.warn(err)} else {
       if (res.body.message) {
         this.setState({message: res.body.message})
@@ -55,9 +54,13 @@ export default class ForgotPassword extends React.Component {
       <div className='forgot-password'>
         <h1>Forgot Password</h1>
         <div className='body-text'>Enter the email address associated with your account, and we'll email you a link to reset your password</div>
-        <input className='full-width' placeholder='E-mail address'
-          type='email' value={this.state.email}
-          onKeyPress={this.handleKey} onChange={this.updateEmail} />
+        <input
+          className='full-width'
+          placeholder='E-mail address'
+          type='email'
+          value={this.state.email}
+          onKeyPress={this.handleKey}
+          onChange={this.updateEmail} />
         <div className='modal-button-container'>
           <div className='modal-button'
             onClick={this.submit}>Send Reset Instructions</div>

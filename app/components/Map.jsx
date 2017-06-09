@@ -9,8 +9,8 @@ const MapComponent = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={props.mapConfig.zoom}
     center={props.mapConfig.location}
-    defaultCenter={props.mapConfig.location}
-    controlPosition={google.maps.ControlPosition.TOP_LEFT}
+    ref={props.onMapMounted}
+    onIdle={props.onIdle}
     defaultOptions={{
       scrollwheel: false,
       styles: MapStyles
@@ -46,20 +46,37 @@ export default class MapContainer extends Component {
     super(props)
 
     this.state = {
-      hoveredBuildingId: null
+      hoveredBuildingId: null,
+      location: {
+        lat: 41.3075931,
+        lng: -72.9278493
+      }
     }
+
+    this.handleMapMounted = this.handleMapMounted.bind(this)
+    this.updateCenter = this.updateCenter.bind(this)
+  }
+
+  handleMapMounted(map) {
+    this._map = map;
+  }
+
+  updateCenter() {
+    const center = this._map.getCenter();
+    this.setState({
+      location: {
+        lat: center.lat(),
+        lng: center.lng()
+      }
+    })
   }
 
   render() {
-    const initialLocation = this.props.initialLocation,
-        defaultLocation = {
-          lat: 41.3075931,
-          lng: -72.9278493
-        },
-        mapConfig = {
-          zoom: 15,
-          location: initialLocation ? initialLocation : defaultLocation
-        };
+    const initialLocation = this.props.initialLocation;
+    const mapConfig = {
+      zoom: 15,
+      location: initialLocation ? initialLocation : this.state.location
+    };
 
     return (
       <div className='map'>
@@ -71,6 +88,8 @@ export default class MapContainer extends Component {
             tourNameToIndex={this.props.tourNameToIndex}
             mapConfig={mapConfig}
             userLocation={this.props.userLocation}
+            onMapMounted={this.handleMapMounted}
+            onIdle={this.updateCenter}
           />
         </div>
       </div>

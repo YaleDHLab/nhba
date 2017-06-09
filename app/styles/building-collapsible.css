@@ -39,3 +39,7 @@
 .building-collapsible-push {
   margin-bottom: 20px;
 }
+
+.building-collapsible hr.push {
+  margin-top: 5px;
+}

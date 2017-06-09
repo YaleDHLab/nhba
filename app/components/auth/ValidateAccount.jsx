@@ -59,9 +59,13 @@ export default class ValidateAccount extends React.Component {
         <h1>Validate Account</h1>
         <div className='body-text'>Please enter your password below to validate your account:</div>
 
-        <input type='password' className='full-width'
-          onKeyPress={this.handleKey} onChange={this.updatePassword}
-          placeholder='Password' value={this.state.password} />
+        <input
+          type='password'
+          className='full-width'
+          onKeyPress={this.handleKey}
+          onChange={this.updatePassword}
+          placeholder='Password'
+          value={this.state.password} />
 
         <div className='modal-button-container'>
           <div className='modal-button' onClick={this.submit}>Submit</div>

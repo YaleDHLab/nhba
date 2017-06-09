@@ -70,8 +70,7 @@ export default class Building extends React.Component {
 
   processBuilding(err, res) {
     if (err) { console.warn(err) } else {
-      const building = Object.assign({}, res.body[0])
-      this.setState({building: building})
+      this.setState({building: res.body[0]})
     }
   }
 
