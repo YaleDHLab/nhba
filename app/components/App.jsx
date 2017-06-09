@@ -16,7 +16,6 @@ export default class AppWrapper extends React.Component {
       modal: null,          // {'login','validate','reset-password'}
       authenticated: false, // {true, false} is the user authenticated
       lastquery: null,      // the last observed query params
-      innerWidth: Infinity // the width of the client device
     }
 
     this.login = this.login.bind(this)
@@ -27,7 +26,6 @@ export default class AppWrapper extends React.Component {
     this.processLogout = this.processLogout.bind(this)
     this.getSessionData = this.getSessionData.bind(this)
     this.processSession = this.processSession.bind(this)
-    this.updateWidth = this.updateWidth.bind(this)
   }
 
   /**
@@ -35,17 +33,11 @@ export default class AppWrapper extends React.Component {
   **/
 
   componentDidMount() {
-    this.updateWidth();
     this.checkForAuth();
-    window.addEventListener('resize', this.updateWidth);
   }
 
   componentDidUpdate() {
     this.checkForAuth();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWidth);
   }
 
   /**
@@ -126,14 +118,6 @@ export default class AppWrapper extends React.Component {
   }
 
   /**
-  * Check the device width
-  **/
-
-  updateWidth() {
-    this.setState({innerWidth: window.innerWidth});
-  }
-
-  /**
   * Render
   **/
 
@@ -150,15 +134,11 @@ export default class AppWrapper extends React.Component {
       : null
 
     const routeView = isMobile && !isBuilding ?
-            <MobileSearch {...this.props} />
-          : this.props.children;
+        <MobileSearch {...this.props} />
+      : this.props.children;
 
-    const mobileFooter = isMobile ?
+    const footer = isMobile ?
         <MobileFooter location={this.props.location} />
-      : null
-
-    const shield = isMobile ?
-        null
       : <Shield />
 
     return (
@@ -173,8 +153,7 @@ export default class AppWrapper extends React.Component {
             {routeView}
           </div>
         </div>
-        {mobileFooter}
-        {shield}
+        {footer}
       </div>
     )
   }
