@@ -146,12 +146,20 @@
     background: #fff;
   }
 
-  .building .top .right .top-right-top {
-    height: 300px;
-  }
-
   .building .top .right .top-right-bottom {
     width: 100%;
     background: #fff;
+  }
+}
+
+@media(max-width: 900px) {
+  .building .top .right .top-right-top {
+    height: 400px;
+  }
+}
+
+@media(max-width: 600px) {
+  .building .top .right .top-right-top {
+    height: 210px;
   }
 }

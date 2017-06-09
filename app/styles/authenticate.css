@@ -127,6 +127,7 @@
     left: 10%;
     margin-left: 0;
     transform: none;
+    top: 60px;
   }
 
   .authenticate .close-text.modal-header-text * {
@@ -140,4 +141,16 @@
     color: #999;
     font-size: .9em;
   }
+
+  .authenticate .modal .half-width,
+  .authenticate .modal .full-width {
+    margin: 7px 0;
+    width: 100%;
+  }
+
+  .authenticate .modal .text {
+    width: 75%;
+    margin: 0px 16px;
+  }
+
 }
