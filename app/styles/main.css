@@ -254,6 +254,10 @@ a {
   cursor: pointer;
 }
 
+.custom-select::-ms-expand {
+  display: none;
+}
+
 .custom-textarea {
   border: none;
   overflow: auto;
