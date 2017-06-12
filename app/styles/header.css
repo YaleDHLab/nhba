@@ -14,7 +14,7 @@
 
 .header .app-name {
   margin: 26px 40px;
-  font-family: SonderSans;
+  font-family: 'SonderSans', Fallback, sans-serif;
   letter-spacing: 0.04em;
   font-size: 2em;
   color: #fff;
