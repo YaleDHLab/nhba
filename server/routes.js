@@ -34,7 +34,7 @@ const getTime = () => {
 **/
 
 const getTextQuery = (req) => {
-  return {
+  const textQuery = {
     '$or': [
       {
         'overview_description': {
@@ -44,13 +44,33 @@ const getTextQuery = (req) => {
       },
       {
         'address': {
-          $regex: req.query.fulltext,
+          $regex: regexEscape(req.query.fulltext),
+          $options: 'i'
+        }
+      },
+      {
+        'building_name': {
+          $regex: regexEscape(req.query.fulltext),
           $options: 'i'
         }
       }
     ]
   };
+
+  return textQuery;
 }
+
+/**
+* Helper that escapes regex characters in order to make them
+* searchable by server.js.
+*
+* @author: Mathias Bynens
+*   originally posted in SO 3115150
+**/
+
+const regexEscape = (text) => {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+};
 
 /**
 * Retrieve the text portion of a building query
