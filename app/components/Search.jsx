@@ -59,8 +59,7 @@ export default class Search extends React.Component {
     this.watchUserLocation = this.watchUserLocation.bind(this)
     this.unwatchUserLocation = this.unwatchUserLocation.bind(this)
 
-    // methods that execute search
-    this.runFulltextSearch = this.runFulltextSearch.bind(this)
+    // method that executes search
     this.runSearch = this.runSearch.bind(this)
   }
 
@@ -73,14 +72,14 @@ export default class Search extends React.Component {
     // bind an event listener to the admin search button
     const adminSearch = getAdminSearchButton(),
         adminInput = getAdminSearchInput();
-    if (adminSearch) adminSearch.addEventListener('click', this.runFulltextSearch);
+    if (adminSearch) adminSearch.addEventListener('click', this.runSearch(this.state));
     if (adminInput) adminInput.addEventListener('keydown', this.handleInputKeys);
   }
 
   componentWillUnmount() {
     const adminSearch = getAdminSearchButton(),
         adminInput = getAdminSearchInput();
-    if (adminSearch) adminSearch.removeEventListener('click', this.runFulltextSearch);
+    if (adminSearch) adminSearch.removeEventListener('click', this.runSearch(this.state));
     if (adminInput) adminInput.removeEventListener('keydown', this.handleInputKeys);
     this.unwatchUserLocation()
   }
@@ -115,7 +114,7 @@ export default class Search extends React.Component {
   }
 
   handleInputKeys(e) {
-    if (e.keyCode == 13) this.runFulltextSearch()
+    if (e.keyCode == 13) this.runSearch(this.state)
   }
 
   /**
@@ -139,28 +138,17 @@ export default class Search extends React.Component {
   }
 
   /**
-  * Seach runners
-  **/
-
-  runFulltextSearch() {
-    // get the query url containing select filters data
-    let url = getBuildingQueryUrl(this.state, selectFields);
-
-    // add the full text search to the query
-    const textSearch = document.querySelector('.building-search').value;
-    url += 'fulltext=' + encodeURIComponent(textSearch);
-
-    // run the search and process the results
-    api.get(url, this.processBuildings);
-  }
-
-  /**
   * Alow functions to pass a copy of the component state so
   * we can trigger search without waiting for state to trickle down
   **/
 
   runSearch(state) {
-    const url = getBuildingQueryUrl(state, selectFields);
+    let url = getBuildingQueryUrl(state, selectFields);
+
+    // add search terms (if any)
+    const textSearch = document.querySelector('.building-search').value;
+    if (textSearch) url += 'fulltext=' + encodeURIComponent(textSearch);
+
     api.get(url, this.processBuildings);
   }
 
@@ -174,7 +162,7 @@ export default class Search extends React.Component {
         <Filters {...this.state}
           updateSelect={this.updateSelect}
           updateFulltextSearch={this.updateFulltextSearch}
-          runFulltextSearch={this.runFulltextSearch}
+          runSearch={this.runSearch}
           handleInputKeys={this.handleInputKeys}
           updateSort={this.updateSort} />
         <Cards buildings={this.state.buildings} />
