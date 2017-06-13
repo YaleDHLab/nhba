@@ -16,7 +16,7 @@ export default class Related extends React.Component {
   }
 
   componentDidMount() {
-    api.get('buildings', this.processBuildings)
+    api.get('buildings?images=true', this.processBuildings)
   }
 
   componentDidUpdate(prevProps, prevState) {
