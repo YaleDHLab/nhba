@@ -76,7 +76,7 @@ module.exports = function(app) {
         mailer.send(user.email, user.token, null)
 
         user.save((err, doc) => {
-          if (err) return res.status(500).send({cause: err})
+          if (err) return res.status(500).send({cause: err});
           return res.status(200).send({
             message: messages.checkEmail
           });
@@ -130,7 +130,7 @@ module.exports = function(app) {
     var user = doc[0];
 
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-      if (err) return res.status(200).send({
+      if (err) return res.status(500).send({
         message: messages.error
       });
 
@@ -138,7 +138,7 @@ module.exports = function(app) {
       if (isMatch) {
         validateUser(user, req, res)
       } else {
-        return res.status(200).send({
+        return res.status(403).send({
           message: messages.loginFail
         });
       }
@@ -173,7 +173,7 @@ module.exports = function(app) {
 
     models.user.update({_id: user._id}, {$set: user},
       {overwrite: true}, (err, data) => {
-        if (err) console.warn(err)
+        if (err) console.warn(err);
 
         // update the user's session state
         loginSessionData(user, req);
@@ -239,7 +239,7 @@ module.exports = function(app) {
     req.session.superadmin = false
     req.session.save((err) => {
       if (err) {
-        return res.status(200).send({
+        return res.status(500).send({
           message: messages.logoutFail
         });
       } else {
@@ -276,7 +276,7 @@ module.exports = function(app) {
 
   var requestPasswordReset = (err, doc, req, res) => {
     if (err) {
-      return res.status(200).send({
+      return res.status(500).send({
         message: messages.error
       });
     }
@@ -321,7 +321,7 @@ module.exports = function(app) {
 
   var resetPassword = (err, doc, req, res) => {
     if (err) {
-      return res.status(200).send({
+      return res.status(500).send({
         message: messages.error
       })
     }
@@ -329,7 +329,7 @@ module.exports = function(app) {
     var user = doc[0];
 
     if (!user) {
-      return res.status(200).send({
+      return res.status(403).send({
         message: messages.loginFail
       })
     }
