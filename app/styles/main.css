@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  font-family: Helvetica Neue;
+  font-family: 'Helvetica Neue', sans-serif;
   color: #444;
   font-weight: 400;
   font-size: 16px;
@@ -64,7 +64,7 @@ h1 {
 }
 
 h1, h2 {
-  font-family: SonderSans;
+  font-family: 'SonderSans';
   color: #4F6077;
   letter-spacing: 1px;
 }
@@ -190,7 +190,7 @@ a {
 }
 
 .modal .header .modal-header-text.brand {
-  font-family: SonderSans;
+  font-family: 'SonderSans';
   text-align: left;
   font-size: 1.6em;
   padding-left: 27px;

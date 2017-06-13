@@ -70,7 +70,7 @@
   padding-left: 25px;
   padding-right: 50px;
   color: #666;
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 13px;
 }
@@ -90,7 +90,7 @@
   border-bottom: none;
   z-index: -1;
   color: #666;
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 12px;
   display: inline-block;
@@ -118,7 +118,7 @@
 .filters .multiselect .select-checkboxes {
   top: 60px;
   max-height: 60vh;
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
