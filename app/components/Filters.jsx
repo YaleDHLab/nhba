@@ -13,6 +13,7 @@ export default class Filters extends React.Component {
       options: {}
     }
 
+    this.runSearch = this.runSearch.bind(this)
     this.setSelectOptions = this.setSelectOptions.bind(this)
   }
 
@@ -26,6 +27,10 @@ export default class Filters extends React.Component {
     const buildings = this.props.buildings;
     const options = getSelectOptions(buildings, filterSelects)
     this.setState({options: options})
+  }
+
+  runSearch() {
+    this.props.runSearch(this.props)
   }
 
   render() {
@@ -50,7 +55,7 @@ export default class Filters extends React.Component {
       <div className='filters'>
         <div className='input-container'>
           <div className='search-icon'
-            onClick={this.props.runFulltextSearch} />
+            onClick={this.runSearch} />
           <input type='text'
             className='building-search'
             onKeyDown={this.props.handleInputKeys}></input>
