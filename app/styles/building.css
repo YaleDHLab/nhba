@@ -115,7 +115,7 @@
 .building .bottom .label {
   font-size: 1em;
   margin-top: 40px;
-  font-family: Helvetica Neue;
+  font-family: 'Helvetica Neue', sans-serif;
   margin-bottom: 10px;
   letter-spacing: 0px;
   color: #888;

@@ -17,6 +17,7 @@
 .building-text h1 {
   margin: 20px 0 10px;
   word-break: break-word;
+  text-transform: uppercase;
 }
 
 .building-text h2 {
