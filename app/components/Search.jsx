@@ -30,7 +30,7 @@ export default class Search extends React.Component {
 
     this.state = {
       buildings: [],
-      tourNameToIndex: {},
+      tourNameToIndex: null,
 
       // select fields
       'tours': new Set(),
@@ -88,7 +88,9 @@ export default class Search extends React.Component {
   processBuildings(err, res) {
     if (err) { console.warn(err) } else {
       this.setState({buildings: res.body})
-      this.setState({tourNameToIndex: this.getTourNameToIndex(res.body)})
+      if (!this.state.tourNameToIndex) {
+        this.setState({tourNameToIndex: this.getTourNameToIndex(res.body)})
+      }
     }
   }
 

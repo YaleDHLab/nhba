@@ -41,6 +41,8 @@ const handleMarkerClick = (building) => {
 
 // fetch an icon to represent the current building
 const getIcon = (building, tourNameToIndex) => {
+  if (!tourNameToIndex) return;
+
   const tourIndex = building.tours && building.tours.length ?
       tourNameToIndex[ building.tours[0] ]
     : config.colors.length -1;
