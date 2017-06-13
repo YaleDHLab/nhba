@@ -14,7 +14,7 @@ var _ = require('lodash');
 
 mongoose.connect('mongodb://localhost/' + config.db)
 mongoose.connection.on('error', (err) => {
-  console.log(err)
+  console.warn(err)
 })
 
 /**
@@ -71,15 +71,19 @@ const addFilterTerms = (queryTerms, req) => {
 
   keys.map((key) => {
     // values with ' ' use _ as whitespace separator in query
-    var values = []
-    req.query[key].split(' ').map((value) => {
-      values.push(value.split('_').join(' '))
+    var values = [],
+        queryTerm = {}
+        args = req.query[key] = _.isArray(req.query[key]) ?
+            req.query[key]
+          : [req.query[key]]
+
+    args.map((value) => {
+      values.push(value);
     })
 
     // ensure returned records have all of the selected levels
-    var queryTerm = {}
-    queryTerm[key] = { $all: values }
-    queryTerms.push(queryTerm)
+    queryTerm[key] = { $all: values };
+    queryTerms.push(queryTerm);
   })
 
   // ensure we only return buildings with 1 or more images

@@ -51,7 +51,7 @@ const addSelectQueryTerms = (state, selectFields, queryTerms) => {
 const encodeValues = (values) => {
   let encodedValues = [];
   values.map((value) => {
-    encodedValues.push(value.split(' ').join('_'))
+    encodedValues.push( encodeURIComponent(value) )
   })
   return encodedValues;
 }
@@ -108,12 +108,16 @@ const buildQueryUrl = (queryTerms) => {
   if (queryTerms) {
     url += '?filter=true&'
     _.keys(queryTerms).map((field) => {
+
       if (Array.isArray(queryTerms[field])) {
-        url += field + '=' + queryTerms[field].join('+') + '&'
+        queryTerms[field].map((queryTerm) => {
+          url += field + '=' + queryTerm + '&';
+        })
       } else {
         url += field + '=' + queryTerms[field] + '&'
       }
     })
   }
+
   return url;
 }
