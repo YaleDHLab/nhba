@@ -45,13 +45,19 @@ export default class Login extends React.Component {
   }
 
   handleResponse(err, res) {
+    const self = this;
     if (err) {console.warn(err)} else {
       if (res.body.message) {
-        this.setState({message: res.body.message})
+        self.setState({message: res.body.message})
       }
     }
 
-    this.props.getSessionData()
+    self.props.getSessionData()
+    if (res.status && res.status === 200) {
+      window.setTimeout(function() {
+        self.props.hideAuth()
+      }, 500)
+    }
   }
 
   render() {
