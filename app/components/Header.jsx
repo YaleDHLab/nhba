@@ -24,9 +24,9 @@ export default class Header extends React.Component {
 
     return (
       <header className='header'>
-        <Link to='/#' className='app-name'>
+        <a href='/' className='app-name'>
           NEW HAVEN BUILDING ARCHIVE
-        </Link>
+        </a>
         <div className='links'>
           <Link to='/about'>About</Link>
           <Link to='/glossary'>Glossary</Link>
