@@ -48,9 +48,10 @@
   position: absolute;
   bottom: 0;
   background: rgba(0,0,0,0.5);
-  color: #fff;
+  color: #eee;
   padding: 22px;
-  font-size: 18px;
+  font-size: 14px;
+  letter-spacing: .25px;
   width: 100%;
   box-sizing: border-box;
   display: none;

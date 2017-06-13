@@ -26,8 +26,12 @@ body {
 **/
 
 @font-face {
-  font-family: SonderSans;
-  src: url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff');
+  font-family: 'SonderSans';
+  src: url('/assets/fonts/sondersans-blackrough-webfont.eot') format('eot'),
+       url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff'),
+       url('/assets/fonts/sondersans-blackrough-webfont.woff2') format('woff2'),
+       url('/assets/fonts/sondersans-blackrough-webfont.ttf') format('truetype'),
+       url('/assets/fonts/sondersans-blackrough-webfont.svg') format('svg');
 }
 
 /**
