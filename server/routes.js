@@ -14,7 +14,7 @@ var _ = require('lodash');
 
 mongoose.connect('mongodb://localhost/' + config.db)
 mongoose.connection.on('error', (err) => {
-  console.log(err)
+  console.warn(err)
 })
 
 /**
@@ -34,7 +34,7 @@ const getTime = () => {
 **/
 
 const getTextQuery = (req) => {
-  return {
+  const textQuery = {
     '$or': [
       {
         'overview_description': {
@@ -44,13 +44,33 @@ const getTextQuery = (req) => {
       },
       {
         'address': {
-          $regex: req.query.fulltext,
+          $regex: regexEscape(req.query.fulltext),
+          $options: 'i'
+        }
+      },
+      {
+        'building_name': {
+          $regex: regexEscape(req.query.fulltext),
           $options: 'i'
         }
       }
     ]
   };
+
+  return textQuery;
 }
+
+/**
+* Helper that escapes regex characters in order to make them
+* searchable by server.js.
+*
+* @author: Mathias Bynens
+*   originally posted in SO 3115150
+**/
+
+const regexEscape = (text) => {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+};
 
 /**
 * Retrieve the text portion of a building query
@@ -71,15 +91,19 @@ const addFilterTerms = (queryTerms, req) => {
 
   keys.map((key) => {
     // values with ' ' use _ as whitespace separator in query
-    var values = []
-    req.query[key].split(' ').map((value) => {
-      values.push(value.split('_').join(' '))
+    var values = [],
+        queryTerm = {}
+        args = req.query[key] = _.isArray(req.query[key]) ?
+            req.query[key]
+          : [req.query[key]]
+
+    args.map((value) => {
+      values.push(value);
     })
 
     // ensure returned records have all of the selected levels
-    var queryTerm = {}
-    queryTerm[key] = { $all: values }
-    queryTerms.push(queryTerm)
+    queryTerm[key] = { $all: values };
+    queryTerms.push(queryTerm);
   })
 
   // ensure we only return buildings with 1 or more images
