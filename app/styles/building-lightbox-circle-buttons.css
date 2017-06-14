@@ -24,3 +24,9 @@
 .building-lightbox-circle-button.active {
   background: #EDA138;
 }
+
+@media(max-width: 600px) {
+  .building-lightbox-circle-buttons {
+    display: none;
+  }
+}

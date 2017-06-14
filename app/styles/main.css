@@ -226,7 +226,7 @@ a {
   box-sizing: border-box;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 1150px) {
   .modal .header .modal-header-text.brand {
     display: none;
   }
