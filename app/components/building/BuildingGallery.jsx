@@ -1,6 +1,7 @@
 import React from 'react'
 import Lightbox from './BuildingLightbox'
 import getBackgroundImageStyle from '../lib/getBackgroundImageStyle'
+import _ from 'lodash'
 
 export default class BuildingGallery extends React.Component {
   constructor(props) {
@@ -35,6 +36,16 @@ export default class BuildingGallery extends React.Component {
       const dir = '/assets/uploads/resized/large/'
       const image = dir + images[this.state.imageIndex].filename;
       return getBackgroundImageStyle(image);
+    }
+  }
+
+  /**
+  * Reset image index to 0 when buildings change
+  **/
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!_.isEqual(prevProps.building, this.props.building)) {
+      this.setState({imageIndex: 0})
     }
   }
 
