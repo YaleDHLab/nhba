@@ -4,7 +4,7 @@
 
 .building-table {
   width: 100%;
-  word-break: break-word;
+  word-break: normal;
   margin-bottom: 30px;
 }
 
