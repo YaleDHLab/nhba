@@ -16,6 +16,7 @@ export default class AppWrapper extends React.Component {
       modal: null,          // {'login','validate','reset-password'}
       authenticated: false, // {true, false} is the user authenticated
       lastquery: null,      // the last observed query params
+      isMobile: false
     }
 
     this.login = this.login.bind(this)
@@ -26,6 +27,7 @@ export default class AppWrapper extends React.Component {
     this.processLogout = this.processLogout.bind(this)
     this.getSessionData = this.getSessionData.bind(this)
     this.processSession = this.processSession.bind(this)
+    this.checkWidth = this.checkWidth.bind(this)
   }
 
   /**
@@ -34,10 +36,20 @@ export default class AppWrapper extends React.Component {
 
   componentDidMount() {
     this.checkForAuth();
+    window.addEventListener('resize', this.checkWidth)
+    this.checkWidth();
   }
 
   componentDidUpdate() {
     this.checkForAuth();
+  }
+
+  checkWidth() {
+    if (window.innerWidth < 1150 && this.state.isMobile === false) {
+      this.setState({isMobile: true})
+    } else if (window.innerWidth >= 1150 && this.state.isMobile === true) {
+      this.setState({isMobile: false})
+    }
   }
 
   /**
@@ -122,7 +134,7 @@ export default class AppWrapper extends React.Component {
   **/
 
   render() {
-    const isMobile = window.innerWidth < 1150;
+    const isMobile = this.state.isMobile;
     const isBuilding = this.props.location.pathname.includes('building');
 
     const modal = this.state.modal ?
