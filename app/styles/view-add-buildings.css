@@ -44,55 +44,7 @@
   background: rgba(0,0,0,0.3);
 }
 
-.view-add-buildings h1 {
-  color: #fff;
-  margin-top: 50px;
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight:500;
-  font-size: 1.5em;
-
-}
-
-.view-add-buildings .admin-search-container {
-  text-align: center;
-  width: 100%;
-  margin: 40px 0 30px;
-}
-
-.view-add-buildings .admin-search-content {
-  position: relative;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  border-radius: 5px;
-  width: 400px;
-  display: inline-block;
-}
-
-.view-add-buildings .admin-search {
-  width: 100%;
-  padding: 10px;
-  padding-left:12px;
-  padding-right: 78px;
-  height: 40px;
-  border: none;
-  font-size: 1em;
-  box-sizing: border-box;
-  letter-spacing: 0px;
-}
-
-.view-add-buildings .admin-search-button {
-  background: #EDA138;
-  width: 70px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: url(/assets/images/search-icon-white.png);
-  background-repeat: no-repeat;
-  background-position: center 6px;
-  background-size: 27px;
-  cursor: pointer;
+.view-add-buildings .white-button.add-a-building {
+  margin-top: 130px;
+  background: rgba(0, 0, 0, 0.4);
 }

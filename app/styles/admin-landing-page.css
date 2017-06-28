@@ -63,6 +63,11 @@
   float: right;
 }
 
+.admin-landing-page .users {
+  max-height: 150px;
+  overflow: auto;
+}
+
 /**
 * Users/Pages Table
 **/
@@ -131,14 +136,6 @@
   background-size: 26px;
   background-repeat: no-repeat;
   background-position: -4px 1px;
-}
-
-/**
-* Filters
-**/
-
-.admin-landing-page .filters .input-container {
-  display: none;
 }
 
 /**
