@@ -60,7 +60,7 @@
     font-size: 1.4em;
     display: block;
     margin: 0;
-    margin-top: 16px;
+    margin-top: 12px;
   }
 
   .header .links {
@@ -71,6 +71,6 @@
 @media (max-width: 450px) {
   .header .app-name {
     font-size: 1em;
-    margin-top: 18px;
+    margin-top: 15px;
   }
 }
