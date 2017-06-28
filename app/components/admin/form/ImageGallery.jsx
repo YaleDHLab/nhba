@@ -35,7 +35,7 @@ export default class ImageGallery extends React.Component {
       req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
-        if (err) console.log(err);
+        if (err) console.warn(err);
 
         const doc = {
           filename: res.body.file.name,
