@@ -13,14 +13,18 @@
 }
 
 .header .app-name {
-  margin: 26px 40px;
-  font-family: 'SonderSans', sans-serif;
-  letter-spacing: 0.04em;
-  font-size: 2em;
+  margin: 19px 40px;
+  font-family: 'almaq-rough';
+  letter-spacing: 0.1em;
+  font-size: 2.4em;
   color: #fff;
   background: #4F6077;
   position: absolute;
   z-index: 1;
+}
+
+.wf-loading .header .app-name {
+  opacity: 0;
 }
 
 .header .links {
