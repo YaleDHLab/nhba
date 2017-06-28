@@ -20,8 +20,13 @@
 
 .building-text h2 {
   margin: 20px 0 7px;
-  font-family: SonderSans;
+  font-family: 'almaq-rough';
+  text-transform: uppercase;
   font-size: 1.25em;
+}
+
+.wf-loading .building-text h2 {
+  opacity: 0;
 }
 
 @media(max-width: 1150px) {
