@@ -95,17 +95,18 @@
   background: inherit;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 600px) {
   .building-lightbox .lightbox-caption {
     position: absolute;
-    bottom: -55px;
+    bottom: 0px;
     color: #fff;
     padding: 10px;
     text-align: center;
     box-sizing: border-box;
     width: 100%;
     background: inherit;
-    height: 55px;
+    min-height: 60px;
+    max-height: 80px;
     overflow: scroll;
     left: 0;
     font-size: 0.9em;

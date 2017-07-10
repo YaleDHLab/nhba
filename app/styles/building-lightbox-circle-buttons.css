@@ -25,7 +25,7 @@
   background: #EDA138;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 600px) {
   .building-lightbox-circle-buttons {
     display: none;
   }
