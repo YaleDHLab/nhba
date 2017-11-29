@@ -9,6 +9,7 @@
   width: 280px;
   border-radius: 3px;
   border: 1px solid #ccc;
+  pointer-events: none;
 }
 
 .marker-overlay .building-title {
