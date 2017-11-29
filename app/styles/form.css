@@ -15,10 +15,19 @@
   text-align: left;
 }
 
+.form .form-content > a {
+  display: block;
+}
+
 .form h1 {
   margin: 15px;
   text-align: center;
   font-weight: 600;
+  transition: color .05s;
+}
+
+.form a:hover h1 {
+  color: #eda138;
 }
 
 /**
