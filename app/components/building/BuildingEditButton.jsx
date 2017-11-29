@@ -2,10 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 
 export default class SuggestEdit extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const adminButton = (
       <div className='suggest-edit'>
@@ -16,8 +12,7 @@ export default class SuggestEdit extends React.Component {
 
     const contributeButton = (
       <div className='suggest-edit'>
-        <a href='mailto:nhba@yale.edu?Subject=NHBA%20Editorial'
-          target='_top'>Suggest an Edit</a>
+        <a href='mailto:nhba@yale.edu' target='_top'>Suggest an Edit</a>
         <div><b>Have something to add?</b> Contribute a fun fact or image to this building.</div>
       </div>
     )

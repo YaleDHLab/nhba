@@ -268,10 +268,16 @@ export default class Form extends React.Component {
         building.address
       : 'New Building'
 
+    const header = this.state.building._id ?
+        <a href={'http://localhost:8080/building?id=' + this.state.building._id}>
+          <h1>{address}</h1>
+        </a>
+      : <h1>{address}</h1>
+
     return (
       <div className='form'>
         <div className='form-content'>
-          <h1>{address}</h1>
+          {header}
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
