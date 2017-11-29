@@ -13,6 +13,9 @@ export default class About extends React.Component {
     return (
       <div className='about'>
         <SimplePage {...page} />
+        <div className='terms'>
+          <a href='/assets/nhba_tou.pdf'>Terms of Use</a>
+        </div>
       </div>
     )
   }
