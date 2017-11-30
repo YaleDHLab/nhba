@@ -39,7 +39,7 @@ export default class Search extends React.Component {
       'styles': new Set(),
       'eras': new Set(),
       'neighborhoods': new Set(),
-      'sort': 'Sort by',
+      'sort': 'updated_at',
 
       // store the user location && watcher id
       'userLocation': null,
@@ -64,7 +64,7 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
-    api.get('buildings?images=true', this.processBuildings);
+    this.runSearch(this.state);
     this.watchUserLocation();
   }
 
