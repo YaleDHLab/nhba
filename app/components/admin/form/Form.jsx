@@ -269,7 +269,7 @@ export default class Form extends React.Component {
       : 'New Building'
 
     const header = this.state.building._id ?
-        <a href={'http://localhost:8080/building?id=' + this.state.building._id}>
+        <a href={'/building?id=' + this.state.building._id}>
           <h1>{address}</h1>
         </a>
       : <h1>{address}</h1>
