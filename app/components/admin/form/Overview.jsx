@@ -116,8 +116,13 @@ export default class Overview extends React.Component {
 
         <TextInput {...this.props}
           width={'full-width'}
-          label={'Story Map Url'}
+          label={'Story Maps Url'}
           field={'storymap_url'} />
+
+        <TextInput {...this.props}
+          width={'full-width'}
+          label={'Multimedia Url'}
+          field={'multimedia_url'} />
 
       </div>
     )
