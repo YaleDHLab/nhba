@@ -7,7 +7,6 @@
   width: 100%;
   box-sizing: border-box;
   border: 20px solid #eee;
-  word-break: break-all;
   font-size: 15px;
   padding-left: 20px;
   padding-right: 20px;
@@ -16,14 +15,18 @@
 
 .building-text h1 {
   margin: 20px 0 10px;
-  word-break: break-word;
   text-transform: uppercase;
 }
 
 .building-text h2 {
   margin: 20px 0 7px;
-  font-family: SonderSans;
+  font-family: 'almaq-rough';
+  text-transform: uppercase;
   font-size: 1.25em;
+}
+
+.wf-loading .building-text h2 {
+  opacity: 0;
 }
 
 @media(max-width: 1150px) {

@@ -23,19 +23,6 @@ body {
 }
 
 /**
-* Fonts
-**/
-
-@font-face {
-  font-family: 'SonderSans';
-  src: url('/assets/fonts/sondersans-blackrough-webfont.eot') format('eot'),
-       url('/assets/fonts/sondersans-blackrough-webfont.woff') format('woff'),
-       url('/assets/fonts/sondersans-blackrough-webfont.woff2') format('woff2'),
-       url('/assets/fonts/sondersans-blackrough-webfont.ttf') format('truetype'),
-       url('/assets/fonts/sondersans-blackrough-webfont.svg') format('svg');
-}
-
-/**
 * Containers
 **/
 
@@ -65,9 +52,15 @@ h1 {
 }
 
 h1, h2 {
-  font-family: 'SonderSans';
+  font-family: 'almaq-rough';
   color: #4F6077;
   letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.wf-loading h1,
+.wf-loading h2 {
+  opacity: 0;
 }
 
 h3 {
@@ -77,7 +70,6 @@ h3 {
 p {
   margin: 10px 0;
   line-height: 1.5em;
-  word-break: normal;
 }
 
 a {
@@ -182,7 +174,7 @@ a {
   height: 50px;
   overflow: hidden;
   margin-right: 4px;
-  padding: 14px;
+  padding: 17px;
   box-sizing: border-box;
   background: #4F6077;
   text-align: center;
@@ -192,11 +184,17 @@ a {
 }
 
 .modal .header .modal-header-text.brand {
-  font-family: 'SonderSans';
+  font-family: 'almaq-rough';
+  text-transform: uppercase;
   text-align: left;
   font-size: 1.6em;
   padding-left: 27px;
   letter-spacing: 1px;
+  padding-top: 12px;
+}
+
+.wf-loading .modal .header .modal-header-text.brand {
+  display: none;
 }
 
 .modal .header .close-text {
@@ -204,7 +202,6 @@ a {
   width: 110px;
   margin-right: 0;
   max-height: 100%;
-  padding-top:16px;
   display: inline-block;
 }
 
@@ -226,7 +223,7 @@ a {
   box-sizing: border-box;
 }
 
-@media(max-width: 900px) {
+@media(max-width: 1150px) {
   .modal .header .modal-header-text.brand {
     display: none;
   }

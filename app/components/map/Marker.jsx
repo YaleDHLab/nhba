@@ -10,16 +10,22 @@ export default class MapMarker extends React.Component {
       hovered: false
     }
 
+    this.isIe = this.isIe.bind(this)
     this.handleMouseOver = this.handleMouseOver.bind(this)
     this.handleMouseOut = this.handleMouseOut.bind(this)
   }
 
+  isIe() {
+    const userAgent = window.navigator.userAgent;
+    return userAgent.includes('MSIE') || userAgent.includes('.NET');
+  }
+
   handleMouseOver() {
-    this.setState({hovered: true})
+    if (!this.isIe()) this.setState({hovered: true})
   }
 
   handleMouseOut() {
-    this.setState({hovered: false})
+    if (!this.isIe()) this.setState({hovered: false})
   }
 
   render() {

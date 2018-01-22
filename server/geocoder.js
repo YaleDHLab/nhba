@@ -17,8 +17,13 @@ var writeFile = (filename, content) => {
 }
 
 var geocode = (buildingId, address, callback) => {
+  var dir = 'server/geocode-responses/';
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+
   geocoder.geocode(address, (err, res) => {
-    var filename = 'server/geocode-responses/' + buildingId + '.json';
+    var filename = dir + buildingId + '.json';
     writeFile(filename, res);
     callback(err, res);
   })

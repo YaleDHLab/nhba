@@ -1,10 +1,17 @@
-### Dependencies
+# New Haven Building Archive
+> Mapping New Haven's architectural history.
+
+The New Haven Building Archive (NHBA) is a digital archive of the buildings in New Haven. This repository houses the site's source code and guides for building the site locally or on EC2 instances.
+
+![App preview](/build/assets/images/nhba-landing-page.png?raw=true)
+
+## Dependencies
 
 This application requires Node.js (version 6 or higher) and MongoDB.
 
 Data migrations within this application require pymongo (`pip install pymongo`).
 
-### Runnning Locally
+## Quickstart
 
 To run this application on your machine, open a terminal and run:
 
@@ -33,7 +40,7 @@ The application will then be available on `localhost:8080`.
 
 You can optionally open another terminal window, cd into the nhba directory, and run `npm run start` to start a development server on 8081. This development server depends on the production server, but features hot module reloading for quicker development speed.
 
-### Deploying to EC2
+## Deploying to EC2
 
 To deploy this app on an Amazon Linux instance on EC2, one must:
  - [ ] install the application dependencies

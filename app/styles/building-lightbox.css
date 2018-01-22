@@ -29,7 +29,7 @@
 }
 
 /**
-* Body contenet
+* Body content
 **/
 
 .building-lightbox .modal .body {
@@ -93,4 +93,21 @@
   box-sizing: border-box;
   width: 100%;
   background: inherit;
+}
+
+@media(max-width: 900px) {
+  .building-lightbox .lightbox-caption {
+    position: absolute;
+    bottom: -55px;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    background: inherit;
+    height: 55px;
+    overflow: scroll;
+    left: 0;
+    font-size: 0.9em;
+  }
 }

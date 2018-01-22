@@ -39,7 +39,7 @@ export default class Search extends React.Component {
       'styles': new Set(),
       'eras': new Set(),
       'neighborhoods': new Set(),
-      'sort': 'Sort by',
+      'sort': 'updated_at',
 
       // store the user location && watcher id
       'userLocation': null,
@@ -64,23 +64,11 @@ export default class Search extends React.Component {
   }
 
   componentDidMount() {
-    api.get('buildings?images=true', this.processBuildings);
+    this.runSearch(this.state);
     this.watchUserLocation();
   }
 
-  componentDidUpdate() {
-    // bind an event listener to the admin search button
-    const adminSearch = getAdminSearchButton(),
-        adminInput = getAdminSearchInput();
-    if (adminSearch) adminSearch.addEventListener('click', this.runSearch(this.state));
-    if (adminInput) adminInput.addEventListener('keydown', this.handleInputKeys);
-  }
-
   componentWillUnmount() {
-    const adminSearch = getAdminSearchButton(),
-        adminInput = getAdminSearchInput();
-    if (adminSearch) adminSearch.removeEventListener('click', this.runSearch(this.state));
-    if (adminInput) adminInput.removeEventListener('keydown', this.handleInputKeys);
     this.unwatchUserLocation()
   }
 
@@ -116,7 +104,9 @@ export default class Search extends React.Component {
   }
 
   handleInputKeys(e) {
-    if (e.keyCode == 13) this.runSearch(this.state)
+    if (e.keyCode === 13) {
+      this.runSearch(this.state)
+    }
   }
 
   /**

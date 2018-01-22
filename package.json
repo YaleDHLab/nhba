@@ -12,7 +12,7 @@
     "start": "webpack-dev-server",
     "build": "webpack",
     "compress": "webpack",
-    "production": "npm run build && node server.js",
+    "production": "source ~/.bash_profile && npm run build && node server.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
     "resize": "node server/resize-all.js",
     "geocode": "node server/geocode-all.js",

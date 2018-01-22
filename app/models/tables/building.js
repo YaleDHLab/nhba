@@ -12,11 +12,11 @@ var capitalized = _.startCase(_.toLower(table))
 var schema = new mongoose.Schema(db[table])
 
 // autoincrement a new {{table}}Id field and add pagination
-autoIncrement.initialize(mongoose.createConnection('mongodb://localhost/' + config.db));
-schema.plugin(autoIncrement.plugin, {model: capitalized, field: table + 'Id'});
-schema.plugin(mongoosePaginate);
+autoIncrement.initialize(mongoose.createConnection('mongodb://localhost/' + config.db))
+schema.plugin(autoIncrement.plugin, {model: capitalized, field: table + 'Id'})
+schema.plugin(mongoosePaginate)
 
 schema.index({location: '2dsphere'})
 schema.set('autoIndex', false);
 
-module.exports = mongoose.model(capitalized, schema, table + 's');
+module.exports = mongoose.model(capitalized, schema, table + 's')
