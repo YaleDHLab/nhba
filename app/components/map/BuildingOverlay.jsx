@@ -25,6 +25,8 @@ export default class BuildingOverlay extends React.Component {
   render() {
     return (
       <OverlayView
+        key={Math.random()}
+
         position={{
           lat: this.props.lat,
           lng: this.props.lng
