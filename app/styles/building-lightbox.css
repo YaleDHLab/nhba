@@ -8,7 +8,7 @@
   height: 80%;
   left: 15%;
   position: absolute;
-  max-height: 550px;
+  max-height: 72%;
 }
 
 @media(max-width: 900px) {
