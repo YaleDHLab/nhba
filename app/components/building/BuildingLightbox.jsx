@@ -11,8 +11,10 @@ export default class BuildingLightbox extends React.Component {
   **/
 
   handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (!e.target.className === 'lightbox-image') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 
   render() {
@@ -31,8 +33,7 @@ export default class BuildingLightbox extends React.Component {
     return (
       <div className='building-lightbox dark-modal-backdrop'
         onClick={this.props.closeLightbox}>
-        <div className='modal'
-          onClick={this.handleClick}>
+        <div className='modal' onClick={this.handleClick}>
           <div className='header'>
             <div className='brand modal-header-text'>New Haven Building Archive</div>
             <div className='close-text modal-header-text'
@@ -42,7 +43,9 @@ export default class BuildingLightbox extends React.Component {
             </div>
           </div>
           <div className='body'>
-            <img className='lightbox-image' src={image}></img>
+            <a href={image} target='_blank'>
+              <img className='lightbox-image' src={image}></img>
+            </a>
             <div className='previous-image image-pagination-button'
               onClick={this.props.decrementImageIndex}>
               <img src='/assets/images/image-paginate-icon.svg' />
