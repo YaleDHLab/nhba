@@ -69,5 +69,19 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.14.1"
+  }, 
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "env": {
+      "start": {
+        "presets": [
+          "react-hmre"
+        ]
+      }
+    },
+    "plugins":["transform-decorators-legacy"]
   }
 }

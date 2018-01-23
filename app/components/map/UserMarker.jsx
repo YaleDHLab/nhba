@@ -9,6 +9,7 @@ export default class UserMarker extends React.Component {
   render() {
     const marker = this.props.userLocation ?
         <OverlayView
+            key={Math.random()}
             position={{
               lat: this.props.userLocation.latitude,
               lng: this.props.userLocation.longitude

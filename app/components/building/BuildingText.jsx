@@ -39,6 +39,8 @@ export default class BuildingText extends React.Component {
       {label: 'Neighborhood', field: 'neighborhoods'},
       {label: 'Tour', field: 'tours'},
       {label: 'Researcher', field: 'researcher'},
+      {label: 'Story Maps', field: 'storymap_url', type: 'url'},
+      {label: 'Multimedia', field: 'multimedia_url', type: 'url'},
     ]
 
     if (this.props.building.building_name) {

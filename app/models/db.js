@@ -70,6 +70,7 @@ db.building = {
   researcher: String,
   overview_description: String,
   storymap_url: String,
+  multimedia_url: String,
 
   // data and history
   historic_uses: [String],

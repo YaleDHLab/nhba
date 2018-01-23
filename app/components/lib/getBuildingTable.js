@@ -17,7 +17,21 @@ module.exports = (tableFields, building) => {
     let value = building[f.field];
     let valueString = Array.isArray(value) ? value.join(', ') : value;
     if (value && value.length > 0) {
-      cells.push ( <td key={i}><div className='table-label'>{f.label}</div>: {valueString}</td> )
+      if (f.type && f.type === 'url') {
+        cells.push (
+          <td key={i}>
+            <div className='table-label'>{f.label}</div>:
+            <span> </span>
+            <a target='_blank' href={ valueString.trim() }>{valueString}</a>
+          </td>
+        )
+      } else {
+        cells.push (
+          <td key={i}>
+            <div className='table-label'>{f.label}</div>: {valueString}
+          </td>
+        )
+      }
     }
   })
 
