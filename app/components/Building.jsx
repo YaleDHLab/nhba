@@ -12,7 +12,7 @@ import api from '../../config'
 
 // Building Text components
 import BuildingText from './building/BuildingText'
-import BuildingOverview from './building/BuildingOverview'
+import BuildingTextBox from './building/BuildingTextBox'
 import BuildingHistory from './building/BuildingHistory'
 import BuildingStructuralData from './building/BuildingStructuralData'
 import BuildingResources from './building/BuildingResources'
@@ -94,10 +94,9 @@ export default class Building extends React.Component {
   **/
 
   toggleLayout() {
-    const layout = this.state.layout.left == 'Map' ?
-        {left: 'Gallery', right: 'Map'}
-      : {left: 'Map',  right: 'Gallery'}
-    this.setState({layout: layout})
+    this.state.layout.left === 'Map' ?
+        this.setState({ layout: {left: 'Gallery', right: 'Map'} })
+      : this.setState({ layout: {left: 'Map',  right: 'Gallery'} })
   }
 
   /**
@@ -105,35 +104,60 @@ export default class Building extends React.Component {
   **/
 
   getTextFields() {
+    const building = this.state.building;
+    if (!building) return;
+
     const fields = [
       {
         label: 'Overview',
         button: {label: 'Overview', icon: 'overview'},
         href: 'description',
-        component: <BuildingOverview building={this.state.building} />,
         collapsible: false,
-        contentFields: [
-          'overview_description'
-        ]
+        contentFields: [ 'overview_description' ],
+        component: <BuildingTextBox title='Overview'
+          text={building.overview_description} />
       },
       {
-        label: 'Building History',
-        button: {label: 'Building History', icon: 'building'},
-        href: 'buildingHistory',
-        component: <BuildingHistory building={this.state.building} />,
-        collapsible: true,
-        contentFields: [
-          'physical_description',
-          'urban_setting',
-          'social_history',
-          'site_history'
-        ]
+        label: 'Physical Description',
+        button: {label: 'Physical Description', icon: 'building'},
+        href: 'physical-description',
+        collapsible: false,
+        contentFields: [ 'physical_description' ],
+        component: <BuildingTextBox title='Physical Description'
+          text={building.physical_description} />
+      },
+      {
+        label: 'Urban Setting',
+        button: {label: 'Urban Setting', icon: 'building'},
+        href: 'urban-setting',
+        collapsible: false,
+        contentFields: [ 'urban_setting' ],
+        component: <BuildingTextBox title='Urban Setting'
+          text={building.urban_setting} />
+      },
+      {
+        label: 'Social History',
+        button: {label: 'Social History', icon: 'building'},
+        href: 'social-history',
+        collapsible: false,
+        contentFields: [ 'social_history' ],
+        component: <BuildingTextBox title='Social History'
+          text={building.social_history} />
+      },
+      {
+        label: 'Site History',
+        button: {label: 'Site History', icon: 'building'},
+        href: 'site-history',
+        collapsible: false,
+        contentFields: [ 'site_history' ],
+        component: <BuildingTextBox title='Site History'
+          text={building.site_history} />
       },
       {
         label: 'Structural Data',
         button: {label: 'Structural Data', icon: 'structure'},
         href: 'structuralData',
-        component: <BuildingStructuralData building={this.state.building} />,
+        component: <BuildingStructuralData building={building} />,
         collapsible: true,
         contentFields: [
           'historic_uses',
@@ -153,7 +177,7 @@ export default class Building extends React.Component {
         label: 'Resources',
         button: {label: 'Resources', icon: 'community'},
         href: 'resources',
-        component: <BuildingResources building={this.state.building} />,
+        component: <BuildingResources building={building} />,
         collapsible: true,
         contentFields: [
           'archive_documents',
@@ -165,14 +189,10 @@ export default class Building extends React.Component {
     // only return fields if one or more of their contentFields are populated
     // in the current building
     let extantFields = [];
-    if (!this.state.building) return;
-
     fields.map((field) => {
       let kept = false;
       field.contentFields.map((contentField) => {
-        if (this.state.building[contentField] &&
-            this.state.building[contentField].length &&
-            !kept) {
+        if (building[contentField] && building[contentField].length && !kept) {
           extantFields.push(field);
           kept = true;
         }
@@ -188,21 +208,16 @@ export default class Building extends React.Component {
 
   render() {
     const building = this.state.building;
-    const location = building &&
-      building.latitude &&
-      building.longitude ?
-        {
-          lat: parseFloat(building.latitude),
-          lng: parseFloat(building.longitude)
-        }
+    const location = building && building.latitude && building.longitude ?
+        {lat: parseFloat(building.latitude), lng: parseFloat(building.longitude)}
       : null
 
     const map = (
       this.state.tourNameToIndex && building ?
-          <Map buildings={[this.state.building]}
-            tourNameToIndex={this.state.tourNameToIndex}
-            initialLocation={location} />
-        : <Loader />
+        <Map buildings={[this.state.building]}
+          tourNameToIndex={this.state.tourNameToIndex}
+          initialLocation={location} />
+      : <Loader />
     )
 
     const layout = {
@@ -211,6 +226,8 @@ export default class Building extends React.Component {
         building={this.state.building}
         layout={this.state.layout} />
     }
+
+    const fields = this.getTextFields()
 
     return (
       <div className='building'>
@@ -226,7 +243,7 @@ export default class Building extends React.Component {
                     toggleLayout={this.toggleLayout}
                     layout={this.state.layout} />
                   <BuildingButtons
-                    fields={this.getTextFields()} {...this.props} />
+                    fields={fields} {...this.props} />
                   <BuildingEditButton
                     admin={this.state.admin}
                     building={this.state.building} />
@@ -244,7 +261,7 @@ export default class Building extends React.Component {
               <div className='top-right-bottom'>
                 <BuildingText
                   building={this.state.building}
-                  fields={this.getTextFields()} />
+                  fields={fields} />
               </div>
             </div>
           </div>
