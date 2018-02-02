@@ -48,7 +48,7 @@ const common = {
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
-            'file-loader?name=[name].[ext]',
+          'file-loader?name=[name].[ext]',
         ]
       },
       {
@@ -61,9 +61,9 @@ const common = {
 }
 
 // Development configuration
-if(TARGET === 'start' || !TARGET) {
+if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
-    
+
     // Enable sourcemaps for debugging
     devtool: 'eval-source-map',
 
@@ -96,7 +96,7 @@ if(TARGET === 'start' || !TARGET) {
 }
 
 // Bundled development configuration
-if(TARGET === 'build' || !TARGET) {
+if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
     plugins: [
       new webpack.optimize.OccurrenceOrderPlugin()
@@ -105,7 +105,7 @@ if(TARGET === 'build' || !TARGET) {
 }
 
 // Production configuration
-if(TARGET === 'compress' || !TARGET) {
+if (TARGET === 'compress' || !TARGET) {
   module.exports = merge(common, {
     plugins: [
 

@@ -154,3 +154,11 @@
 .form .multiselect .select-checkboxes input[type=checkbox] {
   margin-right: 8px;
 }
+
+/**
+* Rich textarea
+**/
+
+.form .rich-text-area .label {
+  width: 100%;
+}

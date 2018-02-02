@@ -12,6 +12,7 @@
     "start": "webpack-dev-server",
     "build": "webpack",
     "compress": "webpack",
+    "dev": "npm run build && node server.js",
     "production": "source ~/.bash_profile && npm run build && node server.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
     "resize": "node server/resize-all.js",
@@ -47,9 +48,10 @@
     "react-dnd-html5-backend": "^2.3.0",
     "react-dom": "^15.3.2",
     "react-google-maps": "^6.0.1",
+    "react-quill": "^1.2.3",
     "react-router": "^3.0.2",
     "serve-favicon": "^2.4.0",
-    "sharp": "^0.17.3",
+    "sharp": "^0.19.0",
     "superagent": "^3.5.2"
   },
   "devDependencies": {
@@ -69,7 +71,7 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.14.1"
-  }, 
+  },
   "babel": {
     "presets": [
       "es2015",
@@ -82,6 +84,8 @@
         ]
       }
     },
-    "plugins":["transform-decorators-legacy"]
+    "plugins": [
+      "transform-decorators-legacy"
+    ]
   }
 }
