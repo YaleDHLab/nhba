@@ -51,7 +51,7 @@ export default class Form extends React.Component {
     // load the requested building data if query params are present
     const buildingId = this.props.location.query.buildingId;
     buildingId ?
-        this.getBuilding(buildingId)
+      this.getBuilding(buildingId)
       : this.getNewBuilding()
 
     // fetch all buildings so we can populate dropdowns
@@ -71,7 +71,7 @@ export default class Form extends React.Component {
   getNewBuilding() {
     api.get('building/new', (err, res) => {
       if (err) console.warn(err)
-      this.setState({building: res.body})
+      this.setState({ building: res.body })
     })
   }
 
@@ -79,8 +79,8 @@ export default class Form extends React.Component {
     const self = this;
     const url = 'buildings?buildingId=' + buildingId;
     api.get(url, (err, res) => {
-      if (err) {console.warn(err)} else {
-        self.setState({building: res.body[0]})
+      if (err) { console.warn(err) } else {
+        self.setState({ building: res.body[0] })
       }
     })
   }
@@ -89,7 +89,7 @@ export default class Form extends React.Component {
     const self = this;
     api.get('buildings?images=true', (err, res) => {
       if (err) { console.warn(err) } else {
-        self.setState({buildings: res.body})
+        self.setState({ buildings: res.body })
       }
     })
   }
@@ -101,7 +101,7 @@ export default class Form extends React.Component {
   setSelectOptions() {
     const buildings = this.state.buildings;
     const options = getSelectOptions(buildings, allSelects);
-    this.setState({options: options})
+    this.setState({ options: options })
   }
 
   /**
@@ -112,9 +112,9 @@ export default class Form extends React.Component {
     // add this value to the available options
     let options = Object.assign({}, this.state.options);
     options[field] ?
-        options[field].push(value)
+      options[field].push(value)
       : options[field] = [value]
-    this.setState({options: options})
+    this.setState({ options: options })
 
     // select this value within this record
     this.updateField(field, value)
@@ -125,7 +125,7 @@ export default class Form extends React.Component {
   **/
 
   changeTab(tab) {
-    this.setState({activeTab: tab})
+    this.setState({ activeTab: tab })
   }
 
   /**
@@ -140,7 +140,7 @@ export default class Form extends React.Component {
     // remove/add the selected value when users un/select values
     if (Array.isArray(building[field])) {
       _.includes(building[field], value) ?
-          _.pull(building[field], value)
+        _.pull(building[field], value)
         : building[field].push(value)
     } else {
       building[field] = value;
@@ -175,8 +175,8 @@ export default class Form extends React.Component {
       .set('Accept', 'application/json')
       .end((err, res) => {
         const result = res.body,
-            latitude = result.latitude,
-            longitude = result.longitude;
+          latitude = result.latitude,
+          longitude = result.longitude;
         if (latitude && longitude) {
           this.updateField('latitude', latitude)
           this.updateField('longitude', longitude)
@@ -196,7 +196,7 @@ export default class Form extends React.Component {
       .end((err, res) => {
         if (err) console.warn(err)
       })
-    this.setState({unsavedChanges: false})
+    this.setState({ unsavedChanges: false })
   }
 
   /**
@@ -219,7 +219,7 @@ export default class Form extends React.Component {
 
   getSaveButtonStyle() {
     return this.state.unsavedChanges ?
-        'save-button yellow-button unsaved-changes'
+      'save-button yellow-button unsaved-changes'
       : 'save-button yellow-button no-unsaved-changes'
   }
 
@@ -265,13 +265,13 @@ export default class Form extends React.Component {
 
     const building = this.state.building;
     const address = building && building.address ?
-        building.address
+      building.address
       : 'New Building'
 
     const header = this.state.building._id ?
-        <a href={'/building?id=' + this.state.building._id}>
-          <h1>{address}</h1>
-        </a>
+      <a href={'/building?id=' + this.state.building._id}>
+        <h1>{address}</h1>
+      </a>
       : <h1>{address}</h1>
 
     return (
