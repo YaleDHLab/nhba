@@ -17,15 +17,15 @@ export default class RichTextArea extends React.Component {
   }
 
   updateField(value) {
-    console.log(value)
     this.props.updateField(this.props.field, value)
   }
 
   render() {
     return (
-      <div className={this.getClass()} style={{ display: 'block' }}>
+      <div className={this.getClass()}>
         <div className='label'>{this.props.label}</div>
         <ReactQuill
+          style={{ height: this.props.height }}
           onChange={this.updateField}
           placeholder={this.props.placeholder || ''}
           value={this.props.building[this.props.field] || ''}

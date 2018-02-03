@@ -11,7 +11,8 @@
 
 .form .label,
 .form select,
-.form input {
+.form input,
+.form .quill {
   display: table-cell;
   height: 30px;
   margin: 6px 0;
@@ -60,12 +61,17 @@
   height: auto;
 }
 
+.form .quill {
+  padding: 6px 0;
+}
+
 /**
 * Full width
 **/
 
 .form .full-width {
   display: table;
+  table-layout: fixed;
   width: 100%;
 }
 
@@ -75,6 +81,7 @@
 
 .form .half-width {
   display: table;
+  table-layout: fixed;
   width: 50%;
 }
 
@@ -153,12 +160,4 @@
 
 .form .multiselect .select-checkboxes input[type=checkbox] {
   margin-right: 8px;
-}
-
-/**
-* Rich textarea
-**/
-
-.form .rich-text-area .label {
-  width: 100%;
 }
