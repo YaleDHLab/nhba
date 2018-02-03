@@ -4,6 +4,7 @@ import TextArea from './form-elements/TextArea'
 import TextInput from './form-elements/TextInput'
 import FileTable from './form-elements/FileTable'
 import FilePicker from './form-elements/FilePicker'
+import RichTextArea from './form-elements/RichTextArea'
 import request from 'superagent'
 import api from '../../../../config'
 
@@ -29,10 +30,10 @@ export default class DataAndHistory extends React.Component {
     if (fileIndex != null) {
       let fileToRelabel = this.props.building.archive_documents[fileIndex];
       fileToRelabel.index = fileIndex;
-      this.setState({fileToRelabel: fileToRelabel})
+      this.setState({ fileToRelabel: fileToRelabel })
     } else {
       // allow callers to specify null to remove the file to relabel
-      this.setState({fileToRelabel: null})
+      this.setState({ fileToRelabel: null })
     }
   }
 
@@ -61,7 +62,7 @@ export default class DataAndHistory extends React.Component {
 
   handleFile(e) {
     // remove the file we were relabelling (if any)
-    this.setState({fileToRelabel: null})
+    this.setState({ fileToRelabel: null })
 
     const self = this;
     e.preventDefault();
@@ -180,33 +181,33 @@ export default class DataAndHistory extends React.Component {
           <div className='style-guide'>Style guide...</div>
         </div>
 
-        <TextArea {...this.props}
+        <RichTextArea {...this.props}
           width={'full-width'}
           label={'Physical Description'}
           field={'physical_description'}
           placeholder={'Describe building form, materials, design, and style.  Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant.  Highlight glossary terms.'}
-          rows={7} />
+          height={150} />
 
-        <TextArea {...this.props}
+        <RichTextArea {...this.props}
           width={'full-width'}
           label={'Urban Setting'}
           field={'urban_setting'}
-          placeholder={'Describe the building’s broader urban context and the interrelationship of building and surroundings.'}
-          rows={7} />
+          placeholder={'Describe building form, materials, design, and style.  Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant.  Highlight glossary terms.'}
+          height={150} />
 
-        <TextArea {...this.props}
+        <RichTextArea {...this.props}
           width={'full-width'}
           label={'Social History'}
           field={'social_history'}
           placeholder={'Describe ownership and tenancy of the building over time.  Draw from city directories, atlases, Sanborn maps, etc.  Can you suggest the roles this building has played in the city’s broader social history?  What social groups or functions has it housed over time?'}
-          rows={7} />
+          height={150} />
 
-        <TextArea {...this.props}
+        <RichTextArea {...this.props}
           width={'full-width'}
           label={'Site History'}
           field={'site_history'}
           placeholder={'More additional information on the history of this site, including ownership and land use prior to the current structure.'}
-          rows={7} />
+          height={150} />
 
         <FileTable {...this.props}
           files={this.props.building.archive_documents}
@@ -221,12 +222,12 @@ export default class DataAndHistory extends React.Component {
           textField={'label'}
           handleTextChange={this.handleLabelChange} />
 
-        <TextArea {...this.props}
+        <RichTextArea {...this.props}
           width={'full-width'}
           label={'Sources'}
           field={'sources'}
           placeholder={'Please note sources, including maps, documents, and secondary sources.'}
-          rows={10} />
+          height={200} />
 
       </div>
     )
