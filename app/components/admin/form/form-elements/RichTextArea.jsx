@@ -16,8 +16,11 @@ export default class RichTextArea extends React.Component {
     return ['rich-text-area', width, position].join(' ')
   }
 
-  updateField(value) {
-    this.props.updateField(this.props.field, value)
+  updateField(value, delta, source) {
+    // Only emit update event if changed by user
+    if (source == 'user') {
+      this.props.updateField(this.props.field, value)
+    }
   }
 
   render() {

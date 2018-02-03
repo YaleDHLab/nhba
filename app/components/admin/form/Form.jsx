@@ -19,7 +19,9 @@ export default class Form extends React.Component {
       options: {},
       building: {},
       activeTab: 'overview',
-      unsavedChanges: false
+      unsavedChanges: false,
+      saveButtonText: 'Save',
+      autoSaveInterval: null
     }
 
     // buildling(s) getters and setters
@@ -146,9 +148,13 @@ export default class Form extends React.Component {
       building[field] = value;
     }
 
+    // Checks if an autosave interval already exists, if not, set 5 second autosave interval
+    let autoSaveInterval = this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
     this.setState({
       building: building,
-      unsavedChanges: true
+      unsavedChanges: true,
+      saveButtonText: 'Save',
+      autoSaveInterval: autoSaveInterval
     })
   }
 
@@ -196,7 +202,8 @@ export default class Form extends React.Component {
       .end((err, res) => {
         if (err) console.warn(err)
       })
-    this.setState({ unsavedChanges: false })
+    clearInterval(this.state.autoSaveInterval);
+    this.setState({ unsavedChanges: false, saveButtonText: 'Saved', autoSaveInterval: null })
   }
 
   /**
@@ -281,7 +288,7 @@ export default class Form extends React.Component {
           <div className='instructions'>Edit record for this building. General guidelines here...</div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
-            <div className={this.getSaveButtonStyle()} onClick={this.saveBuilding}>Save</div>
+            <div className={this.getSaveButtonStyle()} onClick={this.saveBuilding}>{this.state.saveButtonText}</div>
             <div className='delete-button red-button' onClick={this.deleteBuilding}>Delete</div>
           </div>
           {view}
