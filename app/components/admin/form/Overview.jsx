@@ -112,9 +112,8 @@ export default class Overview extends React.Component {
           width={'full-width'}
           label={'Overview Description'}
           field={'overview_description'}
-          height={250}
           placeholder={'A pithy description of what a visitor to the building sees or should look for.  Summarize basic physical features, say something about its current use, and suggest some narrative or significance of the building.  Tone is engaging and conversational.'}
-        />
+          height={250} />
 
         <TextInput {...this.props}
           width={'full-width'}
