@@ -11,12 +11,17 @@ export default class Card extends React.Component {
   }
 
   getStyle() {
-    const dir = "/assets/uploads/resized/small";
-    const url =
+    const style =
       this.props.building.images.length > 0
-        ? dir + "/" + this.props.building.images[0].filename
-        : "/assets/images/image-placeholder.jpg";
-    return { backgroundImage: "url(" + url + ")" };
+        ? {
+            backgroundImage: `url(/assets/uploads/resized/small/${
+              this.props.building.images[0].filename
+            })`
+          }
+        : {
+            backgroundColor: "#f1f1f1"
+          };
+    return style;
   }
 
   handleClick(e) {
