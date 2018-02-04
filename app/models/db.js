@@ -1,17 +1,17 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var db = {}
+var db = {};
 
 db.simplepage = {
   route: String,
   text: String
-}
+};
 
 db.glossaryterm = {
   term: String,
   definition: String
-}
+};
 
 db.user = {
   firstname: String,
@@ -22,9 +22,10 @@ db.user = {
   validated: Boolean,
   admin: Boolean,
   superadmin: Boolean,
+  contributor: Boolean,
   // buildings created by the user
-  buildings: [{ type: Schema.Types.ObjectId, ref: 'Building' }]
-}
+  buildings: [{ type: Schema.Types.ObjectId, ref: "Building" }]
+};
 
 db.wptour = {
   post_mime_type: String,
@@ -51,10 +52,9 @@ db.wptour = {
   pre_mongified_id: Number,
   pinged: String,
   post_excerpt: String
-}
+};
 
 db.building = {
-
   // mapping to the building's mysql id in wordpress
   sql_building_id: Number,
 
@@ -95,17 +95,21 @@ db.building = {
   urban_setting: String,
   social_history: String,
   site_history: String,
-  archive_documents: [{
-    filename: String,
-    label: String
-  }],
+  archive_documents: [
+    {
+      filename: String,
+      label: String
+    }
+  ],
   sources: String,
 
   // image gallery
-  images: [{
-    filename: String,
-    caption: String
-  }],
+  images: [
+    {
+      filename: String,
+      caption: String
+    }
+  ],
 
   // geospatial fields
   longitude: Number,
@@ -113,8 +117,8 @@ db.building = {
   location: {
     type: {
       type: String,
-      enum: 'Point',
-      default: 'Point'
+      enum: "Point",
+      default: "Point"
     },
     coordinates: {
       type: [Number],
@@ -131,7 +135,7 @@ db.building = {
   tour_position: Number,
 
   // creator
-  creator: { type: Schema.Types.ObjectId, ref: 'User' }
-}
+  creator: { type: Schema.Types.ObjectId, ref: "User" }
+};
 
-module.exports = db
+module.exports = db;
