@@ -1,4 +1,5 @@
 # New Haven Building Archive
+
 > Mapping New Haven's architectural history.
 
 The New Haven Building Archive (NHBA) is a digital archive of the buildings in New Haven. This repository houses the site's source code and guides for building the site locally or on EC2 instances.
@@ -43,13 +44,14 @@ You can optionally open another terminal window, cd into the nhba directory, and
 ## Deploying to EC2
 
 To deploy this app on an Amazon Linux instance on EC2, one must:
- - [ ] install the application dependencies
- - [ ] obtain ssl certificates
- - [ ] configure the app for https
- - [ ] store required environment variables
- - [ ] create file upload directory
- - [ ] provision superadmin users
- - [ ] and then start the application
+
+* [ ] install the application dependencies
+* [ ] obtain ssl certificates
+* [ ] configure the app for https
+* [ ] store required environment variables
+* [ ] create file upload directory
+* [ ] provision superadmin users
+* [ ] and then start the application
 
 #### Install Dependencies
 
@@ -114,6 +116,7 @@ config.api = {
 #### Store Environment Variables
 
 Add the following variables to `~/.bash_profile`:
+
 ```
 export NHBA_EMAIL='YOURGMAILACCOUNT'           # e.g. catparty
 export NHBA_EMAIL_PASSWORD='YOURGMAILPASSWORD' # e.g. meow
@@ -123,6 +126,7 @@ export NHBA_ENVIRONMENT='production'           # switch to production
 export NHBA_ADMIN_EMAILS='so@gm.com go@gm.com' # space separated emails
 export NHBA_SUPERADMIN_EMAILS='so@gm.com'      # space separated emails
 ```
+
 Then `source ~/.bash_profile`
 
 #### Create file upload directory
@@ -139,8 +143,9 @@ Only superadmin users can appoint other admin users. Superadmin users must be ap
 mongo nhba
 
 # find a user by their userId and make them a superadmin
-db.users.update({'userId': 6}, {$set: {'superadmin': true}})
+db.users.update({'email': 'email@email.com'}, {$set: {'superadmin': true}})
 ```
+
 #### Start Application
 
 ```
