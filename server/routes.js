@@ -105,8 +105,6 @@ const addFilterTerms = (queryTerms, req) => {
     queryTerms.push(queryTerm);
   });
 
-  // ensure we only return buildings with 1 or more images
-  queryTerms.push({ $where: "this.images.length > 0" });
   return queryTerms;
 };
 
