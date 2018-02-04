@@ -13,18 +13,16 @@
 
 .card-content {
   width: 100%;
-  padding-bottom: 66%;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
   position: relative;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
 .card-image {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  flex: 1;
 }
 
 /**
@@ -43,7 +41,7 @@
 **/
 
 .search .card:hover .card-content {
-  outline: 3px solid #EDA138;
+  outline: 3px solid #eda138;
 }
 
 .search .card:hover .card-name {
@@ -73,8 +71,6 @@
 **/
 
 .card-text {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   background: #fff;
   padding: 4px 8px;
@@ -89,7 +85,7 @@
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  color: #4F6077;
+  color: #4f6077;
 }
 
 .card-details {
@@ -102,20 +98,20 @@
 * Mobile search cards
 **/
 
-@media(max-width: 1150px) and (min-width: 600px) {
+@media (max-width: 1150px) and (min-width: 600px) {
   .search .card {
     width: 50%;
   }
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .search .card {
     width: 100%;
     border: none;
   }
 }
 
-@media(max-width: 1150px) {
+@media (max-width: 1150px) {
   .cards {
     padding: 0;
   }

@@ -301,9 +301,12 @@ export default class Building extends React.Component {
               </div>
             </div>
             <div className="right">
-              <div className="top-right-top">
-                {layout[this.state.layout.right]}
-              </div>
+              {this.state.building.images &&
+                this.state.building.images.length > 0 && (
+                  <div className="top-right-top">
+                    {layout[this.state.layout.right]}
+                  </div>
+                )}
               <div className="top-right-bottom">
                 <BuildingText building={this.state.building} fields={fields} />
               </div>
