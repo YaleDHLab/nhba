@@ -86,16 +86,16 @@ const addFilterTerms = (queryTerms, req) => {
   var keys = _.chain(req.query)
     .keys()
     .without('filter', 'fulltext', 'sort',
-      'userLatitude', 'userLongitude')
+    'userLatitude', 'userLongitude')
     .value();
 
   keys.map((key) => {
     // values with ' ' use _ as whitespace separator in query
     var values = [],
-        queryTerm = {}
-        args = req.query[key] = _.isArray(req.query[key]) ?
-            req.query[key]
-          : [req.query[key]]
+      queryTerm = {}
+    args = req.query[key] = _.isArray(req.query[key]) ?
+      req.query[key]
+      : [req.query[key]]
 
     args.map((value) => {
       values.push(value);
@@ -107,7 +107,7 @@ const addFilterTerms = (queryTerms, req) => {
   })
 
   // ensure we only return buildings with 1 or more images
-  queryTerms.push({$where: 'this.images.length > 0'});
+  queryTerms.push({ $where: 'this.images.length > 0' });
   return queryTerms;
 }
 
@@ -123,13 +123,13 @@ const addFilterTerms = (queryTerms, req) => {
 
 const getLocation = (lng, lat) => {
   return lng && lat ?
-      {
-        'type': 'Point',
-        'coordinates': [
-          parseFloat(lng),
-          parseFloat(lat)
-        ]
-      }
+    {
+      'type': 'Point',
+      'coordinates': [
+        parseFloat(lng),
+        parseFloat(lat)
+      ]
+    }
     : undefined;
 }
 
@@ -175,7 +175,7 @@ const updateBuildingFields = (building) => {
   return building;
 }
 
-module.exports = function(app) {
+module.exports = function (app) {
 
   /**
   *
@@ -186,11 +186,11 @@ module.exports = function(app) {
   app.get('/api/users', (req, res) => {
 
     // remove the hashed password and access token from responses
-    var select = {password: 0, token: 0};
+    var select = { password: 0, token: 0 };
 
     models.user.find({}, select, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
@@ -211,7 +211,7 @@ module.exports = function(app) {
 
     // query for buildings with images
     if (req.query.images && req.query.images == 'true') {
-      queryTerms.push({$where: 'this.images.length > 0'})
+      queryTerms.push({ $where: 'this.images.length > 0' })
     }
 
     // query for fulltet
@@ -232,20 +232,20 @@ module.exports = function(app) {
     // combine the queries if necessary
     if (queryTerms.length) {
       queryTerms.push(query);
-      var query = {$and: queryTerms};
+      var query = { $and: queryTerms };
     }
 
     if (req.query.sort && req.query.sort !== 'proximity') {
       var sort = {};
       sort[req.query.sort] = -1;
       models.building.find(query).sort(sort).exec((err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
+        if (err) return res.status(500).send({ cause: err })
+        return res.status(200).send(data)
       })
     } else {
       models.building.find(query, (err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
+        if (err) return res.status(500).send({ cause: err })
+        return res.status(200).send(data)
       })
     }
   })
@@ -257,10 +257,10 @@ module.exports = function(app) {
   **/
 
   app.get('/api/buildings/random', (req, res) => {
-    var query = {$where: 'this.images.length > 0'};
+    var query = { $where: 'this.images.length > 0' };
     models.building.findOne(query, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
@@ -278,10 +278,14 @@ module.exports = function(app) {
       }
     }
 
-    var building = new models.building({});
+    var building = new models.building({ creator: req.session.userId });
     building.save((err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      var query = { _id: req.session.userId };
+      models.user.findOneAndUpdate(query, { $push: { buildings: building._id } }, (err, data) => {
+        if (err) return res.status(500).send({ cause: err })
+      })
+      return res.status(200).send(data)
     })
   })
 
@@ -302,18 +306,18 @@ module.exports = function(app) {
     var building = req.body;
     if (building._id) {
       building = updateBuildingFields(building);
-      models.building.update({_id: building._id}, {$set: building},
-          {overwrite: true}, (err, data) => {
-        if (err) return res.status(500).send({cause: err})
+      models.building.update({ _id: building._id }, { $set: building },
+        { overwrite: true }, (err, data) => {
+          if (err) return res.status(500).send({ cause: err })
           return res.status(200).send(data)
-      })
+        })
 
     } else {
       var newBuilding = new models.building(building);
       newBuilding.created_at = getTime();
       newBuilding.save((err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
+        if (err) return res.status(500).send({ cause: err })
+        return res.status(200).send(data)
       })
     }
   })
@@ -333,9 +337,9 @@ module.exports = function(app) {
 
     var building = req.body;
     if (building._id) {
-      models.building.remove({_id: building._id}, (err, data) => {
-        if (err) return res.status(500).send({cause: err})
-          return res.status(200).send(data)
+      models.building.remove({ _id: building._id }, (err, data) => {
+        if (err) return res.status(500).send({ cause: err })
+        return res.status(200).send(data)
       })
     }
   })
@@ -356,23 +360,23 @@ module.exports = function(app) {
     var building = req.body;
     geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
       if (geoErr) {
-        return res.status(500).send({cause: geoErr})
+        return res.status(500).send({ cause: geoErr })
       }
       var match = geoRes ? geoRes[0] : null;
       if (match) {
         var lat = parseFloat(match.latitude),
-            lng = parseFloat(match.longitude);
+          lng = parseFloat(match.longitude);
         building.latitude = lat;
         building.longitude = lng;
         building.location = getLocation(lng, lat);
 
         // configure the update
-        var query = {_id: building._id};
-        var update = {$set: building};
+        var query = { _id: building._id };
+        var update = { $set: building };
 
         models.building.update(query, update, (saveErr, saveData) => {
           if (saveErr) {
-            return res.status(500).send({cause: saveErr})
+            return res.status(500).send({ cause: saveErr })
           } else {
             return res.status(200).send({
               latitude: lat,
@@ -393,19 +397,19 @@ module.exports = function(app) {
   **/
 
   app.get('/api/about', (req, res) => {
-    models.simplepage.find({'route': 'About'}, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+    models.simplepage.find({ 'route': 'About' }, (err, data) => {
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
   app.post('/api/about/save', (req, res) => {
-    var query = {'route': 'About'};
-    var options = {upsert: true};
+    var query = { 'route': 'About' };
+    var options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(query, req.body, options, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
@@ -416,19 +420,19 @@ module.exports = function(app) {
   **/
 
   app.get('/api/contact', (req, res) => {
-    models.simplepage.find({'route': 'Contact'}, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+    models.simplepage.find({ 'route': 'Contact' }, (err, data) => {
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
   app.post('/api/contact/save', (req, res) => {
-    var query = {'route': 'Contact'};
-    var options = {upsert: true};
+    var query = { 'route': 'Contact' };
+    var options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(query, req.body, options, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
@@ -440,13 +444,13 @@ module.exports = function(app) {
 
   app.get('/api/glossary', (req, res) => {
     models.glossaryterm.find({}, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
-        return res.status(200).send(data)
+      if (err) return res.status(500).send({ cause: err })
+      return res.status(200).send(data)
     })
   })
 
   app.post('/api/glossary/save', (req, res) => {
-    var options = {upsert: true};
+    var options = { upsert: true };
     var results = [];
 
     // remove all glossary terms then save each new glossary term
@@ -477,18 +481,18 @@ module.exports = function(app) {
     }
 
     if (req.body.admin === true) {
-      var status = {admin: true};
+      var status = { admin: true };
     } else if (req.body.contributor === true) {
-      var status = {admin: false, contributor: true};
+      var status = { admin: false, contributor: true };
     } else {
       var status = {};
     }
 
-    models.user.update({_id: req.body._id}, {$set: status},
-        {overwrite: true}, (err, data) => {
-      if (err) return res.status(500).send({cause: err})
+    models.user.update({ _id: req.body._id }, { $set: status },
+      { overwrite: true }, (err, data) => {
+        if (err) return res.status(500).send({ cause: err })
         return res.status(200).send(data)
-    })
+      })
 
   })
 
