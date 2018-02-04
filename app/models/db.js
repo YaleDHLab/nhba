@@ -1,3 +1,6 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
 var db = {}
 
 db.simplepage = {
@@ -18,34 +21,36 @@ db.user = {
   token: String,
   validated: Boolean,
   admin: Boolean,
-  superadmin: Boolean
+  superadmin: Boolean,
+  // buildings created by the user
+  buildings: [{ type: Schema.Types.ObjectId, ref: 'Building' }]
 }
 
 db.wptour = {
-  post_mime_type : String,
-  post_date_gmt : Date,
-  post_date : Date,
-  post_type : String,
-  post_modified : Date,
-  menu_order : Number,
-  guid : String,
-  post_title : String,
-  post_status : String,
-  comment_count : Number,
-  post_content : String,
-  post_content_filtered : String,
-  tour_id : Number,
-  post_parent : Number,
-  post_password : String,
-  ping_status : String,
-  post_author : Number,
-  comment_status : String,
-  to_ping : String,
-  post_name : String,
-  post_modified_gmt : Date,
-  pre_mongified_id : Number,
-  pinged : String,
-  post_excerpt : String
+  post_mime_type: String,
+  post_date_gmt: Date,
+  post_date: Date,
+  post_type: String,
+  post_modified: Date,
+  menu_order: Number,
+  guid: String,
+  post_title: String,
+  post_status: String,
+  comment_count: Number,
+  post_content: String,
+  post_content_filtered: String,
+  tour_id: Number,
+  post_parent: Number,
+  post_password: String,
+  ping_status: String,
+  post_author: Number,
+  comment_status: String,
+  to_ping: String,
+  post_name: String,
+  post_modified_gmt: Date,
+  pre_mongified_id: Number,
+  pinged: String,
+  post_excerpt: String
 }
 
 db.building = {
@@ -113,7 +118,7 @@ db.building = {
     },
     coordinates: {
       type: [Number],
-      default: [0,0]
+      default: [0, 0]
     }
   },
 
@@ -123,7 +128,10 @@ db.building = {
 
   // fields not in admin ui
   courses: [String],
-  tour_position: Number
+  tour_position: Number,
+
+  // creator
+  creator: { type: Schema.Types.ObjectId, ref: 'User' }
 }
 
 module.exports = db

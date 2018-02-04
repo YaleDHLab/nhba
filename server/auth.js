@@ -7,7 +7,7 @@ var _ = require('lodash')
 // specify the encryption level
 var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10
 
-module.exports = function(app) {
+module.exports = function (app) {
 
   /**
   * Identify the messages delievered by the auth middleware to client
@@ -32,7 +32,7 @@ module.exports = function(app) {
 
   // request made by client when attempting to add a user to the db
   app.post('/api/register', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
       initializeUserPassword(err, doc, req, res)
     })
   })
@@ -76,7 +76,7 @@ module.exports = function(app) {
         mailer.send(user.email, user.token, null)
 
         user.save((err, doc) => {
-          if (err) return res.status(500).send({cause: err});
+          if (err) return res.status(500).send({ cause: err });
           return res.status(200).send({
             message: messages.checkEmail
           });
@@ -171,8 +171,8 @@ module.exports = function(app) {
 
     user.validated = true;
 
-    models.user.update({_id: user._id}, {$set: user},
-      {overwrite: true}, (err, data) => {
+    models.user.update({ _id: user._id }, { $set: user },
+      { overwrite: true }, (err, data) => {
         if (err) console.warn(err);
 
         // update the user's session state
@@ -182,7 +182,7 @@ module.exports = function(app) {
         return res.status(200).send({
           message: messages.loginSuccess
         });
-    })
+      })
   }
 
   /**
@@ -197,6 +197,7 @@ module.exports = function(app) {
     req.session.authenticated = true;
     if (user.admin) req.session.admin = true;
     if (user.superadmin) req.session.superadmin = true;
+    req.session.userId = user._id;
 
     req.session.save((err) => {
       if (err) console.warn('could not save session', err)
@@ -210,7 +211,7 @@ module.exports = function(app) {
   **/
 
   app.post('/api/login', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
       authenticateUser(err, doc, req, res)
     })
   })
@@ -257,7 +258,7 @@ module.exports = function(app) {
   **/
 
   app.post('/api/forgotPassword', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
       requestPasswordReset(err, doc, req, res)
     })
   })
@@ -299,8 +300,8 @@ module.exports = function(app) {
       email: user.email
     }
 
-    models.user.findOneAndUpdate(query, user, {upsert: true}, (err, doc) => {
-      if (err) return res.status(500).send({cause: err})
+    models.user.findOneAndUpdate(query, user, { upsert: true }, (err, doc) => {
+      if (err) return res.status(500).send({ cause: err })
       return res.status(200).send({
         message: messages.checkEmail
       });
@@ -314,7 +315,7 @@ module.exports = function(app) {
   **/
 
   app.post('/api/resetPassword', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
       resetPassword(err, doc, req, res)
     })
   })
@@ -355,8 +356,8 @@ module.exports = function(app) {
           token: user.token
         };
 
-        models.user.findOneAndUpdate(query, user, {upsert: true}, (err, doc) => {
-          if (err) return res.status(500).send({cause: err})
+        models.user.findOneAndUpdate(query, user, { upsert: true }, (err, doc) => {
+          if (err) return res.status(500).send({ cause: err })
           return res.status(200).send({
             message: messages.passwordUpdated
           });
@@ -374,7 +375,7 @@ module.exports = function(app) {
     app.use((req, res, next) => {
       if (req.url.includes('/admin')) {
         req.session && req.session.authenticated && req.session.admin ?
-            next()
+          next()
           : res.redirect('/?authenticated=false')
       } else {
         next()
