@@ -56,13 +56,17 @@
   font-family: inherit;
 }
 
-.form input[type=checkbox] {
+.form input[type="checkbox"] {
   width: 13px;
   height: auto;
 }
 
 .form .quill {
   padding: 6px 0;
+}
+
+.form .quill .ql-container {
+  height: calc(100% - 42px);
 }
 
 /**
@@ -122,7 +126,6 @@
 **/
 
 .form .multiselect {
-  display: inline-block;
   width: 100%;
   height: 100%;
 }
@@ -158,6 +161,6 @@
   overflow: scroll;
 }
 
-.form .multiselect .select-checkboxes input[type=checkbox] {
+.form .multiselect .select-checkboxes input[type="checkbox"] {
   margin-right: 8px;
 }
