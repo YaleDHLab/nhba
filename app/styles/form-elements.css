@@ -65,10 +65,6 @@
   padding: 6px 0;
 }
 
-.form .quill .ql-container {
-  height: calc(100% - 42px);
-}
-
 /**
 * Full width
 **/
