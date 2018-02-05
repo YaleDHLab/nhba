@@ -1,14 +1,17 @@
-var db = {}
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var db = {};
 
 db.simplepage = {
   route: String,
   text: String
-}
+};
 
 db.glossaryterm = {
   term: String,
   definition: String
-}
+};
 
 db.user = {
   firstname: String,
@@ -18,38 +21,40 @@ db.user = {
   token: String,
   validated: Boolean,
   admin: Boolean,
-  superadmin: Boolean
-}
+  superadmin: Boolean,
+  contributor: Boolean,
+  // buildings created by the user
+  buildings: [{ type: Schema.Types.ObjectId, ref: "Building" }]
+};
 
 db.wptour = {
-  post_mime_type : String,
-  post_date_gmt : Date,
-  post_date : Date,
-  post_type : String,
-  post_modified : Date,
-  menu_order : Number,
-  guid : String,
-  post_title : String,
-  post_status : String,
-  comment_count : Number,
-  post_content : String,
-  post_content_filtered : String,
-  tour_id : Number,
-  post_parent : Number,
-  post_password : String,
-  ping_status : String,
-  post_author : Number,
-  comment_status : String,
-  to_ping : String,
-  post_name : String,
-  post_modified_gmt : Date,
-  pre_mongified_id : Number,
-  pinged : String,
-  post_excerpt : String
-}
+  post_mime_type: String,
+  post_date_gmt: Date,
+  post_date: Date,
+  post_type: String,
+  post_modified: Date,
+  menu_order: Number,
+  guid: String,
+  post_title: String,
+  post_status: String,
+  comment_count: Number,
+  post_content: String,
+  post_content_filtered: String,
+  tour_id: Number,
+  post_parent: Number,
+  post_password: String,
+  ping_status: String,
+  post_author: Number,
+  comment_status: String,
+  to_ping: String,
+  post_name: String,
+  post_modified_gmt: Date,
+  pre_mongified_id: Number,
+  pinged: String,
+  post_excerpt: String
+};
 
 db.building = {
-
   // mapping to the building's mysql id in wordpress
   sql_building_id: Number,
 
@@ -90,17 +95,21 @@ db.building = {
   urban_setting: String,
   social_history: String,
   site_history: String,
-  archive_documents: [{
-    filename: String,
-    label: String
-  }],
+  archive_documents: [
+    {
+      filename: String,
+      label: String
+    }
+  ],
   sources: String,
 
   // image gallery
-  images: [{
-    filename: String,
-    caption: String
-  }],
+  images: [
+    {
+      filename: String,
+      caption: String
+    }
+  ],
 
   // geospatial fields
   longitude: Number,
@@ -108,12 +117,12 @@ db.building = {
   location: {
     type: {
       type: String,
-      enum: 'Point',
-      default: 'Point'
+      enum: "Point",
+      default: "Point"
     },
     coordinates: {
       type: [Number],
-      default: [0,0]
+      default: [0, 0]
     }
   },
 
@@ -123,7 +132,10 @@ db.building = {
 
   // fields not in admin ui
   courses: [String],
-  tour_position: Number
-}
+  tour_position: Number,
 
-module.exports = db
+  // creator
+  creator: { type: Schema.Types.ObjectId, ref: "User" }
+};
+
+module.exports = db;

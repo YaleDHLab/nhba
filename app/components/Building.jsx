@@ -25,6 +25,7 @@ export default class Building extends React.Component {
       building: {},
       layout: { left: "Map", right: "Gallery" },
       admin: false,
+      creator: false,
 
       // tour data for mapping
       tourNameToIndex: {}
@@ -42,6 +43,10 @@ export default class Building extends React.Component {
     // getter and setter for user admin status
     this.checkUserStatus = this.checkUserStatus.bind(this);
     this.processUserStatus = this.processUserStatus.bind(this);
+
+    // getter and setter for building creator status
+    this.checkCreatorStatus = this.checkCreatorStatus.bind(this);
+    this.processCreatorStatus = this.processCreatorStatus.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +78,7 @@ export default class Building extends React.Component {
       console.warn(err);
     } else {
       this.setState({ building: res.body[0] });
+      this.checkCreatorStatus(res.body[0]._id);
     }
   }
 
@@ -86,8 +92,23 @@ export default class Building extends React.Component {
 
   processUserStatus(err, res) {
     if (err) console.warn(err);
-    if (res.body.session.authenticated === true) {
+    if (res.body.session.admin === true) {
       this.setState({ admin: true });
+    }
+  }
+
+  /**
+   * Check whether the user is the creator of the building or not
+   **/
+
+  checkCreatorStatus(buildingId) {
+    api.get("creator?buildingId=" + buildingId, this.processCreatorStatus);
+  }
+
+  processCreatorStatus(err, res) {
+    if (err) console.warn(err);
+    if (res.body.creator === true) {
+      this.setState({ creator: true });
     }
   }
 
@@ -269,6 +290,7 @@ export default class Building extends React.Component {
                   <BuildingButtons fields={fields} {...this.props} />
                   <BuildingEditButton
                     admin={this.state.admin}
+                    creator={this.state.creator}
                     building={this.state.building}
                   />
                 </div>

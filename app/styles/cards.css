@@ -43,7 +43,7 @@
 **/
 
 .search .card:hover .card-content {
-  outline: 3px solid #EDA138;
+  outline: 3px solid #eda138;
 }
 
 .search .card:hover .card-name {
@@ -89,7 +89,7 @@
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  color: #4F6077;
+  color: #4f6077;
 }
 
 .card-details {
@@ -102,20 +102,20 @@
 * Mobile search cards
 **/
 
-@media(max-width: 1150px) and (min-width: 600px) {
+@media (max-width: 1150px) and (min-width: 600px) {
   .search .card {
     width: 50%;
   }
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .search .card {
     width: 100%;
     border: none;
   }
 }
 
-@media(max-width: 1150px) {
+@media (max-width: 1150px) {
   .cards {
     padding: 0;
   }
