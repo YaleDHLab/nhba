@@ -389,7 +389,7 @@ module.exports = function(app) {
   if (process.env["NHBA_ENVIRONMENT"] === "production") {
     app.use((req, res, next) => {
       if (req.url.includes("/admin")) {
-        req.session && req.session.authenticated && req.session.admin
+        req.session && req.session.authenticated
           ? next()
           : res.redirect("/?authenticated=false");
       } else {
