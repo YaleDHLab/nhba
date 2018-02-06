@@ -295,7 +295,7 @@ module.exports = function(app) {
       // reject if not authenticated or admin or creator
       if (
         !req.session.authenticated ||
-        (!req.admin && req.body.creator != req.session.userId)
+        (!req.session.admin && req.body.creator != req.session.userId)
       ) {
         return res.status(403).send("This action could not be completed");
       }
