@@ -48,10 +48,10 @@ export default class Login extends React.Component {
     const self = this;
     if (err) {
       console.warn(err);
-    } else {
-      if (res.body.message) {
-        self.setState({ message: res.body.message });
-      }
+    }
+
+    if (res.body.message) {
+      self.setState({ message: res.body.message });
     }
 
     self.props.getSessionData();

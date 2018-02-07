@@ -24,8 +24,7 @@ module.exports = function(app) {
       "Sorry, this email address does not have any account information.",
     passwordUpdated: "Success! Your password has been updated.",
     error:
-      "Sorry, we could not process your request. \
-              Please contact an administrator for help.",
+      "Sorry, we could not process your request. Please contact an administrator for help.",
   };
 
   /**
@@ -127,8 +126,8 @@ module.exports = function(app) {
 
   var authenticateUser = (err, doc, req, res) => {
     if (err || doc.length == 0) {
-      return res.status(200).send({
-        message: messages.error,
+      return res.status(403).send({
+        message: messages.loginFail,
       });
     }
 
