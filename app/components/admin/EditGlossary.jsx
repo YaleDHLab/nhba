@@ -1,7 +1,8 @@
-import React from "react";
-import GlossaryItem from "./GlossaryItem";
-import api from "../../../config";
-import request from "superagent";
+import React from 'react';
+import GlossaryItem from './GlossaryItem';
+import api from '../../../config';
+import request from 'superagent';
+import _ from 'lodash';
 
 export default class EditSimplePage extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class EditSimplePage extends React.Component {
   }
 
   componentWillMount() {
-    api.get("glossary", this.handleApiResponse);
+    api.get('glossary', this.handleApiResponse);
   }
 
   handleApiResponse(err, res) {
@@ -76,7 +77,7 @@ export default class EditSimplePage extends React.Component {
    **/
 
   sortItems(items) {
-    return _.sortBy(items, "term");
+    return _.sortBy(items, 'term');
   }
 
   /**
@@ -87,10 +88,10 @@ export default class EditSimplePage extends React.Component {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
 
     request
-      .post(api.endpoint + "glossary/save")
+      .post(api.endpoint + 'glossary/save')
       .send(glossaryItems)
-      .set("Accept", "application/json")
-      .end((err, res) => {
+      .set('Accept', 'application/json')
+      .end(err => {
         if (err) console.warn(err);
       });
   }
@@ -101,7 +102,7 @@ export default class EditSimplePage extends React.Component {
         <div className="form-content">
           <h1>Glossary</h1>
           <div className="instructions">
-            {"Add definitions....style guide and directions here."}
+            {'Add definitions....style guide and directions here.'}
           </div>
           {this.state.glossaryItems.map((item, idx) => {
             return (

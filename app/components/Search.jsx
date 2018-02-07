@@ -1,28 +1,19 @@
-import React from "react";
-import Filters from "./Filters";
-import Cards from "./Cards";
-import Map from "./Map";
-import api from "../../config";
-import getTourNameToIndex from "./lib/getTourNameToIndex";
-import getBuildingQueryUrl from "./lib/getBuildingQueryUrl";
-import _ from "lodash";
+import React from 'react';
+import Filters from './Filters';
+import Cards from './Cards';
+import Map from './Map';
+import api from '../../config';
+import getTourNameToIndex from './lib/getTourNameToIndex';
+import getBuildingQueryUrl from './lib/getBuildingQueryUrl';
 
 const selectFields = [
-  "tours",
-  "building_types",
-  "current_uses",
-  "styles",
-  "eras",
-  "neighborhoods",
+  'tours',
+  'building_types',
+  'current_uses',
+  'styles',
+  'eras',
+  'neighborhoods',
 ];
-
-const getAdminSearchButton = () => {
-  return document.querySelector(".admin-search-button");
-};
-
-const getAdminSearchInput = () => {
-  return document.querySelector("input.admin-search");
-};
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -39,7 +30,7 @@ export default class Search extends React.Component {
       styles: new Set(),
       eras: new Set(),
       neighborhoods: new Set(),
-      sort: "updated_at",
+      sort: 'updated_at',
 
       // store the user location && watcher id
       userLocation: null,
@@ -140,8 +131,8 @@ export default class Search extends React.Component {
     let url = getBuildingQueryUrl(state, selectFields);
 
     // add search terms (if any)
-    const textSearch = document.querySelector(".building-search").value;
-    if (textSearch) url += "fulltext=" + encodeURIComponent(textSearch);
+    const textSearch = document.querySelector('.building-search').value;
+    if (textSearch) url += 'fulltext=' + encodeURIComponent(textSearch);
 
     api.get(url, this.processBuildings);
   }

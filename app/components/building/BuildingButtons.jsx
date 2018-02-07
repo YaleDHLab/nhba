@@ -1,5 +1,5 @@
-import React from "react";
-import BuildingButton from "./BuildingButton";
+import React from 'react';
+import BuildingButton from './BuildingButton';
 
 export default class BuildingButtons extends React.Component {
   constructor(props) {

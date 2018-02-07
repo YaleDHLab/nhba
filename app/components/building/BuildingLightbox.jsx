@@ -1,5 +1,5 @@
-import React from "react";
-import BuildingLightboxCircles from "./BuildingLightboxCircleButtons";
+import React from 'react';
+import BuildingLightboxCircles from './BuildingLightboxCircleButtons';
 
 export default class BuildingLightbox extends React.Component {
   constructor(props) {
@@ -11,14 +11,14 @@ export default class BuildingLightbox extends React.Component {
    **/
 
   handleClick(e) {
-    if (!e.target.className === "lightbox-image") {
+    if (!e.target.className === 'lightbox-image') {
       e.preventDefault();
       e.stopPropagation();
     }
   }
 
   render() {
-    const imageDir = "/assets/uploads/resized/large/",
+    const imageDir = '/assets/uploads/resized/large/',
       imageFile = this.props.building.images[this.props.imageIndex].filename,
       imageCaption = this.props.building.images[this.props.imageIndex].caption,
       image = imageDir + imageFile;

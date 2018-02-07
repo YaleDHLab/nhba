@@ -1,5 +1,5 @@
-import React from "react";
-import User from "./User";
+import React from 'react';
+import User from './User';
 
 export default class Users extends React.Component {
   render() {

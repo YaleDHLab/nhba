@@ -1,5 +1,5 @@
-import React from "react";
-import CircleButton from "./BuildingLightboxCircleButton";
+import React from 'react';
+import CircleButton from './BuildingLightboxCircleButton';
 
 export default class BuildingLightboxCircleButtons extends React.Component {
   constructor(props) {

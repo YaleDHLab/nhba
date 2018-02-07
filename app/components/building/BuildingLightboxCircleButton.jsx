@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class BuildingLightboxCircleButton extends React.Component {
   constructor(props) {
@@ -14,8 +14,8 @@ export default class BuildingLightboxCircleButton extends React.Component {
   render() {
     const buttonClass =
       this.props.index === this.props.imageIndex
-        ? "building-lightbox-circle-button active"
-        : "building-lightbox-circle-button";
+        ? 'building-lightbox-circle-button active'
+        : 'building-lightbox-circle-button';
 
     return <div className={buttonClass} onClick={this.handleClick} />;
   }

@@ -1,5 +1,5 @@
-import React from "react";
-import Multiselect from "../../../Multiselect";
+import React from 'react';
+import Multiselect from '../../../Multiselect';
 
 export default class Select extends React.Component {
   constructor(props) {
@@ -10,10 +10,10 @@ export default class Select extends React.Component {
   }
 
   getClass() {
-    const defaultClass = "select";
-    const width = this.props.width || "";
-    const position = this.props.position || "";
-    return [defaultClass, width, position].join(" ");
+    const defaultClass = 'select';
+    const width = this.props.width || '';
+    const position = this.props.position || '';
+    return [defaultClass, width, position].join(' ');
   }
 
   updateField(field, option) {
@@ -27,7 +27,7 @@ export default class Select extends React.Component {
       values = values.map(v => this.props.valueMap[v]);
     }
 
-    const label = values.join(", ");
+    const label = values.join(', ');
 
     return (
       <div className={this.getClass()}>
@@ -41,7 +41,7 @@ export default class Select extends React.Component {
           allowNewOptions={this.props.allowNewOptions}
           onNewOption={this.props.handleNewOption}
           handleChange={this.updateField}
-          className={"custom-select"}
+          className={'custom-select'}
         />
       </div>
     );

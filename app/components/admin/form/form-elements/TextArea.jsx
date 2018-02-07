@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class TextArea extends React.Component {
   constructor(props) {
@@ -9,9 +9,9 @@ export default class TextArea extends React.Component {
   }
 
   getClass() {
-    const width = this.props.width || "";
-    const position = this.props.position || "";
-    return ["text-area", width, position].join(" ");
+    const width = this.props.width || '';
+    const position = this.props.position || '';
+    return ['text-area', width, position].join(' ');
   }
 
   updateField(e) {
@@ -26,8 +26,8 @@ export default class TextArea extends React.Component {
           className="custom-textarea"
           onChange={this.updateField}
           rows={this.props.rows}
-          placeholder={this.props.placeholder || ""}
-          value={this.props.building[this.props.field] || ""}
+          placeholder={this.props.placeholder || ''}
+          value={this.props.building[this.props.field] || ''}
         />
       </div>
     );

@@ -1,8 +1,8 @@
-import React from "react";
-import { findDOMNode } from "react-dom";
-import { DragSource, DropTarget } from "react-dnd";
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import { DragSource, DropTarget } from 'react-dnd';
 
-import Confirm from "../../Confirm";
+import Confirm from '../../Confirm';
 
 const imageSource = {
   beginDrag(props) {
@@ -60,10 +60,10 @@ const imageTarget = {
   },
 };
 
-@DropTarget("image", imageTarget, connect => ({
+@DropTarget('image', imageTarget, connect => ({
   connectDropTarget: connect.dropTarget(),
 }))
-@DragSource("image", imageSource, (connect, monitor) => ({
+@DragSource('image', imageSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))
@@ -78,7 +78,7 @@ export default class ImageGridItem extends React.Component {
 
   getStyle(image) {
     return {
-      backgroundImage: "url(" + image + ")",
+      backgroundImage: 'url(' + image + ')',
     };
   }
 
@@ -93,12 +93,7 @@ export default class ImageGridItem extends React.Component {
   }
 
   render() {
-    const {
-      text,
-      isDragging,
-      connectDragSource,
-      connectDropTarget,
-    } = this.props;
+    const { connectDragSource, connectDropTarget } = this.props;
 
     return connectDragSource(
       connectDropTarget(

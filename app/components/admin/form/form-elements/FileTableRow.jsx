@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class FileTableRow extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class FileTableRow extends React.Component {
   }
 
   removeFile() {
-    this.props.updateField("archive_documents", this.props.file);
+    this.props.updateField('archive_documents', this.props.file);
     this.props.selectFileToRelabel(null);
   }
 
@@ -18,10 +18,10 @@ export default class FileTableRow extends React.Component {
   }
 
   render() {
-    const minusIconImage = "/assets/images/minus-icon";
+    const minusIconImage = '/assets/images/minus-icon';
     const minusIcon = (
-      <object data={minusIconImage + ".svg"} type="image/svg+xml">
-        <img src={minusIconImage + ".png"} className="logo" />
+      <object data={minusIconImage + '.svg'} type="image/svg+xml">
+        <img src={minusIconImage + '.png'} className="logo" />
       </object>
     );
 

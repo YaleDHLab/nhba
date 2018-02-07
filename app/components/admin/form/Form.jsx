@@ -1,15 +1,16 @@
-import React from "react";
-import { browserHistory } from "react-router";
-import Tabs from "./Tabs";
-import Overview from "./Overview";
-import DataAndHistory from "./DataAndHistory";
-import ImageGallery from "./ImageGallery";
-import Confirm from "../Confirm";
-import getSelectOptions from "../../lib/getSelectOptions";
-import allSelects from "../../lib/allSelects.js";
-import api from "../../../../config";
-import Loader from "../../Loader";
-import request from "superagent";
+import React from 'react';
+import { browserHistory } from 'react-router';
+import Tabs from './Tabs';
+import Overview from './Overview';
+import DataAndHistory from './DataAndHistory';
+import ImageGallery from './ImageGallery';
+import Confirm from '../Confirm';
+import getSelectOptions from '../../lib/getSelectOptions';
+import allSelects from '../../lib/allSelects';
+import api from '../../../../config';
+import Loader from '../../Loader';
+import request from 'superagent';
+import _ from 'lodash';
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -19,9 +20,9 @@ export default class Form extends React.Component {
       buildings: [],
       options: {},
       building: {},
-      activeTab: "overview",
+      activeTab: 'overview',
       unsavedChanges: false,
-      saveButtonText: "Save",
+      saveButtonText: 'Save',
       autoSaveInterval: null,
     };
 
@@ -70,7 +71,7 @@ export default class Form extends React.Component {
    **/
 
   getNewBuilding() {
-    api.get("building/new", (err, res) => {
+    api.get('building/new', (err, res) => {
       if (err) console.warn(err);
       this.setState({ building: res.body });
     });
@@ -78,7 +79,7 @@ export default class Form extends React.Component {
 
   getBuilding(buildingId) {
     const self = this;
-    const url = "buildings?buildingId=" + buildingId;
+    const url = 'buildings?buildingId=' + buildingId;
     api.get(url, (err, res) => {
       if (err) {
         console.warn(err);
@@ -90,7 +91,7 @@ export default class Form extends React.Component {
 
   getBuildings() {
     const self = this;
-    api.get("buildings?images=true", (err, res) => {
+    api.get('buildings?images=true', (err, res) => {
       if (err) {
         console.warn(err);
       } else {
@@ -154,7 +155,7 @@ export default class Form extends React.Component {
     this.setState({
       building: building,
       unsavedChanges: true,
-      saveButtonText: "Save",
+      saveButtonText: 'Save',
       autoSaveInterval: autoSaveInterval,
     });
   }
@@ -178,16 +179,16 @@ export default class Form extends React.Component {
 
   geocode() {
     request
-      .post(api.endpoint + "geocode")
+      .post(api.endpoint + 'geocode')
       .send(this.state.building)
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .end((err, res) => {
         const result = res.body,
           latitude = result.latitude,
           longitude = result.longitude;
         if (latitude && longitude) {
-          this.updateField("latitude", latitude);
-          this.updateField("longitude", longitude);
+          this.updateField('latitude', latitude);
+          this.updateField('longitude', longitude);
         }
         if (err) console.warn(err);
       });
@@ -199,16 +200,16 @@ export default class Form extends React.Component {
 
   saveBuilding() {
     request
-      .post(api.endpoint + "building/save")
+      .post(api.endpoint + 'building/save')
       .send(this.state.building)
-      .set("Accept", "application/json")
-      .end((err, res) => {
+      .set('Accept', 'application/json')
+      .end(err => {
         if (err) console.warn(err);
       });
     clearInterval(this.state.autoSaveInterval);
     this.setState({
       unsavedChanges: false,
-      saveButtonText: "Saved",
+      saveButtonText: 'Saved',
       autoSaveInterval: null,
     });
   }
@@ -219,13 +220,13 @@ export default class Form extends React.Component {
 
   deleteBuilding() {
     request
-      .post(api.endpoint + "building/delete")
+      .post(api.endpoint + 'building/delete')
       .send(this.state.building)
-      .set("Accept", "application/json")
-      .end((err, res) => {
+      .set('Accept', 'application/json')
+      .end(err => {
         if (err) console.warn(err);
       });
-    browserHistory.push("/admin");
+    browserHistory.push('/admin');
   }
 
   /**
@@ -234,8 +235,8 @@ export default class Form extends React.Component {
 
   getSaveButtonStyle() {
     return this.state.unsavedChanges
-      ? "save-button yellow-button unsaved-changes"
-      : "save-button yellow-button no-unsaved-changes";
+      ? 'save-button yellow-button unsaved-changes'
+      : 'save-button yellow-button no-unsaved-changes';
   }
 
   render() {
@@ -243,7 +244,7 @@ export default class Form extends React.Component {
 
     if (this.state.building) {
       switch (this.state.activeTab) {
-        case "overview":
+        case 'overview':
           view = (
             <Overview
               building={this.state.building}
@@ -257,7 +258,7 @@ export default class Form extends React.Component {
           );
           break;
 
-        case "data-and-history":
+        case 'data-and-history':
           view = (
             <DataAndHistory
               building={this.state.building}
@@ -270,7 +271,7 @@ export default class Form extends React.Component {
           );
           break;
 
-        case "image-gallery":
+        case 'image-gallery':
           view = (
             <ImageGallery
               building={this.state.building}
@@ -289,10 +290,10 @@ export default class Form extends React.Component {
 
     const building = this.state.building;
     const address =
-      building && building.address ? building.address : "New Building";
+      building && building.address ? building.address : 'New Building';
 
     const header = this.state.building._id ? (
-      <a href={"/building?id=" + this.state.building._id}>
+      <a href={'/building?id=' + this.state.building._id}>
         <h1>{address}</h1>
       </a>
     ) : (

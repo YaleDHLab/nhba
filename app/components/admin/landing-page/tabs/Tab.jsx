@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class Tab extends React.Component {
   constructor(props) {
@@ -9,9 +9,9 @@ export default class Tab extends React.Component {
   }
 
   getClass() {
-    const defaultClass = "tab";
+    const defaultClass = 'tab';
     return this.props.tab.value == this.props.activeTab
-      ? defaultClass + " " + "active"
+      ? defaultClass + ' ' + 'active'
       : defaultClass;
   }
 

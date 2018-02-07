@@ -1,23 +1,23 @@
-import React from "react";
-import { browserHistory } from "react-router";
-import MobileFooterIcon from "./MobileFooterIcon";
+import React from 'react';
+import { browserHistory } from 'react-router';
+import MobileFooterIcon from './MobileFooterIcon';
 
 export default class MobileFooter extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentRoute: "search",
+      currentRoute: 'search',
     };
 
     this.toggleView = this.toggleView.bind(this);
     this.showAuth = this.showAuth.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.location != this.props.location) {
       let route = this.props.location.pathname;
-      route = route[0] === "/" && route.length > 1 ? route.substring(1) : route;
+      route = route[0] === '/' && route.length > 1 ? route.substring(1) : route;
       this.toggleView(route);
     }
   }
@@ -27,23 +27,23 @@ export default class MobileFooter extends React.Component {
 
     const elems = [
       {
-        elem: document.querySelectorAll(".building"),
-        route: "building",
+        elem: document.querySelectorAll('.building'),
+        route: 'building',
       },
       {
-        elem: document.querySelectorAll(".map"),
-        route: "/",
+        elem: document.querySelectorAll('.map'),
+        route: '/',
       },
       {
-        elem: document.querySelectorAll(".cards"),
-        route: "cards",
+        elem: document.querySelectorAll('.cards'),
+        route: 'cards',
       },
     ];
 
     elems.map(d => {
       if (d.elem) {
         for (var i = 0; i < d.elem.length; i++) {
-          d.elem[i].style.display = d.route !== currentRoute ? "none" : "block";
+          d.elem[i].style.display = d.route !== currentRoute ? 'none' : 'block';
         }
       }
     });
@@ -52,13 +52,13 @@ export default class MobileFooter extends React.Component {
   showAuth() {
     const location = Object.assign({}, window.location);
     const route = location.pathname.substring(1);
-    if (location.search.includes("login")) {
+    if (location.search.includes('login')) {
       browserHistory.push(route + location.search);
     } else {
       if (location.search.length) {
-        browserHistory.push("&login=true");
+        browserHistory.push('&login=true');
       } else {
-        browserHistory.push("?login=true");
+        browserHistory.push('?login=true');
       }
     }
   }
@@ -73,7 +73,7 @@ export default class MobileFooter extends React.Component {
             label="Map"
             route="/"
             handleClick={() => {
-              browserHistory.push("/");
+              browserHistory.push('/');
             }}
           />
           <MobileFooterIcon
@@ -82,7 +82,7 @@ export default class MobileFooter extends React.Component {
             label="List"
             route="cards"
             handleClick={() => {
-              browserHistory.push("/cards");
+              browserHistory.push('/cards');
             }}
           />
           <MobileFooterIcon

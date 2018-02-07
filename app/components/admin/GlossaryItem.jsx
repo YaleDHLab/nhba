@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class GlossaryItem extends React.Component {
   constructor(props) {
@@ -10,11 +10,11 @@ export default class GlossaryItem extends React.Component {
   }
 
   handleTermChange(e) {
-    this.props.handleTextChange(e, "term", this.props.index);
+    this.props.handleTextChange(e, 'term', this.props.index);
   }
 
   handleDefinitionChange(e) {
-    this.props.handleTextChange(e, "definition", this.props.index);
+    this.props.handleTextChange(e, 'definition', this.props.index);
   }
 
   deleteItem() {

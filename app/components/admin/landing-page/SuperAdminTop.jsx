@@ -1,25 +1,22 @@
-import React from "react";
-import Tabs from "./tabs/Tabs";
-import Pages from "./Pages";
-import Users from "./Users";
-import ViewAddBuildings from "./ViewAddBuildings";
-import Filters from "../../Filters";
-import Search from "../../Search";
-import api from "../../../../config";
-import { Link } from "react-router";
+import React from 'react';
+import Tabs from './tabs/Tabs';
+import Pages from './Pages';
+import Users from './Users';
+import ViewAddBuildings from './ViewAddBuildings';
+import api from '../../../../config';
 
 const pages = [
   {
-    label: "About",
-    route: "/admin/about",
+    label: 'About',
+    route: '/admin/about',
   },
   {
-    label: "Contact",
-    route: "/admin/contact",
+    label: 'Contact',
+    route: '/admin/contact',
   },
   {
-    label: "Glossary",
-    route: "/admin/glossary",
+    label: 'Glossary',
+    route: '/admin/glossary',
   },
 ];
 
@@ -28,7 +25,7 @@ export default class SuperadminTop extends React.Component {
     super(props);
 
     this.state = {
-      tab: "users", // {'users' | 'pages'}
+      tab: 'users', // {'users' | 'pages'}
       users: [],
     };
 
@@ -46,7 +43,7 @@ export default class SuperadminTop extends React.Component {
   }
 
   getUsers() {
-    api.get("users", this.processUsers);
+    api.get('users', this.processUsers);
   }
 
   processUsers(err, res) {
@@ -56,7 +53,7 @@ export default class SuperadminTop extends React.Component {
 
   render() {
     const view =
-      this.state.tab == "users" ? (
+      this.state.tab == 'users' ? (
         <Users users={this.state.users} getUsers={this.getUsers} />
       ) : (
         <Pages pages={pages} />

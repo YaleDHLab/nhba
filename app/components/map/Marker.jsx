@@ -1,6 +1,6 @@
-import React from "react";
-import BuildingOverlay from "./BuildingOverlay";
-import BuildingCircle from "./BuildingCircle";
+import React from 'react';
+import BuildingOverlay from './BuildingOverlay';
+import BuildingCircle from './BuildingCircle';
 
 export default class MapMarker extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class MapMarker extends React.Component {
 
   isIe() {
     const userAgent = window.navigator.userAgent;
-    return userAgent.includes("MSIE") || userAgent.includes(".NET");
+    return userAgent.includes('MSIE') || userAgent.includes('.NET');
   }
 
   handleMouseOver() {

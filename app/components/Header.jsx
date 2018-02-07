@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router";
+import React from 'react';
+import { Link } from 'react-router';
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -17,7 +17,6 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const logo = "/assets/images/NHBA-logo";
     const link = this.props.authenticated ? (
       <a href="#logout" onClick={this.logout}>
         Log out

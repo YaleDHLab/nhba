@@ -1,5 +1,5 @@
-import React from "react";
-import Tab from "./Tab";
+import React from 'react';
+import Tab from './Tab';
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class Tabs extends React.Component {
       <div className="tabs-container">
         <div className="tabs">
           <Tab
-            tab={{ label: "Users", value: "users" }}
+            tab={{ label: 'Users', value: 'users' }}
             changeTab={this.changeTab}
             activeTab={this.props.tab}
           />
@@ -25,7 +25,7 @@ export default class Tabs extends React.Component {
           <div className="spacer">&nbsp;</div>
 
           <Tab
-            tab={{ label: "Pages", value: "pages" }}
+            tab={{ label: 'Pages', value: 'pages' }}
             changeTab={this.changeTab}
             activeTab={this.props.tab}
           />

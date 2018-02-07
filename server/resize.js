@@ -1,10 +1,10 @@
-var sharp = require("sharp");
-var glob = require("glob");
-var path = require("path");
+var sharp = require('sharp');
+var glob = require('glob');
+var path = require('path');
 
 var dirs = {
-  raw: "build/assets/uploads/raw",
-  resized: "build/assets/uploads/resized",
+  raw: 'build/assets/uploads/raw',
+  resized: 'build/assets/uploads/resized',
 };
 
 var sizes = {
@@ -24,12 +24,12 @@ var sizes = {
 
 // make calls to resize the image at each size
 var getAllSizes = file => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     var basename = path.basename(file);
 
     // get each of the required sizes
     Object.keys(sizes).map((size, idx) => {
-      var outputdir = dirs.resized + "/" + size + "/" + basename;
+      var outputdir = dirs.resized + '/' + size + '/' + basename;
       var width = sizes[size].width;
       var height = sizes[size].height;
       var resizedImage = resizeImage(file, width, height, outputdir);
@@ -48,11 +48,11 @@ var resizeImage = (file, width, height, outputdir) => {
     sharp(file)
       .resize(width, height)
       .min()
-      .toFile(outputdir, (err, info) => {
+      .toFile(outputdir, err => {
         if (err) {
           reject();
         } else {
-          console.log(" * created a", width, "x", height, "resize of", file);
+          console.info(' * created a', width, 'x', height, 'resize of', file);
           resolve();
         }
       });
@@ -61,7 +61,7 @@ var resizeImage = (file, width, height, outputdir) => {
 
 // resize all uploads
 var uploads = () => {
-  glob(dirs.raw + "/*", (err, files) => {
+  glob(dirs.raw + '/*', (err, files) => {
     if (err) {
       console.warn(err);
     } else {
@@ -74,7 +74,7 @@ var uploads = () => {
 
 // resize one upload
 var upload = filepath => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     var allResizes = getAllSizes(filepath);
     allResizes.then(() => {
       resolve();

@@ -1,14 +1,14 @@
-import React from "react";
-import api from "../../../config";
-import request from "superagent";
+import React from 'react';
+import api from '../../../config';
+import request from 'superagent';
 
 export default class EditSimplePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      text: "",
-      title: "",
+      text: '',
+      title: '',
     };
 
     // getters for simple page data
@@ -40,14 +40,14 @@ export default class EditSimplePage extends React.Component {
   }
 
   getRoute() {
-    return this.props.location.pathname.replace("/admin/", "");
+    return this.props.location.pathname.replace('/admin/', '');
   }
 
   /**
    * Event listeners for text changes
    **/
 
-  handleTitleChange(e) {
+  handleTitleChange() {
     // pass, as this should be static
   }
 
@@ -63,10 +63,10 @@ export default class EditSimplePage extends React.Component {
     let page = Object.assign({}, this.state);
 
     request
-      .post(api.endpoint + this.getRoute() + "/save")
+      .post(api.endpoint + this.getRoute() + '/save')
       .send(page)
-      .set("Accept", "application/json")
-      .end((err, res) => {
+      .set('Accept', 'application/json')
+      .end(err => {
         if (err) console.warn(err);
       });
   }
@@ -77,9 +77,9 @@ export default class EditSimplePage extends React.Component {
         <div className="form-content">
           <h1>{this.state.title}</h1>
           <div className="instructions">
-            {"Edit page content here. For headings, use <b> tags."}
+            {'Edit page content here. For headings, use <b> tags.'}
           </div>
-          <div className={"text-input full-width"}>
+          <div className={'text-input full-width'}>
             <div className="label">Page Title</div>
             <input
               type="text"
@@ -87,7 +87,7 @@ export default class EditSimplePage extends React.Component {
               onChange={this.handleTitleChange}
             />
           </div>
-          <div className={"full-width text-area"}>
+          <div className={'full-width text-area'}>
             <div className="label">Body Text</div>
             <textarea
               className="custom-textarea"

@@ -1,8 +1,8 @@
-import React from "react";
-import SuperAdminTop from "./SuperAdminTop";
-import AdminTop from "./AdminTop";
-import Search from "../../Search";
-import api from "../../../../config";
+import React from 'react';
+import SuperAdminTop from './SuperAdminTop';
+import AdminTop from './AdminTop';
+import Search from '../../Search';
+import api from '../../../../config';
 
 export default class LandingPage extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class LandingPage extends React.Component {
 
   componentWillMount() {
     const self = this;
-    api.get("session", (err, res) => {
+    api.get('session', (err, res) => {
       if (err) console.warn(err);
       self.setState({ superadmin: res.body.session.superadmin });
     });

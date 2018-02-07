@@ -1,5 +1,5 @@
-import React from "react";
-import getNewlineMarkup from "../lib/getNewlineMarkup";
+import React from 'react';
+import getNewlineMarkup from '../lib/getNewlineMarkup';
 
 export default class BuildingResources extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class BuildingResources extends React.Component {
           return (
             <div className="archive-document" key={i}>
               <img src="/assets/images/link-icon.png" />
-              <a href={"/assets/uploads/files/" + doc.filename}>{doc.label}</a>
+              <a href={'/assets/uploads/files/' + doc.filename}>{doc.label}</a>
             </div>
           );
         })

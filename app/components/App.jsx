@@ -1,12 +1,11 @@
-import React from "react";
-import Header from "./Header";
-import MobileFooter from "./MobileFooter";
-import Authenticate from "./auth/Authenticate";
-import MobileSearch from "./MobileSearch";
-import Shield from "./Shield";
-import request from "superagent";
-import api from "../../config";
-import _ from "lodash";
+import React from 'react';
+import Header from './Header';
+import MobileFooter from './MobileFooter';
+import Authenticate from './auth/Authenticate';
+import MobileSearch from './MobileSearch';
+import Shield from './Shield';
+import request from 'superagent';
+import api from '../../config';
 
 export default class AppWrapper extends React.Component {
   constructor(props) {
@@ -36,7 +35,7 @@ export default class AppWrapper extends React.Component {
 
   componentDidMount() {
     this.checkForAuth();
-    window.addEventListener("resize", this.checkWidth);
+    window.addEventListener('resize', this.checkWidth);
     this.checkWidth();
   }
 
@@ -69,17 +68,17 @@ export default class AppWrapper extends React.Component {
    **/
 
   processAuth(query) {
-    if (query.login && query.login === "true") {
-      this.setState({ modal: "login" });
+    if (query.login && query.login === 'true') {
+      this.setState({ modal: 'login' });
     }
     if (query.token) {
-      this.setState({ modal: "validate" });
+      this.setState({ modal: 'validate' });
     }
     if (query.resetPassword) {
-      this.setState({ modal: "reset-password" });
+      this.setState({ modal: 'reset-password' });
     }
-    if (query.authenticated && query.authenticated === "false") {
-      this.setState({ modal: "unauthorized" });
+    if (query.authenticated && query.authenticated === 'false') {
+      this.setState({ modal: 'unauthorized' });
     }
     this.getSessionData();
   }
@@ -89,7 +88,7 @@ export default class AppWrapper extends React.Component {
    **/
 
   login() {
-    this.setState({ modal: "login" });
+    this.setState({ modal: 'login' });
   }
 
   hideAuth() {
@@ -102,8 +101,8 @@ export default class AppWrapper extends React.Component {
 
   getSessionData() {
     request
-      .get(api.endpoint + "session")
-      .set("Accept", "application/json")
+      .get(api.endpoint + 'session')
+      .set('Accept', 'application/json')
       .end(this.processSession);
   }
 
@@ -120,12 +119,12 @@ export default class AppWrapper extends React.Component {
 
   logout() {
     request
-      .get(api.endpoint + "logout")
-      .set("Accept", "application/json")
+      .get(api.endpoint + 'logout')
+      .set('Accept', 'application/json')
       .end(this.processLogout);
   }
 
-  processLogout(err, res) {
+  processLogout(err) {
     err ? console.warn(err) : this.setState({ authenticated: false });
   }
 
@@ -135,7 +134,7 @@ export default class AppWrapper extends React.Component {
 
   render() {
     const isMobile = this.state.isMobile;
-    const isBuilding = this.props.location.pathname.includes("building");
+    const isBuilding = this.props.location.pathname.includes('building');
 
     const modal = this.state.modal ? (
       <Authenticate

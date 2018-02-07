@@ -1,11 +1,11 @@
 // auth.js
-var bcrypt = require("bcryptjs");
-var models = require("../app/models/models");
-var mailer = require("./mailer");
-var _ = require("lodash");
+var bcrypt = require('bcryptjs');
+var models = require('../app/models/models');
+var mailer = require('./mailer');
+var _ = require('lodash');
 
 // specify the encryption level
-var saltWorkFactor = parseInt(process.env["NHBA_SALT_WORK_FACTOR"]) || 10;
+var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10;
 
 module.exports = function(app) {
   /**
@@ -13,18 +13,18 @@ module.exports = function(app) {
    **/
 
   var messages = {
-    emailTaken: "Sorry, the requested email address is already taken.",
-    checkEmail: "Success! Please check your email for further instructions.",
-    loginSuccess: "Success! You are now logged in.",
+    emailTaken: 'Sorry, the requested email address is already taken.',
+    checkEmail: 'Success! Please check your email for further instructions.',
+    loginSuccess: 'Success! You are now logged in.',
     loginFail:
-      "An incorrect username or password was entered. Please try again.",
-    logoutSuccess: "Success! You are now logged out.",
-    logoutFail: "Sorry, we could not log out out. Please try again.",
+      'An incorrect username or password was entered. Please try again.',
+    logoutSuccess: 'Success! You are now logged out.',
+    logoutFail: 'Sorry, we could not log out out. Please try again.',
     emailMissing:
-      "Sorry, this email address does not have any account information.",
-    passwordUpdated: "Success! Your password has been updated.",
+      'Sorry, this email address does not have any account information.',
+    passwordUpdated: 'Success! Your password has been updated.',
     error:
-      "Sorry, we could not process your request. Please contact an administrator for help.",
+      'Sorry, we could not process your request. Please contact an administrator for help.',
   };
 
   /**
@@ -32,9 +32,9 @@ module.exports = function(app) {
    **/
 
   // request made by client when attempting to add a user to the db
-  app.post("/api/register", (req, res, next) => {
+  app.post('/api/register', (req, res, next) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
-      initializeUserPassword(err, doc, req, res);
+      initializeUserPassword(err, doc, req, res, next);
     });
   });
 
@@ -48,7 +48,7 @@ module.exports = function(app) {
    *   res: a response object from express
    **/
 
-  var initializeUserPassword = (err, doc, req, res) => {
+  var initializeUserPassword = (err, doc, req, res, next) => {
     // if the requested email address is used, inform the client
     if (doc.length > 0) {
       return res.status(200).send({
@@ -76,9 +76,8 @@ module.exports = function(app) {
         // email the user a validation token
         mailer.send(user.email, user.token, null);
 
-        user.save((err, doc) => {
+        user.save(err => {
           if (err) {
-            console.log(err);
             return res.status(500).send({ cause: err });
           }
           return res.status(200).send({
@@ -93,7 +92,7 @@ module.exports = function(app) {
    * Validate the account token emailed to user
    **/
 
-  app.post("/api/validate", (req, res, next) => {
+  app.post('/api/validate', (req, res) => {
     var query = {
       email: req.body.email,
       token: req.body.token,
@@ -111,7 +110,7 @@ module.exports = function(app) {
 
   var getToken = () => {
     var salt = bcrypt.genSaltSync(saltWorkFactor);
-    return bcrypt.hashSync("B4c0//", salt);
+    return bcrypt.hashSync('B4c0//', salt);
   };
 
   /**
@@ -166,10 +165,10 @@ module.exports = function(app) {
    **/
 
   var validateUser = (user, req, res) => {
-    var adminEmails = process.env["NHBA_ADMIN_EMAILS"];
-    var superadminEmails = process.env["NHBA_SUPERADMIN_EMAILS"];
-    adminEmails = adminEmails ? adminEmails.split(" ") : [];
-    superadminEmails = superadminEmails ? superadminEmails.split(" ") : [];
+    var adminEmails = process.env['NHBA_ADMIN_EMAILS'];
+    var superadminEmails = process.env['NHBA_SUPERADMIN_EMAILS'];
+    adminEmails = adminEmails ? adminEmails.split(' ') : [];
+    superadminEmails = superadminEmails ? superadminEmails.split(' ') : [];
 
     if (_.includes(adminEmails, user.email)) {
       user.admin = true;
@@ -185,7 +184,7 @@ module.exports = function(app) {
       { _id: user._id },
       { $set: user },
       { overwrite: true },
-      (err, data) => {
+      err => {
         if (err) console.warn(err);
 
         // update the user's session state
@@ -214,7 +213,7 @@ module.exports = function(app) {
     req.session.userId = user._id;
 
     req.session.save(err => {
-      if (err) console.warn("could not save session", err);
+      if (err) console.warn('could not save session', err);
     });
   };
 
@@ -224,7 +223,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/login", (req, res, next) => {
+  app.post('/api/login', (req, res) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
       authenticateUser(err, doc, req, res);
     });
@@ -236,7 +235,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/session", (req, res, next) => {
+  app.get('/api/session', (req, res) => {
     return res.status(200).send({
       session: req.session,
     });
@@ -248,7 +247,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/logout", (req, res, next) => {
+  app.get('/api/logout', (req, res) => {
     req.session.authenticated = false;
     req.session.admin = false;
     req.session.superadmin = false;
@@ -271,7 +270,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/forgotPassword", (req, res, next) => {
+  app.post('/api/forgotPassword', (req, res) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
       requestPasswordReset(err, doc, req, res);
     });
@@ -308,13 +307,13 @@ module.exports = function(app) {
     user.validated = false;
 
     // email the user a new validation token
-    mailer.send(user.email, user.token, "&resetPassword=true");
+    mailer.send(user.email, user.token, '&resetPassword=true');
 
     var query = {
       email: user.email,
     };
 
-    models.user.findOneAndUpdate(query, user, { upsert: true }, (err, doc) => {
+    models.user.findOneAndUpdate(query, user, { upsert: true }, err => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send({
         message: messages.checkEmail,
@@ -328,13 +327,13 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/resetPassword", (req, res, next) => {
+  app.post('/api/resetPassword', (req, res, next) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
-      resetPassword(err, doc, req, res);
+      resetPassword(err, doc, req, res, next);
     });
   });
 
-  var resetPassword = (err, doc, req, res) => {
+  var resetPassword = (err, doc, req, res, next) => {
     if (err) {
       return res.status(500).send({
         message: messages.error,
@@ -370,17 +369,12 @@ module.exports = function(app) {
           token: user.token,
         };
 
-        models.user.findOneAndUpdate(
-          query,
-          user,
-          { upsert: true },
-          (err, doc) => {
-            if (err) return res.status(500).send({ cause: err });
-            return res.status(200).send({
-              message: messages.passwordUpdated,
-            });
-          }
-        );
+        models.user.findOneAndUpdate(query, user, { upsert: true }, err => {
+          if (err) return res.status(500).send({ cause: err });
+          return res.status(200).send({
+            message: messages.passwordUpdated,
+          });
+        });
       });
     });
   };
@@ -390,12 +384,12 @@ module.exports = function(app) {
    * NB: This middleware is only loaded in production environments
    **/
 
-  if (process.env["NHBA_ENVIRONMENT"] === "production") {
+  if (process.env['NHBA_ENVIRONMENT'] === 'production') {
     app.use((req, res, next) => {
-      if (req.url.includes("/admin")) {
+      if (req.url.includes('/admin')) {
         req.session && req.session.authenticated
           ? next()
-          : res.redirect("/?authenticated=false");
+          : res.redirect('/?authenticated=false');
       } else {
         next();
       }

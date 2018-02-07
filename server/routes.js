@@ -1,10 +1,9 @@
-var mongoose = require("mongoose");
-var ObjectId = require("mongoose").Types.ObjectId;
-var models = require("../app/models/models");
-var config = require("../config");
-var geocoder = require("./geocoder");
-var path = require("path");
-var _ = require("lodash");
+var mongoose = require('mongoose');
+var models = require('../app/models/models');
+var config = require('../config');
+var geocoder = require('./geocoder');
+var path = require('path');
+var _ = require('lodash');
 
 /**
  *
@@ -12,8 +11,8 @@ var _ = require("lodash");
  *
  **/
 
-mongoose.connect("mongodb://localhost/" + config.db);
-mongoose.connection.on("error", err => {
+mongoose.connect('mongodb://localhost/' + config.db);
+mongoose.connection.on('error', err => {
   console.warn(err);
 });
 
@@ -39,19 +38,19 @@ const getTextQuery = req => {
       {
         overview_description: {
           $regex: req.query.fulltext,
-          $options: "i",
+          $options: 'i',
         },
       },
       {
         address: {
           $regex: regexEscape(req.query.fulltext),
-          $options: "i",
+          $options: 'i',
         },
       },
       {
         building_name: {
           $regex: regexEscape(req.query.fulltext),
-          $options: "i",
+          $options: 'i',
         },
       },
     ],
@@ -69,7 +68,7 @@ const getTextQuery = req => {
  **/
 
 const regexEscape = text => {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 };
 
 /**
@@ -85,16 +84,16 @@ const regexEscape = text => {
 const addFilterTerms = (queryTerms, req) => {
   var keys = _.chain(req.query)
     .keys()
-    .without("filter", "fulltext", "sort", "userLatitude", "userLongitude")
+    .without('filter', 'fulltext', 'sort', 'userLatitude', 'userLongitude')
     .value();
 
   keys.map(key => {
     // values with ' ' use _ as whitespace separator in query
     var values = [],
       queryTerm = {};
-    args = req.query[key] = _.isArray(req.query[key])
+    var args = (req.query[key] = _.isArray(req.query[key])
       ? req.query[key]
-      : [req.query[key]];
+      : [req.query[key]]);
 
     args.map(value => {
       values.push(value);
@@ -119,12 +118,14 @@ const addFilterTerms = (queryTerms, req) => {
  **/
 
 const getLocation = (lng, lat) => {
-  return lng && lat
-    ? {
-        type: "Point",
-        coordinates: [parseFloat(lng), parseFloat(lat)],
-      }
-    : undefined;
+  if (lng && lat) {
+    return {
+      type: 'Point',
+      coordinates: [parseFloat(lng), parseFloat(lat)],
+    };
+  } else {
+    return undefined;
+  }
 };
 
 /**
@@ -173,7 +174,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/users", (req, res) => {
+  app.get('/api/users', (req, res) => {
     // remove the hashed password and access token from responses
     var select = { password: 0, token: 0 };
 
@@ -189,7 +190,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/buildings", (req, res) => {
+  app.get('/api/buildings', (req, res) => {
     var query = {};
     var queryTerms = [];
 
@@ -199,8 +200,8 @@ module.exports = function(app) {
     }
 
     // query for buildings with images
-    if (req.query.images && req.query.images == "true") {
-      queryTerms.push({ $where: "this.images.length > 0" });
+    if (req.query.images && req.query.images == 'true') {
+      queryTerms.push({ $where: 'this.images.length > 0' });
     }
 
     // query for fulltet
@@ -214,17 +215,17 @@ module.exports = function(app) {
     }
 
     // query by geospatial location
-    if (req.query.sort && req.query.sort == "proximity") {
+    if (req.query.sort && req.query.sort == 'proximity') {
       queryTerms = addProximityTerms(queryTerms, req);
     }
 
     // combine the queries if necessary
     if (queryTerms.length) {
       queryTerms.push(query);
-      var query = { $and: queryTerms };
+      query = { $and: queryTerms };
     }
 
-    if (req.query.sort && req.query.sort !== "proximity") {
+    if (req.query.sort && req.query.sort !== 'proximity') {
       var sort = {};
       sort[req.query.sort] = -1;
       models.building
@@ -248,8 +249,8 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/buildings/random", (req, res) => {
-    var query = { $where: "this.images.length > 0" };
+  app.get('/api/buildings/random', (req, res) => {
+    var query = { $where: 'this.images.length > 0' };
     models.building.findOne(query, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send(data);
@@ -262,10 +263,10 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/building/new", (req, res) => {
-    if (process.env["NHBA_ENVIRONMENT"] === "production") {
+  app.get('/api/building/new', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.authenticated) {
-        return res.status(403).send("This action could not be completed");
+        return res.status(403).send('This action could not be completed');
       }
     }
 
@@ -276,7 +277,7 @@ module.exports = function(app) {
       models.user.findOneAndUpdate(
         query,
         { $push: { buildings: building._id } },
-        (err, data) => {
+        err => {
           if (err) return res.status(500).send({ cause: err });
         }
       );
@@ -290,14 +291,14 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/building/save", (req, res) => {
-    if (process.env["NHBA_ENVIRONMENT"] === "production") {
+  app.post('/api/building/save', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       // reject if not authenticated or admin or creator
       if (
         !req.session.authenticated ||
         (!req.session.admin && req.body.creator != req.session.userId)
       ) {
-        return res.status(403).send("This action could not be completed");
+        return res.status(403).send('This action could not be completed');
       }
     }
 
@@ -330,10 +331,10 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/building/delete", (req, res) => {
-    if (process.env["NHBA_ENVIRONMENT"] === "production") {
+  app.post('/api/building/delete', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        return res.status(403).send("This action could not be completed");
+        return res.status(403).send('This action could not be completed');
       }
     }
 
@@ -352,10 +353,10 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/geocode", (req, res) => {
-    if (process.env["NHBA_ENVIRONMENT"] === "production") {
+  app.post('/api/geocode', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       if (!req.session.admin) {
-        return res.status(403).send("This action could not be completed");
+        return res.status(403).send('This action could not be completed');
       }
     }
 
@@ -376,7 +377,7 @@ module.exports = function(app) {
         var query = { _id: building._id };
         var update = { $set: building };
 
-        models.building.update(query, update, (saveErr, saveData) => {
+        models.building.update(query, update, saveErr => {
           if (saveErr) {
             return res.status(500).send({ cause: saveErr });
           } else {
@@ -387,7 +388,7 @@ module.exports = function(app) {
           }
         });
       } else {
-        return res.status(200).send("address not found");
+        return res.status(200).send('address not found');
       }
     });
   });
@@ -398,7 +399,7 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/creator", (req, res) => {
+  app.get('/api/creator', (req, res) => {
     if (!req.session.userId) {
       return res.status(200).send({ creator: false });
     }
@@ -417,15 +418,15 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/about", (req, res) => {
-    models.simplepage.find({ route: "About" }, (err, data) => {
+  app.get('/api/about', (req, res) => {
+    models.simplepage.find({ route: 'About' }, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send(data);
     });
   });
 
-  app.post("/api/about/save", (req, res) => {
-    var query = { route: "About" };
+  app.post('/api/about/save', (req, res) => {
+    var query = { route: 'About' };
     var options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(
@@ -445,15 +446,15 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/contact", (req, res) => {
-    models.simplepage.find({ route: "Contact" }, (err, data) => {
+  app.get('/api/contact', (req, res) => {
+    models.simplepage.find({ route: 'Contact' }, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send(data);
     });
   });
 
-  app.post("/api/contact/save", (req, res) => {
-    var query = { route: "Contact" };
+  app.post('/api/contact/save', (req, res) => {
+    var query = { route: 'Contact' };
     var options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(
@@ -473,30 +474,34 @@ module.exports = function(app) {
    *
    **/
 
-  app.get("/api/glossary", (req, res) => {
+  app.get('/api/glossary', (req, res) => {
     models.glossaryterm.find({}, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send(data);
     });
   });
 
-  app.post("/api/glossary/save", (req, res) => {
+  app.post('/api/glossary/save', (req, res) => {
     var options = { upsert: true };
     var results = [];
 
     // remove all glossary terms then save each new glossary term
-    models.glossaryterm.remove({}, () => {
-      req.body.map(doc => {
-        var term = new models.glossaryterm(doc);
-        term.save((err, term) => {
-          results.push(err ? err : term);
+    models.glossaryterm.remove(
+      {},
+      () => {
+        req.body.map(doc => {
+          var term = new models.glossaryterm(doc);
+          term.save((err, term) => {
+            results.push(err ? err : term);
 
-          if (results.length == req.body.length) {
-            return res.status(200).send(results);
-          }
+            if (results.length == req.body.length) {
+              return res.status(200).send(results);
+            }
+          });
         });
-      });
-    });
+      },
+      options
+    );
   });
 
   /**
@@ -505,17 +510,18 @@ module.exports = function(app) {
    *
    **/
 
-  app.post("/api/users/update", (req, res) => {
+  app.post('/api/users/update', (req, res) => {
     if (!req.body._id) {
-      return res.status(400).send("missing one or more required params");
+      return res.status(400).send('missing one or more required params');
     }
 
+    var status = {};
     if (req.body.admin === true) {
-      var status = { admin: true };
+      status = { admin: true };
     } else if (req.body.contributor === true) {
-      var status = { admin: false };
+      status = { admin: false };
     } else {
-      var status = {};
+      status = {};
     }
 
     models.user.update(
@@ -536,7 +542,7 @@ module.exports = function(app) {
    **/
 
   // send requests to index.html so browserHistory in React Router works
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
   });
 };
