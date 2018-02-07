@@ -1,166 +1,167 @@
-import React from 'react'
-import { browserHistory } from 'react-router'
-import Tabs from './Tabs'
-import Overview from './Overview'
-import DataAndHistory from './DataAndHistory'
-import ImageGallery from './ImageGallery'
-import getSelectOptions from '../../lib/getSelectOptions'
-import allSelects from '../../lib/allSelects.js'
-import api from '../../../../config'
-import Loader from '../../Loader'
-import request from 'superagent'
+import React from "react";
+import { browserHistory } from "react-router";
+import Tabs from "./Tabs";
+import Overview from "./Overview";
+import DataAndHistory from "./DataAndHistory";
+import ImageGallery from "./ImageGallery";
+import Confirm from "../Confirm";
+import getSelectOptions from "../../lib/getSelectOptions";
+import allSelects from "../../lib/allSelects.js";
+import api from "../../../../config";
+import Loader from "../../Loader";
+import request from "superagent";
 
 export default class Form extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       buildings: [],
       options: {},
       building: {},
-      activeTab: 'overview',
+      activeTab: "overview",
       unsavedChanges: false,
-      saveButtonText: 'Save',
+      saveButtonText: "Save",
       autoSaveInterval: null
-    }
+    };
 
     // buildling(s) getters and setters
-    this.getBuilding = this.getBuilding.bind(this)
-    this.getNewBuilding = this.getNewBuilding.bind(this)
-    this.getBuildings = this.getBuildings.bind(this)
+    this.getBuilding = this.getBuilding.bind(this);
+    this.getNewBuilding = this.getNewBuilding.bind(this);
+    this.getBuildings = this.getBuildings.bind(this);
 
     // getters and setters for select options
-    this.setSelectOptions = this.setSelectOptions.bind(this)
-    this.handleNewOption = this.handleNewOption.bind(this)
+    this.setSelectOptions = this.setSelectOptions.bind(this);
+    this.handleNewOption = this.handleNewOption.bind(this);
 
     // form field navigation
-    this.changeTab = this.changeTab.bind(this)
+    this.changeTab = this.changeTab.bind(this);
 
     // methods to update/replace form fields
-    this.updateField = this.updateField.bind(this)
-    this.replaceField = this.replaceField.bind(this)
+    this.updateField = this.updateField.bind(this);
+    this.replaceField = this.replaceField.bind(this);
 
     // method to request lat long data
-    this.geocode = this.geocode.bind(this)
+    this.geocode = this.geocode.bind(this);
 
     // upsert or delete buildings
-    this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this)
-    this.saveBuilding = this.saveBuilding.bind(this)
-    this.deleteBuilding = this.deleteBuilding.bind(this)
+    this.getSaveButtonStyle = this.getSaveButtonStyle.bind(this);
+    this.saveBuilding = this.saveBuilding.bind(this);
+    this.deleteBuilding = this.deleteBuilding.bind(this);
   }
 
   componentDidMount() {
     // load the requested building data if query params are present
     const buildingId = this.props.location.query.buildingId;
-    buildingId ?
-      this.getBuilding(buildingId)
-      : this.getNewBuilding()
+    buildingId ? this.getBuilding(buildingId) : this.getNewBuilding();
 
     // fetch all buildings so we can populate dropdowns
-    this.getBuildings()
+    this.getBuildings();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (!_.isEqual(this.state.buildings, prevState.buildings)) {
-      this.setSelectOptions()
+      this.setSelectOptions();
     }
   }
 
   /**
-  * Building & Buildings getters and setters
-  **/
+   * Building & Buildings getters and setters
+   **/
 
   getNewBuilding() {
-    api.get('building/new', (err, res) => {
-      if (err) console.warn(err)
-      this.setState({ building: res.body })
-    })
+    api.get("building/new", (err, res) => {
+      if (err) console.warn(err);
+      this.setState({ building: res.body });
+    });
   }
 
   getBuilding(buildingId) {
     const self = this;
-    const url = 'buildings?buildingId=' + buildingId;
+    const url = "buildings?buildingId=" + buildingId;
     api.get(url, (err, res) => {
-      if (err) { console.warn(err) } else {
-        self.setState({ building: res.body[0] })
+      if (err) {
+        console.warn(err);
+      } else {
+        self.setState({ building: res.body[0] });
       }
-    })
+    });
   }
 
   getBuildings() {
     const self = this;
-    api.get('buildings?images=true', (err, res) => {
-      if (err) { console.warn(err) } else {
-        self.setState({ buildings: res.body })
+    api.get("buildings?images=true", (err, res) => {
+      if (err) {
+        console.warn(err);
+      } else {
+        self.setState({ buildings: res.body });
       }
-    })
+    });
   }
 
   /**
-  * Get available select options
-  **/
+   * Get available select options
+   **/
 
   setSelectOptions() {
     const buildings = this.state.buildings;
     const options = getSelectOptions(buildings, allSelects);
-    this.setState({ options: options })
+    this.setState({ options: options });
   }
 
   /**
-  * Callback triggered when users add a new option to a multiselect
-  **/
+   * Callback triggered when users add a new option to a multiselect
+   **/
 
   handleNewOption(field, value) {
     // add this value to the available options
     let options = Object.assign({}, this.state.options);
-    options[field] ?
-      options[field].push(value)
-      : options[field] = [value]
-    this.setState({ options: options })
+    options[field] ? options[field].push(value) : (options[field] = [value]);
+    this.setState({ options: options });
 
     // select this value within this record
-    this.updateField(field, value)
+    this.updateField(field, value);
   }
 
   /**
-  * Change the tab of the form currently in view
-  **/
+   * Change the tab of the form currently in view
+   **/
 
   changeTab(tab) {
-    this.setState({ activeTab: tab })
+    this.setState({ activeTab: tab });
   }
 
   /**
-  * If `value` is missing from `field`, add it to the form, else remove it
-  **/
+   * If `value` is missing from `field`, add it to the form, else remove it
+   **/
 
   updateField(field, value) {
-
     // use Object.assign to avoid object mutations
-    let building = Object.assign({}, this.state.building)
+    let building = Object.assign({}, this.state.building);
 
     // remove/add the selected value when users un/select values
     if (Array.isArray(building[field])) {
-      _.includes(building[field], value) ?
-        _.pull(building[field], value)
-        : building[field].push(value)
+      _.includes(building[field], value)
+        ? _.pull(building[field], value)
+        : building[field].push(value);
     } else {
       building[field] = value;
     }
 
     // Checks if an autosave interval already exists, if not, set 5 second autosave interval
-    let autoSaveInterval = this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
+    let autoSaveInterval =
+      this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
     this.setState({
       building: building,
       unsavedChanges: true,
-      saveButtonText: 'Save',
+      saveButtonText: "Save",
       autoSaveInterval: autoSaveInterval
-    })
+    });
   }
 
   /**
-  * Replace the current value of `field` with `value`
-  **/
+   * Replace the current value of `field` with `value`
+   **/
 
   replaceField(field, value) {
     let building = Object.assign({}, this.state.building);
@@ -168,66 +169,73 @@ export default class Form extends React.Component {
     this.setState({
       building: building,
       unsavedChanges: true
-    })
+    });
   }
 
   /**
-  * Fetch lat,lng coordinates for a building
-  **/
+   * Fetch lat,lng coordinates for a building
+   **/
 
   geocode() {
-    request.post(api.endpoint + 'geocode')
+    request
+      .post(api.endpoint + "geocode")
       .send(this.state.building)
-      .set('Accept', 'application/json')
+      .set("Accept", "application/json")
       .end((err, res) => {
         const result = res.body,
           latitude = result.latitude,
           longitude = result.longitude;
         if (latitude && longitude) {
-          this.updateField('latitude', latitude)
-          this.updateField('longitude', longitude)
+          this.updateField("latitude", latitude);
+          this.updateField("longitude", longitude);
         }
-        if (err) console.warn(err)
-      })
+        if (err) console.warn(err);
+      });
   }
 
   /**
-  * Save a new or edited building in the db
-  **/
+   * Save a new or edited building in the db
+   **/
 
   saveBuilding() {
-    request.post(api.endpoint + 'building/save')
+    request
+      .post(api.endpoint + "building/save")
       .send(this.state.building)
-      .set('Accept', 'application/json')
+      .set("Accept", "application/json")
       .end((err, res) => {
-        if (err) console.warn(err)
-      })
+        if (err) console.warn(err);
+      });
     clearInterval(this.state.autoSaveInterval);
-    this.setState({ unsavedChanges: false, saveButtonText: 'Saved', autoSaveInterval: null })
+    this.setState({
+      unsavedChanges: false,
+      saveButtonText: "Saved",
+      autoSaveInterval: null
+    });
   }
 
   /**
-  * Delete the current building and return the admin to the admin page
-  **/
+   * Delete the current building and return the admin to the admin page
+   **/
 
   deleteBuilding() {
-    request.post(api.endpoint + 'building/delete')
+    request
+      .post(api.endpoint + "building/delete")
       .send(this.state.building)
-      .set('Accept', 'application/json')
+      .set("Accept", "application/json")
       .end((err, res) => {
-        if (err) console.warn(err)
-      })
-    browserHistory.push('/admin');
+        if (err) console.warn(err);
+      });
+    browserHistory.push("/admin");
   }
 
   /**
-  * Return styles that indicate whether the form is dirty or not
-  **/
+   * Return styles that indicate whether the form is dirty or not
+   **/
 
   getSaveButtonStyle() {
-    return this.state.unsavedChanges ?
-      'save-button yellow-button unsaved-changes'
-      : 'save-button yellow-button no-unsaved-changes'
+    return this.state.unsavedChanges
+      ? "save-button yellow-button unsaved-changes"
+      : "save-button yellow-button no-unsaved-changes";
   }
 
   render() {
@@ -235,65 +243,89 @@ export default class Form extends React.Component {
 
     if (this.state.building) {
       switch (this.state.activeTab) {
-        case 'overview':
-          view = <Overview
-            building={this.state.building}
-            updateField={this.updateField}
-            replaceField={this.replaceField}
-            options={this.state.options}
-            allowNewOptions={true}
-            handleNewOption={this.handleNewOption}
-            geocode={this.geocode} />;
+        case "overview":
+          view = (
+            <Overview
+              building={this.state.building}
+              updateField={this.updateField}
+              replaceField={this.replaceField}
+              options={this.state.options}
+              allowNewOptions={true}
+              handleNewOption={this.handleNewOption}
+              geocode={this.geocode}
+            />
+          );
           break;
 
-        case 'data-and-history':
-          view = <DataAndHistory
-            building={this.state.building}
-            updateField={this.updateField}
-            replaceField={this.replaceField}
-            options={this.state.options}
-            allowNewOptions={true}
-            handleNewOption={this.handleNewOption} />;
+        case "data-and-history":
+          view = (
+            <DataAndHistory
+              building={this.state.building}
+              updateField={this.updateField}
+              replaceField={this.replaceField}
+              options={this.state.options}
+              allowNewOptions={true}
+              handleNewOption={this.handleNewOption}
+            />
+          );
           break;
 
-        case 'image-gallery':
-          view = <ImageGallery
-            building={this.state.building}
-            updateField={this.updateField}
-            replaceField={this.replaceField}
-            options={this.state.options}
-            allowNewOptions={true}
-            handleNewOption={this.handleNewOption} />;
+        case "image-gallery":
+          view = (
+            <ImageGallery
+              building={this.state.building}
+              updateField={this.updateField}
+              replaceField={this.replaceField}
+              options={this.state.options}
+              allowNewOptions={true}
+              handleNewOption={this.handleNewOption}
+            />
+          );
           break;
       }
     } else {
-      view = <Loader />
+      view = <Loader />;
     }
 
     const building = this.state.building;
-    const address = building && building.address ?
-      building.address
-      : 'New Building'
+    const address =
+      building && building.address ? building.address : "New Building";
 
-    const header = this.state.building._id ?
-      <a href={'/building?id=' + this.state.building._id}>
+    const header = this.state.building._id ? (
+      <a href={"/building?id=" + this.state.building._id}>
         <h1>{address}</h1>
       </a>
-      : <h1>{address}</h1>
+    ) : (
+      <h1>{address}</h1>
+    );
 
     return (
-      <div className='form'>
-        <div className='form-content'>
+      <div className="form">
+        <div className="form-content">
           {header}
-          <div className='instructions'>Edit record for this building. General guidelines here...</div>
+          <div className="instructions">
+            Edit record for this building. General guidelines here...
+          </div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />
-            <div className={this.getSaveButtonStyle()} onClick={this.saveBuilding}>{this.state.saveButtonText}</div>
-            <div className='delete-button red-button' onClick={this.deleteBuilding}>Delete</div>
+            <div
+              className={this.getSaveButtonStyle()}
+              onClick={this.saveBuilding}
+            >
+              {this.state.saveButtonText}
+            </div>
+            <Confirm
+              title="Confirm Delete"
+              bodyText="Are you sure you want to delete this building?"
+              confirmText="Delete"
+              onConfirm={this.deleteBuilding}
+            >
+              <div className="delete-button red-button">Delete</div>
+            </Confirm>
           </div>
           {view}
         </div>
       </div>
-    )
+    );
   }
 }
