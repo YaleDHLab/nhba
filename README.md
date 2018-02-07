@@ -142,7 +142,7 @@ Only superadmin users can appoint other admin users. Superadmin users must be ap
 # enter nhba db
 mongo nhba
 
-# find a user by their userId and make them a superadmin
+# find a user by their email address and make them a superadmin
 db.users.update({'email': 'email@email.com'}, {$set: {'superadmin': true}})
 ```
 
