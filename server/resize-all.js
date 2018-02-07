@@ -1,4 +1,4 @@
 // allow module to be called from npm or current dir
-var resize = require('./resize')
+var resize = require("./resize");
 
-resize.uploads()
+resize.uploads();

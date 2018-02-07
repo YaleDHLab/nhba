@@ -7,7 +7,7 @@ export default class Confirm extends React.Component {
     super(props);
 
     this.state = {
-      isVisible: false
+      isVisible: false,
     };
 
     // open or close confirm modal
@@ -62,7 +62,7 @@ export default class Confirm extends React.Component {
     var content = React.cloneElement(
       btn,
       {
-        onClick: this.openModal
+        onClick: this.openModal,
       },
       btn.props.children,
       this.state.isVisible ? modal : null

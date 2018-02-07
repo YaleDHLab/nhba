@@ -16,10 +16,10 @@ export default class Card extends React.Component {
         ? {
             backgroundImage: `url(/assets/uploads/resized/small/${
               this.props.building.images[0].filename
-            })`
+            })`,
           }
         : {
-            backgroundColor: "#f1f1f1"
+            backgroundColor: "#f1f1f1",
           };
     return style;
   }

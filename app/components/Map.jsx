@@ -1,9 +1,9 @@
-import { default as React, Component } from 'react'
-import {  withGoogleMap, GoogleMap } from 'react-google-maps'
-import UserMarker from './map/UserMarker'
-import MapMarker from './map/Marker'
-import _ from 'lodash'
-import MapStyles from './map/MapStyles'
+import { default as React, Component } from "react";
+import { withGoogleMap, GoogleMap } from "react-google-maps";
+import UserMarker from "./map/UserMarker";
+import MapMarker from "./map/Marker";
+import _ from "lodash";
+import MapStyles from "./map/MapStyles";
 
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
@@ -13,9 +13,9 @@ const MapComponent = withGoogleMap(props => (
     onIdle={props.onIdle}
     defaultOptions={{
       scrollwheel: false,
-      styles: MapStyles
-    }}>
-
+      styles: MapStyles,
+    }}
+  >
     <UserMarker userLocation={props.userLocation} />
 
     {props.buildings.map((building, idx) => {
@@ -23,38 +23,39 @@ const MapComponent = withGoogleMap(props => (
       const lng = parseFloat(building.longitude);
 
       return (
-        <MapMarker {...props}
+        <MapMarker
+          {...props}
           building={building}
           key={idx}
           lat={lat}
           lng={lng}
         />
-      )
+      );
     })}
   </GoogleMap>
-))
+));
 
 const styles = {
   map: {
-    height: '100%',
-    width: '100%'
-  }
-}
+    height: "100%",
+    width: "100%",
+  },
+};
 
 export default class MapContainer extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       hoveredBuildingId: null,
       location: {
         lat: 41.3075931,
-        lng: -72.9278493
-      }
-    }
+        lng: -72.9278493,
+      },
+    };
 
-    this.handleMapMounted = this.handleMapMounted.bind(this)
-    this.updateCenter = this.updateCenter.bind(this)
+    this.handleMapMounted = this.handleMapMounted.bind(this);
+    this.updateCenter = this.updateCenter.bind(this);
   }
 
   handleMapMounted(map) {
@@ -66,24 +67,24 @@ export default class MapContainer extends Component {
     this.setState({
       location: {
         lat: center.lat(),
-        lng: center.lng()
-      }
-    })
+        lng: center.lng(),
+      },
+    });
   }
 
   render() {
     const initialLocation = this.props.initialLocation;
     const mapConfig = {
       zoom: 15,
-      location: initialLocation ? initialLocation : this.state.location
+      location: initialLocation ? initialLocation : this.state.location,
     };
 
     return (
-      <div className='map'>
-        <div className='map-content'>
+      <div className="map">
+        <div className="map-content">
           <MapComponent
-            containerElement={ <div style={styles.map} /> }
-            mapElement={ <div style={styles.map} /> }
+            containerElement={<div style={styles.map} />}
+            mapElement={<div style={styles.map} />}
             buildings={this.props.buildings}
             tourNameToIndex={this.props.tourNameToIndex}
             mapConfig={mapConfig}
