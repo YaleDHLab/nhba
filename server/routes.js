@@ -12,7 +12,8 @@ var _ = require("lodash");
  *
  **/
 
-mongoose.connect("mongodb://localhost/" + config.db);
+var mongoOptions = { useMongoClient: true };
+mongoose.connect("mongodb://localhost/" + config.db, mongoOptions);
 mongoose.connection.on("error", err => {
   console.warn(err);
 });
