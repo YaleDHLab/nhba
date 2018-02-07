@@ -22,7 +22,7 @@ export default class Form extends React.Component {
       activeTab: "overview",
       unsavedChanges: false,
       saveButtonText: "Save",
-      autoSaveInterval: null
+      autoSaveInterval: null,
     };
 
     // buildling(s) getters and setters
@@ -155,7 +155,7 @@ export default class Form extends React.Component {
       building: building,
       unsavedChanges: true,
       saveButtonText: "Save",
-      autoSaveInterval: autoSaveInterval
+      autoSaveInterval: autoSaveInterval,
     });
   }
 
@@ -168,7 +168,7 @@ export default class Form extends React.Component {
     building[field] = value;
     this.setState({
       building: building,
-      unsavedChanges: true
+      unsavedChanges: true,
     });
   }
 
@@ -209,7 +209,7 @@ export default class Form extends React.Component {
     this.setState({
       unsavedChanges: false,
       saveButtonText: "Saved",
-      autoSaveInterval: null
+      autoSaveInterval: null,
     });
   }
 

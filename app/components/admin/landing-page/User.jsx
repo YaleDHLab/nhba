@@ -11,7 +11,7 @@ export default class User extends React.Component {
 
   handleChange(e) {
     let packet = {
-      _id: this.props.user._id
+      _id: this.props.user._id,
     };
 
     if (e.target.value === "admin") {

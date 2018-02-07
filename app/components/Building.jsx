@@ -28,7 +28,7 @@ export default class Building extends React.Component {
       creator: false,
 
       // tour data for mapping
-      tourNameToIndex: {}
+      tourNameToIndex: {},
     };
 
     this.toggleLayout = this.toggleLayout.bind(this);
@@ -142,7 +142,7 @@ export default class Building extends React.Component {
             title="Overview"
             text={building.overview_description}
           />
-        )
+        ),
       },
       {
         label: "Physical Description",
@@ -155,7 +155,7 @@ export default class Building extends React.Component {
             title="Physical Description"
             text={building.physical_description}
           />
-        )
+        ),
       },
       {
         label: "Urban Setting",
@@ -168,7 +168,7 @@ export default class Building extends React.Component {
             title="Urban Setting"
             text={building.urban_setting}
           />
-        )
+        ),
       },
       {
         label: "Social History",
@@ -181,7 +181,7 @@ export default class Building extends React.Component {
             title="Social History"
             text={building.social_history}
           />
-        )
+        ),
       },
       {
         label: "Site History",
@@ -191,7 +191,7 @@ export default class Building extends React.Component {
         contentFields: ["site_history"],
         component: (
           <BuildingTextBox title="Site History" text={building.site_history} />
-        )
+        ),
       },
       {
         label: "Structural Data",
@@ -210,8 +210,8 @@ export default class Building extends React.Component {
           "accessibilities",
           "levels",
           "structures",
-          "roof_materials"
-        ]
+          "roof_materials",
+        ],
       },
       {
         label: "Resources",
@@ -219,8 +219,8 @@ export default class Building extends React.Component {
         href: "resources",
         component: <BuildingResources building={building} />,
         collapsible: true,
-        contentFields: ["archive_documents", "sources"]
-      }
+        contentFields: ["archive_documents", "sources"],
+      },
     ];
 
     // only return fields if one or more of their contentFields are populated
@@ -249,7 +249,7 @@ export default class Building extends React.Component {
       building && building.latitude && building.longitude
         ? {
             lat: parseFloat(building.latitude),
-            lng: parseFloat(building.longitude)
+            lng: parseFloat(building.longitude),
           }
         : null;
 
@@ -268,7 +268,7 @@ export default class Building extends React.Component {
       Map: map,
       Gallery: (
         <Gallery building={this.state.building} layout={this.state.layout} />
-      )
+      ),
     };
 
     const fields = this.getTextFields();

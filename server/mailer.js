@@ -5,7 +5,7 @@ var config = require("../config");
 var account = {
   user: process.env["NHBA_EMAIL"],
   password: process.env["NHBA_EMAIL_PASSWORD"],
-  address: process.env["NHBA_EMAIL"] + "@gmail.com"
+  address: process.env["NHBA_EMAIL"] + "@gmail.com",
 };
 
 var mail = {
@@ -19,7 +19,7 @@ var mail = {
   toAddress: account.address,
   subject: "NHBA Account Validation",
   text: "Please click the following link to validate your account: ",
-  html: "Please click the following link to validate your account: "
+  html: "Please click the following link to validate your account: ",
 };
 
 var transporter = nodemailer.createTransport(mail.string);
@@ -40,7 +40,7 @@ module.exports = {
       to: emailAddress, // list of receivers
       subject: mail.subject, // subject line
       text: mail.text + link, // plaintext body
-      html: mail.html + link // html body
+      html: mail.html + link, // html body
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -49,5 +49,5 @@ module.exports = {
       }
       console.log("Message sent: " + info.response);
     });
-  }
+  },
 };

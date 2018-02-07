@@ -39,22 +39,22 @@ const getTextQuery = req => {
       {
         overview_description: {
           $regex: req.query.fulltext,
-          $options: "i"
-        }
+          $options: "i",
+        },
       },
       {
         address: {
           $regex: regexEscape(req.query.fulltext),
-          $options: "i"
-        }
+          $options: "i",
+        },
       },
       {
         building_name: {
           $regex: regexEscape(req.query.fulltext),
-          $options: "i"
-        }
-      }
-    ]
+          $options: "i",
+        },
+      },
+    ],
   };
 
   return textQuery;
@@ -122,7 +122,7 @@ const getLocation = (lng, lat) => {
   return lng && lat
     ? {
         type: "Point",
-        coordinates: [parseFloat(lng), parseFloat(lat)]
+        coordinates: [parseFloat(lng), parseFloat(lat)],
       }
     : undefined;
 };
@@ -143,9 +143,9 @@ const addProximityTerms = (queryTerms, req) => {
   var nearQuery = {
     location: {
       $near: {
-        $geometry: getLocation(userLng, userLat)
-      }
-    }
+        $geometry: getLocation(userLng, userLat),
+      },
+    },
   };
 
   queryTerms.push(nearQuery);
@@ -382,7 +382,7 @@ module.exports = function(app) {
           } else {
             return res.status(200).send({
               latitude: lat,
-              longitude: lng
+              longitude: lng,
             });
           }
         });
