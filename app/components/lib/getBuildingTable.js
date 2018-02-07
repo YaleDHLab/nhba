@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * General function called to create building tables
@@ -15,9 +15,9 @@ module.exports = (tableFields, building) => {
   let cells = [];
   tableFields.map((f, i) => {
     let value = building[f.field];
-    let valueString = Array.isArray(value) ? value.join(", ") : value;
+    let valueString = Array.isArray(value) ? value.join(', ') : value;
     if (value && value.length > 0) {
-      if (f.type && f.type === "url") {
+      if (f.type && f.type === 'url') {
         cells.push(
           <td key={i}>
             <div className="table-label">{f.label}</div>:

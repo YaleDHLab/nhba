@@ -1,14 +1,14 @@
-import React from "react";
-import request from "superagent";
-import api from "../../../config";
+import React from 'react';
+import request from 'superagent';
+import api from '../../../config';
 
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      message: "",
+      email: '',
+      message: '',
     };
 
     this.updateEmail = this.updateEmail.bind(this);
@@ -33,9 +33,9 @@ export default class ForgotPassword extends React.Component {
     };
 
     request
-      .post(api.endpoint + "forgotPassword")
+      .post(api.endpoint + 'forgotPassword')
       .send(packet)
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .end(this.handleResponse);
   }
 

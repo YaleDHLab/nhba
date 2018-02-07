@@ -1,9 +1,8 @@
-import { default as React, Component } from "react";
-import { withGoogleMap, GoogleMap } from "react-google-maps";
-import UserMarker from "./map/UserMarker";
-import MapMarker from "./map/Marker";
-import _ from "lodash";
-import MapStyles from "./map/MapStyles";
+import { default as React, Component } from 'react';
+import { withGoogleMap, GoogleMap } from 'react-google-maps';
+import UserMarker from './map/UserMarker';
+import MapMarker from './map/Marker';
+import MapStyles from './map/MapStyles';
 
 const MapComponent = withGoogleMap(props => (
   <GoogleMap
@@ -37,8 +36,8 @@ const MapComponent = withGoogleMap(props => (
 
 const styles = {
   map: {
-    height: "100%",
-    width: "100%",
+    height: '100%',
+    width: '100%',
   },
 };
 

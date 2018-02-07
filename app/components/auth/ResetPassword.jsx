@@ -1,13 +1,13 @@
-import React from "react";
-import request from "superagent";
-import api from "../../../config";
+import React from 'react';
+import request from 'superagent';
+import api from '../../../config';
 
 export default class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      password: "",
+      password: '',
       message: null,
     };
 
@@ -35,9 +35,9 @@ export default class ResetPassword extends React.Component {
     };
 
     request
-      .post(api.endpoint + "resetPassword")
+      .post(api.endpoint + 'resetPassword')
       .send(packet)
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .end(this.handleResponse);
   }
 

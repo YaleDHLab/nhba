@@ -1,16 +1,16 @@
-import React from "react";
-import request from "superagent";
-import api from "../../../config";
+import React from 'react';
+import request from 'superagent';
+import api from '../../../config';
 
 export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
       terms: false,
       message: null,
     };
@@ -49,9 +49,9 @@ export default class SignUp extends React.Component {
     };
 
     request
-      .post(api.endpoint + "register")
+      .post(api.endpoint + 'register')
       .send(user)
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .end(this.handleResponse);
   }
 

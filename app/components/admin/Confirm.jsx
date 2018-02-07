@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import "../../styles/confirm.css";
+import '../../styles/confirm.css';
 
 export default class Confirm extends React.Component {
   constructor(props) {

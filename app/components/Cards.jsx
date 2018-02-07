@@ -1,6 +1,6 @@
-import React from "react";
-import Card from "./Card";
-import _ from "lodash";
+import React from 'react';
+import Card from './Card';
+import _ from 'lodash';
 
 export default class Cards extends React.Component {
   constructor(props) {
@@ -16,8 +16,8 @@ export default class Cards extends React.Component {
 
   componentWillMount() {
     const self = this;
-    this.handleScroll = _.debounce(function(event) {
-      const cards = document.querySelector(".cards");
+    this.handleScroll = _.debounce(function() {
+      const cards = document.querySelector('.cards');
       if (!cards) return;
       if (cards.clientHeight - cards.scrollTop < 300) self.addCards();
     }, 200);

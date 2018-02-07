@@ -1,6 +1,6 @@
-import React from "react";
-import BuildingTable from "./BuildingTable";
-import BuildingCollapsible from "./BuildingCollapsible";
+import React from 'react';
+import BuildingTable from './BuildingTable';
+import BuildingCollapsible from './BuildingCollapsible';
 
 export default class BuildingText extends React.Component {
   render() {
@@ -31,23 +31,23 @@ export default class BuildingText extends React.Component {
     }
 
     let tableFields = [
-      { label: "Year Built", field: "year_built" },
-      { label: "Era", field: "era" },
-      { label: "Functions", field: "current_uses" },
-      { label: "Style", field: "styles" },
-      { label: "Architect", field: "architect" },
-      { label: "Client", field: "client" },
-      { label: "Neighborhood", field: "neighborhoods" },
-      { label: "Tour", field: "tours" },
-      { label: "Researcher", field: "researcher" },
-      { label: "Story Maps", field: "storymap_url", type: "url" },
-      { label: "Multimedia", field: "multimedia_url", type: "url" },
+      { label: 'Year Built', field: 'year_built' },
+      { label: 'Era', field: 'era' },
+      { label: 'Functions', field: 'current_uses' },
+      { label: 'Style', field: 'styles' },
+      { label: 'Architect', field: 'architect' },
+      { label: 'Client', field: 'client' },
+      { label: 'Neighborhood', field: 'neighborhoods' },
+      { label: 'Tour', field: 'tours' },
+      { label: 'Researcher', field: 'researcher' },
+      { label: 'Story Maps', field: 'storymap_url', type: 'url' },
+      { label: 'Multimedia', field: 'multimedia_url', type: 'url' },
     ];
 
     if (this.props.building.building_name) {
       tableFields.unshift({
-        label: "Address",
-        field: "address",
+        label: 'Address',
+        field: 'address',
       });
     }
 

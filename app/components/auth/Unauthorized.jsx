@@ -1,14 +1,14 @@
-import React from "react";
-import request from "superagent";
-import api from "../../../config";
+import React from 'react';
+import request from 'superagent';
+import api from '../../../config';
 
 export default class Unauthorized extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       message: null,
     };
 
@@ -40,9 +40,9 @@ export default class Unauthorized extends React.Component {
     };
 
     request
-      .post(api.endpoint + "login")
+      .post(api.endpoint + 'login')
       .send(user)
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .end(this.handleResponse);
   }
 

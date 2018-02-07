@@ -1,11 +1,11 @@
-import React from "react";
-import getNewlineMarkup from "../lib/getNewlineMarkup";
+import React from 'react';
+import getNewlineMarkup from '../lib/getNewlineMarkup';
 
 const buildingHistoryFields = [
-  { field: "physical_description", label: "Physical Description" },
-  { field: "urban_setting", label: "Urban Setting" },
-  { field: "social_history", label: "Social History" },
-  { field: "site_history", label: "Site History" },
+  { field: 'physical_description', label: 'Physical Description' },
+  { field: 'urban_setting', label: 'Urban Setting' },
+  { field: 'social_history', label: 'Social History' },
+  { field: 'site_history', label: 'Site History' },
 ];
 
 export default class BuildingHistory extends React.Component {

@@ -3,14 +3,14 @@
  * Usage: node seed-db.js
  **/
 
-const faker = require("faker");
-const models = require("../models");
-const moment = require("moment");
-const mongoose = require("mongoose");
-const config = require("../../../config");
-const _ = require("lodash");
+const faker = require('faker');
+const models = require('../models');
+const moment = require('moment');
+const mongoose = require('mongoose');
+const config = require('../../../config');
+const _ = require('lodash');
 
-mongoose.connect("mongodb://localhost/" + config.db);
+mongoose.connect('mongodb://localhost/' + config.db);
 
 /**
  * Configure seed
@@ -28,11 +28,11 @@ const dropTable = tableName => {
   try {
     models[tableName].drop();
   } catch (err) {
-    console.log("couldn't drop the ", +tableName + " table");
+    console.info('failed to drop ', +tableName + ' table');
   }
 };
 
-["buildings", "selects"].map(table => {
+['buildings', 'selects'].map(table => {
   dropTable(table);
 });
 
@@ -42,12 +42,12 @@ const dropTable = tableName => {
 
 let selects = {}; // map each select field to {'label': str, 'options': []}
 const selectOptions = [
-  "tour",
-  "building_type",
-  "current_use",
-  "style",
-  "era",
-  "neighborhood",
+  'tour',
+  'building_type',
+  'current_use',
+  'style',
+  'era',
+  'neighborhood',
 ];
 
 selectOptions.map(select => {
@@ -86,7 +86,7 @@ for (let i = 0; i < nBuildings; i++) {
     // short text fields
     address: faker.address.streetAddress(),
     name: faker.company.companyName(),
-    year_built: moment(faker.date.past()).format("YYYY"),
+    year_built: moment(faker.date.past()).format('YYYY'),
     historic_use: faker.lorem.words(),
     neighborhood: faker.lorem.words(),
 
@@ -107,21 +107,21 @@ for (let i = 0; i < nBuildings; i++) {
     storymap_url: faker.lorem.words(),
     archive_documents: [
       {
-        url: "https://lorempixel.com/800/500/city/",
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words(),
       },
       {
-        url: "https://lorempixel.com/800/500/city/",
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words(),
       },
     ],
     resources: [
       {
-        url: "https://lorempixel.com/800/500/city/",
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words(),
       },
       {
-        url: "https://lorempixel.com/800/500/city/",
+        url: 'https://lorempixel.com/800/500/city/',
         label: faker.lorem.words(),
       },
     ],
@@ -138,5 +138,5 @@ for (let i = 0; i < nBuildings; i++) {
   const Building = new models.building(building);
   Building.save();
 
-  console.log(" * saved building", i);
+  console.info(' * saved building', i);
 }

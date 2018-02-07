@@ -11,9 +11,9 @@
 
 module.exports = url => {
   return {
-    backgroundImage: "url(" + url + ")",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    backgroundSize: "cover",
+    backgroundImage: 'url(' + url + ')',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center center',
+    backgroundSize: 'cover',
   };
 };

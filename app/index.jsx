@@ -1,21 +1,20 @@
-import "es5-shim";
-import "es6-shim";
-import React from "react";
-import ReactDOM from "react-dom";
-import { Router, Route, browserHistory, IndexRoute } from "react-router";
-import App from "./components/App";
-import Home from "./components/Home";
-import About from "./components/simple-pages/About";
-import Glossary from "./components/simple-pages/Glossary";
-import Contact from "./components/simple-pages/Contact";
-import Search from "./components/Search";
-import Building from "./components/Building";
-import Authenticate from "./components/auth/Authenticate";
-import Admin from "./components/admin/Admin";
-import Form from "./components/admin/form/Form";
-import EditSimplePage from "./components/admin/EditSimplePage";
-import EditGlossary from "./components/admin/EditGlossary";
-import "./styles/styles";
+import 'es5-shim';
+import 'es6-shim';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router';
+import App from './components/App';
+import About from './components/simple-pages/About';
+import Glossary from './components/simple-pages/Glossary';
+import Contact from './components/simple-pages/Contact';
+import Search from './components/Search';
+import Building from './components/Building';
+import Authenticate from './components/auth/Authenticate';
+import Admin from './components/admin/Admin';
+import Form from './components/admin/form/Form';
+import EditSimplePage from './components/admin/EditSimplePage';
+import EditGlossary from './components/admin/EditGlossary';
+import './styles/styles';
 
 ReactDOM.render(
   <Router history={browserHistory}>
@@ -35,5 +34,5 @@ ReactDOM.render(
       <Route path="/admin/glossary" component={EditGlossary} />
     </Route>
   </Router>,
-  document.getElementById("app")
+  document.getElementById('app')
 );

@@ -6,8 +6,8 @@
  *   options: an object mapping each select field to its options
  **/
 
-import _ from "lodash";
-import sortEras from "./sortEras";
+import _ from 'lodash';
+import sortEras from './sortEras';
 
 module.exports = function(buildings, selects) {
   let options = {};

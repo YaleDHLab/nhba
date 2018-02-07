@@ -1,21 +1,20 @@
-import React from "react";
-import LayoutToggle from "./building/BuildingLayoutToggle";
-import BuildingButtons from "./building/BuildingButtons";
-import BuildingEditButton from "./building/BuildingEditButton";
-import Gallery from "./building/BuildingGallery";
-import Related from "./building/Related";
-import Loader from "./Loader";
-import Map from "./Map";
+import React from 'react';
+import LayoutToggle from './building/BuildingLayoutToggle';
+import BuildingButtons from './building/BuildingButtons';
+import BuildingEditButton from './building/BuildingEditButton';
+import Gallery from './building/BuildingGallery';
+import Related from './building/Related';
+import Loader from './Loader';
+import Map from './Map';
 
 // helpers
-import api from "../../config";
+import api from '../../config';
 
 // Building Text components
-import BuildingText from "./building/BuildingText";
-import BuildingTextBox from "./building/BuildingTextBox";
-import BuildingHistory from "./building/BuildingHistory";
-import BuildingStructuralData from "./building/BuildingStructuralData";
-import BuildingResources from "./building/BuildingResources";
+import BuildingText from './building/BuildingText';
+import BuildingTextBox from './building/BuildingTextBox';
+import BuildingStructuralData from './building/BuildingStructuralData';
+import BuildingResources from './building/BuildingResources';
 
 export default class Building extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ export default class Building extends React.Component {
 
     this.state = {
       building: {},
-      layout: { left: "Map", right: "Gallery" },
+      layout: { left: 'Map', right: 'Gallery' },
       admin: false,
       creator: false,
 
@@ -54,7 +53,7 @@ export default class Building extends React.Component {
     this.checkUserStatus();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.location.query.id != prevProps.location.query.id) {
       this.getBuilding();
     }
@@ -67,9 +66,9 @@ export default class Building extends React.Component {
   getBuilding() {
     if (this.props.location.query.id) {
       const buildingId = this.props.location.query.id;
-      api.get("buildings?buildingId=" + buildingId, this.processBuilding);
-    } else if (this.props.location.query.random === "true") {
-      api.get("buildings/random", this.processBuilding);
+      api.get('buildings?buildingId=' + buildingId, this.processBuilding);
+    } else if (this.props.location.query.random === 'true') {
+      api.get('buildings/random', this.processBuilding);
     }
   }
 
@@ -87,7 +86,7 @@ export default class Building extends React.Component {
    **/
 
   checkUserStatus() {
-    api.get("session", this.processUserStatus);
+    api.get('session', this.processUserStatus);
   }
 
   processUserStatus(err, res) {
@@ -102,7 +101,7 @@ export default class Building extends React.Component {
    **/
 
   checkCreatorStatus(buildingId) {
-    api.get("creator?buildingId=" + buildingId, this.processCreatorStatus);
+    api.get('creator?buildingId=' + buildingId, this.processCreatorStatus);
   }
 
   processCreatorStatus(err, res) {
@@ -117,9 +116,9 @@ export default class Building extends React.Component {
    **/
 
   toggleLayout() {
-    this.state.layout.left === "Map"
-      ? this.setState({ layout: { left: "Gallery", right: "Map" } })
-      : this.setState({ layout: { left: "Map", right: "Gallery" } });
+    this.state.layout.left === 'Map'
+      ? this.setState({ layout: { left: 'Gallery', right: 'Map' } })
+      : this.setState({ layout: { left: 'Map', right: 'Gallery' } });
   }
 
   /**
@@ -132,11 +131,11 @@ export default class Building extends React.Component {
 
     const fields = [
       {
-        label: "Overview",
-        button: { label: "Overview", icon: "overview" },
-        href: "description",
+        label: 'Overview',
+        button: { label: 'Overview', icon: 'overview' },
+        href: 'description',
         collapsible: false,
-        contentFields: ["overview_description"],
+        contentFields: ['overview_description'],
         component: (
           <BuildingTextBox
             title="Overview"
@@ -145,11 +144,11 @@ export default class Building extends React.Component {
         ),
       },
       {
-        label: "Physical Description",
-        button: { label: "Physical Description", icon: "building" },
-        href: "physical-description",
+        label: 'Physical Description',
+        button: { label: 'Physical Description', icon: 'building' },
+        href: 'physical-description',
         collapsible: false,
-        contentFields: ["physical_description"],
+        contentFields: ['physical_description'],
         component: (
           <BuildingTextBox
             title="Physical Description"
@@ -158,11 +157,11 @@ export default class Building extends React.Component {
         ),
       },
       {
-        label: "Urban Setting",
-        button: { label: "Urban Setting", icon: "building" },
-        href: "urban-setting",
+        label: 'Urban Setting',
+        button: { label: 'Urban Setting', icon: 'building' },
+        href: 'urban-setting',
         collapsible: false,
-        contentFields: ["urban_setting"],
+        contentFields: ['urban_setting'],
         component: (
           <BuildingTextBox
             title="Urban Setting"
@@ -171,11 +170,11 @@ export default class Building extends React.Component {
         ),
       },
       {
-        label: "Social History",
-        button: { label: "Social History", icon: "building" },
-        href: "social-history",
+        label: 'Social History',
+        button: { label: 'Social History', icon: 'building' },
+        href: 'social-history',
         collapsible: false,
-        contentFields: ["social_history"],
+        contentFields: ['social_history'],
         component: (
           <BuildingTextBox
             title="Social History"
@@ -184,42 +183,42 @@ export default class Building extends React.Component {
         ),
       },
       {
-        label: "Site History",
-        button: { label: "Site History", icon: "building" },
-        href: "site-history",
+        label: 'Site History',
+        button: { label: 'Site History', icon: 'building' },
+        href: 'site-history',
         collapsible: false,
-        contentFields: ["site_history"],
+        contentFields: ['site_history'],
         component: (
           <BuildingTextBox title="Site History" text={building.site_history} />
         ),
       },
       {
-        label: "Structural Data",
-        button: { label: "Structural Data", icon: "structure" },
-        href: "structuralData",
+        label: 'Structural Data',
+        button: { label: 'Structural Data', icon: 'structure' },
+        href: 'structuralData',
         component: <BuildingStructuralData building={building} />,
         collapsible: true,
         contentFields: [
-          "historic_uses",
-          "street_visibilities",
-          "dimensions",
-          "materials",
-          "roof_types",
-          "structural_conditions",
-          "past_tenants",
-          "accessibilities",
-          "levels",
-          "structures",
-          "roof_materials",
+          'historic_uses',
+          'street_visibilities',
+          'dimensions',
+          'materials',
+          'roof_types',
+          'structural_conditions',
+          'past_tenants',
+          'accessibilities',
+          'levels',
+          'structures',
+          'roof_materials',
         ],
       },
       {
-        label: "Resources",
-        button: { label: "Resources", icon: "community" },
-        href: "resources",
+        label: 'Resources',
+        button: { label: 'Resources', icon: 'community' },
+        href: 'resources',
         component: <BuildingResources building={building} />,
         collapsible: true,
-        contentFields: ["archive_documents", "sources"],
+        contentFields: ['archive_documents', 'sources'],
       },
     ];
 
@@ -248,9 +247,9 @@ export default class Building extends React.Component {
     const location =
       building && building.latitude && building.longitude
         ? {
-            lat: parseFloat(building.latitude),
-            lng: parseFloat(building.longitude),
-          }
+          lat: parseFloat(building.latitude),
+          lng: parseFloat(building.longitude),
+        }
         : null;
 
     const map =

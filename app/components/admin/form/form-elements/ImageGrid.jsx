@@ -1,10 +1,8 @@
-import React from "react";
-import request from "superagent";
-import update from "react/lib/update";
-import { DragDropContext } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
-import ImageGridItem from "./ImageGridItem";
-import _ from "lodash";
+import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import ImageGridItem from './ImageGridItem';
+import _ from 'lodash';
 
 @DragDropContext(HTML5Backend)
 export default class ImageGrid extends React.Component {
@@ -21,13 +19,13 @@ export default class ImageGrid extends React.Component {
     shuffledImages[dragIndex] = images[hoverIndex];
     shuffledImages[hoverIndex] = images[dragIndex];
 
-    this.props.replaceField("images", shuffledImages);
+    this.props.replaceField('images', shuffledImages);
   }
 
   deleteImage(imageIndex) {
     const images = this.props.building.images;
     const newImages = _.filter(images, (img, idx) => idx != imageIndex);
-    this.props.replaceField("images", newImages);
+    this.props.replaceField('images', newImages);
   }
 
   render() {
@@ -41,7 +39,7 @@ export default class ImageGrid extends React.Component {
                 key={image.filename}
                 index={i}
                 id={image.filename}
-                image={"/assets/uploads/resized/small/" + image.filename}
+                image={'/assets/uploads/resized/small/' + image.filename}
                 moveImage={this.moveImage}
                 selectFileToRecaption={this.props.selectFileToRecaption}
                 deleteImage={this.deleteImage}

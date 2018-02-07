@@ -1,5 +1,5 @@
-import React from "react";
-import ViewAddBuildings from "./ViewAddBuildings";
+import React from 'react';
+import ViewAddBuildings from './ViewAddBuildings';
 
 export default class AdminTop extends React.Component {
   render() {

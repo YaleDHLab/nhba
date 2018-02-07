@@ -1,5 +1,5 @@
-import React from "react";
-import { OverlayView } from "react-google-maps";
+import React from 'react';
+import { OverlayView } from 'react-google-maps';
 
 const centerOverlay = (width, height) => {
   return { x: width / 2 - 9, y: height / 2 - 9 };

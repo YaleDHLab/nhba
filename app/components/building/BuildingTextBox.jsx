@@ -1,5 +1,5 @@
-import React from "react";
-import getNewlineMarkup from "../lib/getNewlineMarkup";
+import React from 'react';
+import getNewlineMarkup from '../lib/getNewlineMarkup';
 
 export default class TextBox extends React.Component {
   render() {

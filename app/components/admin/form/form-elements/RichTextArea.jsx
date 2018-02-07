@@ -1,7 +1,7 @@
-import React, { PropTypes } from "react";
-import ReactQuill from "react-quill";
+import React from 'react';
+import ReactQuill from 'react-quill';
 
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 
 export default class RichTextArea extends React.Component {
   constructor(props) {
@@ -11,14 +11,14 @@ export default class RichTextArea extends React.Component {
   }
 
   getClass() {
-    const width = this.props.width || "";
-    const position = this.props.position || "";
-    return ["rich-text-area", width, position].join(" ");
+    const width = this.props.width || '';
+    const position = this.props.position || '';
+    return ['rich-text-area', width, position].join(' ');
   }
 
   updateField(value, delta, source) {
     // Only emit update event if changed by user
-    if (source == "user") {
+    if (source == 'user') {
       this.props.updateField(this.props.field, value);
     }
   }
@@ -29,8 +29,8 @@ export default class RichTextArea extends React.Component {
         <div className="label">{this.props.label}</div>
         <ReactQuill
           onChange={this.updateField}
-          placeholder={this.props.placeholder || ""}
-          value={this.props.building[this.props.field] || ""}
+          placeholder={this.props.placeholder || ''}
+          value={this.props.building[this.props.field] || ''}
         >
           <div style={{ height: this.props.height }} />
         </ReactQuill>

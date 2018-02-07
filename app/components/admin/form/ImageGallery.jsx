@@ -1,9 +1,9 @@
-import React from "react";
-import ImageGrid from "./form-elements/ImageGrid";
-import FilePicker from "./form-elements/FilePicker";
-import api from "../../../../config";
-import request from "superagent";
-import _ from "lodash";
+import React from 'react';
+import ImageGrid from './form-elements/ImageGrid';
+import FilePicker from './form-elements/FilePicker';
+import api from '../../../../config';
+import request from 'superagent';
+import _ from 'lodash';
 
 export default class ImageGallery extends React.Component {
   constructor(props) {
@@ -30,19 +30,19 @@ export default class ImageGallery extends React.Component {
     }
 
     _.keys(files).map(k => {
-      let req = request.post(api.endpoint + "upload?resize=true");
-      let filename = files[k].name.split(" ").join("-");
-      req.attach("attachment", files[k], filename);
+      let req = request.post(api.endpoint + 'upload?resize=true');
+      let filename = files[k].name.split(' ').join('-');
+      req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
         if (err) console.warn(err);
 
         const doc = {
           filename: res.body.file.name,
-          caption: "",
+          caption: '',
         };
 
-        self.props.updateField("images", doc);
+        self.props.updateField('images', doc);
       });
     });
   }
@@ -60,7 +60,7 @@ export default class ImageGallery extends React.Component {
 
   handleCaptionChange(e) {
     const relabelCaptionIndex = this.state.fileToRecaption.index;
-    if (relabelCaptionIndex != "null") {
+    if (relabelCaptionIndex != 'null') {
       const newCaption = e.target.value;
       const images = this.props.building.images;
 
@@ -69,7 +69,7 @@ export default class ImageGallery extends React.Component {
       newImages[relabelCaptionIndex].caption = newCaption;
 
       // use the replaceField method to quash the old archive documents
-      this.props.replaceField("images", newImages);
+      this.props.replaceField('images', newImages);
     }
   }
 
@@ -78,17 +78,17 @@ export default class ImageGallery extends React.Component {
       <div className="media-gallery">
         <ImageGrid
           {...this.props}
-          label={"Image Gallery"}
+          label={'Image Gallery'}
           selectFileToRecaption={this.selectFileToRecaption}
         />
 
         <FilePicker
           {...this.props}
-          topLabel={"Select File"}
-          bottomLabel={"Caption"}
+          topLabel={'Select File'}
+          bottomLabel={'Caption'}
           handleFile={this.handleFile}
           file={this.state.fileToRecaption}
-          textField={"caption"}
+          textField={'caption'}
           handleTextChange={this.handleCaptionChange}
         />
       </div>

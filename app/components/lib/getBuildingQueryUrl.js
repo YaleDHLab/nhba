@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * Method to construct a query url for finding buildings that
  * match 0 or more search fields or terms
@@ -68,7 +70,7 @@ const encodeValues = values => {
  **/
 
 const addSortQueryTerms = (state, queryTerms) => {
-  if (state.sort && state.sort !== "Sort by") {
+  if (state.sort && state.sort !== 'Sort by') {
     queryTerms.sort = state.sort;
   }
   return queryTerms;
@@ -104,16 +106,16 @@ const addUserLocationQueryTerms = (state, queryTerms) => {
  **/
 
 const buildQueryUrl = queryTerms => {
-  let url = "buildings";
+  let url = 'buildings';
   if (queryTerms) {
-    url += "?filter=true&";
+    url += '?filter=true&';
     _.keys(queryTerms).map(field => {
       if (Array.isArray(queryTerms[field])) {
         queryTerms[field].map(queryTerm => {
-          url += field + "=" + queryTerm + "&";
+          url += field + '=' + queryTerm + '&';
         });
       } else {
-        url += field + "=" + queryTerms[field] + "&";
+        url += field + '=' + queryTerms[field] + '&';
       }
     });
   }

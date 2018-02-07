@@ -1,3 +1,3 @@
-var geocoder = require("./geocoder");
+var geocoder = require('./geocoder');
 
 geocoder.geocodeAll();

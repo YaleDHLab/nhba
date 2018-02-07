@@ -1,6 +1,5 @@
-import React from "react";
-import api from "../../config";
-import _ from "lodash";
+import React from 'react';
+import _ from 'lodash';
 
 export default class Multiselect extends React.Component {
   constructor(props) {
@@ -8,7 +7,7 @@ export default class Multiselect extends React.Component {
 
     this.state = {
       active: false,
-      newOption: "",
+      newOption: '',
     };
 
     // hide/show the dropdown options
@@ -33,11 +32,11 @@ export default class Multiselect extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("mousedown", this.handlePageClick, false);
+    window.addEventListener('mousedown', this.handlePageClick, false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("mousedown", this.handlePageClick, false);
+    window.removeEventListener('mousedown', this.handlePageClick, false);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -52,11 +51,10 @@ export default class Multiselect extends React.Component {
 
   handlePageClick(e) {
     if (
-      this.selectClicked(e) ||
-      this.inputClicked(e) ||
-      this.addNewOptionClicked(e)
+      !this.selectClicked(e) &&
+      !this.inputClicked(e) &&
+      !this.addNewOptionClicked(e)
     ) {
-    } else {
       this.setState({ active: false });
     }
   }
@@ -67,11 +65,11 @@ export default class Multiselect extends React.Component {
 
   inputClicked(e) {
     const tagName = e.target.tagName;
-    return tagName === "INPUT" || tagName === "LABEL" ? true : false;
+    return tagName === 'INPUT' || tagName === 'LABEL' ? true : false;
   }
 
   addNewOptionClicked(e) {
-    return e.target.tagName === "IMG";
+    return e.target.tagName === 'IMG';
   }
 
   toggleView(e) {
@@ -87,13 +85,13 @@ export default class Multiselect extends React.Component {
 
   getSelectClass() {
     const defaultClass = this.props.className
-      ? "multiselect " + this.props.className
-      : "multiselect";
-    return this.state.active ? defaultClass + " active" : defaultClass;
+      ? 'multiselect ' + this.props.className
+      : 'multiselect';
+    return this.state.active ? defaultClass + ' active' : defaultClass;
   }
 
   getDecoyClass() {
-    return "select-decoy " + this.props.field;
+    return 'select-decoy ' + this.props.field;
   }
 
   /**
@@ -122,19 +120,19 @@ export default class Multiselect extends React.Component {
   render() {
     const options = this.props.options
       ? this.props.options.map((option, i) => {
-          const value = _.includes(this.props.values, option) ? true : false;
-          return (
-            <label key={i}>
-              <input
-                type="checkbox"
-                id={option}
-                checked={value}
-                onChange={this.handleCheckbox}
-              />
-              {option}
-            </label>
-          );
-        })
+        const value = _.includes(this.props.values, option) ? true : false;
+        return (
+          <label key={i}>
+            <input
+              type="checkbox"
+              id={option}
+              checked={value}
+              onChange={this.handleCheckbox}
+            />
+            {option}
+          </label>
+        );
+      })
       : null;
 
     const newOption = this.props.allowNewOptions ? (

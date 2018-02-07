@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class TextInput extends React.Component {
   constructor(props) {
@@ -10,9 +10,9 @@ export default class TextInput extends React.Component {
   }
 
   getClass() {
-    const width = this.props.width || "";
-    const position = this.props.position || "";
-    return ["text-input", width, position].join(" ");
+    const width = this.props.width || '';
+    const position = this.props.position || '';
+    return ['text-input', width, position].join(' ');
   }
 
   updateField(e) {
@@ -29,7 +29,7 @@ export default class TextInput extends React.Component {
         <div className="label">{this.props.label}</div>
         <input
           type="text"
-          value={this.props.building[this.props.field] || ""}
+          value={this.props.building[this.props.field] || ''}
           onChange={this.updateField}
           onBlur={this.handleBlur}
         />

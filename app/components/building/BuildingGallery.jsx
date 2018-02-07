@@ -1,7 +1,7 @@
-import React from "react";
-import Lightbox from "./BuildingLightbox";
-import getBackgroundImageStyle from "../lib/getBackgroundImageStyle";
-import _ from "lodash";
+import React from 'react';
+import Lightbox from './BuildingLightbox';
+import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
+import _ from 'lodash';
 
 export default class BuildingGallery extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export default class BuildingGallery extends React.Component {
   getStyle() {
     const images = this.props.building.images;
     if (images) {
-      const dir = "/assets/uploads/resized/large/";
+      const dir = '/assets/uploads/resized/large/';
       const image = dir + images[this.state.imageIndex].filename;
       return getBackgroundImageStyle(image);
     }
@@ -42,7 +42,7 @@ export default class BuildingGallery extends React.Component {
    * Reset image index to 0 when buildings change
    **/
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.building, this.props.building)) {
       this.setState({ imageIndex: 0 });
     }
@@ -94,10 +94,10 @@ export default class BuildingGallery extends React.Component {
     const caption =
       this.props.building.images &&
       this.props.building.images[this.state.imageIndex].caption ? (
-        <div className="image-caption">
-          {this.props.building.images[this.state.imageIndex].caption}
-        </div>
-      ) : null;
+          <div className="image-caption">
+            {this.props.building.images[this.state.imageIndex].caption}
+          </div>
+        ) : null;
 
     const expandIcon = (
       <div className="expand-image-icon-container">
@@ -110,7 +110,7 @@ export default class BuildingGallery extends React.Component {
 
     let gallery = null;
     if (this.props.building.images) {
-      if (this.props.layout.right === "Gallery") {
+      if (this.props.layout.right === 'Gallery') {
         if (this.props.building.images.length > 1) {
           gallery = (
             <div

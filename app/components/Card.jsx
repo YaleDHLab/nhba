@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router";
+import React from 'react';
+import { Link } from 'react-router';
 
 export default class Card extends React.Component {
   constructor(props) {
@@ -14,17 +14,17 @@ export default class Card extends React.Component {
     const style =
       this.props.building.images && this.props.building.images.length > 0
         ? {
-            backgroundImage: `url(/assets/uploads/resized/small/${
-              this.props.building.images[0].filename
-            })`,
-          }
+          backgroundImage: `url(/assets/uploads/resized/small/${
+            this.props.building.images[0].filename
+          })`,
+        }
         : {
-            backgroundColor: "#f1f1f1",
-          };
+          backgroundColor: '#f1f1f1',
+        };
     return style;
   }
 
-  handleClick(e) {
+  handleClick() {
     this.scrollTo(0, 150);
   }
 
@@ -58,30 +58,30 @@ export default class Card extends React.Component {
     const building = this.props.building;
 
     // parse out the large and small card text
-    let bigtext = "",
-      smalltext = "";
+    let bigtext = '',
+      smalltext = '';
 
     if (building.building_name) {
       bigtext = building.building_name;
       smalltext = building.address;
     } else {
       bigtext = building.address;
-      if (bigtext && bigtext.includes(", New Haven")) {
-        let splitaddress = bigtext.split(", New Haven");
+      if (bigtext && bigtext.includes(', New Haven')) {
+        let splitaddress = bigtext.split(', New Haven');
         bigtext = splitaddress[0];
 
         // parse out the small text
-        if (splitaddress[1].substring(0, 1) == ",") {
-          smalltext = "New Haven, " + splitaddress[1].substring(1).trim();
+        if (splitaddress[1].substring(0, 1) == ',') {
+          smalltext = 'New Haven, ' + splitaddress[1].substring(1).trim();
         } else {
-          smalltext = "New Haven, " + splitaddress[1].trim();
+          smalltext = 'New Haven, ' + splitaddress[1].trim();
         }
       }
     }
 
     return (
       <div className="card" onClick={this.handleClick}>
-        <Link to={"/building?id=" + this.props.building._id + "#"}>
+        <Link to={'/building?id=' + this.props.building._id + '#'}>
           <div className="card-content">
             <div
               className="background-image card-image"

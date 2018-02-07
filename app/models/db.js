@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var db = {};
@@ -24,7 +24,7 @@ db.user = {
   superadmin: Boolean,
   contributor: Boolean,
   // buildings created by the user
-  buildings: [{ type: Schema.Types.ObjectId, ref: "Building" }],
+  buildings: [{ type: Schema.Types.ObjectId, ref: 'Building' }],
 };
 
 db.wptour = {
@@ -117,8 +117,8 @@ db.building = {
   location: {
     type: {
       type: String,
-      enum: "Point",
-      default: "Point",
+      enum: 'Point',
+      default: 'Point',
     },
     coordinates: {
       type: [Number],
@@ -135,7 +135,7 @@ db.building = {
   tour_position: Number,
 
   // creator
-  creator: { type: Schema.Types.ObjectId, ref: "User" },
+  creator: { type: Schema.Types.ObjectId, ref: 'User' },
 };
 
 module.exports = db;

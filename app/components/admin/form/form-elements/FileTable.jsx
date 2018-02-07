@@ -1,5 +1,5 @@
-import React from "react";
-import FileTableRow from "./FileTableRow";
+import React from 'react';
+import FileTableRow from './FileTableRow';
 
 export default class FileTable extends React.Component {
   constructor(props) {

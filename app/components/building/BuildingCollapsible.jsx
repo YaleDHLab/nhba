@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class BuildingCollapsible extends React.Component {
   constructor(props) {
@@ -17,8 +17,8 @@ export default class BuildingCollapsible extends React.Component {
 
   render() {
     const containerClass = this.state.collapsed
-      ? "building-collapsible collapsed"
-      : "building-collapsible";
+      ? 'building-collapsible collapsed'
+      : 'building-collapsible';
 
     return (
       <div className={containerClass}>

@@ -1,17 +1,17 @@
-import React from "react";
-import SignUp from "./SignUp";
-import Login from "./Login";
-import Unauthorized from "./Unauthorized";
-import ForgotPassword from "./ForgotPassword";
-import ValidateAccount from "./ValidateAccount";
-import ResetPassword from "./ResetPassword";
+import React from 'react';
+import SignUp from './SignUp';
+import Login from './Login';
+import Unauthorized from './Unauthorized';
+import ForgotPassword from './ForgotPassword';
+import ValidateAccount from './ValidateAccount';
+import ResetPassword from './ResetPassword';
 
 export default class Authenticate extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      view: "login",
+      view: 'login',
     };
 
     this.signUp = this.signUp.bind(this);
@@ -24,40 +24,40 @@ export default class Authenticate extends React.Component {
     }
   }
 
-  signUp(e) {
-    this.setState({ view: "sign-up" });
+  signUp() {
+    this.setState({ view: 'sign-up' });
   }
 
-  forgotPassword(e) {
-    this.setState({ view: "forgot-password" });
+  forgotPassword() {
+    this.setState({ view: 'forgot-password' });
   }
 
   render() {
     let view = null;
     switch (this.state.view) {
-      case "login":
+      case 'login':
         view = <Login {...this.props} forgotPassword={this.forgotPassword} />;
         break;
 
-      case "unauthorized":
+      case 'unauthorized':
         view = (
           <Unauthorized {...this.props} forgotPassword={this.forgotPassword} />
         );
         break;
 
-      case "sign-up":
+      case 'sign-up':
         view = <SignUp {...this.props} />;
         break;
 
-      case "forgot-password":
+      case 'forgot-password':
         view = <ForgotPassword {...this.props} />;
         break;
 
-      case "validate":
+      case 'validate':
         view = <ValidateAccount {...this.props} />;
         break;
 
-      case "reset-password":
+      case 'reset-password':
         view = <ResetPassword {...this.props} />;
         break;
     }

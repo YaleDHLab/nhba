@@ -1,6 +1,8 @@
-import React from "react";
-import Card from "../Card";
-import api from "../../../config";
+import React from 'react';
+import _ from 'lodash';
+
+import Card from '../Card';
+import api from '../../../config';
 
 export default class Related extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ export default class Related extends React.Component {
   }
 
   componentDidMount() {
-    api.get("buildings?images=true", this.processBuildings);
+    api.get('buildings?images=true', this.processBuildings);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -71,7 +73,7 @@ export default class Related extends React.Component {
     });
 
     const nearby = _.chain(distances)
-      .sortBy("distance")
+      .sortBy('distance')
       .take(8)
       .value();
 
@@ -88,8 +90,8 @@ export default class Related extends React.Component {
         <div className="related-buildings">
           {this.state.nearbyBuildings.length > 0
             ? this.state.nearbyBuildings.map((building, i) => {
-                return <Card building={building} key={i} label={"address"} />;
-              })
+              return <Card building={building} key={i} label={'address'} />;
+            })
             : null}
         </div>
       </div>

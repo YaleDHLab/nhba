@@ -1,5 +1,5 @@
-import React from "react";
-import getBuildingTable from "../lib/getBuildingTable";
+import React from 'react';
+import getBuildingTable from '../lib/getBuildingTable';
 
 export default class BuildingTable extends React.Component {
   constructor(props) {
