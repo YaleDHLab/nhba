@@ -125,7 +125,12 @@ module.exports = function(app) {
    **/
 
   var authenticateUser = (err, doc, req, res) => {
-    if (err || doc.length == 0) {
+    if (err)
+      return res.status(500).send({
+        message: messages.error,
+      });
+
+    if (doc.length == 0) {
       return res.status(403).send({
         message: messages.loginFail,
       });
