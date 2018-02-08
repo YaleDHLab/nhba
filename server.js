@@ -4,6 +4,8 @@ var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var compression = require('compression');
 var bodyParser = require('body-parser');
+var mongoSanitize = require('express-mongo-sanitize');
+var expressSanitizer = require('express-sanitizer');
 var session = require('express-session');
 var morgan = require('morgan');
 var https = require('https');
@@ -53,6 +55,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // enable json body parsing
 app.use(bodyParser.json());
+
+// sanitize mongo queries
+app.use(mongoSanitize());
+
+// sanitize html input
+app.use(expressSanitizer());
 
 // enable method overrides
 app.use(methodOverride());
