@@ -13,7 +13,7 @@ var _ = require('lodash');
 
 var mongoOptions = { useMongoClient: true };
 mongoose.connect('mongodb://localhost/' + config.db, mongoOptions);
-mongoose.connection.on("error", err => {
+mongoose.connection.on('error', err => {
   console.warn(err);
 });
 
@@ -343,6 +343,15 @@ module.exports = function(app) {
     if (building._id) {
       models.building.remove({ _id: building._id }, (err, data) => {
         if (err) return res.status(500).send({ cause: err });
+        if (building.creator) {
+          models.user.update(
+            { _id: building.creator },
+            { $pull: { buildings: building._id } },
+            err => {
+              if (err) return res.status(500).send({ cause: err });
+            }
+          );
+        }
         return res.status(200).send(data);
       });
     }
