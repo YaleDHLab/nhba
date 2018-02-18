@@ -1,11 +1,13 @@
 import React from 'react';
 import ImageGrid from './form-elements/ImageGrid';
+import FileTable from './form-elements/FileTable';
 import FilePicker from './form-elements/FilePicker';
+import TextInput from './form-elements/TextInput';
 import api from '../../../../config';
 import request from 'superagent';
 import _ from 'lodash';
 
-export default class ImageGallery extends React.Component {
+export default class MultimediaGallery extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,6 +92,30 @@ export default class ImageGallery extends React.Component {
           file={this.state.fileToRecaption}
           textField={'caption'}
           handleTextChange={this.handleCaptionChange}
+        />
+
+        <FileTable
+          {...this.props}
+          files={this.props.building.archive_documents}
+          label={'Archive Documents'}
+          selectFileToRelabel={this.selectFileToRelabel}
+        />
+
+        <FilePicker
+          {...this.props}
+          topLabel={'Upload'}
+          bottomLabel={'Display Title'}
+          handleFile={this.handleFile}
+          file={this.state.fileToRelabel}
+          textField={'label'}
+          handleTextChange={this.handleLabelChange}
+        />
+
+        <TextInput
+          {...this.props}
+          width={'full-width'}
+          label={'Story Maps Url'}
+          field={'storymap_url'}
         />
       </div>
     );

@@ -12,7 +12,10 @@ export default class TextInput extends React.Component {
   getClass() {
     const width = this.props.width || '';
     const position = this.props.position || '';
-    return ['text-input', width, position].join(' ');
+    const missing = this.props.missingFields.includes(this.props.field)
+      ? 'missing'
+      : '';
+    return ['text-input', width, position, missing].join(' ');
   }
 
   updateField(e) {

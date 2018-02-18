@@ -91,6 +91,7 @@ db.building = {
   structural_conditions: [String],
   external_conditions: [String],
   threats: [String],
+  ownership_status: [String],
   physical_description: String,
   urban_setting: String,
   social_history: String,
