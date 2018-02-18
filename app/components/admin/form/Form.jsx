@@ -303,6 +303,7 @@ export default class Form extends React.Component {
               options={this.state.options}
               allowNewOptions={this.props.admin}
               handleNewOption={this.handleNewOption}
+              missingFields={this.state.missingFields}
             />
           );
           break;
@@ -316,6 +317,7 @@ export default class Form extends React.Component {
               options={this.state.options}
               allowNewOptions={this.props.admin}
               handleNewOption={this.handleNewOption}
+              missingFields={this.state.missingFields}
             />
           );
           break;
