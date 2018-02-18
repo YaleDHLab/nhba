@@ -13,7 +13,10 @@ export default class Select extends React.Component {
     const defaultClass = 'select';
     const width = this.props.width || '';
     const position = this.props.position || '';
-    return [defaultClass, width, position].join(' ');
+    const missing = this.props.missingFields.includes(this.props.field)
+      ? 'missing'
+      : '';
+    return [defaultClass, width, position, missing].join(' ');
   }
 
   updateField(field, option) {
@@ -26,7 +29,6 @@ export default class Select extends React.Component {
     if (this.props.valueMap) {
       values = values.map(v => this.props.valueMap[v]);
     }
-
     const label = values.join(', ');
 
     return (

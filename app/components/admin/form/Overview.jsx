@@ -21,7 +21,7 @@ export default class Overview extends React.Component {
         <TextInput
           {...this.props}
           width={'full-width'}
-          label={'Address'}
+          label={'Address*'}
           field={'address'}
           onBlur={this.props.geocode}
         />
@@ -62,7 +62,7 @@ export default class Overview extends React.Component {
           {...this.props}
           width={'half-width'}
           position={'left'}
-          label={'Current Use'}
+          label={'Current Use*'}
           field={'current_uses'}
         />
 
@@ -134,7 +134,7 @@ export default class Overview extends React.Component {
           {...this.props}
           width={'half-width'}
           position={'right'}
-          label={'Researcher'}
+          label={'Researcher*'}
           field={'researcher'}
         />
 
@@ -147,20 +147,6 @@ export default class Overview extends React.Component {
             'A pithy description of what a visitor to the building sees or should look for.  Summarize basic physical features, say something about its current use, and suggest some narrative or significance of the building.  Tone is engaging and conversational.'
           }
           height={250}
-        />
-
-        <TextInput
-          {...this.props}
-          width={'full-width'}
-          label={'Story Maps Url'}
-          field={'storymap_url'}
-        />
-
-        <TextInput
-          {...this.props}
-          width={'full-width'}
-          label={'Multimedia Url'}
-          field={'multimedia_url'}
         />
       </div>
     );

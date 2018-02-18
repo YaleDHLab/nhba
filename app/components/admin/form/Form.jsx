@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import Tabs from './Tabs';
 import Overview from './Overview';
 import DataAndHistory from './DataAndHistory';
-import ImageGallery from './ImageGallery';
+import MultimediaGallery from './MultimediaGallery';
 import Confirm from '../Confirm';
 import getSelectOptions from '../../lib/getSelectOptions';
 import allSelects from '../../lib/allSelects';
@@ -24,11 +24,12 @@ export default class Form extends React.Component {
       unsavedChanges: false,
       saveButtonText: 'Save',
       autoSaveInterval: null,
+      missingFields: [],
     };
 
     // buildling(s) getters and setters
     this.getBuilding = this.getBuilding.bind(this);
-    this.getNewBuilding = this.getNewBuilding.bind(this);
+    this.getEmptyBuilding = this.getEmptyBuilding.bind(this);
     this.getBuildings = this.getBuildings.bind(this);
 
     // getters and setters for select options
@@ -54,7 +55,7 @@ export default class Form extends React.Component {
   componentDidMount() {
     // load the requested building data if query params are present
     const buildingId = this.props.location.query.buildingId;
-    buildingId ? this.getBuilding(buildingId) : this.getNewBuilding();
+    buildingId ? this.getBuilding(buildingId) : this.getEmptyBuilding();
 
     // fetch all buildings so we can populate dropdowns
     this.getBuildings();
@@ -70,10 +71,13 @@ export default class Form extends React.Component {
    * Building & Buildings getters and setters
    **/
 
-  getNewBuilding() {
-    api.get('building/new', (err, res) => {
-      if (err) console.warn(err);
-      this.setState({ building: res.body });
+  getEmptyBuilding() {
+    api.get('building/empty', (err, res) => {
+      if (err) {
+        console.warn(err);
+      } else {
+        this.setState({ building: res.body });
+      }
     });
   }
 
@@ -91,7 +95,7 @@ export default class Form extends React.Component {
 
   getBuildings() {
     const self = this;
-    api.get('buildings?images=true', (err, res) => {
+    api.get('buildings', (err, res) => {
       if (err) {
         console.warn(err);
       } else {
@@ -149,14 +153,21 @@ export default class Form extends React.Component {
       building[field] = value;
     }
 
-    // Checks if an autosave interval already exists, if not, set 5 second autosave interval
-    let autoSaveInterval =
-      this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
+    // sets autosave interval if no missing fields
+    const requiredFields = ['address', 'current_uses', 'researcher'];
+    if (requiredFields.every(field => this.state.building[field])) {
+      // checks if an autosave interval already exists, if not, set 5 second autosave interval
+      let autoSaveInterval =
+        this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
+      this.setState({ autoSaveInterval });
+    } else {
+      clearInterval(this.state.autoSaveInterval);
+    }
+
     this.setState({
       building: building,
       unsavedChanges: true,
       saveButtonText: 'Save',
-      autoSaveInterval: autoSaveInterval,
     });
   }
 
@@ -199,19 +210,43 @@ export default class Form extends React.Component {
    **/
 
   saveBuilding() {
-    request
-      .post(api.endpoint + 'building/save')
-      .send(this.state.building)
-      .set('Accept', 'application/json')
-      .end(err => {
-        if (err) console.warn(err);
-      });
-    clearInterval(this.state.autoSaveInterval);
-    this.setState({
-      unsavedChanges: false,
-      saveButtonText: 'Saved',
-      autoSaveInterval: null,
-    });
+    if (this.state.unsavedChanges) {
+      const requiredFields = ['address', 'current_uses', 'researcher'];
+      this.setState(
+        {
+          missingFields: requiredFields.filter(
+            field =>
+              !this.state.building[field] ||
+              (Array.isArray(this.state.building[field]) &&
+                this.state.building[field].length === 0)
+          ),
+        },
+        () => {
+          if (this.state.missingFields.length === 0) {
+            request
+              .post(api.endpoint + 'building/save')
+              .send(this.state.building)
+              .set('Accept', 'application/json')
+              .end((err, res) => {
+                if (err) {
+                  console.warn(err);
+                } else {
+                  // check if created new building
+                  if (!this.state.building._id) {
+                    this.setState({ building: res.body });
+                  }
+                }
+              });
+            clearInterval(this.state.autoSaveInterval);
+            this.setState({
+              unsavedChanges: false,
+              saveButtonText: 'Saved',
+              autoSaveInterval: null,
+            });
+          }
+        }
+      );
+    }
   }
 
   /**
@@ -251,9 +286,10 @@ export default class Form extends React.Component {
               updateField={this.updateField}
               replaceField={this.replaceField}
               options={this.state.options}
-              allowNewOptions={true}
+              allowNewOptions={this.props.admin}
               handleNewOption={this.handleNewOption}
               geocode={this.geocode}
+              missingFields={this.state.missingFields}
             />
           );
           break;
@@ -265,20 +301,20 @@ export default class Form extends React.Component {
               updateField={this.updateField}
               replaceField={this.replaceField}
               options={this.state.options}
-              allowNewOptions={true}
+              allowNewOptions={this.props.admin}
               handleNewOption={this.handleNewOption}
             />
           );
           break;
 
-        case 'image-gallery':
+        case 'multimedia-gallery':
           view = (
-            <ImageGallery
+            <MultimediaGallery
               building={this.state.building}
               updateField={this.updateField}
               replaceField={this.replaceField}
               options={this.state.options}
-              allowNewOptions={true}
+              allowNewOptions={this.props.admin}
               handleNewOption={this.handleNewOption}
             />
           );
@@ -305,7 +341,13 @@ export default class Form extends React.Component {
         <div className="form-content">
           {header}
           <div className="instructions">
-            Edit record for this building. General guidelines here...
+            <p>Edit record for this building.</p>
+            {this.state.missingFields.length > 0 ? (
+              <p className="missing">
+                You are missing the following fields:{' '}
+                {this.state.missingFields.join(', ')}
+              </p>
+            ) : null}
           </div>
           <div>
             <Tabs activeTab={this.state.activeTab} changeTab={this.changeTab} />

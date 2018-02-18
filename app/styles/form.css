@@ -23,7 +23,7 @@
   margin: 15px;
   text-align: center;
   font-weight: 600;
-  transition: color .05s;
+  transition: color 0.05s;
 }
 
 .form a:hover h1 {
@@ -61,11 +61,11 @@
 
 .form .form-tab.right {
   text-align: right;
-  width: 110px;
+  width: 150px;
 }
 
 .form .form-tab.active {
-  border-bottom: 3px solid #EDA138;
+  border-bottom: 3px solid #eda138;
   color: #222;
 }
 

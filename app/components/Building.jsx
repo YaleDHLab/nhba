@@ -39,10 +39,6 @@ export default class Building extends React.Component {
     this.getBuilding = this.getBuilding.bind(this);
     this.processBuilding = this.processBuilding.bind(this);
 
-    // getter and setter for user admin status
-    this.checkUserStatus = this.checkUserStatus.bind(this);
-    this.processUserStatus = this.processUserStatus.bind(this);
-
     // getter and setter for building creator status
     this.checkCreatorStatus = this.checkCreatorStatus.bind(this);
     this.processCreatorStatus = this.processCreatorStatus.bind(this);
@@ -50,7 +46,6 @@ export default class Building extends React.Component {
 
   componentDidMount() {
     this.getBuilding();
-    this.checkUserStatus();
   }
 
   componentDidUpdate(prevProps) {
@@ -78,21 +73,6 @@ export default class Building extends React.Component {
     } else {
       this.setState({ building: res.body[0] });
       this.checkCreatorStatus(res.body[0]._id);
-    }
-  }
-
-  /**
-   * Check whether the user is an admin or not
-   **/
-
-  checkUserStatus() {
-    api.get('session', this.processUserStatus);
-  }
-
-  processUserStatus(err, res) {
-    if (err) console.warn(err);
-    if (res.body.session.admin === true) {
-      this.setState({ admin: true });
     }
   }
 
@@ -247,9 +227,9 @@ export default class Building extends React.Component {
     const location =
       building && building.latitude && building.longitude
         ? {
-          lat: parseFloat(building.latitude),
-          lng: parseFloat(building.longitude),
-        }
+            lat: parseFloat(building.latitude),
+            lng: parseFloat(building.longitude),
+          }
         : null;
 
     const map =
@@ -288,7 +268,7 @@ export default class Building extends React.Component {
                   />
                   <BuildingButtons fields={fields} {...this.props} />
                   <BuildingEditButton
-                    admin={this.state.admin}
+                    admin={this.props.admin}
                     creator={this.state.creator}
                     building={this.state.building}
                   />

@@ -1,8 +1,6 @@
 import React from 'react';
 import Select from './form-elements/Select';
 import TextInput from './form-elements/TextInput';
-import FileTable from './form-elements/FileTable';
-import FilePicker from './form-elements/FilePicker';
 import RichTextArea from './form-elements/RichTextArea';
 import request from 'superagent';
 import _ from 'lodash';
@@ -103,18 +101,10 @@ export default class DataAndHistory extends React.Component {
           field={'historic_uses'}
         />
 
-        <TextInput
-          {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Past Tenants'}
-          field={'past_tenants'}
-        />
-
         <Select
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Street Visibility'}
           field={'street_visibilities'}
         />
@@ -122,7 +112,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'right'}
+          position={'left'}
           label={'Accessibility'}
           field={'accessibilities'}
         />
@@ -130,7 +120,7 @@ export default class DataAndHistory extends React.Component {
         <TextInput
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Dimensions'}
           field={'dimensions'}
         />
@@ -138,7 +128,7 @@ export default class DataAndHistory extends React.Component {
         <TextInput
           {...this.props}
           width={'half-width'}
-          position={'right'}
+          position={'left'}
           label={'No. of Levels'}
           field={'levels'}
         />
@@ -146,7 +136,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Materials'}
           field={'materials'}
         />
@@ -154,7 +144,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'right'}
+          position={'left'}
           label={'Structure'}
           field={'structures'}
         />
@@ -162,7 +152,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Roof Type'}
           field={'roof_types'}
         />
@@ -170,7 +160,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'right'}
+          position={'left'}
           label={'Roof Material'}
           field={'roof_materials'}
         />
@@ -178,7 +168,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Structural Condition'}
           field={'structural_conditions'}
         />
@@ -186,7 +176,7 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'right'}
+          position={'left'}
           label={'External Condition'}
           field={'external_conditions'}
         />
@@ -194,17 +184,28 @@ export default class DataAndHistory extends React.Component {
         <Select
           {...this.props}
           width={'half-width'}
-          position={'left'}
+          position={'right'}
           label={'Threats'}
           field={'threats'}
         />
 
+        <Select
+          {...this.props}
+          width={'half-width'}
+          position={'left'}
+          label={'Ownership Status'}
+          field={'ownership_status'}
+        />
+
         <div className="clear-both" />
 
-        <div className="row">
-          <h4>Building History</h4>
-          <div className="style-guide">Style guide...</div>
-        </div>
+        <RichTextArea
+          {...this.props}
+          width={'full-width'}
+          label={'Past Tenants'}
+          field={'past_tenants'}
+          height={150}
+        />
 
         <RichTextArea
           {...this.props}
@@ -248,23 +249,6 @@ export default class DataAndHistory extends React.Component {
             'More additional information on the history of this site, including ownership and land use prior to the current structure.'
           }
           height={150}
-        />
-
-        <FileTable
-          {...this.props}
-          files={this.props.building.archive_documents}
-          label={'Archive Documents'}
-          selectFileToRelabel={this.selectFileToRelabel}
-        />
-
-        <FilePicker
-          {...this.props}
-          topLabel={'Upload'}
-          bottomLabel={'Display Title'}
-          handleFile={this.handleFile}
-          file={this.state.fileToRelabel}
-          textField={'label'}
-          handleTextChange={this.handleLabelChange}
         />
 
         <RichTextArea

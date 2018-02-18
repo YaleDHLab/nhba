@@ -108,9 +108,11 @@ export default class AppWrapper extends React.Component {
 
   processSession(err, res) {
     if (err) console.warn(err);
-    res.body.session.authenticated == true
-      ? this.setState({ authenticated: true, session: res.body.session })
-      : this.setState({ authenticated: false, session: res.body.session });
+    this.setState({
+      admin: res.body.session.admin,
+      authenticated: res.body.session.authenticated,
+      session: res.body.session,
+    });
   }
 
   /**
@@ -135,6 +137,11 @@ export default class AppWrapper extends React.Component {
   render() {
     const isMobile = this.state.isMobile;
     const isBuilding = this.props.location.pathname.includes('building');
+    var child = React.Children.only(this.props.children);
+    var content = React.cloneElement(child, {
+      admin: this.state.admin,
+      authenticated: this.state.authenticated,
+    });
 
     const modal = this.state.modal ? (
       <Authenticate
@@ -146,11 +153,7 @@ export default class AppWrapper extends React.Component {
     ) : null;
 
     const routeView =
-      isMobile && !isBuilding ? (
-        <MobileSearch {...this.props} />
-      ) : (
-        this.props.children
-      );
+      isMobile && !isBuilding ? <MobileSearch {...this.props} /> : content;
 
     const footer = isMobile ? (
       <MobileFooter location={this.props.location} />

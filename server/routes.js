@@ -272,6 +272,7 @@ module.exports = function(app) {
     }
 
     var building = new models.building({ creator: req.session.userId });
+    building.created_at = getTime();
     building.save((err, data) => {
       if (err) return res.status(500).send({ cause: err });
       var query = { _id: req.session.userId };
@@ -284,6 +285,23 @@ module.exports = function(app) {
       );
       return res.status(200).send(data);
     });
+  });
+
+  /**
+   *
+   * Empty record
+   *
+   **/
+
+  app.get('/api/building/empty', (req, res) => {
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.authenticated) {
+        return res.status(403).send('This action could not be completed');
+      }
+    }
+    var building = new models.building().toObject();
+    delete building._id;
+    return res.status(200).send(building);
   });
 
   /**
@@ -305,6 +323,21 @@ module.exports = function(app) {
 
     // update buildings that have ids
     var building = req.body;
+    const requiredFields = ['address', 'current_uses', 'researcher'];
+    // reject if lacks required fields
+    if (
+      !requiredFields.every(field => {
+        if (building[field]) {
+          if (Array.isArray(building[field])) {
+            return building[field].length > 0;
+          }
+          return building[field];
+        }
+        return false;
+      })
+    ) {
+      return res.status(403).send('This action could not be completed');
+    }
     if (building._id) {
       building = updateBuildingFields(building);
       models.building.update(
