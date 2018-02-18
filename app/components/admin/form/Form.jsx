@@ -17,7 +17,6 @@ export default class Form extends React.Component {
     super(props);
 
     this.state = {
-      admin: false,
       buildings: [],
       options: {},
       building: {},
