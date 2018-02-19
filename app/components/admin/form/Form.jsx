@@ -155,16 +155,17 @@ export default class Form extends React.Component {
 
     // sets autosave interval if no missing fields
     const requiredFields = ['address', 'current_uses', 'researcher'];
+    let autoSaveInterval = null;
     if (requiredFields.every(field => this.state.building[field])) {
       // checks if an autosave interval already exists, if not, set 5 second autosave interval
-      let autoSaveInterval =
+      autoSaveInterval =
         this.state.autoSaveInterval || setInterval(this.saveBuilding, 5000);
-      this.setState({ autoSaveInterval });
     } else {
       clearInterval(this.state.autoSaveInterval);
     }
 
     this.setState({
+      autoSaveInterval,
       building: building,
       unsavedChanges: true,
       saveButtonText: 'Save',
