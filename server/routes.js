@@ -273,6 +273,7 @@ module.exports = function(app) {
 
     var building = new models.building({ creator: req.session.userId });
     building.created_at = getTime();
+    building.updated_at = getTime();
     building.save((err, data) => {
       if (err) return res.status(500).send({ cause: err });
       var query = { _id: req.session.userId };
@@ -352,6 +353,7 @@ module.exports = function(app) {
     } else {
       var newBuilding = new models.building(building);
       newBuilding.created_at = getTime();
+      newBuilding.updated_at = getTime();
       newBuilding.save((err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
