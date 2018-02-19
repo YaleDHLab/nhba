@@ -224,7 +224,7 @@ export default class DataAndHistory extends React.Component {
           label={'Urban Setting'}
           field={'urban_setting'}
           placeholder={
-            'Describe building form, materials, design, and style. Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant. Highlight glossary terms.'
+            'Describe the urban context of your building. Standing alone in a field? In the midst of a dense commercial district? Comments and observations about the streetscape and general setting should go here. What role does your building play in this broader setting?'
           }
           height={150}
         />
