@@ -313,7 +313,7 @@ module.exports = function(app) {
 
   app.post('/api/building/save', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
-      // reject if not authenticated or admin or creator
+      // reject if not authenticated
       if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
@@ -323,23 +323,27 @@ module.exports = function(app) {
     var building = req.body;
     const requiredFields = ['address', 'current_uses', 'researcher'];
     // reject if lacks required fields
-    if (
-      !requiredFields.every(field => {
-        if (building[field]) {
-          if (Array.isArray(building[field])) {
-            return building[field].length > 0;
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (
+        !requiredFields.every(field => {
+          if (building[field]) {
+            if (Array.isArray(building[field])) {
+              return building[field].length > 0;
+            }
+            return building[field];
           }
-          return building[field];
-        }
-        return false;
-      })
-    ) {
-      return res.status(403).send('This action could not be completed');
+          return false;
+        })
+      ) {
+        return res.status(403).send('This action could not be completed');
+      }
     }
     if (building._id) {
       // reject if not admin or creator
-      if (!req.session.admin && building.creator != req.session.userId) {
-        return res.status(403).send('This action could not be completed');
+      if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+        if (!req.session.admin && building.creator != req.session.userId) {
+          return res.status(403).send('This action could not be completed');
+        }
       }
       building = updateBuildingFields(building);
       models.building.update(
@@ -371,12 +375,18 @@ module.exports = function(app) {
 
   app.post('/api/building/delete', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
-      if (!req.session.admin) {
+      // reject if not authenticated
+      if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
     }
 
     var building = req.body;
+    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (!req.session.admin && building.creator != req.session.userId) {
+        return res.status(403).send('This action could not be completed');
+      }
+    }
     if (building._id) {
       models.building.remove({ _id: building._id }, (err, data) => {
         if (err) return res.status(500).send({ cause: err });
