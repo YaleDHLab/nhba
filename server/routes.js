@@ -314,10 +314,7 @@ module.exports = function(app) {
   app.post('/api/building/save', (req, res) => {
     if (process.env['NHBA_ENVIRONMENT'] === 'production') {
       // reject if not authenticated or admin or creator
-      if (
-        !req.session.authenticated ||
-        (!req.session.admin && req.body.creator != req.session.userId)
-      ) {
+      if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
     }
@@ -340,6 +337,10 @@ module.exports = function(app) {
       return res.status(403).send('This action could not be completed');
     }
     if (building._id) {
+      // reject if not admin or creator
+      if (!req.session.admin && building.creator != req.session.userId) {
+        return res.status(403).send('This action could not be completed');
+      }
       building = updateBuildingFields(building);
       models.building.update(
         { _id: building._id },
