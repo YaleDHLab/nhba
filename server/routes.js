@@ -353,6 +353,7 @@ module.exports = function(app) {
       );
     } else {
       var newBuilding = new models.building(building);
+      newBuilding.creator = req.session.userId;
       newBuilding.created_at = getTime();
       newBuilding.updated_at = getTime();
       newBuilding.save((err, data) => {
