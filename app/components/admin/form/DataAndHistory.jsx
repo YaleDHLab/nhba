@@ -204,6 +204,9 @@ export default class DataAndHistory extends React.Component {
           width={'full-width'}
           label={'Past Tenants'}
           field={'past_tenants'}
+          placeholder={
+            'Use this space to create a list of past tenants organized by dates and names (of people and/or businesses). Aspects of this information may also be included in the narrative "Social History" section.'
+          }
           height={150}
         />
 
