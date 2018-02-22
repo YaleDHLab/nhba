@@ -6,12 +6,12 @@ const db = {};
 
 db.simplepage = {
   route: String,
-  text: String,
+  text: String
 };
 
 db.glossaryterm = {
   term: String,
-  definition: String,
+  definition: String
 };
 
 db.user = {
@@ -25,7 +25,7 @@ db.user = {
   superadmin: Boolean,
   contributor: Boolean,
   // buildings created by the user
-  buildings: [{ type: Schema.Types.ObjectId, ref: 'Building' }],
+  buildings: [{ type: Schema.Types.ObjectId, ref: 'Building' }]
 };
 
 db.wptour = {
@@ -52,7 +52,7 @@ db.wptour = {
   post_modified_gmt: Date,
   pre_mongified_id: Number,
   pinged: String,
-  post_excerpt: String,
+  post_excerpt: String
 };
 
 db.building = {
@@ -100,8 +100,8 @@ db.building = {
   archive_documents: [
     {
       filename: String,
-      label: String,
-    },
+      label: String
+    }
   ],
   sources: String,
 
@@ -109,8 +109,8 @@ db.building = {
   images: [
     {
       filename: String,
-      caption: String,
-    },
+      caption: String
+    }
   ],
 
   // geospatial fields
@@ -120,12 +120,12 @@ db.building = {
     type: {
       type: String,
       enum: 'Point',
-      default: 'Point',
+      default: 'Point'
     },
     coordinates: {
       type: [Number],
-      default: [0, 0],
-    },
+      default: [0, 0]
+    }
   },
 
   // timestamp fields
@@ -137,7 +137,7 @@ db.building = {
   tour_position: Number,
 
   // creator
-  creator: { type: Schema.Types.ObjectId, ref: 'User' },
+  creator: { type: Schema.Types.ObjectId, ref: 'User' }
 };
 
 module.exports = db;

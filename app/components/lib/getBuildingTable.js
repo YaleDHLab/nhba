@@ -25,20 +25,20 @@ module.exports = (tableFields, building) => {
             <a target="_blank" href={valueString.trim()}>
               {valueString}
             </a>
-          </td>,
+          </td>
         );
       } else if (f.type && f.type === 'time') {
         cells.push(
           <td key={i}>
             <div className="table-label">{f.label}</div>:{' '}
             {new Date(valueString * 1000).toDateString()}
-          </td>,
+          </td>
         );
       } else {
         cells.push(
           <td key={i}>
             <div className="table-label">{f.label}</div>: {valueString}
-          </td>,
+          </td>
         );
       }
     }

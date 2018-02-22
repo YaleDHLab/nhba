@@ -14,7 +14,7 @@ routes.map(route => {
     route,
     text:
       'Lorem ipsum dolor sit amet, venenatis sodales placerat, in voluptates \
-      hac, dui a sed nullam purus.',
+      hac, dui a sed nullam purus.'
   };
 
   const simplePage = new models.simplepage(page);

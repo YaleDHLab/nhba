@@ -12,7 +12,7 @@ const terms = [
       'A very popular style of the 1920s and 30s in other cities, Art Deco is \
       more rare in New Haven and often comes in its later, more streamlined \
       phase.  Not very much of the vertical, zig-zag style of the 20s.  But a \
-      few lovely moderne gems to be found here.',
+      few lovely moderne gems to be found here.'
   },
   {
     term: 'Beaux Arts Classical',
@@ -23,8 +23,8 @@ const terms = [
       urban planning.  Key examples in New Haven include early twentieth \
       century public buildings that face the Green, including the New Haven \
       Free Public Library Ives Branch and the great temples of the Circuit \
-      Court and the Post Office building, now used as a county courthouse.',
-  },
+      Court and the Post Office building, now used as a county courthouse.'
+  }
 ];
 
 let completed = 0;

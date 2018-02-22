@@ -6,7 +6,7 @@ const fs = require('fs');
 const geocoder = NodeGeocoder({
   provider: 'google',
   httpAdapter: 'https',
-  formatter: null,
+  formatter: null
 });
 
 const writeFile = (filename, content) => {
@@ -52,5 +52,5 @@ const geocodeAll = () => {
 
 module.exports = {
   geocode,
-  geocodeAll,
+  geocodeAll
 };

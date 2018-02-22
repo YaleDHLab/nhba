@@ -15,7 +15,7 @@ module.exports = {
       'error',
       {
         singleQuote: true,
-        trailingComma: 'all',
+        trailingComma: 'none',
       },
     ],
     'react/jsx-uses-vars': 2,

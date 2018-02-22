@@ -10,7 +10,7 @@ config.api = {
   protocol: 'http',
   host: 'localhost',
   port: 8080,
-  prefix: 'api',
+  prefix: 'api'
 };
 
 config.endpoint = '';
@@ -43,7 +43,7 @@ config.get = function(route, callback) {
 
 config.ssl = {
   key: 'tls/privkey.pem',
-  cert: 'tls/fullchain.pem',
+  cert: 'tls/fullchain.pem'
 };
 
 module.exports = config;

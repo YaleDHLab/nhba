@@ -13,5 +13,5 @@ module.exports = url => ({
   backgroundImage: `url(${url})`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
-  backgroundSize: 'cover',
+  backgroundSize: 'cover'
 });

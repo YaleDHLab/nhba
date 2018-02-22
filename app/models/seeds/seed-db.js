@@ -47,7 +47,7 @@ const selectOptions = [
   'current_use',
   'style',
   'era',
-  'neighborhood',
+  'neighborhood'
 ];
 
 selectOptions.map(select => {
@@ -58,7 +58,7 @@ selectOptions.map(select => {
 
   selects[select] = {
     label: select,
-    options,
+    options
   };
 });
 
@@ -108,27 +108,27 @@ for (let i = 0; i < nBuildings; i++) {
     archive_documents: [
       {
         url: 'https://lorempixel.com/800/500/city/',
-        label: faker.lorem.words(),
+        label: faker.lorem.words()
       },
       {
         url: 'https://lorempixel.com/800/500/city/',
-        label: faker.lorem.words(),
-      },
+        label: faker.lorem.words()
+      }
     ],
     resources: [
       {
         url: 'https://lorempixel.com/800/500/city/',
-        label: faker.lorem.words(),
+        label: faker.lorem.words()
       },
       {
         url: 'https://lorempixel.com/800/500/city/',
-        label: faker.lorem.words(),
-      },
+        label: faker.lorem.words()
+      }
     ],
     location: {
       latitude: loc.lat + randomNumber(-20, 20) / 1000,
-      longitude: loc.long + randomNumber(-20, 20) / 1000,
-    },
+      longitude: loc.long + randomNumber(-20, 20) / 1000
+    }
   };
 
   selectOptions.map(select => {

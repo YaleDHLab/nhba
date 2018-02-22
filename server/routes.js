@@ -47,22 +47,22 @@ const getTextQuery = req => {
       {
         overview_description: {
           $regex: req.query.fulltext,
-          $options: 'i',
-        },
+          $options: 'i'
+        }
       },
       {
         address: {
           $regex: regexEscape(req.query.fulltext),
-          $options: 'i',
-        },
+          $options: 'i'
+        }
       },
       {
         building_name: {
           $regex: regexEscape(req.query.fulltext),
-          $options: 'i',
-        },
-      },
-    ],
+          $options: 'i'
+        }
+      }
+    ]
   };
 
   return textQuery;
@@ -117,7 +117,7 @@ const getLocation = (lng, lat) => {
   if (lng && lat) {
     return {
       type: 'Point',
-      coordinates: [parseFloat(lng), parseFloat(lat)],
+      coordinates: [parseFloat(lng), parseFloat(lat)]
     };
   }
   return undefined;
@@ -139,9 +139,9 @@ const addProximityTerms = (queryTerms, req) => {
   const nearQuery = {
     location: {
       $near: {
-        $geometry: getLocation(userLng, userLat),
-      },
-    },
+        $geometry: getLocation(userLng, userLat)
+      }
+    }
   };
 
   queryTerms.push(nearQuery);
@@ -276,7 +276,7 @@ module.exports = function routes(app) {
         { $push: { buildings: building._id } },
         err => {
           if (err) return res.status(500).send({ cause: err });
-        },
+        }
       );
       return res.status(200).send(data);
     });
@@ -347,7 +347,7 @@ module.exports = function routes(app) {
         (err, data) => {
           if (err) return res.status(500).send({ cause: err });
           return res.status(200).send(data);
-        },
+        }
       );
     } else {
       const newBuilding = new models.building(building);
@@ -390,7 +390,7 @@ module.exports = function routes(app) {
             { $pull: { buildings: building._id } },
             err => {
               if (err) return res.status(500).send({ cause: err });
-            },
+            }
           );
         }
         return res.status(200).send(data);
@@ -434,7 +434,7 @@ module.exports = function routes(app) {
           }
           return res.status(200).send({
             latitude: lat,
-            longitude: lng,
+            longitude: lng
           });
         });
       } else {
@@ -486,7 +486,7 @@ module.exports = function routes(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      },
+      }
     );
   });
 
@@ -514,7 +514,7 @@ module.exports = function routes(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      },
+      }
     );
   });
 
@@ -550,7 +550,7 @@ module.exports = function routes(app) {
           });
         });
       },
-      options,
+      options
     );
   });
 
@@ -581,7 +581,7 @@ module.exports = function routes(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      },
+      }
     );
   });
 

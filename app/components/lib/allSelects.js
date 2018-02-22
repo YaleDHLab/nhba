@@ -22,5 +22,5 @@ module.exports = [
   { label: 'Structural Conditions', field: 'structural_conditions' },
   { label: 'External Conditions', field: 'external_conditions' },
   { label: 'Threats', field: 'threats' },
-  { label: 'Ownership Status', field: 'ownership_status' },
+  { label: 'Ownership Status', field: 'ownership_status' }
 ];

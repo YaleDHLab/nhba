@@ -24,7 +24,7 @@ module.exports = function(app) {
       'Sorry, this email address does not have any account information.',
     passwordUpdated: 'Success! Your password has been updated.',
     error:
-      'Sorry, we could not process your request. Please contact an administrator for help.',
+      'Sorry, we could not process your request. Please contact an administrator for help.'
   };
 
   /**
@@ -52,7 +52,7 @@ module.exports = function(app) {
     // if the requested email address is used, inform the client
     if (doc.length > 0) {
       return res.status(200).send({
-        message: messages.emailTaken,
+        message: messages.emailTaken
       });
     }
 
@@ -81,7 +81,7 @@ module.exports = function(app) {
             return res.status(500).send({ cause: err });
           }
           return res.status(200).send({
-            message: messages.checkEmail,
+            message: messages.checkEmail
           });
         });
       });
@@ -95,7 +95,7 @@ module.exports = function(app) {
   app.post('/api/validate', (req, res) => {
     const query = {
       email: req.body.email,
-      token: req.body.token,
+      token: req.body.token
     };
 
     // find and validate the user
@@ -126,12 +126,12 @@ module.exports = function(app) {
   var authenticateUser = (err, doc, req, res) => {
     if (err)
       return res.status(500).send({
-        message: messages.error,
+        message: messages.error
       });
 
     if (doc.length == 0) {
       return res.status(403).send({
-        message: messages.loginFail,
+        message: messages.loginFail
       });
     }
 
@@ -140,7 +140,7 @@ module.exports = function(app) {
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err)
         return res.status(500).send({
-          message: messages.error,
+          message: messages.error
         });
 
       // validate the user, update their credentials, and log them in
@@ -148,7 +148,7 @@ module.exports = function(app) {
         validateUser(user, req, res);
       } else {
         return res.status(403).send({
-          message: messages.loginFail,
+          message: messages.loginFail
         });
       }
     });
@@ -192,9 +192,9 @@ module.exports = function(app) {
 
         // inform the user they're logged in
         return res.status(200).send({
-          message: messages.loginSuccess,
+          message: messages.loginSuccess
         });
-      },
+      }
     );
   };
 
@@ -237,8 +237,8 @@ module.exports = function(app) {
 
   app.get('/api/session', (req, res) =>
     res.status(200).send({
-      session: req.session,
-    }),
+      session: req.session
+    })
   );
 
   /**
@@ -254,11 +254,11 @@ module.exports = function(app) {
     req.session.save(err => {
       if (err) {
         return res.status(500).send({
-          message: messages.logoutFail,
+          message: messages.logoutFail
         });
       }
       return res.status(200).send({
-        message: messages.logoutSuccess,
+        message: messages.logoutSuccess
       });
     });
   });
@@ -290,7 +290,7 @@ module.exports = function(app) {
   var requestPasswordReset = (err, doc, req, res) => {
     if (err) {
       return res.status(500).send({
-        message: messages.error,
+        message: messages.error
       });
     }
 
@@ -298,7 +298,7 @@ module.exports = function(app) {
 
     if (!user) {
       return res.status(200).send({
-        message: messages.loginFail,
+        message: messages.loginFail
       });
     }
 
@@ -309,13 +309,13 @@ module.exports = function(app) {
     mailer.send(user.email, user.token, '&resetPassword=true');
 
     const query = {
-      email: user.email,
+      email: user.email
     };
 
     models.user.findOneAndUpdate(query, user, { upsert: true }, err => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send({
-        message: messages.checkEmail,
+        message: messages.checkEmail
       });
     });
   };
@@ -335,7 +335,7 @@ module.exports = function(app) {
   var resetPassword = (err, doc, req, res, next) => {
     if (err) {
       return res.status(500).send({
-        message: messages.error,
+        message: messages.error
       });
     }
 
@@ -343,7 +343,7 @@ module.exports = function(app) {
 
     if (!user) {
       return res.status(403).send({
-        message: messages.loginFail,
+        message: messages.loginFail
       });
     }
 
@@ -365,13 +365,13 @@ module.exports = function(app) {
 
         const query = {
           email: user.email,
-          token: user.token,
+          token: user.token
         };
 
         models.user.findOneAndUpdate(query, user, { upsert: true }, err => {
           if (err) return res.status(500).send({ cause: err });
           return res.status(200).send({
-            message: messages.passwordUpdated,
+            message: messages.passwordUpdated
           });
         });
       });

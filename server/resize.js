@@ -4,22 +4,22 @@ const path = require('path');
 
 const dirs = {
   raw: 'build/assets/uploads/raw',
-  resized: 'build/assets/uploads/resized',
+  resized: 'build/assets/uploads/resized'
 };
 
 const sizes = {
   small: {
     width: 500,
-    height: 330,
+    height: 330
   },
   medium: {
     width: 1000,
-    height: 660,
+    height: 660
   },
   large: {
     width: 1500,
-    height: 990,
-  },
+    height: 990
+  }
 };
 
 // make calls to resize the image at each size
@@ -82,5 +82,5 @@ const upload = filepath =>
 // return file resize api
 module.exports = {
   uploads,
-  upload,
+  upload
 };

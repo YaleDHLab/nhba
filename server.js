@@ -40,8 +40,8 @@ app.use(
     proxy: true,
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 3600000 * 24 }, // 24 hours
-  }),
+    cookie: { maxAge: 3600000 * 24 } // 24 hours
+  })
 );
 
 // serve files from the build directory
@@ -70,7 +70,7 @@ app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 
 // enable logging
 morgan('combined', {
-  skip: (req, res) => res.statusCode < 400,
+  skip: (req, res) => res.statusCode < 400
 });
 
 // send CORS headers to enable dev work on 8081
@@ -78,7 +78,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
+    'Origin, X-Requested-With, Content-Type, Accept'
   );
   next();
 });
@@ -96,10 +96,10 @@ uploads(app);
  * */
 
 // check whether we need to initialize a production grade https server
-if (process.env.NHBA_ENVIRONMENT == 'production') {
+if (process.env.NHBA_ENVIRONMENT === 'production') {
   const options = {
     key: fs.readFileSync(config.ssl.key),
-    cert: fs.readFileSync(config.ssl.cert),
+    cert: fs.readFileSync(config.ssl.cert)
   };
 
   https.createServer(options, app).listen(443);
@@ -107,7 +107,7 @@ if (process.env.NHBA_ENVIRONMENT == 'production') {
   http
     .createServer((req, res) => {
       res.writeHead(301, {
-        Location: `https://${req.headers.host}${req.url}`,
+        Location: `https://${req.headers.host}${req.url}`
       });
       res.end();
     })
