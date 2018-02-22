@@ -1,6 +1,9 @@
 import React from 'react';
 import api from '../../../config';
 import request from 'superagent';
+import ReactQuill from 'react-quill';
+
+import 'react-quill/dist/quill.snow.css';
 
 export default class EditSimplePage extends React.Component {
   constructor(props) {
@@ -51,8 +54,10 @@ export default class EditSimplePage extends React.Component {
     // pass, as this should be static
   }
 
-  handleTextChange(e) {
-    this.setState({ text: e.target.value });
+  handleTextChange(value, delta, source) {
+    if (source == 'user') {
+      this.setState({ text: value });
+    }
   }
 
   /**
@@ -76,9 +81,7 @@ export default class EditSimplePage extends React.Component {
       <div className="form edit-simple-page">
         <div className="form-content">
           <h1>{this.state.title}</h1>
-          <div className="instructions">
-            {'Edit page content here. For headings, use <b> tags.'}
-          </div>
+          <div className="instructions">Edit page content here.</div>
           <div className={'text-input full-width'}>
             <div className="label">Page Title</div>
             <input
@@ -89,15 +92,14 @@ export default class EditSimplePage extends React.Component {
           </div>
           <div className={'full-width text-area'}>
             <div className="label">Body Text</div>
-            <textarea
-              className="custom-textarea"
+            <ReactQuill
               onChange={this.handleTextChange}
-              rows={35}
-              placeholder="(200 words) Style guide..."
+              placeholder={this.props.placeholder || ''}
               value={this.state.text}
-            />
+            >
+              <div style={{ height: 300 }} />
+            </ReactQuill>
           </div>
-
           <div className="center-save-button">
             <div className="yellow-button" onClick={this.savePage}>
               Save

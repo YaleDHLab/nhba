@@ -42,6 +42,7 @@ export default class BuildingText extends React.Component {
       { label: 'Tour', field: 'tours' },
       { label: 'Researcher', field: 'researcher' },
       { label: 'Created At', field: 'created_at', type: 'time' },
+      { label: 'Updated At', field: 'updated_at', type: 'time' },
       { label: 'Story Maps', field: 'storymap_url', type: 'url' },
       { label: 'Multimedia', field: 'multimedia_url', type: 'url' },
     ];

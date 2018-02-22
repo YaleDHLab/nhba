@@ -1,12 +1,14 @@
 import React from 'react';
 import api from '../../../config';
 import _ from 'lodash';
+import getNewlineMarkup from '../lib/getNewlineMarkup';
 
 export default class SimplePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      text: '',
       paragraphs: [],
       glossaryterms: [],
     };
@@ -21,24 +23,34 @@ export default class SimplePage extends React.Component {
       if (err) console.warn(err);
 
       this.props.flat
-        ? this.setState({ paragraphs: res.body[0].text.split('\n\n') })
+        ? this.setState({ text: res.body[0].text })
         : this.setState({ glossaryterms: _.sortBy(res.body, 'term') });
     });
   }
 
   render() {
+    console.log(
+      this.state.glossaryterms
+        .map((t, i) => {
+          return (
+            <div key={i}>
+              <b>{t.term}</b>
+              <p>{t.definition}</p>
+            </div>
+          );
+        })
+        .join('')
+    );
     const bodyText = this.props.flat
-      ? this.state.paragraphs.map((p, i) => {
-        return <p key={i}>{p}</p>;
-      })
+      ? this.state.text
       : this.state.glossaryterms.map((t, i) => {
-        return (
-          <div key={i}>
-            <b>{t.term}</b>
-            <p>{t.definition}</p>
-          </div>
-        );
-      });
+          return (
+            <div key={i}>
+              <b>{t.term}</b>
+              <p>{t.definition}</p>
+            </div>
+          );
+        });
 
     return (
       <div className="simple-page">
@@ -50,7 +62,14 @@ export default class SimplePage extends React.Component {
         </div>
         <div className="container">
           <h1 className="title">{this.props.title}</h1>
-          <div className="body-text">{bodyText}</div>
+          {this.props.flat ? (
+            <div
+              className="body-text"
+              dangerouslySetInnerHTML={getNewlineMarkup(bodyText)}
+            />
+          ) : (
+            <div className="body-text">{bodyText}</div>
+          )}
         </div>
       </div>
     );
