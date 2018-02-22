@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const models = require('../models');
 const config = require('../../../config');
 
-mongoose.connect('mongodb://localhost/' + config.db);
+mongoose.connect(`mongodb://localhost/${config.db}`);
 
 const terms = [
   {

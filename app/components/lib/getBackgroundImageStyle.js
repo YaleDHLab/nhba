@@ -7,13 +7,11 @@
  * @returns:
  *   {obj}: a style object that creates a background image
  *     given that url
- **/
+ * */
 
-module.exports = url => {
-  return {
-    backgroundImage: 'url(' + url + ')',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
-  };
-};
+module.exports = url => ({
+  backgroundImage: `url(${url})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center center',
+  backgroundSize: 'cover',
+});

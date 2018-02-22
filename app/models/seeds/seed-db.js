@@ -1,7 +1,7 @@
 /**
  * Run this file to create seed data for the database
  * Usage: node seed-db.js
- **/
+ * */
 
 const faker = require('faker');
 const models = require('../models');
@@ -10,11 +10,11 @@ const mongoose = require('mongoose');
 const config = require('../../../config');
 const _ = require('lodash');
 
-mongoose.connect('mongodb://localhost/' + config.db);
+mongoose.connect(`mongodb://localhost/${config.db}`);
 
 /**
  * Configure seed
- **/
+ * */
 
 const nBuildings = 50; // the number of buildings to generate
 const nSelectOptions = 10; // the number of options per select field
@@ -22,13 +22,13 @@ const loc = { lat: 41.3062931, long: -72.9348493 }; // initial location
 
 /**
  * Drop extant tables
- **/
+ * */
 
 const dropTable = tableName => {
   try {
     models[tableName].drop();
   } catch (err) {
-    console.info('failed to drop ', +tableName + ' table');
+    console.info('failed to drop ', `${+tableName} table`);
   }
 };
 
@@ -38,9 +38,9 @@ const dropTable = tableName => {
 
 /**
  * Seed select fields
- **/
+ * */
 
-let selects = {}; // map each select field to {'label': str, 'options': []}
+const selects = {}; // map each select field to {'label': str, 'options': []}
 const selectOptions = [
   'tour',
   'building_type',
@@ -51,14 +51,14 @@ const selectOptions = [
 ];
 
 selectOptions.map(select => {
-  let options = [];
+  const options = [];
   _.times(nSelectOptions, () => {
     options.push(faker.lorem.word());
   });
 
   selects[select] = {
     label: select,
-    options: options,
+    options,
   };
 });
 
@@ -71,7 +71,7 @@ Object.keys(selects).map(select => {
 
 /**
  * Seed buildings
- **/
+ * */
 
 const randomNumber = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);

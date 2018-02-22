@@ -4,14 +4,14 @@ const mongoose = require('mongoose');
 const models = require('../models');
 const config = require('../../../config');
 
-mongoose.connect('mongodb://localhost/' + config.db);
+mongoose.connect(`mongodb://localhost/${config.db}`);
 
 const routes = ['About', 'Contact'];
 let completed = 0;
 
 routes.map(route => {
   const page = {
-    route: route,
+    route,
     text:
       'Lorem ipsum dolor sit amet, venenatis sodales placerat, in voluptates \
       hac, dui a sed nullam purus.',

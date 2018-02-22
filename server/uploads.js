@@ -1,28 +1,28 @@
-var multer = require('multer');
-var resize = require('./resize');
-var path = require('path');
+const multer = require('multer');
+const resize = require('./resize');
+const path = require('path');
 
-var destination = path.join('build', 'assets', 'uploads', 'files');
+const destination = path.join('build', 'assets', 'uploads', 'files');
 
-var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
     cb(null, destination);
   },
-  filename: function(req, file, cb) {
+  filename(req, file, cb) {
     cb(null, file.originalname);
   },
 });
 
-var upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-module.exports = function(app) {
+module.exports = function uploads(app) {
   app.post('/api/upload', upload.single('attachment'), (req, res) => {
     // If the user passed resize params, resize the attached image
-    if (req.query.resize && req.query.resize == 'true') {
-      var uploads = resize.upload(
-        path.join(destination, req.file.originalname)
+    if (req.query.resize && req.query.resize === 'true') {
+      const resizedUpload = resize.upload(
+        path.join(destination, req.file.originalname),
       );
-      uploads.then(function() {
+      resizedUpload.then(() => {
         res.status(200).send({
           status: 'great',
           file: {

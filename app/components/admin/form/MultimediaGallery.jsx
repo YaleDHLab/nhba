@@ -1,26 +1,30 @@
 import React from 'react';
+import request from 'superagent';
+import _ from 'lodash';
+
 import ImageGrid from './form-elements/ImageGrid';
 import FileTable from './form-elements/FileTable';
 import FilePicker from './form-elements/FilePicker';
 import TextInput from './form-elements/TextInput';
 import api from '../../../../config';
-import request from 'superagent';
-import _ from 'lodash';
 
 export default class MultimediaGallery extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fileToRecaption: {}, // the file we're recaptioning
+      fileToRecaption: {},
+      fileToRelabel: {},
     };
 
     this.handleFile = this.handleFile.bind(this);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
+    this.handleLabelChange = this.handleLabelChange.bind(this);
+    this.selectFileToRelabel = this.selectFileToRelabel.bind(this);
   }
 
-  handleFile(e) {
+  handleImage(e) {
     const self = this;
     e.preventDefault();
 
@@ -49,11 +53,43 @@ export default class MultimediaGallery extends React.Component {
     });
   }
 
+  handleFile(e) {
+    // remove the file we were relabelling (if any)
+    this.setState({ fileToRelabel: null });
+
+    const self = this;
+    e.preventDefault();
+
+    let files = [];
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+
+    _.keys(files).map((k) => {
+      let req = request.post(api.endpoint + 'upload');
+      let filename = files[k].name.split(' ').join('-');
+      req.attach('attachment', files[k], filename);
+
+      req.end((err, res) => {
+        if (err) console.warn(err);
+
+        const doc = {
+          filename: res.body.file.name,
+          label: res.body.file.name,
+        };
+
+        self.props.updateField('archive_documents', doc);
+      });
+    });
+  }
+
   selectFileToRecaption(fileIndex) {
-    if (fileIndex != null) {
-      let fileToRecaption = this.props.building.images[fileIndex];
+    if (fileIndex !== null) {
+      const fileToRecaption = this.props.building.images[fileIndex];
       fileToRecaption.index = fileIndex;
-      this.setState({ fileToRecaption: fileToRecaption });
+      this.setState({ fileToRecaption });
     } else {
       // allow callers to specify null to remove the file to recaption
       this.setState({ fileToRecaption: null });
@@ -62,16 +98,42 @@ export default class MultimediaGallery extends React.Component {
 
   handleCaptionChange(e) {
     const relabelCaptionIndex = this.state.fileToRecaption.index;
-    if (relabelCaptionIndex != 'null') {
+    if (relabelCaptionIndex !== 'null') {
       const newCaption = e.target.value;
-      const images = this.props.building.images;
+      const { images } = this.props.building;
 
       // mutate a copy of the extant archive documents
-      let newImages = Object.assign([], images);
+      const newImages = Object.assign([], images);
       newImages[relabelCaptionIndex].caption = newCaption;
 
       // use the replaceField method to quash the old archive documents
       this.props.replaceField('images', newImages);
+    }
+  }
+
+  handleLabelChange(e) {
+    const relabelFileIndex = this.state.fileToRelabel.index;
+    if (relabelFileIndex !== 'null') {
+      const newLabel = e.target.value;
+      const archiveDocuments = this.props.building.archive_documents;
+
+      // mutate a copy of the extant archive documents
+      const newArchiveDocuments = Object.assign([], archiveDocuments);
+      newArchiveDocuments[relabelFileIndex].label = newLabel;
+
+      // use the replaceField method to quash the old archive documents
+      this.props.replaceField('archive_documents', newArchiveDocuments);
+    }
+  }
+
+  selectFileToRelabel(fileIndex) {
+    if (fileIndex !== null) {
+      const fileToRelabel = this.props.building.archive_documents[fileIndex];
+      fileToRelabel.index = fileIndex;
+      this.setState({ fileToRelabel });
+    } else {
+      // allow callers to specify null to remove the file to relabel
+      this.setState({ fileToRelabel: null });
     }
   }
 
@@ -86,9 +148,9 @@ export default class MultimediaGallery extends React.Component {
 
         <FilePicker
           {...this.props}
-          topLabel={'Select File'}
+          topLabel={'Select Image'}
           bottomLabel={'Caption'}
-          handleFile={this.handleFile}
+          handleFile={this.handleImage}
           file={this.state.fileToRecaption}
           textField={'caption'}
           handleTextChange={this.handleCaptionChange}
@@ -103,8 +165,8 @@ export default class MultimediaGallery extends React.Component {
 
         <FilePicker
           {...this.props}
-          topLabel={'Upload'}
-          bottomLabel={'Display Title'}
+          topLabel={'Select File'}
+          bottomLabel={'Name'}
           handleFile={this.handleFile}
           file={this.state.fileToRelabel}
           textField={'label'}

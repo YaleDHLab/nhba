@@ -3,7 +3,7 @@
  *   an array of objects that identify the label and fields
  *   for all available selects. Uset to populate the select
  *   options on the admin form
- **/
+ * */
 
 module.exports = [
   { label: 'Style', field: 'styles' },

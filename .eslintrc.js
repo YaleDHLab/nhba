@@ -9,38 +9,22 @@ module.exports = {
       env: 'development',
     },
   },
-  extends: ['eslint:recommended', 'prettier', 'prettier/react'],
+  extends: ['eslint:recommended', 'airbnb-base', 'prettier', 'prettier/react'],
   rules: {
-    'import/extensions': [
+    'prettier/prettier': [
       'error',
-      'always',
       {
-        js: 'never',
-        jsx: 'never',
-        mjs: 'never',
+        singleQuote: true,
+        trailingComma: 'all',
       },
     ],
-    indent: ['error', 2, { SwitchCase: 1 }],
-    'linebreak-style': ['error', 'unix'],
-    'max-len': [
-      1,
-      80,
-      {
-        ignoreComments: true,
-        ignoreTrailingComments: true,
-        ignoreUrls: true,
-        ignoreStrings: true,
-      },
-    ],
-    'no-console': ['error', { allow: ['warn', 'info'] }],
-    'no-empty': ['error', { allowEmptyCatch: true }],
-    'no-undef': ['error', { typeof: false }],
-    'no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
-    'no-trailing-spaces': 2,
-    quotes: ['error', 'single'],
     'react/jsx-uses-vars': 2,
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-underscore-dangle': ['error', { allow: ['_id']}],
+    'no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
+    eqeqeq: ['error', 'always'],
   },
-  plugins: ['react', 'import'],
+  plugins: ['react', 'import', 'prettier'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {

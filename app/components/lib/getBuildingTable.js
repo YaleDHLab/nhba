@@ -9,13 +9,13 @@ import React from 'react';
  *         each with field and label attributes
  *        {obj} building: a building object
  *
- **/
+ * */
 
 module.exports = (tableFields, building) => {
-  let cells = [];
+  const cells = [];
   tableFields.map((f, i) => {
-    let value = building[f.field];
-    let valueString = Array.isArray(value) ? value.join(', ') : value;
+    const value = building[f.field];
+    const valueString = Array.isArray(value) ? value.join(', ') : value;
     if (value && (value.length > 0 || !isNaN(parseFloat(value)))) {
       if (f.type && f.type === 'url') {
         cells.push(
@@ -25,26 +25,26 @@ module.exports = (tableFields, building) => {
             <a target="_blank" href={valueString.trim()}>
               {valueString}
             </a>
-          </td>
+          </td>,
         );
       } else if (f.type && f.type === 'time') {
         cells.push(
           <td key={i}>
             <div className="table-label">{f.label}</div>:{' '}
             {new Date(valueString * 1000).toDateString()}
-          </td>
+          </td>,
         );
       } else {
         cells.push(
           <td key={i}>
             <div className="table-label">{f.label}</div>: {valueString}
-          </td>
+          </td>,
         );
       }
     }
   });
 
-  let rows = [];
+  const rows = [];
   let rowCells = [];
   cells.map((c, i) => {
     rowCells.push(c);

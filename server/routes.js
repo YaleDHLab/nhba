@@ -1,29 +1,37 @@
-var mongoose = require('mongoose');
-var models = require('../app/models/models');
-var config = require('../config');
-var geocoder = require('./geocoder');
-var path = require('path');
-var _ = require('lodash');
+const mongoose = require('mongoose');
+const models = require('../app/models/models');
+const config = require('../config');
+const geocoder = require('./geocoder');
+const path = require('path');
+const _ = require('lodash');
 
 /**
  *
  * Connect to the Mongoose db
  *
- **/
+ * */
 
-var mongoOptions = { useMongoClient: true };
-mongoose.connect('mongodb://localhost/' + config.db, mongoOptions);
+const mongoOptions = { useMongoClient: true };
+mongoose.connect(`mongodb://localhost/${config.db}`, mongoOptions);
 mongoose.connection.on('error', err => {
   console.warn(err);
 });
 
 /**
  * Return the time since epoch in millisconds
- **/
+ * */
 
-const getTime = () => {
-  return Date.now() / 1000;
-};
+const getTime = () => Date.now() / 1000;
+
+/**
+ * Helper that escapes regex characters in order to make them
+ * searchable by server.js.
+ *
+ * @author: Mathias Bynens
+ *   originally posted in SO 3115150
+ * */
+
+const regexEscape = text => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
 /**
  * Retrieve the text portion of a building query
@@ -31,7 +39,7 @@ const getTime = () => {
  *     {obj} req: an express request
  *   @returns:
  *     {obj}: an object that defines a regex query for all fulltext fields
- **/
+ * */
 
 const getTextQuery = req => {
   const textQuery = {
@@ -61,18 +69,6 @@ const getTextQuery = req => {
 };
 
 /**
- * Helper that escapes regex characters in order to make them
- * searchable by server.js.
- *
- * @author: Mathias Bynens
- *   originally posted in SO 3115150
- **/
-
-const regexEscape = text => {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-};
-
-/**
  * Retrieve the text portion of a building query
  *   @args:
  *     {array} queryTerms: a list of mongo query objects; e.g. [{_id: 1}]
@@ -80,23 +76,22 @@ const regexEscape = text => {
  *   @returns:
  *     {array} the input queryTerms array plus query terms from the filters
  *       within the Search component
- **/
+ * */
 
 const addFilterTerms = (queryTerms, req) => {
-  var keys = _.chain(req.query)
+  const keys = _.chain(req.query)
     .keys()
     .without('filter', 'fulltext', 'sort', 'userLatitude', 'userLongitude')
     .value();
 
-  keys.map(key => {
+  keys.forEach(key => {
     // values with ' ' use _ as whitespace separator in query
-    var values = [],
-      queryTerm = {};
-    var args = (req.query[key] = _.isArray(req.query[key])
-      ? req.query[key]
-      : [req.query[key]]);
+    const values = [];
+    const queryTerm = {};
+    req.query[key] = _.isArray(req.query[key]);
+    const args = req.query[key] ? req.query[key] : [req.query[key]];
 
-    args.map(value => {
+    args.forEach(value => {
       values.push(value);
     });
 
@@ -116,7 +111,7 @@ const addFilterTerms = (queryTerms, req) => {
  *   @returns:
  *     {obj}: an geojson object with the specified lat,lng if available
  *       else, undefined
- **/
+ * */
 
 const getLocation = (lng, lat) => {
   if (lng && lat) {
@@ -124,9 +119,8 @@ const getLocation = (lng, lat) => {
       type: 'Point',
       coordinates: [parseFloat(lng), parseFloat(lat)],
     };
-  } else {
-    return undefined;
   }
+  return undefined;
 };
 
 /**
@@ -136,13 +130,13 @@ const getLocation = (lng, lat) => {
  *     {obj} req: an express request
  *   @returns:
  *     {array} the input queryTerms array plus a $near query
- **/
+ * */
 
 const addProximityTerms = (queryTerms, req) => {
-  var userLng = req.query.userLongitude;
-  var userLat = req.query.userLatitude;
+  const userLng = req.query.userLongitude;
+  const userLat = req.query.userLatitude;
 
-  var nearQuery = {
+  const nearQuery = {
     location: {
       $near: {
         $geometry: getLocation(userLng, userLat),
@@ -160,7 +154,7 @@ const addProximityTerms = (queryTerms, req) => {
  *     {obj} building: an instance of the building model
  *   @returns:
  *     {obj}: the same building with a new timestamp and location
- **/
+ * */
 
 const updateBuildingFields = building => {
   building.updated_at = getTime();
@@ -168,16 +162,16 @@ const updateBuildingFields = building => {
   return building;
 };
 
-module.exports = function(app) {
+module.exports = function routes(app) {
   /**
    *
    * User routes
    *
-   **/
+   * */
 
   app.get('/api/users', (req, res) => {
     // remove the hashed password and access token from responses
-    var select = { password: 0, token: 0 };
+    const select = { password: 0, token: 0 };
 
     models.user.find({}, select, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
@@ -189,11 +183,11 @@ module.exports = function(app) {
    *
    * Building query routes
    *
-   **/
+   * */
 
   app.get('/api/buildings', (req, res) => {
-    var query = {};
-    var queryTerms = [];
+    let query = {};
+    let queryTerms = [];
 
     // query by building id
     if (req.query.buildingId) {
@@ -216,7 +210,7 @@ module.exports = function(app) {
     }
 
     // query by geospatial location
-    if (req.query.sort && req.query.sort == 'proximity') {
+    if (req.query.sort && req.query.sort === 'proximity') {
       queryTerms = addProximityTerms(queryTerms, req);
     }
 
@@ -227,7 +221,7 @@ module.exports = function(app) {
     }
 
     if (req.query.sort && req.query.sort !== 'proximity') {
-      var sort = {};
+      const sort = {};
       sort[req.query.sort] = -1;
       models.building
         .find(query)
@@ -248,10 +242,10 @@ module.exports = function(app) {
    *
    * First building in db for mobiles
    *
-   **/
+   * */
 
   app.get('/api/buildings/random', (req, res) => {
-    var query = { $where: 'this.images.length > 0' };
+    const query = { $where: 'this.images.length > 0' };
     models.building.findOne(query, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res.status(200).send(data);
@@ -262,27 +256,27 @@ module.exports = function(app) {
    *
    * New records
    *
-   **/
+   * */
 
   app.get('/api/building/new', (req, res) => {
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
     }
 
-    var building = new models.building({ creator: req.session.userId });
+    const building = new models.building({ creator: req.session.userId });
     building.created_at = getTime();
     building.updated_at = getTime();
     building.save((err, data) => {
       if (err) return res.status(500).send({ cause: err });
-      var query = { _id: req.session.userId };
+      const query = { _id: req.session.userId };
       models.user.findOneAndUpdate(
         query,
         { $push: { buildings: building._id } },
         err => {
           if (err) return res.status(500).send({ cause: err });
-        }
+        },
       );
       return res.status(200).send(data);
     });
@@ -292,15 +286,15 @@ module.exports = function(app) {
    *
    * Empty record
    *
-   **/
+   * */
 
   app.get('/api/building/empty', (req, res) => {
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
     }
-    var building = new models.building().toObject();
+    const building = new models.building().toObject();
     delete building._id;
     return res.status(200).send(building);
   });
@@ -309,10 +303,10 @@ module.exports = function(app) {
    *
    * Save building
    *
-   **/
+   * */
 
   app.post('/api/building/save', (req, res) => {
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       // reject if not authenticated
       if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
@@ -320,10 +314,10 @@ module.exports = function(app) {
     }
 
     // update buildings that have ids
-    var building = req.body;
+    let building = req.body;
     const requiredFields = ['address', 'current_uses', 'researcher'];
     // reject if lacks required fields
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       if (
         !requiredFields.every(field => {
           if (building[field]) {
@@ -340,7 +334,7 @@ module.exports = function(app) {
     }
     if (building._id) {
       // reject if not admin or creator
-      if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+      if (process.env.NHBA_ENVIRONMENT === 'production') {
         if (!req.session.admin && building.creator != req.session.userId) {
           return res.status(403).send('This action could not be completed');
         }
@@ -353,10 +347,10 @@ module.exports = function(app) {
         (err, data) => {
           if (err) return res.status(500).send({ cause: err });
           return res.status(200).send(data);
-        }
+        },
       );
     } else {
-      var newBuilding = new models.building(building);
+      const newBuilding = new models.building(building);
       newBuilding.creator = req.session.userId;
       newBuilding.created_at = getTime();
       newBuilding.updated_at = getTime();
@@ -371,18 +365,18 @@ module.exports = function(app) {
    *
    * Delete building
    *
-   **/
+   * */
 
   app.post('/api/building/delete', (req, res) => {
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       // reject if not authenticated
       if (!req.session.authenticated) {
         return res.status(403).send('This action could not be completed');
       }
     }
 
-    var building = req.body;
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    const building = req.body;
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       if (!req.session.admin && building.creator != req.session.userId) {
         return res.status(403).send('This action could not be completed');
       }
@@ -396,7 +390,7 @@ module.exports = function(app) {
             { $pull: { buildings: building._id } },
             err => {
               if (err) return res.status(500).send({ cause: err });
-            }
+            },
           );
         }
         return res.status(200).send(data);
@@ -408,41 +402,40 @@ module.exports = function(app) {
    *
    * Geocode building
    *
-   **/
+   * */
 
   app.post('/api/geocode', (req, res) => {
-    if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+    if (process.env.NHBA_ENVIRONMENT === 'production') {
       if (!req.session.admin) {
         return res.status(403).send('This action could not be completed');
       }
     }
 
-    var building = req.body;
+    const building = req.body;
     geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
       if (geoErr) {
         return res.status(500).send({ cause: geoErr });
       }
-      var match = geoRes ? geoRes[0] : null;
+      const match = geoRes ? geoRes[0] : null;
       if (match) {
-        var lat = parseFloat(match.latitude),
+        let lat = parseFloat(match.latitude),
           lng = parseFloat(match.longitude);
         building.latitude = lat;
         building.longitude = lng;
         building.location = getLocation(lng, lat);
 
         // configure the update
-        var query = { _id: building._id };
-        var update = { $set: building };
+        const query = { _id: building._id };
+        const update = { $set: building };
 
         models.building.update(query, update, saveErr => {
           if (saveErr) {
             return res.status(500).send({ cause: saveErr });
-          } else {
-            return res.status(200).send({
-              latitude: lat,
-              longitude: lng,
-            });
           }
+          return res.status(200).send({
+            latitude: lat,
+            longitude: lng,
+          });
         });
       } else {
         return res.status(200).send('address not found');
@@ -454,13 +447,13 @@ module.exports = function(app) {
    *
    * Check creator status
    *
-   **/
+   * */
 
   app.get('/api/creator', (req, res) => {
     if (!req.session.userId) {
       return res.status(200).send({ creator: false });
     }
-    var query = { _id: req.query.buildingId };
+    const query = { _id: req.query.buildingId };
     models.building.findOne(query, (err, data) => {
       if (err) return res.status(500).send({ cause: err });
       return res
@@ -473,7 +466,7 @@ module.exports = function(app) {
    *
    * About routes
    *
-   **/
+   * */
 
   app.get('/api/about', (req, res) => {
     models.simplepage.find({ route: 'About' }, (err, data) => {
@@ -483,8 +476,8 @@ module.exports = function(app) {
   });
 
   app.post('/api/about/save', (req, res) => {
-    var query = { route: 'About' };
-    var options = { upsert: true };
+    const query = { route: 'About' };
+    const options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(
       query,
@@ -493,7 +486,7 @@ module.exports = function(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      }
+      },
     );
   });
 
@@ -501,7 +494,7 @@ module.exports = function(app) {
    *
    * Contact routes
    *
-   **/
+   * */
 
   app.get('/api/contact', (req, res) => {
     models.simplepage.find({ route: 'Contact' }, (err, data) => {
@@ -511,8 +504,8 @@ module.exports = function(app) {
   });
 
   app.post('/api/contact/save', (req, res) => {
-    var query = { route: 'Contact' };
-    var options = { upsert: true };
+    const query = { route: 'Contact' };
+    const options = { upsert: true };
 
     models.simplepage.findOneAndUpdate(
       query,
@@ -521,7 +514,7 @@ module.exports = function(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      }
+      },
     );
   });
 
@@ -529,7 +522,7 @@ module.exports = function(app) {
    *
    * Glossary routes
    *
-   **/
+   * */
 
   app.get('/api/glossary', (req, res) => {
     models.glossaryterm.find({}, (err, data) => {
@@ -539,17 +532,17 @@ module.exports = function(app) {
   });
 
   app.post('/api/glossary/save', (req, res) => {
-    var options = { upsert: true };
-    var results = [];
+    const options = { upsert: true };
+    const results = [];
 
     // remove all glossary terms then save each new glossary term
     models.glossaryterm.remove(
       {},
       () => {
         req.body.map(doc => {
-          var term = new models.glossaryterm(doc);
+          const term = new models.glossaryterm(doc);
           term.save((err, term) => {
-            results.push(err ? err : term);
+            results.push(err || term);
 
             if (results.length == req.body.length) {
               return res.status(200).send(results);
@@ -557,7 +550,7 @@ module.exports = function(app) {
           });
         });
       },
-      options
+      options,
     );
   });
 
@@ -565,14 +558,14 @@ module.exports = function(app) {
    *
    * User routes
    *
-   **/
+   * */
 
   app.post('/api/users/update', (req, res) => {
     if (!req.body._id) {
       return res.status(400).send('missing one or more required params');
     }
 
-    var status = {};
+    let status = {};
     if (req.body.admin === true) {
       status = { admin: true };
     } else if (req.body.contributor === true) {
@@ -588,7 +581,7 @@ module.exports = function(app) {
       (err, data) => {
         if (err) return res.status(500).send({ cause: err });
         return res.status(200).send(data);
-      }
+      },
     );
   });
 
@@ -596,7 +589,7 @@ module.exports = function(app) {
    *
    * View routes
    *
-   **/
+   * */
 
   // send requests to index.html so browserHistory in React Router works
   app.get('*', (req, res) => {

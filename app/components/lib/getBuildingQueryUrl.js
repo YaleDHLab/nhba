@@ -9,7 +9,7 @@ import _ from 'lodash';
  *   {obj} selectFields: an array of objects with label, field keys
  * @returns:
  *   {str} a URI-escaped query string for building data
- **/
+ * */
 
 module.exports = (state, selectFields) => {
   let queryTerms = {};
@@ -30,11 +30,11 @@ module.exports = (state, selectFields) => {
  *     is a list of values for that field
  * @returns:
  *   {obj}: returns the updated query terms
- **/
+ * */
 
 const addSelectQueryTerms = (state, selectFields, queryTerms) => {
   selectFields.map(field => {
-    let values = Array.from(state[field]);
+    const values = Array.from(state[field]);
     if (values.length) queryTerms[field] = encodeValues(values);
   });
   return queryTerms;
@@ -48,10 +48,10 @@ const addSelectQueryTerms = (state, selectFields, queryTerms) => {
  * @returns:
  *   [array]: the input array, except now strings with whitespace
  *     are underscore joined
- **/
+ * */
 
 const encodeValues = values => {
-  let encodedValues = [];
+  const encodedValues = [];
   values.map(value => {
     encodedValues.push(encodeURIComponent(value));
   });
@@ -67,7 +67,7 @@ const encodeValues = values => {
  *     is a list of values for that field
  * @returns:
  *   {obj}: returns the updated query terms
- **/
+ * */
 
 const addSortQueryTerms = (state, queryTerms) => {
   if (state.sort && state.sort !== 'Sort by') {
@@ -85,7 +85,7 @@ const addSortQueryTerms = (state, queryTerms) => {
  *     is a list of values for that field
  * @returns:
  *   {obj}: returns the updated query terms
- **/
+ * */
 
 const addUserLocationQueryTerms = (state, queryTerms) => {
   if (state.userLocation) {
@@ -103,7 +103,7 @@ const addUserLocationQueryTerms = (state, queryTerms) => {
  *     is a list of values for that field
  * @returns:
  *   {str}: a url ready to query for buildings
- **/
+ * */
 
 const buildQueryUrl = queryTerms => {
   let url = 'buildings';
@@ -112,10 +112,10 @@ const buildQueryUrl = queryTerms => {
     _.keys(queryTerms).map(field => {
       if (Array.isArray(queryTerms[field])) {
         queryTerms[field].map(queryTerm => {
-          url += field + '=' + queryTerm + '&';
+          url += `${field}=${queryTerm}&`;
         });
       } else {
-        url += field + '=' + queryTerms[field] + '&';
+        url += `${field}=${queryTerms[field]}&`;
       }
     });
   }

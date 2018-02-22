@@ -1,9 +1,10 @@
-var request = require('superagent');
-var config = {};
+const request = require('superagent');
 
-/***
+const config = {};
+
+/** *
  * Static
- ***/
+ ** */
 
 config.api = {
   protocol: 'http',
@@ -13,21 +14,21 @@ config.api = {
 };
 
 config.endpoint = '';
-config.endpoint += config.api.protocol + '://';
-config.endpoint += config.api.host + ':';
-config.endpoint += config.api.port + '/';
-config.endpoint += config.api.prefix + '/';
+config.endpoint += `${config.api.protocol}://`;
+config.endpoint += `${config.api.host}:`;
+config.endpoint += `${config.api.port}/`;
+config.endpoint += `${config.api.prefix}/`;
 
-/***
+/** *
  * Namespace
- ***/
+ ** */
 
 config.db = 'nhba';
 config.brand = 'nhba';
 
-/***
+/** *
  * Methods
- ***/
+ ** */
 
 config.get = function(route, callback) {
   request
@@ -36,9 +37,9 @@ config.get = function(route, callback) {
     .end(callback);
 };
 
-/***
+/** *
  * Certificates
- ***/
+ ** */
 
 config.ssl = {
   key: 'tls/privkey.pem',

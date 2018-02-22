@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var db = {};
+const Schema = mongoose.Schema;
+
+const db = {};
 
 db.simplepage = {
   route: String,

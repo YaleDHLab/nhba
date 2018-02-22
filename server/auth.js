@@ -1,18 +1,18 @@
 // auth.js
-var bcrypt = require('bcryptjs');
-var models = require('../app/models/models');
-var mailer = require('./mailer');
-var _ = require('lodash');
+const bcrypt = require('bcryptjs');
+const models = require('../app/models/models');
+const mailer = require('./mailer');
+const _ = require('lodash');
 
 // specify the encryption level
-var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10;
+const saltWorkFactor = parseInt(process.env.NHBA_SALT_WORK_FACTOR) || 10;
 
 module.exports = function(app) {
   /**
    * Identify the messages delievered by the auth middleware to client
-   **/
+   * */
 
-  var messages = {
+  const messages = {
     emailTaken: 'Sorry, the requested email address is already taken.',
     checkEmail: 'Success! Please check your email for further instructions.',
     loginSuccess: 'Success! You are now logged in.',
@@ -29,7 +29,7 @@ module.exports = function(app) {
 
   /**
    * Register new users
-   **/
+   * */
 
   // request made by client when attempting to add a user to the db
   app.post('/api/register', (req, res, next) => {
@@ -46,7 +46,7 @@ module.exports = function(app) {
    *   doc: the result of a mongoose query for a user
    *   req: a request object from express
    *   res: a response object from express
-   **/
+   * */
 
   var initializeUserPassword = (err, doc, req, res, next) => {
     // if the requested email address is used, inform the client
@@ -57,7 +57,7 @@ module.exports = function(app) {
     }
 
     // else, create a new user with that email address
-    var user = new models.user(req.body);
+    const user = new models.user(req.body);
 
     bcrypt.genSalt(saltWorkFactor, (err, salt) => {
       if (err) return next(err);
@@ -90,10 +90,10 @@ module.exports = function(app) {
 
   /**
    * Validate the account token emailed to user
-   **/
+   * */
 
   app.post('/api/validate', (req, res) => {
-    var query = {
+    const query = {
       email: req.body.email,
       token: req.body.token,
     };
@@ -106,10 +106,10 @@ module.exports = function(app) {
 
   /**
    * Create a new secure token for account validation
-   **/
+   * */
 
   var getToken = () => {
-    var salt = bcrypt.genSaltSync(saltWorkFactor);
+    const salt = bcrypt.genSaltSync(saltWorkFactor);
     return bcrypt.hashSync('B4c0//', salt);
   };
 
@@ -121,7 +121,7 @@ module.exports = function(app) {
    *   doc: the result of a mongoose query for a user
    *   req: a request object from express
    *   res: a response object from express
-   **/
+   * */
 
   var authenticateUser = (err, doc, req, res) => {
     if (err)
@@ -135,7 +135,7 @@ module.exports = function(app) {
       });
     }
 
-    var user = doc[0];
+    const user = doc[0];
 
     bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
       if (err)
@@ -162,11 +162,11 @@ module.exports = function(app) {
    *   {user}: an instance of the User table
    *   {req}: the current Express request
    *   {res}: the current Express response
-   **/
+   * */
 
   var validateUser = (user, req, res) => {
-    var adminEmails = process.env['NHBA_ADMIN_EMAILS'];
-    var superadminEmails = process.env['NHBA_SUPERADMIN_EMAILS'];
+    let adminEmails = process.env.NHBA_ADMIN_EMAILS;
+    let superadminEmails = process.env.NHBA_SUPERADMIN_EMAILS;
     adminEmails = adminEmails ? adminEmails.split(' ') : [];
     superadminEmails = superadminEmails ? superadminEmails.split(' ') : [];
 
@@ -194,7 +194,7 @@ module.exports = function(app) {
         return res.status(200).send({
           message: messages.loginSuccess,
         });
-      }
+      },
     );
   };
 
@@ -204,7 +204,7 @@ module.exports = function(app) {
    * @args:
    *   {obj} user: the result of a query for the current user
    *   {obj} req: the current request object
-   **/
+   * */
 
   var loginSessionData = (user, req) => {
     req.session.authenticated = true;
@@ -221,7 +221,7 @@ module.exports = function(app) {
    *
    * Log in a user
    *
-   **/
+   * */
 
   app.post('/api/login', (req, res) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
@@ -233,19 +233,19 @@ module.exports = function(app) {
    *
    * Make server-side session data available to client
    *
-   **/
+   * */
 
-  app.get('/api/session', (req, res) => {
-    return res.status(200).send({
+  app.get('/api/session', (req, res) =>
+    res.status(200).send({
       session: req.session,
-    });
-  });
+    }),
+  );
 
   /**
    *
    * Log a user out of their current session
    *
-   **/
+   * */
 
   app.get('/api/logout', (req, res) => {
     req.session.authenticated = false;
@@ -256,11 +256,10 @@ module.exports = function(app) {
         return res.status(500).send({
           message: messages.logoutFail,
         });
-      } else {
-        return res.status(200).send({
-          message: messages.logoutSuccess,
-        });
       }
+      return res.status(200).send({
+        message: messages.logoutSuccess,
+      });
     });
   });
 
@@ -268,7 +267,7 @@ module.exports = function(app) {
    *
    * Allow users to reset their password via an email
    *
-   **/
+   * */
 
   app.post('/api/forgotPassword', (req, res) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
@@ -286,7 +285,7 @@ module.exports = function(app) {
    *   req: a request object from express
    *   res: a response object from express
    *
-   **/
+   * */
 
   var requestPasswordReset = (err, doc, req, res) => {
     if (err) {
@@ -295,7 +294,7 @@ module.exports = function(app) {
       });
     }
 
-    var user = doc[0];
+    const user = doc[0];
 
     if (!user) {
       return res.status(200).send({
@@ -309,7 +308,7 @@ module.exports = function(app) {
     // email the user a new validation token
     mailer.send(user.email, user.token, '&resetPassword=true');
 
-    var query = {
+    const query = {
       email: user.email,
     };
 
@@ -325,7 +324,7 @@ module.exports = function(app) {
    *
    * Save a new password for the user
    *
-   **/
+   * */
 
   app.post('/api/resetPassword', (req, res, next) => {
     models.user.find({ email: req.body.email }, (err, doc) => {
@@ -340,7 +339,7 @@ module.exports = function(app) {
       });
     }
 
-    var user = doc[0];
+    const user = doc[0];
 
     if (!user) {
       return res.status(403).send({
@@ -364,7 +363,7 @@ module.exports = function(app) {
         user.password = hash;
         user.validated = true;
 
-        var query = {
+        const query = {
           email: user.email,
           token: user.token,
         };
@@ -382,9 +381,9 @@ module.exports = function(app) {
   /**
    * Middleware that only allows authenticated users to access /admin;
    * NB: This middleware is only loaded in production environments
-   **/
+   * */
 
-  if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+  if (process.env.NHBA_ENVIRONMENT === 'production') {
     app.use((req, res, next) => {
       if (req.url.includes('/admin')) {
         req.session && req.session.authenticated

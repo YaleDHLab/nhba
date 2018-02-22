@@ -1,6 +1,6 @@
 /**
  * Return a mapping from tour name to that name's index position
- **/
+ * */
 
 module.exports = buildings => {
   let tours = new Set();
@@ -11,7 +11,7 @@ module.exports = buildings => {
   });
 
   tours = Array.from(tours);
-  let tourIdToIndex = {};
+  const tourIdToIndex = {};
   tours.map((d, i) => {
     tourIdToIndex[d] = i;
   });
