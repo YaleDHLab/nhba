@@ -17,6 +17,7 @@ export default class MultimediaGallery extends React.Component {
       fileToRelabel: {},
     };
 
+    this.handleImage = this.handleImage.bind(this);
     this.handleFile = this.handleFile.bind(this);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
