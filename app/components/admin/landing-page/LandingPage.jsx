@@ -9,7 +9,7 @@ export default class LandingPage extends React.Component {
     super(props);
 
     this.state = {
-      superadmin: false,
+      superadmin: false
     };
   }
 
@@ -28,7 +28,7 @@ export default class LandingPage extends React.Component {
       <div className="admin-landing-page">
         <div className="top">{top}</div>
         <div className="bottom">
-          <Search />
+          <Search admin />
         </div>
       </div>
     );

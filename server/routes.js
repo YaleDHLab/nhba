@@ -81,7 +81,14 @@ const getTextQuery = req => {
 const addFilterTerms = (queryTerms, req) => {
   const keys = _.chain(req.query)
     .keys()
-    .without('filter', 'fulltext', 'sort', 'userLatitude', 'userLongitude')
+    .without(
+      'filter',
+      'fulltext',
+      'sort',
+      'userLatitude',
+      'userLongitude',
+      'creator'
+    )
     .value();
   keys.forEach(key => {
     // values with ' ' use _ as whitespace separator in query
@@ -198,9 +205,14 @@ module.exports = function routes(app) {
       queryTerms.push({ $where: 'this.images.length > 0' });
     }
 
-    // query for fulltet
+    // query for fulltext
     if (req.query.fulltext) {
       queryTerms.push(getTextQuery(req));
+    }
+
+    // query for creator
+    if (req.query.creator) {
+      queryTerms.push({ creator: req.session.userId });
     }
 
     // queries from the filter component pass this flag

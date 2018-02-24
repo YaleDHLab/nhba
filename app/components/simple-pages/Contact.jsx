@@ -7,7 +7,7 @@ export default class Contact extends React.Component {
       image: '/assets/images/new-haven-overhead.jpg',
       title: 'Contact',
       route: 'contact',
-      flat: true,
+      flat: true
     };
 
     return (

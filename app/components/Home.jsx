@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const gallery = [
   '/assets/images/chapel-street.jpg',
   '/assets/images/lynn-ladder.JPG',
-  '/assets/images/park.jpg',
+  '/assets/images/park.jpg'
 ];
 
 export default class Home extends React.Component {
@@ -16,7 +16,7 @@ export default class Home extends React.Component {
 
   getStyle(image) {
     return {
-      backgroundImage: 'url(' + image + ')',
+      backgroundImage: `url(${image})`
     };
   }
 
@@ -30,16 +30,14 @@ export default class Home extends React.Component {
         </div>
         <h1 className="label">What's in the Neighborhood</h1>
         <div className="gallery">
-          {gallery.map((image, i) => {
-            return (
-              <Link to={'/search'} key={i}>
-                <div
-                  className="gallery-image background-image"
-                  style={this.getStyle(image)}
-                />
-              </Link>
-            );
-          })}
+          {gallery.map((image, i) => (
+            <Link to="/search" key={i}>
+              <div
+                className="gallery-image background-image"
+                style={this.getStyle(image)}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     );

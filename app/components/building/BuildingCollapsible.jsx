@@ -5,7 +5,7 @@ export default class BuildingCollapsible extends React.Component {
     super(props);
 
     this.state = {
-      collapsed: true,
+      collapsed: true
     };
 
     this.toggleCollapsed = this.toggleCollapsed.bind(this);

@@ -10,13 +10,13 @@ export default class SimplePage extends React.Component {
     this.state = {
       text: '',
       paragraphs: [],
-      glossaryterms: [],
+      glossaryterms: []
     };
   }
 
   /**
    * Handle eiter flat page (about + contact) or glossary text
-   **/
+   * */
 
   componentWillMount() {
     api.get(this.props.route, (err, res) => {
@@ -31,33 +31,29 @@ export default class SimplePage extends React.Component {
   render() {
     console.log(
       this.state.glossaryterms
-        .map((t, i) => {
-          return (
-            <div key={i}>
-              <b>{t.term}</b>
-              <p>{t.definition}</p>
-            </div>
-          );
-        })
+        .map((t, i) => (
+          <div key={i}>
+            <b>{t.term}</b>
+            <p>{t.definition}</p>
+          </div>
+        ))
         .join('')
     );
     const bodyText = this.props.flat
       ? this.state.text
-      : this.state.glossaryterms.map((t, i) => {
-          return (
-            <div key={i}>
-              <b>{t.term}</b>
-              <p>{t.definition}</p>
-            </div>
-          );
-        });
+      : this.state.glossaryterms.map((t, i) => (
+          <div key={i}>
+            <b>{t.term}</b>
+            <p>{t.definition}</p>
+          </div>
+        ));
 
     return (
       <div className="simple-page">
         <div className="hero">
           <div
             className="background-image"
-            style={{ backgroundImage: 'url(' + this.props.image + ')' }}
+            style={{ backgroundImage: `url(${this.props.image})` }}
           />
         </div>
         <div className="container">

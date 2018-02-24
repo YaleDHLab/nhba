@@ -12,14 +12,13 @@
     "start": "webpack-dev-server",
     "build": "webpack",
     "compress": "webpack",
-    "precommit": "eslint . --fix",
+    "precommit": "eslint --ext jsx . --fix",
     "dev": "npm run build && node server.js",
     "production": "source ~/.bash_profile && npm run build && node server.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
     "resize": "node server/resize-all.js",
     "geocode": "node server/geocode-all.js",
-    "index":
-      "mongo nhba --eval \"db.buildings.createIndex({location: '2dsphere'})\""
+    "index": "mongo nhba --eval \"db.buildings.createIndex({location: '2dsphere'})\""
   },
   "author": "",
   "license": "ISC",
@@ -67,9 +66,10 @@
     "babel-preset-react-hmre": "^1.1.1",
     "css-loader": "^0.25.0",
     "eslint": "^4.17.0",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.6.1",
     "faker": "^4.1.0",
@@ -84,12 +84,19 @@
     "webpack-merge": "^0.14.1"
   },
   "babel": {
-    "presets": ["es2015", "react"],
+    "presets": [
+      "es2015",
+      "react"
+    ],
     "env": {
       "start": {
-        "presets": ["react-hmre"]
+        "presets": [
+          "react-hmre"
+        ]
       }
     },
-    "plugins": ["transform-decorators-legacy"]
+    "plugins": [
+      "transform-decorators-legacy"
+    ]
   }
 }

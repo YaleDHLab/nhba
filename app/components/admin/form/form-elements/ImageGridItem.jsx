@@ -8,9 +8,9 @@ const imageSource = {
   beginDrag(props) {
     return {
       id: props.id,
-      index: props.index,
+      index: props.index
     };
-  },
+  }
 };
 
 const imageTarget = {
@@ -57,15 +57,15 @@ const imageTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex;
-  },
+  }
 };
 
 @DropTarget('image', imageTarget, connect => ({
-  connectDropTarget: connect.dropTarget(),
+  connectDropTarget: connect.dropTarget()
 }))
 @DragSource('image', imageSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
+  isDragging: monitor.isDragging()
 }))
 export default class ImageGridItem extends React.Component {
   constructor(props) {
@@ -78,7 +78,7 @@ export default class ImageGridItem extends React.Component {
 
   getStyle(image) {
     return {
-      backgroundImage: 'url(' + image + ')',
+      backgroundImage: `url(${image})`
     };
   }
 

@@ -9,7 +9,7 @@ export default class Unauthorized extends React.Component {
     this.state = {
       email: '',
       password: '',
-      message: null,
+      message: null
     };
 
     this.handleKey = this.handleKey.bind(this);
@@ -34,13 +34,13 @@ export default class Unauthorized extends React.Component {
   }
 
   submit() {
-    var user = {
+    const user = {
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
 
     request
-      .post(api.endpoint + 'login')
+      .post(`${api.endpoint}login`)
       .send(user)
       .set('Accept', 'application/json')
       .end(this.handleResponse);
@@ -49,10 +49,8 @@ export default class Unauthorized extends React.Component {
   handleResponse(err, res) {
     if (err) {
       console.warn(err);
-    } else {
-      if (res.body.message) {
-        this.setState({ message: res.body.message });
-      }
+    } else if (res.body.message) {
+      this.setState({ message: res.body.message });
     }
 
     this.props.getSessionData();

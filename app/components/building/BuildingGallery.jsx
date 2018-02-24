@@ -9,7 +9,7 @@ export default class BuildingGallery extends React.Component {
 
     this.state = {
       imageIndex: 0,
-      showLightbox: false,
+      showLightbox: false
     };
 
     // pagination buttons for images
@@ -27,7 +27,7 @@ export default class BuildingGallery extends React.Component {
 
   /**
    * Layout and style-related functions
-   **/
+   * */
 
   getStyle() {
     const images = this.props.building.images;
@@ -40,7 +40,7 @@ export default class BuildingGallery extends React.Component {
 
   /**
    * Reset image index to 0 when buildings change
-   **/
+   * */
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.building, this.props.building)) {
@@ -50,7 +50,7 @@ export default class BuildingGallery extends React.Component {
 
   /**
    * Paginate through images
-   **/
+   * */
 
   incrementImageIndex(e) {
     e.preventDefault();
@@ -75,7 +75,7 @@ export default class BuildingGallery extends React.Component {
 
   /**
    * Show/hide the lightbox
-   **/
+   * */
 
   toggleLightbox() {
     const lightbox = this.state.showLightbox;
@@ -88,16 +88,16 @@ export default class BuildingGallery extends React.Component {
 
   /**
    * Render
-   **/
+   * */
 
   render() {
     const caption =
       this.props.building.images &&
       this.props.building.images[this.state.imageIndex].caption ? (
-          <div className="image-caption">
-            {this.props.building.images[this.state.imageIndex].caption}
-          </div>
-        ) : null;
+        <div className="image-caption">
+          {this.props.building.images[this.state.imageIndex].caption}
+        </div>
+      ) : null;
 
     const expandIcon = (
       <div className="expand-image-icon-container">

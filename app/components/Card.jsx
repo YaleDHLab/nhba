@@ -16,10 +16,10 @@ export default class Card extends React.Component {
         ? {
             backgroundImage: `url(/assets/uploads/resized/small/${
               this.props.building.images[0].filename
-            })`,
+            })`
           }
         : {
-            backgroundColor: '#f1f1f1',
+            backgroundColor: '#f1f1f1'
           };
     return style;
   }
@@ -36,7 +36,7 @@ export default class Card extends React.Component {
    *   {int} duration: the duration of the scroll
    * @returns:
    *   none
-   **/
+   * */
 
   scrollTo(to, duration) {
     const self = this;
@@ -47,7 +47,7 @@ export default class Card extends React.Component {
     const difference = to - scrolled;
     const perTick = difference / duration * 10;
 
-    setTimeout(function() {
+    setTimeout(() => {
       window.scrollTo(0, scrolled + perTick);
       if (scrolled + perTick === to) return;
       self.scrollTo(to, duration - 10);
@@ -67,21 +67,21 @@ export default class Card extends React.Component {
     } else {
       bigtext = building.address;
       if (bigtext && bigtext.includes(', New Haven')) {
-        let splitaddress = bigtext.split(', New Haven');
+        const splitaddress = bigtext.split(', New Haven');
         bigtext = splitaddress[0];
 
         // parse out the small text
         if (splitaddress[1].substring(0, 1) == ',') {
-          smalltext = 'New Haven, ' + splitaddress[1].substring(1).trim();
+          smalltext = `New Haven, ${splitaddress[1].substring(1).trim()}`;
         } else {
-          smalltext = 'New Haven, ' + splitaddress[1].trim();
+          smalltext = `New Haven, ${splitaddress[1].trim()}`;
         }
       }
     }
 
     return (
       <div className="card" onClick={this.handleClick}>
-        <Link to={'/building?id=' + this.props.building._id + '#'}>
+        <Link to={`/building?id=${this.props.building._id}#`}>
           <div className="card-content">
             <div
               className="background-image card-image"

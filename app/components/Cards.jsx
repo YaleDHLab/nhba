@@ -8,7 +8,7 @@ export default class Cards extends React.Component {
 
     this.state = {
       cardsLoaded: window.innerWidth < 600 ? 5 : 12,
-      cardsPerLoad: window.innerWidth < 600 ? 5 : 12,
+      cardsPerLoad: window.innerWidth < 600 ? 5 : 12
     };
 
     this.addCards = this.addCards.bind(this);
@@ -16,7 +16,7 @@ export default class Cards extends React.Component {
 
   componentWillMount() {
     const self = this;
-    this.handleScroll = _.debounce(function() {
+    this.handleScroll = _.debounce(() => {
       const cards = document.querySelector('.cards');
       if (!cards) return;
       if (cards.clientHeight - cards.scrollTop < 300) self.addCards();
@@ -24,10 +24,10 @@ export default class Cards extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return _.isEqual(nextProps.buildings, this.props.buildings) &&
+    return !(
+      _.isEqual(nextProps.buildings, this.props.buildings) &&
       this.state.cardsLoaded === nextState.cardsLoaded
-      ? false
-      : true;
+    );
   }
 
   addCards() {
@@ -39,9 +39,7 @@ export default class Cards extends React.Component {
     return (
       <div className="cards" onScroll={this.handleScroll}>
         {_.take(this.props.buildings, this.state.cardsLoaded).map(
-          (building, i) => {
-            return <Card key={i} building={building} />;
-          }
+          (building, i) => <Card key={i} building={building} />
         )}
       </div>
     );

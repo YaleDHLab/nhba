@@ -7,7 +7,7 @@ export default class MobileFooter extends React.Component {
     super(props);
 
     this.state = {
-      currentRoute: 'search',
+      currentRoute: 'search'
     };
 
     this.toggleView = this.toggleView.bind(this);
@@ -23,26 +23,26 @@ export default class MobileFooter extends React.Component {
   }
 
   toggleView(currentRoute) {
-    this.setState({ currentRoute: currentRoute });
+    this.setState({ currentRoute });
 
     const elems = [
       {
         elem: document.querySelectorAll('.building'),
-        route: 'building',
+        route: 'building'
       },
       {
         elem: document.querySelectorAll('.map'),
-        route: '/',
+        route: '/'
       },
       {
         elem: document.querySelectorAll('.cards'),
-        route: 'cards',
-      },
+        route: 'cards'
+      }
     ];
 
     elems.map(d => {
       if (d.elem) {
-        for (var i = 0; i < d.elem.length; i++) {
+        for (let i = 0; i < d.elem.length; i++) {
           d.elem[i].style.display = d.route !== currentRoute ? 'none' : 'block';
         }
       }
@@ -54,12 +54,10 @@ export default class MobileFooter extends React.Component {
     const route = location.pathname.substring(1);
     if (location.search.includes('login')) {
       browserHistory.push(route + location.search);
+    } else if (location.search.length) {
+      browserHistory.push('&login=true');
     } else {
-      if (location.search.length) {
-        browserHistory.push('&login=true');
-      } else {
-        browserHistory.push('?login=true');
-      }
+      browserHistory.push('?login=true');
     }
   }
 

@@ -12,7 +12,7 @@ export default class SignUp extends React.Component {
       email: '',
       password: '',
       terms: false,
-      message: null,
+      message: null
     };
 
     this.updateFirstName = this.updateFirstName.bind(this);
@@ -41,15 +41,15 @@ export default class SignUp extends React.Component {
   }
 
   submit() {
-    var user = {
+    const user = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
 
     request
-      .post(api.endpoint + 'register')
+      .post(`${api.endpoint}register`)
       .send(user)
       .set('Accept', 'application/json')
       .end(this.handleResponse);
@@ -58,10 +58,8 @@ export default class SignUp extends React.Component {
   handleResponse(err, res) {
     if (err) {
       console.warn(err);
-    } else {
-      if (res.body.message) {
-        this.setState({ message: res.body.message });
-      }
+    } else if (res.body.message) {
+      this.setState({ message: res.body.message });
     }
 
     this.props.getSessionData();

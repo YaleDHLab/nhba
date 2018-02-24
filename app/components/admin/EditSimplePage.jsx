@@ -11,7 +11,7 @@ export default class EditSimplePage extends React.Component {
 
     this.state = {
       text: '',
-      title: '',
+      title: ''
     };
 
     // getters for simple page data
@@ -38,7 +38,7 @@ export default class EditSimplePage extends React.Component {
 
     this.setState({
       title: route.charAt(0).toUpperCase() + route.slice(1),
-      text: page.text,
+      text: page.text
     });
   }
 
@@ -48,7 +48,7 @@ export default class EditSimplePage extends React.Component {
 
   /**
    * Event listeners for text changes
-   **/
+   * */
 
   handleTitleChange() {
     // pass, as this should be static
@@ -62,13 +62,13 @@ export default class EditSimplePage extends React.Component {
 
   /**
    * Post the page data to the db
-   **/
+   * */
 
   savePage() {
-    let page = Object.assign({}, this.state);
+    const page = Object.assign({}, this.state);
 
     request
-      .post(api.endpoint + this.getRoute() + '/save')
+      .post(`${api.endpoint + this.getRoute()}/save`)
       .send(page)
       .set('Accept', 'application/json')
       .end(err => {
@@ -82,7 +82,7 @@ export default class EditSimplePage extends React.Component {
         <div className="form-content">
           <h1>{this.state.title}</h1>
           <div className="instructions">Edit page content here.</div>
-          <div className={'text-input full-width'}>
+          <div className="text-input full-width">
             <div className="label">Page Title</div>
             <input
               type="text"
@@ -90,7 +90,7 @@ export default class EditSimplePage extends React.Component {
               onChange={this.handleTitleChange}
             />
           </div>
-          <div className={'full-width text-area'}>
+          <div className="full-width text-area">
             <div className="label">Body Text</div>
             <ReactQuill
               onChange={this.handleTextChange}

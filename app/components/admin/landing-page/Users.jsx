@@ -6,9 +6,9 @@ export default class Users extends React.Component {
     return (
       <div className="users">
         <div className="table">
-          {this.props.users.map((user, i) => {
-            return <User user={user} key={i} getUsers={this.props.getUsers} />;
-          })}
+          {this.props.users.map((user, i) => (
+            <User user={user} key={i} getUsers={this.props.getUsers} />
+          ))}
         </div>
       </div>
     );

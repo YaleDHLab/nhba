@@ -11,7 +11,7 @@ export default class Tab extends React.Component {
   getClass() {
     const defaultClass = 'tab';
     return this.props.tab.value == this.props.activeTab
-      ? defaultClass + ' ' + 'active'
+      ? `${defaultClass} ` + `active`
       : defaultClass;
   }
 

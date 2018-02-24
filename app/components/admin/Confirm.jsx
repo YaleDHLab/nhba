@@ -7,7 +7,7 @@ export default class Confirm extends React.Component {
     super(props);
 
     this.state = {
-      isVisible: false,
+      isVisible: false
     };
 
     // open or close confirm modal
@@ -17,7 +17,7 @@ export default class Confirm extends React.Component {
 
   /**
    * Open or close confirm modal
-   **/
+   * */
 
   openModal() {
     if (!this.state.isVisible) this.setState({ isVisible: true });
@@ -28,7 +28,7 @@ export default class Confirm extends React.Component {
   }
 
   render() {
-    var modal = (
+    const modal = (
       <div className="confirm dark-modal-backdrop">
         <div className="modal">
           <div className="header">
@@ -58,11 +58,11 @@ export default class Confirm extends React.Component {
         </div>
       </div>
     );
-    var btn = React.Children.only(this.props.children);
-    var content = React.cloneElement(
+    const btn = React.Children.only(this.props.children);
+    const content = React.cloneElement(
       btn,
       {
-        onClick: this.openModal,
+        onClick: this.openModal
       },
       btn.props.children,
       this.state.isVisible ? modal : null

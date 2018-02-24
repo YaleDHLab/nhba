@@ -7,7 +7,7 @@ export default class MapMarker extends React.Component {
     super(props);
 
     this.state = {
-      hovered: false,
+      hovered: false
     };
 
     this.isIe = this.isIe.bind(this);

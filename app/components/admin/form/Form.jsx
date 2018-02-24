@@ -24,7 +24,7 @@ export default class Form extends React.Component {
       unsavedChanges: false,
       saveButtonText: 'Save',
       autoSaveInterval: null,
-      missingFields: [],
+      missingFields: []
     };
 
     // buildling(s) getters and setters
@@ -69,7 +69,7 @@ export default class Form extends React.Component {
 
   /**
    * Building & Buildings getters and setters
-   **/
+   * */
 
   getEmptyBuilding() {
     api.get('building/empty', (err, res) => {
@@ -83,7 +83,7 @@ export default class Form extends React.Component {
 
   getBuilding(buildingId) {
     const self = this;
-    const url = 'buildings?buildingId=' + buildingId;
+    const url = `buildings?buildingId=${buildingId}`;
     api.get(url, (err, res) => {
       if (err) {
         console.warn(err);
@@ -106,23 +106,23 @@ export default class Form extends React.Component {
 
   /**
    * Get available select options
-   **/
+   * */
 
   setSelectOptions() {
     const buildings = this.state.buildings;
     const options = getSelectOptions(buildings, allSelects);
-    this.setState({ options: options });
+    this.setState({ options });
   }
 
   /**
    * Callback triggered when users add a new option to a multiselect
-   **/
+   * */
 
   handleNewOption(field, value) {
     // add this value to the available options
-    let options = Object.assign({}, this.state.options);
+    const options = Object.assign({}, this.state.options);
     options[field] ? options[field].push(value) : (options[field] = [value]);
-    this.setState({ options: options });
+    this.setState({ options });
 
     // select this value within this record
     this.updateField(field, value);
@@ -130,7 +130,7 @@ export default class Form extends React.Component {
 
   /**
    * Change the tab of the form currently in view
-   **/
+   * */
 
   changeTab(tab) {
     this.setState({ activeTab: tab });
@@ -138,11 +138,11 @@ export default class Form extends React.Component {
 
   /**
    * If `value` is missing from `field`, add it to the form, else remove it
-   **/
+   * */
 
   updateField(field, value) {
     // use Object.assign to avoid object mutations
-    let building = Object.assign({}, this.state.building);
+    const building = Object.assign({}, this.state.building);
 
     // remove/add the selected value when users un/select values
     if (Array.isArray(building[field])) {
@@ -166,32 +166,32 @@ export default class Form extends React.Component {
 
     this.setState({
       autoSaveInterval,
-      building: building,
+      building,
       unsavedChanges: true,
-      saveButtonText: 'Save',
+      saveButtonText: 'Save'
     });
   }
 
   /**
    * Replace the current value of `field` with `value`
-   **/
+   * */
 
   replaceField(field, value) {
-    let building = Object.assign({}, this.state.building);
+    const building = Object.assign({}, this.state.building);
     building[field] = value;
     this.setState({
-      building: building,
-      unsavedChanges: true,
+      building,
+      unsavedChanges: true
     });
   }
 
   /**
    * Fetch lat,lng coordinates for a building
-   **/
+   * */
 
   geocode() {
     request
-      .post(api.endpoint + 'geocode')
+      .post(`${api.endpoint}geocode`)
       .send(this.state.building)
       .set('Accept', 'application/json')
       .end((err, res) => {
@@ -208,7 +208,7 @@ export default class Form extends React.Component {
 
   /**
    * Save a new or edited building in the db
-   **/
+   * */
 
   saveBuilding() {
     if (this.state.unsavedChanges) {
@@ -220,12 +220,12 @@ export default class Form extends React.Component {
               !this.state.building[field] ||
               (Array.isArray(this.state.building[field]) &&
                 this.state.building[field].length === 0)
-          ),
+          )
         },
         () => {
           if (this.state.missingFields.length === 0) {
             request
-              .post(api.endpoint + 'building/save')
+              .post(`${api.endpoint}building/save`)
               .send(this.state.building)
               .set('Accept', 'application/json')
               .end((err, res) => {
@@ -242,7 +242,7 @@ export default class Form extends React.Component {
             this.setState({
               unsavedChanges: false,
               saveButtonText: 'Saved',
-              autoSaveInterval: null,
+              autoSaveInterval: null
             });
           }
         }
@@ -252,11 +252,11 @@ export default class Form extends React.Component {
 
   /**
    * Delete the current building and return the admin to the admin page
-   **/
+   * */
 
   deleteBuilding() {
     request
-      .post(api.endpoint + 'building/delete')
+      .post(`${api.endpoint}building/delete`)
       .send(this.state.building)
       .set('Accept', 'application/json')
       .end(err => {
@@ -267,7 +267,7 @@ export default class Form extends React.Component {
 
   /**
    * Return styles that indicate whether the form is dirty or not
-   **/
+   * */
 
   getSaveButtonStyle() {
     return this.state.unsavedChanges
@@ -332,7 +332,7 @@ export default class Form extends React.Component {
       building && building.address ? building.address : 'New Building';
 
     const header = this.state.building._id ? (
-      <a href={'/building?id=' + this.state.building._id}>
+      <a href={`/building?id=${this.state.building._id}`}>
         <h1>{address}</h1>
       </a>
     ) : (

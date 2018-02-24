@@ -8,7 +8,7 @@ export default class ValidateAccount extends React.Component {
 
     this.state = {
       password: '',
-      message: null,
+      message: null
     };
 
     this.handleKey = this.handleKey.bind(this);
@@ -28,14 +28,14 @@ export default class ValidateAccount extends React.Component {
   }
 
   submit() {
-    var packet = {
+    const packet = {
       email: this.props.location.query.email,
       token: this.props.location.query.token,
-      password: this.state.password,
+      password: this.state.password
     };
 
     request
-      .post(api.endpoint + 'validate')
+      .post(`${api.endpoint}validate`)
       .send(packet)
       .set('Accept', 'application/json')
       .end(this.handleResponse);
@@ -44,10 +44,8 @@ export default class ValidateAccount extends React.Component {
   handleResponse(err, res) {
     if (err) {
       console.warn(err);
-    } else {
-      if (res.body.message) {
-        this.setState({ message: res.body.message });
-      }
+    } else if (res.body.message) {
+      this.setState({ message: res.body.message });
     }
 
     this.props.getSessionData();

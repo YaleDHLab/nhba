@@ -8,7 +8,7 @@ const config = {
     strokeOpacity: 0.8,
     strokeWeight: 2,
     fillOpacity: 0.7,
-    scale: 0.3,
+    scale: 0.3
   },
 
   colors: [
@@ -32,12 +32,12 @@ const config = {
     '#843c39',
     '#ad494a',
     '#d6616b',
-    '#e7969c',
-  ],
+    '#e7969c'
+  ]
 };
 
 const handleMarkerClick = building => {
-  browserHistory.push('/building?id=' + building._id);
+  browserHistory.push(`/building?id=${building._id}`);
 };
 
 // fetch an icon to represent the current building
@@ -50,10 +50,10 @@ const getIcon = (building, tourNameToIndex) => {
       : config.colors.length - 1;
 
   let color = config.colors[tourIndex % config.colors.length - 1];
-  color = color ? color : '#a55194';
+  color = color || '#a55194';
 
   // set the icon colors
-  let markerIcon = Object.assign({}, config.icon);
+  const markerIcon = Object.assign({}, config.icon);
   markerIcon.strokeColor = color;
   markerIcon.fillColor = color;
   return markerIcon;
@@ -75,7 +75,7 @@ export default class BuildingCircle extends React.Component {
         }}
         position={{
           lat: this.props.lat,
-          lng: this.props.lng,
+          lng: this.props.lng
         }}
       />
     );

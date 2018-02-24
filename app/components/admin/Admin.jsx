@@ -7,7 +7,7 @@ export default class Admin extends React.Component {
     super(props);
 
     this.state = {
-      view: 'landing-page',
+      view: 'landing-page'
     };
   }
 
@@ -20,6 +20,9 @@ export default class Admin extends React.Component {
 
       case 'landing-page':
         view = <LandingPage {...this.props} />;
+        break;
+
+      default:
         break;
     }
 

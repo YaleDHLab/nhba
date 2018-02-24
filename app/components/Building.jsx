@@ -27,7 +27,7 @@ export default class Building extends React.Component {
       creator: false,
 
       // tour data for mapping
-      tourNameToIndex: {},
+      tourNameToIndex: {}
     };
 
     this.toggleLayout = this.toggleLayout.bind(this);
@@ -56,12 +56,12 @@ export default class Building extends React.Component {
 
   /**
    * Getters and setters for the requested building
-   **/
+   * */
 
   getBuilding() {
     if (this.props.location.query.id) {
       const buildingId = this.props.location.query.id;
-      api.get('buildings?buildingId=' + buildingId, this.processBuilding);
+      api.get(`buildings?buildingId=${buildingId}`, this.processBuilding);
     } else if (this.props.location.query.random === 'true') {
       api.get('buildings/random', this.processBuilding);
     }
@@ -78,10 +78,10 @@ export default class Building extends React.Component {
 
   /**
    * Check whether the user is the creator of the building or not
-   **/
+   * */
 
   checkCreatorStatus(buildingId) {
-    api.get('creator?buildingId=' + buildingId, this.processCreatorStatus);
+    api.get(`creator?buildingId=${buildingId}`, this.processCreatorStatus);
   }
 
   processCreatorStatus(err, res) {
@@ -93,7 +93,7 @@ export default class Building extends React.Component {
 
   /**
    * Allow users to swap building and map positions
-   **/
+   * */
 
   toggleLayout() {
     this.state.layout.left === 'Map'
@@ -103,7 +103,7 @@ export default class Building extends React.Component {
 
   /**
    * Retrieve the fields required for creating building table and action buttons
-   **/
+   * */
 
   getTextFields() {
     const building = this.state.building;
@@ -121,7 +121,7 @@ export default class Building extends React.Component {
             title="Overview"
             text={building.overview_description}
           />
-        ),
+        )
       },
       {
         label: 'Physical Description',
@@ -134,7 +134,7 @@ export default class Building extends React.Component {
             title="Physical Description"
             text={building.physical_description}
           />
-        ),
+        )
       },
       {
         label: 'Urban Setting',
@@ -147,7 +147,7 @@ export default class Building extends React.Component {
             title="Urban Setting"
             text={building.urban_setting}
           />
-        ),
+        )
       },
       {
         label: 'Social History',
@@ -160,7 +160,7 @@ export default class Building extends React.Component {
             title="Social History"
             text={building.social_history}
           />
-        ),
+        )
       },
       {
         label: 'Site History',
@@ -170,7 +170,7 @@ export default class Building extends React.Component {
         contentFields: ['site_history'],
         component: (
           <BuildingTextBox title="Site History" text={building.site_history} />
-        ),
+        )
       },
       {
         label: 'Structural Data',
@@ -189,8 +189,8 @@ export default class Building extends React.Component {
           'accessibilities',
           'levels',
           'structures',
-          'roof_materials',
-        ],
+          'roof_materials'
+        ]
       },
       {
         label: 'Resources',
@@ -198,13 +198,13 @@ export default class Building extends React.Component {
         href: 'resources',
         component: <BuildingResources building={building} />,
         collapsible: true,
-        contentFields: ['archive_documents', 'sources'],
-      },
+        contentFields: ['archive_documents', 'sources']
+      }
     ];
 
     // only return fields if one or more of their contentFields are populated
     // in the current building
-    let extantFields = [];
+    const extantFields = [];
     fields.map(field => {
       let kept = false;
       field.contentFields.map(contentField => {
@@ -220,7 +220,7 @@ export default class Building extends React.Component {
 
   /**
    * Main render function
-   **/
+   * */
 
   render() {
     const building = this.state.building;
@@ -228,7 +228,7 @@ export default class Building extends React.Component {
       building && building.latitude && building.longitude
         ? {
             lat: parseFloat(building.latitude),
-            lng: parseFloat(building.longitude),
+            lng: parseFloat(building.longitude)
           }
         : null;
 
@@ -247,7 +247,7 @@ export default class Building extends React.Component {
       Map: map,
       Gallery: (
         <Gallery building={this.state.building} layout={this.state.layout} />
-      ),
+      )
     };
 
     const fields = this.getTextFields();

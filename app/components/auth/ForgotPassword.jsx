@@ -8,7 +8,7 @@ export default class ForgotPassword extends React.Component {
 
     this.state = {
       email: '',
-      message: '',
+      message: ''
     };
 
     this.updateEmail = this.updateEmail.bind(this);
@@ -28,12 +28,12 @@ export default class ForgotPassword extends React.Component {
   }
 
   submit() {
-    var packet = {
-      email: this.state.email,
+    const packet = {
+      email: this.state.email
     };
 
     request
-      .post(api.endpoint + 'forgotPassword')
+      .post(`${api.endpoint}forgotPassword`)
       .send(packet)
       .set('Accept', 'application/json')
       .end(this.handleResponse);
@@ -42,10 +42,8 @@ export default class ForgotPassword extends React.Component {
   handleResponse(err, res) {
     if (err) {
       console.warn(err);
-    } else {
-      if (res.body.message) {
-        this.setState({ message: res.body.message });
-      }
+    } else if (res.body.message) {
+      this.setState({ message: res.body.message });
     }
   }
 

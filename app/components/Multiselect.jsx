@@ -7,7 +7,7 @@ export default class Multiselect extends React.Component {
 
     this.state = {
       active: false,
-      newOption: '',
+      newOption: ''
     };
 
     // hide/show the dropdown options
@@ -40,14 +40,14 @@ export default class Multiselect extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return _.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state)
-      ? false
-      : true;
+    return !(
+      _.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state)
+    );
   }
 
   /**
    * Show/Hide select based on clicks
-   **/
+   * */
 
   handlePageClick(e) {
     if (
@@ -60,12 +60,12 @@ export default class Multiselect extends React.Component {
   }
 
   selectClicked(e) {
-    return e.target.className === this.getDecoyClass() ? true : false;
+    return e.target.className === this.getDecoyClass();
   }
 
   inputClicked(e) {
     const tagName = e.target.tagName;
-    return tagName === 'INPUT' || tagName === 'LABEL' ? true : false;
+    return !!(tagName === 'INPUT' || tagName === 'LABEL');
   }
 
   addNewOptionClicked(e) {
@@ -74,29 +74,29 @@ export default class Multiselect extends React.Component {
 
   toggleView(e) {
     if (this.selectClicked(e)) {
-      const active = this.state.active ? false : true;
-      this.setState({ active: active });
+      const active = !this.state.active;
+      this.setState({ active });
     }
   }
 
   /**
    * Styling
-   **/
+   * */
 
   getSelectClass() {
     const defaultClass = this.props.className
-      ? 'multiselect ' + this.props.className
+      ? `multiselect ${this.props.className}`
       : 'multiselect';
-    return this.state.active ? defaultClass + ' active' : defaultClass;
+    return this.state.active ? `${defaultClass} active` : defaultClass;
   }
 
   getDecoyClass() {
-    return 'select-decoy ' + this.props.field;
+    return `select-decoy ${this.props.field}`;
   }
 
   /**
    * Handle check/uncheck of each checkbox
-   **/
+   * */
 
   handleCheckbox(e) {
     const option = e.target.id;
@@ -105,7 +105,7 @@ export default class Multiselect extends React.Component {
 
   /**
    * Allow users to create new options in multiselects
-   **/
+   * */
 
   updateNewOption(e) {
     this.setState({ newOption: e.target.value });
@@ -120,19 +120,19 @@ export default class Multiselect extends React.Component {
   render() {
     const options = this.props.options
       ? this.props.options.map((option, i) => {
-        const value = _.includes(this.props.values, option) ? true : false;
-        return (
-          <label key={i}>
-            <input
-              type="checkbox"
-              id={option}
-              checked={value}
-              onChange={this.handleCheckbox}
-            />
-            {option}
-          </label>
-        );
-      })
+          const value = !!_.includes(this.props.values, option);
+          return (
+            <label key={i}>
+              <input
+                type="checkbox"
+                id={option}
+                checked={value}
+                onChange={this.handleCheckbox}
+              />
+              {option}
+            </label>
+          );
+        })
       : null;
 
     const newOption = this.props.allowNewOptions ? (

@@ -2,9 +2,7 @@ import React from 'react';
 import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
 import { OverlayView } from 'react-google-maps';
 
-const centerOverlay = (width, height) => {
-  return { x: -(width / 2), y: -height - 20 };
-};
+const centerOverlay = (width, height) => ({ x: -(width / 2), y: -height - 20 });
 
 const getBuildingTitle = building => {
   let title = 'New Haven Building';
@@ -29,7 +27,7 @@ export default class BuildingOverlay extends React.Component {
         key={Math.random()}
         position={{
           lat: this.props.lat,
-          lng: this.props.lng,
+          lng: this.props.lng
         }}
         // render the marker to a mouse-accessible layer of the map
         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}

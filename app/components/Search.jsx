@@ -12,7 +12,7 @@ const selectFields = [
   'current_uses',
   'styles',
   'eras',
-  'neighborhoods',
+  'neighborhoods'
 ];
 
 export default class Search extends React.Component {
@@ -34,7 +34,7 @@ export default class Search extends React.Component {
 
       // store the user location && watcher id
       userLocation: null,
-      watchId: null,
+      watchId: null
     };
 
     // getters and setters for buildings and tour color mappings
@@ -74,22 +74,21 @@ export default class Search extends React.Component {
     }
   }
 
-  /**
-   * Handle inputs
-   **/
-
+  // Handle inputs
   updateSelect(field, option) {
-    let state = Object.assign({}, this.state);
-    state[field].has(option)
-      ? state[field].delete(option)
-      : state[field].add(option);
+    const state = Object.assign({}, this.state);
+    if (state[field].has(option)) {
+      state[field].delete(option);
+    } else {
+      state[field].add(option);
+    }
 
     this.runSearch(state);
     this.setState(state);
   }
 
   updateSort(e) {
-    let state = Object.assign({}, this.state);
+    const state = Object.assign({}, this.state);
     state.sort = e.target.value;
 
     this.runSearch(state);
@@ -102,44 +101,35 @@ export default class Search extends React.Component {
     }
   }
 
-  /**
-   * Follow user location
-   **/
-
+  // Follow user location
   watchUserLocation() {
     const watchId = navigator.geolocation.watchPosition(position => {
       this.setState({
         userLocation: {
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
+          longitude: position.coords.longitude
+        }
       });
     });
-    this.setState({ watchId: watchId });
+    this.setState({ watchId });
   }
 
   unwatchUserLocation() {
     navigator.geolocation.clearWatch(this.state.watchId);
   }
 
-  /**
-   * Alow functions to pass a copy of the component state so
-   * we can trigger search without waiting for state to trickle down
-   **/
-
+  // Alow functions to pass a copy of the component state so
+  // we can trigger search without waiting for state to trickle down
   runSearch(state) {
     let url = getBuildingQueryUrl(state, selectFields);
-
+    if (this.props.admin) {
+      url += '&creator=true';
+    }
     // add search terms (if any)
     const textSearch = document.querySelector('.building-search').value;
-    if (textSearch) url += 'fulltext=' + encodeURIComponent(textSearch);
-
+    if (textSearch) url += `fulltext=${encodeURIComponent(textSearch)}`;
     api.get(url, this.processBuildings);
   }
-
-  /**
-   * Render
-   **/
 
   render() {
     return (

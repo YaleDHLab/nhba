@@ -9,7 +9,7 @@ export default class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      message: null,
+      message: null
     };
 
     this.handleKey = this.handleKey.bind(this);
@@ -32,13 +32,13 @@ export default class Login extends React.Component {
   }
 
   submit() {
-    var user = {
+    const user = {
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
 
     request
-      .post(api.endpoint + 'login')
+      .post(`${api.endpoint}login`)
       .send(user)
       .set('Accept', 'application/json')
       .end(this.handleResponse);
@@ -56,7 +56,7 @@ export default class Login extends React.Component {
 
     self.props.getSessionData();
     if (res.status && res.status === 200) {
-      window.setTimeout(function() {
+      window.setTimeout(() => {
         self.props.hideAuth();
       }, 500);
     }
