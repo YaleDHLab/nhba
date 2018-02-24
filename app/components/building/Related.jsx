@@ -10,7 +10,7 @@ export default class Related extends React.Component {
 
     this.state = {
       buildings: [],
-      nearbyBuildings: [],
+      nearbyBuildings: []
     };
 
     this.processBuildings = this.processBuildings.bind(this);
@@ -35,7 +35,7 @@ export default class Related extends React.Component {
       console.warn(err);
     } else {
       const buildings = res.body;
-      this.setState({ buildings: buildings });
+      this.setState({ buildings });
     }
   }
 
@@ -43,11 +43,11 @@ export default class Related extends React.Component {
    * Find the n closest buildings to the currently displayed
    * building, as measured by the Euclidean distance between
    * the currently displayed building and all others (n=~200)
-   **/
+   * */
 
   findNearBuildings() {
-    let nearbyBuildings = [];
-    let distances = [];
+    const nearbyBuildings = [];
+    const distances = [];
     const buildings = this.state.buildings;
 
     if (!this.state.buildings.length || !this.props.building) return;
@@ -65,9 +65,9 @@ export default class Related extends React.Component {
         const distance = Math.pow(dx + dy, 0.5);
 
         distances.push({
-          distance: distance,
-          idx: idx,
-          building: building,
+          distance,
+          idx,
+          building
         });
       }
     });
@@ -81,7 +81,7 @@ export default class Related extends React.Component {
       nearbyBuildings.push(buildings[building.idx]);
     });
 
-    this.setState({ nearbyBuildings: nearbyBuildings });
+    this.setState({ nearbyBuildings });
   }
 
   render() {
@@ -89,9 +89,9 @@ export default class Related extends React.Component {
       <div className="related">
         <div className="related-buildings">
           {this.state.nearbyBuildings.length > 0
-            ? this.state.nearbyBuildings.map((building, i) => {
-              return <Card building={building} key={i} label={'address'} />;
-            })
+            ? this.state.nearbyBuildings.map((building, i) => (
+                <Card building={building} key={i} label="address" />
+              ))
             : null}
         </div>
       </div>

@@ -15,7 +15,7 @@ export default class AppWrapper extends React.Component {
       modal: null, // {'login','validate','reset-password'}
       authenticated: false, // {true, false} is the user authenticated
       lastquery: null, // the last observed query params
-      isMobile: false,
+      isMobile: false
     };
 
     this.login = this.login.bind(this);
@@ -31,7 +31,7 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Initialize the authentication modal if necessary
-   **/
+   * */
 
   componentDidMount() {
     this.checkForAuth();
@@ -53,7 +53,7 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Check to see if we need to run an authentication prompt
-   **/
+   * */
 
   checkForAuth() {
     const query = this.props.location.query;
@@ -65,7 +65,7 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Main method for processing authentication updates
-   **/
+   * */
 
   processAuth(query) {
     if (query.login && query.login === 'true') {
@@ -85,7 +85,7 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Show/hide the authentication modal
-   **/
+   * */
 
   login() {
     this.setState({ modal: 'login' });
@@ -97,11 +97,11 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Fetch user authentication status from server
-   **/
+   * */
 
   getSessionData() {
     request
-      .get(api.endpoint + 'session')
+      .get(`${api.endpoint}session`)
       .set('Accept', 'application/json')
       .end(this.processSession);
   }
@@ -111,17 +111,17 @@ export default class AppWrapper extends React.Component {
     this.setState({
       admin: res.body.session.admin,
       authenticated: res.body.session.authenticated,
-      session: res.body.session,
+      session: res.body.session
     });
   }
 
   /**
    * Handle logout
-   **/
+   * */
 
   logout() {
     request
-      .get(api.endpoint + 'logout')
+      .get(`${api.endpoint}logout`)
       .set('Accept', 'application/json')
       .end(this.processLogout);
   }
@@ -132,15 +132,15 @@ export default class AppWrapper extends React.Component {
 
   /**
    * Render
-   **/
+   * */
 
   render() {
     const isMobile = this.state.isMobile;
     const isBuilding = this.props.location.pathname.includes('building');
-    var child = React.Children.only(this.props.children);
-    var content = React.cloneElement(child, {
+    const child = React.Children.only(this.props.children);
+    const content = React.cloneElement(child, {
       admin: this.state.admin,
-      authenticated: this.state.authenticated,
+      authenticated: this.state.authenticated
     });
 
     const modal = this.state.modal ? (

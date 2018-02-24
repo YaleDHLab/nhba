@@ -7,7 +7,7 @@ export default class Glossary extends React.Component {
       image: '/assets/images/jeffrey-kerekes.jpg',
       title: 'Glossary',
       route: 'glossary',
-      flat: false,
+      flat: false
     };
 
     return (

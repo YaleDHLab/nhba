@@ -1,9 +1,10 @@
 import React from 'react';
 import { OverlayView } from 'react-google-maps';
 
-const centerOverlay = (width, height) => {
-  return { x: width / 2 - 9, y: height / 2 - 9 };
-};
+const centerOverlay = (width, height) => ({
+  x: width / 2 - 9,
+  y: height / 2 - 9
+});
 
 export default class UserMarker extends React.Component {
   render() {
@@ -12,7 +13,7 @@ export default class UserMarker extends React.Component {
         key={Math.random()}
         position={{
           lat: this.props.userLocation.latitude,
-          lng: this.props.userLocation.longitude,
+          lng: this.props.userLocation.longitude
         }}
         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
         getPixelPositionOffset={centerOverlay}

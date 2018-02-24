@@ -12,7 +12,7 @@ const MapComponent = withGoogleMap(props => (
     onIdle={props.onIdle}
     defaultOptions={{
       scrollwheel: false,
-      styles: MapStyles,
+      styles: MapStyles
     }}
   >
     <UserMarker userLocation={props.userLocation} />
@@ -37,8 +37,8 @@ const MapComponent = withGoogleMap(props => (
 const styles = {
   map: {
     height: '100%',
-    width: '100%',
-  },
+    width: '100%'
+  }
 };
 
 export default class MapContainer extends Component {
@@ -49,8 +49,8 @@ export default class MapContainer extends Component {
       hoveredBuildingId: null,
       location: {
         lat: 41.3075931,
-        lng: -72.9278493,
-      },
+        lng: -72.9278493
+      }
     };
 
     this.handleMapMounted = this.handleMapMounted.bind(this);
@@ -66,8 +66,8 @@ export default class MapContainer extends Component {
     this.setState({
       location: {
         lat: center.lat(),
-        lng: center.lng(),
-      },
+        lng: center.lng()
+      }
     });
   }
 
@@ -75,7 +75,7 @@ export default class MapContainer extends Component {
     const initialLocation = this.props.initialLocation;
     const mapConfig = {
       zoom: 15,
-      location: initialLocation ? initialLocation : this.state.location,
+      location: initialLocation || this.state.location
     };
 
     return (

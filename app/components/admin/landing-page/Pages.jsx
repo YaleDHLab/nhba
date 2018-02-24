@@ -10,16 +10,14 @@ export default class Pages extends React.Component {
     return (
       <div className="pages">
         <div className="table">
-          {this.props.pages.map((page, i) => {
-            return (
-              <Link to={page.route} key={i}>
-                <div className="row">
-                  <div className="edit-icon" />
-                  {page.label}
-                </div>
-              </Link>
-            );
-          })}
+          {this.props.pages.map((page, i) => (
+            <Link to={page.route} key={i}>
+              <div className="row">
+                <div className="edit-icon" />
+                {page.label}
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     );

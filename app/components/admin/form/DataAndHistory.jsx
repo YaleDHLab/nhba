@@ -11,7 +11,7 @@ export default class DataAndHistory extends React.Component {
     super(props);
 
     this.state = {
-      fileToRelabel: {}, // the file we're relabelling
+      fileToRelabel: {} // the file we're relabelling
     };
 
     // methods for handling building.archive_documents (file uploads)
@@ -22,13 +22,13 @@ export default class DataAndHistory extends React.Component {
 
   /**
    * Method to select a file to relabel
-   **/
+   * */
 
   selectFileToRelabel(fileIndex) {
     if (fileIndex != null) {
-      let fileToRelabel = this.props.building.archive_documents[fileIndex];
+      const fileToRelabel = this.props.building.archive_documents[fileIndex];
       fileToRelabel.index = fileIndex;
-      this.setState({ fileToRelabel: fileToRelabel });
+      this.setState({ fileToRelabel });
     } else {
       // allow callers to specify null to remove the file to relabel
       this.setState({ fileToRelabel: null });
@@ -37,7 +37,7 @@ export default class DataAndHistory extends React.Component {
 
   /**
    * Method to actually assign a new label to the file
-   **/
+   * */
 
   handleLabelChange(e) {
     const relabelFileIndex = this.state.fileToRelabel.index;
@@ -46,7 +46,7 @@ export default class DataAndHistory extends React.Component {
       const archiveDocuments = this.props.building.archive_documents;
 
       // mutate a copy of the extant archive documents
-      let newArchiveDocuments = Object.assign([], archiveDocuments);
+      const newArchiveDocuments = Object.assign([], archiveDocuments);
       newArchiveDocuments[relabelFileIndex].label = newLabel;
 
       // use the replaceField method to quash the old archive documents
@@ -56,7 +56,7 @@ export default class DataAndHistory extends React.Component {
 
   /**
    * Method to save a file to the current building
-   **/
+   * */
 
   handleFile(e) {
     // remove the file we were relabelling (if any)
@@ -73,8 +73,8 @@ export default class DataAndHistory extends React.Component {
     }
 
     _.keys(files).map(k => {
-      let req = request.post(api.endpoint + 'upload');
-      let filename = files[k].name.split(' ').join('-');
+      const req = request.post(`${api.endpoint}upload`);
+      const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
@@ -82,7 +82,7 @@ export default class DataAndHistory extends React.Component {
 
         const doc = {
           filename: res.body.file.name,
-          label: res.body.file.name,
+          label: res.body.file.name
         };
 
         self.props.updateField('archive_documents', doc);
@@ -95,115 +95,115 @@ export default class DataAndHistory extends React.Component {
       <div className="data-and-history">
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'Historic Use'}
-          field={'historic_uses'}
+          width="half-width"
+          position="left"
+          label="Historic Use"
+          field="historic_uses"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Street Visibility'}
-          field={'street_visibilities'}
+          width="half-width"
+          position="right"
+          label="Street Visibility"
+          field="street_visibilities"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'Accessibility'}
-          field={'accessibilities'}
+          width="half-width"
+          position="left"
+          label="Accessibility"
+          field="accessibilities"
         />
 
         <TextInput
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Dimensions'}
-          field={'dimensions'}
+          width="half-width"
+          position="right"
+          label="Dimensions"
+          field="dimensions"
         />
 
         <TextInput
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'No. of Levels'}
-          field={'levels'}
+          width="half-width"
+          position="left"
+          label="No. of Levels"
+          field="levels"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Materials'}
-          field={'materials'}
+          width="half-width"
+          position="right"
+          label="Materials"
+          field="materials"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'Structure'}
-          field={'structures'}
+          width="half-width"
+          position="left"
+          label="Structure"
+          field="structures"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Roof Type'}
-          field={'roof_types'}
+          width="half-width"
+          position="right"
+          label="Roof Type"
+          field="roof_types"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'Roof Material'}
-          field={'roof_materials'}
+          width="half-width"
+          position="left"
+          label="Roof Material"
+          field="roof_materials"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Structural Condition'}
-          field={'structural_conditions'}
+          width="half-width"
+          position="right"
+          label="Structural Condition"
+          field="structural_conditions"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'External Condition'}
-          field={'external_conditions'}
+          width="half-width"
+          position="left"
+          label="External Condition"
+          field="external_conditions"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'right'}
-          label={'Threats'}
-          field={'threats'}
+          width="half-width"
+          position="right"
+          label="Threats"
+          field="threats"
         />
 
         <Select
           {...this.props}
-          width={'half-width'}
-          position={'left'}
-          label={'Ownership Status'}
-          field={'ownership_status'}
+          width="half-width"
+          position="left"
+          label="Ownership Status"
+          field="ownership_status"
         />
 
         <div className="clear-both" />
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Past Tenants'}
-          field={'past_tenants'}
+          width="full-width"
+          label="Past Tenants"
+          field="past_tenants"
           placeholder={
             'Use this space to create a list of past tenants organized by dates and names (of people and/or businesses). Aspects of this information may also be included in the narrative "Social History" section.'
           }
@@ -212,56 +212,46 @@ export default class DataAndHistory extends React.Component {
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Physical Description'}
-          field={'physical_description'}
-          placeholder={
-            'Describe building form, materials, design, and style. Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant. Highlight glossary terms.'
-          }
+          width="full-width"
+          label="Physical Description"
+          field="physical_description"
+          placeholder="Describe building form, materials, design, and style. Provide clear description of notable architectural features.  Note alterations and additions to the building made over time, both exterior and interior, when relevant. Highlight glossary terms."
           height={150}
         />
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Urban Setting'}
-          field={'urban_setting'}
-          placeholder={
-            'Describe the urban context of your building. Standing alone in a field? In the midst of a dense commercial district? Comments and observations about the streetscape and general setting should go here. What role does your building play in this broader setting?'
-          }
+          width="full-width"
+          label="Urban Setting"
+          field="urban_setting"
+          placeholder="Describe the urban context of your building. Standing alone in a field? In the midst of a dense commercial district? Comments and observations about the streetscape and general setting should go here. What role does your building play in this broader setting?"
           height={150}
         />
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Social History'}
-          field={'social_history'}
-          placeholder={
-            'Describe ownership and tenancy of the building over time. Draw from city directories, atlases, Sanborn maps, etc. Can you suggest the roles this building has played in the city’s broader social history?  What social groups or functions has it housed over time?'
-          }
+          width="full-width"
+          label="Social History"
+          field="social_history"
+          placeholder="Describe ownership and tenancy of the building over time. Draw from city directories, atlases, Sanborn maps, etc. Can you suggest the roles this building has played in the city’s broader social history?  What social groups or functions has it housed over time?"
           height={150}
         />
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Site History'}
-          field={'site_history'}
-          placeholder={
-            'More additional information on the history of this site, including ownership and land use prior to the current structure.'
-          }
+          width="full-width"
+          label="Site History"
+          field="site_history"
+          placeholder="More additional information on the history of this site, including ownership and land use prior to the current structure."
           height={150}
         />
 
         <RichTextArea
           {...this.props}
-          width={'full-width'}
-          label={'Sources'}
-          field={'sources'}
-          placeholder={
-            'Please note sources, including maps, documents, and secondary sources.'
-          }
+          width="full-width"
+          label="Sources"
+          field="sources"
+          placeholder="Please note sources, including maps, documents, and secondary sources."
           height={200}
         />
       </div>

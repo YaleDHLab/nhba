@@ -15,17 +15,15 @@ export default class FileTable extends React.Component {
             <div className="table-header left">File Name</div>
             <div className="table-header right">Document Title</div>
           </div>
-          {this.props.files.map((file, i) => {
-            return (
-              <FileTableRow
-                key={i}
-                file={file}
-                index={i}
-                selectFileToRelabel={this.props.selectFileToRelabel}
-                updateField={this.props.updateField}
-              />
-            );
-          })}
+          {this.props.files.map((file, i) => (
+            <FileTableRow
+              key={i}
+              file={file}
+              index={i}
+              selectFileToRelabel={this.props.selectFileToRelabel}
+              updateField={this.props.updateField}
+            />
+          ))}
         </div>
       </div>
     );

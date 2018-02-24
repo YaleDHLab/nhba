@@ -5,18 +5,18 @@ const tabs = [
   {
     key: 'overview',
     label: 'Overview',
-    position: 'left',
+    position: 'left'
   },
   {
     key: 'data-and-history',
     label: 'Data and History',
-    position: 'center',
+    position: 'center'
   },
   {
     key: 'multimedia-gallery',
     label: 'Multimedia Gallery',
-    position: 'right',
-  },
+    position: 'right'
+  }
 ];
 
 export default class Tabs extends React.Component {
@@ -27,9 +27,7 @@ export default class Tabs extends React.Component {
   render() {
     return (
       <div className="form-tabs">
-        {tabs.map((tab, i) => {
-          return <Tab key={i} {...this.props} tab={tab} />;
-        })}
+        {tabs.map((tab, i) => <Tab key={i} {...this.props} tab={tab} />)}
       </div>
     );
   }

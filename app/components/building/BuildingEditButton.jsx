@@ -5,7 +5,7 @@ export default class SuggestEdit extends React.Component {
   render() {
     const adminButton = (
       <div className="suggest-edit">
-        <Link to={'/admin/form?buildingId=' + this.props.building._id}>
+        <Link to={`/admin/form?buildingId=${this.props.building._id}`}>
           Edit this building
         </Link>
         <div>

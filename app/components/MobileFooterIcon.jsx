@@ -15,11 +15,11 @@ export default class MobileFooterIcon extends React.Component {
         }}
       >
         <object
-          data={'/assets/images/' + this.props.filename + '.svg'}
+          data={`/assets/images/${this.props.filename}.svg`}
           type="image/svg+xml"
           className={this.props.filename}
         >
-          <img src={'/assets/images/' + this.props.filename + '.png'} />
+          <img src={`/assets/images/${this.props.filename}.png`} />
         </object>
         <div>{this.props.label}</div>
       </div>

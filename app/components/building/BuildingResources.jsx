@@ -9,14 +9,12 @@ export default class BuildingResources extends React.Component {
   render() {
     const archiveDocuments =
       this.props.building && this.props.building.archive_documents ? (
-        this.props.building.archive_documents.map((doc, i) => {
-          return (
-            <div className="archive-document" key={i}>
-              <img src="/assets/images/link-icon.png" />
-              <a href={'/assets/uploads/files/' + doc.filename}>{doc.label}</a>
-            </div>
-          );
-        })
+        this.props.building.archive_documents.map((doc, i) => (
+          <div className="archive-document" key={i}>
+            <img src="/assets/images/link-icon.png" />
+            <a href={`/assets/uploads/files/${doc.filename}`}>{doc.label}</a>
+          </div>
+        ))
       ) : (
         <span />
       );

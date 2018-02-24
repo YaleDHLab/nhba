@@ -14,7 +14,7 @@ export default class BuidingButtonIcon extends React.Component {
       building: <IconBuilding />,
       community: <IconCommunity />,
       overview: <IconOverview />,
-      structure: <IconStructure />,
+      structure: <IconStructure />
     };
 
     return <span>{icons[this.props.icon]}</span>;

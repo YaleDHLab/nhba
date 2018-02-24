@@ -43,7 +43,7 @@ export default class Select extends React.Component {
           allowNewOptions={this.props.allowNewOptions}
           onNewOption={this.props.handleNewOption}
           handleChange={this.updateField}
-          className={'custom-select'}
+          className="custom-select"
         />
       </div>
     );

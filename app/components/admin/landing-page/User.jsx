@@ -10,8 +10,8 @@ export default class User extends React.Component {
   }
 
   handleChange(e) {
-    let packet = {
-      _id: this.props.user._id,
+    const packet = {
+      _id: this.props.user._id
     };
 
     if (e.target.value === 'admin') {
@@ -21,7 +21,7 @@ export default class User extends React.Component {
     }
 
     request
-      .post(api.endpoint + 'users/update')
+      .post(`${api.endpoint}users/update`)
       .send(packet)
       .set('Accept', 'application/json')
       .end(err => {

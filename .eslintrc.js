@@ -9,7 +9,7 @@ module.exports = {
       env: 'development',
     },
   },
-  extends: ['eslint:recommended', 'airbnb-base', 'prettier', 'prettier/react'],
+  extends: ['eslint:recommended', 'airbnb', 'prettier', 'prettier/react'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -20,6 +20,7 @@ module.exports = {
     ],
     'consistent-return': 'off',
     'react/jsx-uses-vars': 2,
+    'react/prop-types': 'off',
     'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     'no-underscore-dangle': ['error', { allow: ['_id']}],
     'no-unused-vars': ['error', { varsIgnorePattern: 'React' }],

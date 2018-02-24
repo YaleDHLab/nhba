@@ -8,16 +8,16 @@ import api from '../../../../config';
 const pages = [
   {
     label: 'About',
-    route: '/admin/about',
+    route: '/admin/about'
   },
   {
     label: 'Contact',
-    route: '/admin/contact',
+    route: '/admin/contact'
   },
   {
     label: 'Glossary',
-    route: '/admin/glossary',
-  },
+    route: '/admin/glossary'
+  }
 ];
 
 export default class SuperadminTop extends React.Component {
@@ -26,7 +26,7 @@ export default class SuperadminTop extends React.Component {
 
     this.state = {
       tab: 'users', // {'users' | 'pages'}
-      users: [],
+      users: []
     };
 
     this.changeTab = this.changeTab.bind(this);
@@ -35,7 +35,7 @@ export default class SuperadminTop extends React.Component {
   }
 
   changeTab(tab) {
-    this.setState({ tab: tab });
+    this.setState({ tab });
   }
 
   componentDidMount() {

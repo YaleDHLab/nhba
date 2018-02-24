@@ -12,7 +12,7 @@ const tableFields = [
   { label: 'Accessibility', field: 'accessibilities' },
   { label: 'No. of levels', field: 'levels' },
   { label: 'Structure', field: 'structures' },
-  { label: 'Roof Material', field: 'roof_materials' },
+  { label: 'Roof Material', field: 'roof_materials' }
 ];
 
 export default class BuildingStructuralData extends React.Component {

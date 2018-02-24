@@ -9,9 +9,9 @@ export default class BuildingButtons extends React.Component {
   render() {
     return (
       <div className="building-buttons">
-        {this.props.fields.map((field, i) => {
-          return <BuildingButton field={field} key={i} />;
-        })}
+        {this.props.fields.map((field, i) => (
+          <BuildingButton field={field} key={i} />
+        ))}
       </div>
     );
   }

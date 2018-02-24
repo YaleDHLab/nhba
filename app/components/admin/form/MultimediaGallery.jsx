@@ -14,7 +14,7 @@ export default class MultimediaGallery extends React.Component {
 
     this.state = {
       fileToRecaption: {},
-      fileToRelabel: {},
+      fileToRelabel: {}
     };
 
     this.handleImage = this.handleImage.bind(this);
@@ -37,8 +37,8 @@ export default class MultimediaGallery extends React.Component {
     }
 
     _.keys(files).map(k => {
-      let req = request.post(api.endpoint + 'upload?resize=true');
-      let filename = files[k].name.split(' ').join('-');
+      const req = request.post(`${api.endpoint}upload?resize=true`);
+      const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
@@ -46,7 +46,7 @@ export default class MultimediaGallery extends React.Component {
 
         const doc = {
           filename: res.body.file.name,
-          caption: '',
+          caption: ''
         };
 
         self.props.updateField('images', doc);
@@ -68,9 +68,9 @@ export default class MultimediaGallery extends React.Component {
       files = e.target.files;
     }
 
-    _.keys(files).map((k) => {
-      let req = request.post(api.endpoint + 'upload');
-      let filename = files[k].name.split(' ').join('-');
+    _.keys(files).map(k => {
+      const req = request.post(`${api.endpoint}upload`);
+      const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
 
       req.end((err, res) => {
@@ -78,7 +78,7 @@ export default class MultimediaGallery extends React.Component {
 
         const doc = {
           filename: res.body.file.name,
-          label: res.body.file.name,
+          label: res.body.file.name
         };
 
         self.props.updateField('archive_documents', doc);
@@ -143,42 +143,42 @@ export default class MultimediaGallery extends React.Component {
       <div className="media-gallery">
         <ImageGrid
           {...this.props}
-          label={'Image Gallery'}
+          label="Image Gallery"
           selectFileToRecaption={this.selectFileToRecaption}
         />
 
         <FilePicker
           {...this.props}
-          topLabel={'Select Image'}
-          bottomLabel={'Caption'}
+          topLabel="Select Image"
+          bottomLabel="Caption"
           handleFile={this.handleImage}
           file={this.state.fileToRecaption}
-          textField={'caption'}
+          textField="caption"
           handleTextChange={this.handleCaptionChange}
         />
 
         <FileTable
           {...this.props}
           files={this.props.building.archive_documents}
-          label={'Archive Documents'}
+          label="Archive Documents"
           selectFileToRelabel={this.selectFileToRelabel}
         />
 
         <FilePicker
           {...this.props}
-          topLabel={'Select File'}
-          bottomLabel={'Name'}
+          topLabel="Select File"
+          bottomLabel="Name"
           handleFile={this.handleFile}
           file={this.state.fileToRelabel}
-          textField={'label'}
+          textField="label"
           handleTextChange={this.handleLabelChange}
         />
 
         <TextInput
           {...this.props}
-          width={'full-width'}
-          label={'Story Maps Url'}
-          field={'storymap_url'}
+          width="full-width"
+          label="Story Maps Url"
+          field="storymap_url"
         />
       </div>
     );

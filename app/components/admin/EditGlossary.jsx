@@ -9,7 +9,7 @@ export default class EditSimplePage extends React.Component {
     super(props);
 
     this.state = {
-      glossaryItems: [],
+      glossaryItems: []
     };
 
     // getters and setters for glossary data
@@ -34,26 +34,26 @@ export default class EditSimplePage extends React.Component {
     const glossaryItems = res.body;
 
     this.setState({
-      glossaryItems: this.sortItems(glossaryItems),
+      glossaryItems: this.sortItems(glossaryItems)
     });
   }
 
   /**
    * Event listeners for text changes
-   **/
+   * */
 
   handleTextChange(e, field, termIndex) {
-    let glossaryItems = Object.assign([], this.state.glossaryItems);
+    const glossaryItems = Object.assign([], this.state.glossaryItems);
     glossaryItems[termIndex][field] = e.target.value;
     this.setState({ glossaryItems: this.sortItems(glossaryItems) });
   }
 
   /**
    * Add a new glossary item
-   **/
+   * */
 
   addNewItem() {
-    let glossaryItems = Object.assign([], this.state.glossaryItems);
+    const glossaryItems = Object.assign([], this.state.glossaryItems);
     glossaryItems.push({});
 
     this.setState({ glossaryItems: this.sortItems(glossaryItems) });
@@ -61,10 +61,10 @@ export default class EditSimplePage extends React.Component {
 
   /**
    * Delete an extant glossary item
-   **/
+   * */
 
   deleteItem(idx) {
-    let glossaryItems = Object.assign([], this.state.glossaryItems);
+    const glossaryItems = Object.assign([], this.state.glossaryItems);
     const filtered = _.remove(glossaryItems, (d, i) => i != idx);
 
     this.setState({ glossaryItems: this.sortItems(filtered) }, () => {
@@ -74,7 +74,7 @@ export default class EditSimplePage extends React.Component {
 
   /**
    * Sort a list of glossary items alphabetically by term
-   **/
+   * */
 
   sortItems(items) {
     return _.sortBy(items, 'term');
@@ -82,13 +82,13 @@ export default class EditSimplePage extends React.Component {
 
   /**
    * Save all glossary items
-   **/
+   * */
 
   saveGlossary() {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
 
     request
-      .post(api.endpoint + 'glossary/save')
+      .post(`${api.endpoint}glossary/save`)
       .send(glossaryItems)
       .set('Accept', 'application/json')
       .end(err => {
@@ -104,17 +104,15 @@ export default class EditSimplePage extends React.Component {
           <div className="instructions">
             {'Add definitions....style guide and directions here.'}
           </div>
-          {this.state.glossaryItems.map((item, idx) => {
-            return (
-              <GlossaryItem
-                key={idx}
-                item={item}
-                index={idx}
-                handleTextChange={this.handleTextChange}
-                deleteItem={this.deleteItem}
-              />
-            );
-          })}
+          {this.state.glossaryItems.map((item, idx) => (
+            <GlossaryItem
+              key={idx}
+              item={item}
+              index={idx}
+              handleTextChange={this.handleTextChange}
+              deleteItem={this.deleteItem}
+            />
+          ))}
           <div className="yellow-button" onClick={this.saveGlossary}>
             Save
           </div>

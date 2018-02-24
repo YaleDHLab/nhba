@@ -10,7 +10,7 @@ export default class Tab extends React.Component {
 
   getClass() {
     const tab = this.props.tab;
-    let tabClass = 'form-tab ' + tab.position;
+    let tabClass = `form-tab ${tab.position}`;
     if (tab.key == this.props.activeTab) {
       tabClass += ' active';
     }

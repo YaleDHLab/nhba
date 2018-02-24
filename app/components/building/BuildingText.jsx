@@ -8,7 +8,7 @@ export default class BuildingText extends React.Component {
       ? this.props.building.building_name
       : this.props.building.address;
 
-    let fields = [];
+    const fields = [];
     if (this.props.building) {
       this.props.fields.map((field, i) => {
         if (field.collapsible) {
@@ -30,7 +30,7 @@ export default class BuildingText extends React.Component {
       });
     }
 
-    let tableFields = [
+    const tableFields = [
       { label: 'Year Built', field: 'year_built' },
       { label: 'Era', field: 'era' },
       { label: 'Functions', field: 'current_uses' },
@@ -44,13 +44,13 @@ export default class BuildingText extends React.Component {
       { label: 'Created At', field: 'created_at', type: 'time' },
       { label: 'Updated At', field: 'updated_at', type: 'time' },
       { label: 'Story Maps', field: 'storymap_url', type: 'url' },
-      { label: 'Multimedia', field: 'multimedia_url', type: 'url' },
+      { label: 'Multimedia', field: 'multimedia_url', type: 'url' }
     ];
 
     if (this.props.building.building_name) {
       tableFields.unshift({
         label: 'Address',
-        field: 'address',
+        field: 'address'
       });
     }
 

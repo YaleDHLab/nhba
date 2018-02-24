@@ -8,7 +8,7 @@ export default class BuildingLightbox extends React.Component {
 
   /**
    * Stop propagation of modal clicks
-   **/
+   * */
 
   handleClick(e) {
     if (!e.target.className === 'lightbox-image') {

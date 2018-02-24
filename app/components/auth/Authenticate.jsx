@@ -11,7 +11,7 @@ export default class Authenticate extends React.Component {
     super(props);
 
     this.state = {
-      view: 'login',
+      view: 'login'
     };
 
     this.signUp = this.signUp.bind(this);
