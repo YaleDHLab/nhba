@@ -83,13 +83,11 @@ const addFilterTerms = (queryTerms, req) => {
     .keys()
     .without('filter', 'fulltext', 'sort', 'userLatitude', 'userLongitude')
     .value();
-
   keys.forEach(key => {
     // values with ' ' use _ as whitespace separator in query
     const values = [];
     const queryTerm = {};
-    req.query[key] = _.isArray(req.query[key]);
-    const args = req.query[key] ? req.query[key] : [req.query[key]];
+    const args = _.isArray(req.query[key]) ? req.query[key] : [req.query[key]];
 
     args.forEach(value => {
       values.push(value);
@@ -157,8 +155,9 @@ const addProximityTerms = (queryTerms, req) => {
  * */
 
 const updateBuildingFields = building => {
-  building.updated_at = getTime();
-  building.location = getLocation(building.longitude, building.latitude);
+  const newBuilding = building;
+  newBuilding.updated_at = getTime();
+  newBuilding.location = getLocation(building.longitude, building.latitude);
   return building;
 };
 
@@ -195,7 +194,7 @@ module.exports = function routes(app) {
     }
 
     // query for buildings with images
-    if (req.query.images && req.query.images == 'true') {
+    if (req.query.images && req.query.images === 'true') {
       queryTerms.push({ $where: 'this.images.length > 0' });
     }
 
@@ -274,8 +273,8 @@ module.exports = function routes(app) {
       models.user.findOneAndUpdate(
         query,
         { $push: { buildings: building._id } },
-        err => {
-          if (err) return res.status(500).send({ cause: err });
+        err2 => {
+          if (err2) return res.status(500).send({ cause: err2 });
         }
       );
       return res.status(200).send(data);
@@ -335,7 +334,7 @@ module.exports = function routes(app) {
     if (building._id) {
       // reject if not admin or creator
       if (process.env.NHBA_ENVIRONMENT === 'production') {
-        if (!req.session.admin && building.creator != req.session.userId) {
+        if (!req.session.admin && building.creator !== req.session.userId) {
           return res.status(403).send('This action could not be completed');
         }
       }
@@ -377,7 +376,7 @@ module.exports = function routes(app) {
 
     const building = req.body;
     if (process.env.NHBA_ENVIRONMENT === 'production') {
-      if (!req.session.admin && building.creator != req.session.userId) {
+      if (!req.session.admin && building.creator !== req.session.userId) {
         return res.status(403).send('This action could not be completed');
       }
     }
@@ -388,8 +387,8 @@ module.exports = function routes(app) {
           models.user.update(
             { _id: building.creator },
             { $pull: { buildings: building._id } },
-            err => {
-              if (err) return res.status(500).send({ cause: err });
+            err2 => {
+              if (err2) return res.status(500).send({ cause: err2 });
             }
           );
         }
@@ -418,8 +417,8 @@ module.exports = function routes(app) {
       }
       const match = geoRes ? geoRes[0] : null;
       if (match) {
-        let lat = parseFloat(match.latitude),
-          lng = parseFloat(match.longitude);
+        const lat = parseFloat(match.latitude);
+        const lng = parseFloat(match.longitude);
         building.latitude = lat;
         building.longitude = lng;
         building.location = getLocation(lng, lat);
@@ -458,7 +457,7 @@ module.exports = function routes(app) {
       if (err) return res.status(500).send({ cause: err });
       return res
         .status(200)
-        .send({ creator: data.creator == req.session.userId });
+        .send({ creator: data.creator === req.session.userId });
     });
   });
 
@@ -539,12 +538,12 @@ module.exports = function routes(app) {
     models.glossaryterm.remove(
       {},
       () => {
-        req.body.map(doc => {
+        req.body.forEach(doc => {
           const term = new models.glossaryterm(doc);
-          term.save((err, term) => {
-            results.push(err || term);
+          term.save((err, term2) => {
+            results.push(err || term2);
 
-            if (results.length == req.body.length) {
+            if (results.length === req.body.length) {
               return res.status(200).send(results);
             }
           });

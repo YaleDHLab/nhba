@@ -13,10 +13,10 @@ import React from 'react';
 
 module.exports = (tableFields, building) => {
   const cells = [];
-  tableFields.map((f, i) => {
+  tableFields.forEach((f, i) => {
     const value = building[f.field];
     const valueString = Array.isArray(value) ? value.join(', ') : value;
-    if (value && (value.length > 0 || !isNaN(parseFloat(value)))) {
+    if (value && (value.length > 0 || !Number.isNaN(parseFloat(value)))) {
       if (f.type && f.type === 'url') {
         cells.push(
           <td key={i}>
@@ -46,9 +46,9 @@ module.exports = (tableFields, building) => {
 
   const rows = [];
   let rowCells = [];
-  cells.map((c, i) => {
+  cells.forEach((c, i) => {
     rowCells.push(c);
-    if (rowCells.length % 2 == 0) {
+    if (rowCells.length % 2 === 0) {
       rows.push(<tr key={i}>{rowCells}</tr>);
       rowCells = [];
     }

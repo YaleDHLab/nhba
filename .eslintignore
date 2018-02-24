@@ -1,2 +1,8 @@
 # Ignore built files
 build/*
+
+# Ignore seed
+app/models/seeds/*
+
+# Ignore migrations
+app/models/migrations/*

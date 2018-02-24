@@ -22,27 +22,8 @@ const sizes = {
   }
 };
 
-// make calls to resize the image at each size
-const getAllSizes = file =>
-  new Promise(resolve => {
-    const basename = path.basename(file);
-
-    // get each of the required sizes
-    Object.keys(sizes).map((size, idx) => {
-      const outputdir = `${dirs.resized}/${size}/${basename}`;
-      const width = sizes[size].width;
-      const height = sizes[size].height;
-      const resizedImage = resizeImage(file, width, height, outputdir);
-      resizedImage.then(() => {
-        if (idx == Object.keys(sizes).length - 1) {
-          resolve();
-        }
-      });
-    });
-  });
-
 // execute the resize
-var resizeImage = (file, width, height, outputdir) =>
+const resizeImage = (file, width, height, outputdir) =>
   new Promise((resolve, reject) => {
     sharp(file)
       .resize(width, height)
@@ -51,10 +32,28 @@ var resizeImage = (file, width, height, outputdir) =>
         if (err) {
           reject();
         } else {
-          console.info(' * created a', width, 'x', height, 'resize of', file);
           resolve();
         }
       });
+  });
+
+// make calls to resize the image at each size
+const getAllSizes = file =>
+  new Promise(resolve => {
+    const basename = path.basename(file);
+
+    // get each of the required sizes
+    Object.keys(sizes).forEach((size, idx) => {
+      const outputdir = `${dirs.resized}/${size}/${basename}`;
+      const { width } = sizes[size];
+      const { height } = sizes[size];
+      const resizedImage = resizeImage(file, width, height, outputdir);
+      resizedImage.then(() => {
+        if (idx === Object.keys(sizes).length - 1) {
+          resolve();
+        }
+      });
+    });
   });
 
 // resize all uploads
@@ -63,7 +62,7 @@ const uploads = () => {
     if (err) {
       console.warn(err);
     } else {
-      files.map(file => {
+      files.forEach(file => {
         getAllSizes(file);
       });
     }

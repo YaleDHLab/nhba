@@ -13,15 +13,14 @@ routes.map(route => {
   const page = {
     route,
     text:
-      'Lorem ipsum dolor sit amet, venenatis sodales placerat, in voluptates \
-      hac, dui a sed nullam purus.'
+      'Lorem ipsum dolor sit amet, venenatis sodales placerat, in voluptates hac, dui a sed nullam purus.'
   };
 
   const simplePage = new models.simplepage(page);
   simplePage.save(err => {
     if (err) console.info(err);
-    completed++;
-    if (completed == routes.length) {
+    completed += 1;
+    if (completed === routes.length) {
       console.info(' * initialized simplepages');
       process.exit();
     }

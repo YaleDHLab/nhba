@@ -13,8 +13,8 @@
 module.exports = eras =>
   eras.sort((a, b) => {
     try {
-      const aStart = parseInt(a.split('-')[0]);
-      const bStart = parseInt(b.split('-')[0]);
+      const aStart = parseInt(a.split('-')[0], 10);
+      const bStart = parseInt(b.split('-')[0], 10);
       return aStart < bStart;
     } catch (err) {
       return true;

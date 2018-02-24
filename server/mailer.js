@@ -40,7 +40,7 @@ module.exports = {
       html: mail.html + link // html body
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, error => {
       if (error) {
         console.warn(error);
       }

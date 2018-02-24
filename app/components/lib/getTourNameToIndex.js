@@ -4,7 +4,7 @@
 
 module.exports = buildings => {
   let tours = new Set();
-  buildings.map(d => {
+  buildings.forEach(d => {
     if (d.tours) {
       d.tours.map(tour => tours.add(tour));
     }
@@ -12,7 +12,7 @@ module.exports = buildings => {
 
   tours = Array.from(tours);
   const tourIdToIndex = {};
-  tours.map((d, i) => {
+  tours.forEach((d, i) => {
     tourIdToIndex[d] = i;
   });
 

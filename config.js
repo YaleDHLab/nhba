@@ -30,7 +30,7 @@ config.brand = 'nhba';
  * Methods
  ** */
 
-config.get = function(route, callback) {
+config.get = function getConfig(route, callback) {
   request
     .get(config.endpoint + route)
     .set('Accept', 'application/json')

@@ -1,16 +1,17 @@
 import React from 'react';
+import _ from 'lodash';
+
 import Multiselect from './Multiselect';
 import Sort from './Sort';
 import getSelectOptions from './lib/getSelectOptions';
 import filterSelects from './lib/filterSelects';
-import _ from 'lodash';
 
 export default class Filters extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      options: {},
+      options: {}
     };
 
     this.runSearch = this.runSearch.bind(this);
@@ -24,9 +25,9 @@ export default class Filters extends React.Component {
   }
 
   setSelectOptions() {
-    const buildings = this.props.buildings;
+    const { buildings } = this.props;
     const options = getSelectOptions(buildings, filterSelects);
-    this.setState({ options: options });
+    this.setState({ options });
   }
 
   runSearch() {

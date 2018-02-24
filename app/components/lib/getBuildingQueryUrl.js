@@ -11,12 +11,22 @@ import _ from 'lodash';
  *   {str} a URI-escaped query string for building data
  * */
 
-module.exports = (state, selectFields) => {
-  let queryTerms = {};
-  queryTerms = addSelectQueryTerms(state, selectFields, queryTerms);
-  queryTerms = addSortQueryTerms(state, queryTerms);
-  queryTerms = addUserLocationQueryTerms(state, queryTerms);
-  return buildQueryUrl(queryTerms);
+/**
+ * Prepare query values by handling whitespace in string values
+ *
+ * @args:
+ *   [array] values: a list of values for the current field
+ * @returns:
+ *   [array]: the input array, except now strings with whitespace
+ *     are underscore joined
+ * */
+
+const encodeValues = values => {
+  const encodedValues = [];
+  values.forEach(value => {
+    encodedValues.push(encodeURIComponent(value));
+  });
+  return encodedValues;
 };
 
 /**
@@ -33,29 +43,12 @@ module.exports = (state, selectFields) => {
  * */
 
 const addSelectQueryTerms = (state, selectFields, queryTerms) => {
-  selectFields.map(field => {
+  const newQueryTerms = queryTerms;
+  selectFields.forEach(field => {
     const values = Array.from(state[field]);
-    if (values.length) queryTerms[field] = encodeValues(values);
+    if (values.length) newQueryTerms[field] = encodeValues(values);
   });
-  return queryTerms;
-};
-
-/**
- * Prepare query values by handling whitespace in string values
- *
- * @args:
- *   [array] values: a list of values for the current field
- * @returns:
- *   [array]: the input array, except now strings with whitespace
- *     are underscore joined
- * */
-
-const encodeValues = values => {
-  const encodedValues = [];
-  values.map(value => {
-    encodedValues.push(encodeURIComponent(value));
-  });
-  return encodedValues;
+  return newQueryTerms;
 };
 
 /**
@@ -70,10 +63,11 @@ const encodeValues = values => {
  * */
 
 const addSortQueryTerms = (state, queryTerms) => {
+  const newQueryTerms = queryTerms;
   if (state.sort && state.sort !== 'Sort by') {
-    queryTerms.sort = state.sort;
+    newQueryTerms.sort = state.sort;
   }
-  return queryTerms;
+  return newQueryTerms;
 };
 
 /**
@@ -88,11 +82,12 @@ const addSortQueryTerms = (state, queryTerms) => {
  * */
 
 const addUserLocationQueryTerms = (state, queryTerms) => {
+  const newQueryTerms = queryTerms;
   if (state.userLocation) {
-    queryTerms.userLatitude = state.userLocation.latitude;
-    queryTerms.userLongitude = state.userLocation.longitude;
+    newQueryTerms.userLatitude = state.userLocation.latitude;
+    newQueryTerms.userLongitude = state.userLocation.longitude;
   }
-  return queryTerms;
+  return newQueryTerms;
 };
 
 /**
@@ -109,9 +104,9 @@ const buildQueryUrl = queryTerms => {
   let url = 'buildings';
   if (queryTerms) {
     url += '?filter=true&';
-    _.keys(queryTerms).map(field => {
+    _.keys(queryTerms).forEach(field => {
       if (Array.isArray(queryTerms[field])) {
-        queryTerms[field].map(queryTerm => {
+        queryTerms[field].forEach(queryTerm => {
           url += `${field}=${queryTerm}&`;
         });
       } else {
@@ -121,4 +116,12 @@ const buildQueryUrl = queryTerms => {
   }
 
   return url;
+};
+
+module.exports = (state, selectFields) => {
+  let queryTerms = {};
+  queryTerms = addSelectQueryTerms(state, selectFields, queryTerms);
+  queryTerms = addSortQueryTerms(state, queryTerms);
+  queryTerms = addUserLocationQueryTerms(state, queryTerms);
+  return buildQueryUrl(queryTerms);
 };
