@@ -469,7 +469,7 @@ module.exports = function routes(app) {
       if (err) return res.status(500).send({ cause: err });
       return res
         .status(200)
-        .send({ creator: data.creator === req.session.userId });
+        .send({ creator: data.creator.toString() === req.session.userId });
     });
   });
 
