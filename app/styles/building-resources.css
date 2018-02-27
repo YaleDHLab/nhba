@@ -2,11 +2,6 @@
 * Building Resources
 **/
 
-.building-resources .archive-document,
-.building-resources .footnotes {
-  margin: 0 15px;
-}
-
 .building-resources .archive-document img {
   width: 18px;
   opacity: 0.8;
