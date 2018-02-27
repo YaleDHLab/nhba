@@ -8,7 +8,6 @@ const tableFields = [
   { label: 'Material', field: 'materials' },
   { label: 'Roof Type', field: 'roof_types' },
   { label: 'Structural Condition', field: 'structural_conditions' },
-  { label: 'Past Tenants', field: 'past_tenants' },
   { label: 'Accessibility', field: 'accessibilities' },
   { label: 'No. of levels', field: 'levels' },
   { label: 'Structure', field: 'structures' },
