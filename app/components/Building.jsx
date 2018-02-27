@@ -173,6 +173,16 @@ export default class Building extends React.Component {
         )
       },
       {
+        label: 'Past Tenants',
+        button: { label: 'Past Tenants', icon: 'building' },
+        href: 'past-tenants',
+        collapsible: false,
+        contentFields: ['past_tenants'],
+        component: (
+          <BuildingTextBox title="Past Tenants" text={building.past_tenants} />
+        )
+      },
+      {
         label: 'Structural Data',
         button: { label: 'Structural Data', icon: 'structure' },
         href: 'structuralData',
@@ -185,7 +195,6 @@ export default class Building extends React.Component {
           'materials',
           'roof_types',
           'structural_conditions',
-          'past_tenants',
           'accessibilities',
           'levels',
           'structures',
