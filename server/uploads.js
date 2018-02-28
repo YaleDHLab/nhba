@@ -27,8 +27,7 @@ module.exports = function uploads(app) {
         res.status(200).send({
           status: 'great',
           file: {
-            name: req.file.name,
-            originalName: req.file.originalname
+            name: req.file.filename
           }
         });
       });
@@ -38,8 +37,7 @@ module.exports = function uploads(app) {
       res.status(200).send({
         status: 'great',
         file: {
-          name: req.file.name,
-          originalName: req.file.originalname
+          name: req.file.filename
         }
       });
     }
