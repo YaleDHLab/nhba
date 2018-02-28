@@ -37,7 +37,8 @@ export default class MultimediaGallery extends React.Component {
     }
 
     _.keys(files).map(k => {
-      const req = request.post(`${api.endpoint}upload?resize=true`);
+      const req = request.post(`
+        ${api.endpoint}upload?buildingId=${this.props.building._id}&resize=true`);
       const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
 
@@ -69,7 +70,7 @@ export default class MultimediaGallery extends React.Component {
     }
 
     _.keys(files).map(k => {
-      const req = request.post(`${api.endpoint}upload`);
+      const req = request.post(`${api.endpoint}upload?buildingId=${this.props.building._id}`);
       const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
 
