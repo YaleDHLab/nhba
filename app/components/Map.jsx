@@ -9,7 +9,6 @@ const MapComponent = withGoogleMap(props => (
     defaultZoom={props.mapConfig.zoom}
     center={props.mapConfig.location}
     ref={props.onMapMounted}
-    onIdle={props.onIdle}
     defaultOptions={{
       scrollwheel: false,
       styles: MapStyles
@@ -61,16 +60,6 @@ export default class MapContainer extends Component {
     this._map = map;
   }
 
-  updateCenter() {
-    const center = this._map.getCenter();
-    this.setState({
-      location: {
-        lat: center.lat(),
-        lng: center.lng()
-      }
-    });
-  }
-
   render() {
     const initialLocation = this.props.initialLocation;
     const mapConfig = {
@@ -89,7 +78,6 @@ export default class MapContainer extends Component {
             mapConfig={mapConfig}
             userLocation={this.props.userLocation}
             onMapMounted={this.handleMapMounted}
-            onIdle={this.updateCenter}
           />
         </div>
       </div>

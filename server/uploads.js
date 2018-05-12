@@ -9,7 +9,6 @@ const storage = multer.diskStorage({
     cb(null, destination);
   },
   filename(req, file, cb) {
-    console.log(req.query)
     cb(null, `${req.query.buildingId}-${Date.now()}-${file.originalname}`);
   }
 });

@@ -29,14 +29,6 @@ export default class MapMarker extends React.Component {
   }
 
   render() {
-    const overlay = this.state.hovered ? (
-      <BuildingOverlay
-        lat={this.props.lat}
-        lng={this.props.lng}
-        building={this.props.building}
-      />
-    ) : null;
-
     return (
       <div className="marker-container">
         <BuildingCircle
@@ -47,7 +39,13 @@ export default class MapMarker extends React.Component {
           handleMouseOut={this.handleMouseOut}
           tourNameToIndex={this.props.tourNameToIndex}
         />
-        {overlay}
+        {this.state.hovered && (
+          <BuildingOverlay
+            lat={this.props.lat}
+            lng={this.props.lng}
+            building={this.props.building}
+          />
+        )}
       </div>
     );
   }

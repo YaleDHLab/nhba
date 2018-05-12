@@ -29,16 +29,6 @@ export default class SimplePage extends React.Component {
   }
 
   render() {
-    console.log(
-      this.state.glossaryterms
-        .map((t, i) => (
-          <div key={i}>
-            <b>{t.term}</b>
-            <p>{t.definition}</p>
-          </div>
-        ))
-        .join('')
-    );
     const bodyText = this.props.flat
       ? this.state.text
       : this.state.glossaryterms.map((t, i) => (
