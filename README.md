@@ -138,8 +138,8 @@ Only superadmin users can appoint other admin users. Superadmin users must be ap
 # enter nhba db
 mongo nhba
 
-# find a user by their userId and make them a superadmin
-db.users.update({'userId': 6}, {$set: {'superadmin': true}})
+# find a user by their id and make them a superadmin
+db.users.update({'_id': 6}, {$set: {'superadmin': true}})
 ```
 #### Start Application
 
