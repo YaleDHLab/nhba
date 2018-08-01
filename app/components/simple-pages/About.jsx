@@ -1,5 +1,5 @@
-import React from 'react'
-import SimplePage from './SimplePage'
+import React from 'react';
+import SimplePage from './SimplePage';
 
 export default class About extends React.Component {
   render() {
@@ -8,15 +8,15 @@ export default class About extends React.Component {
       title: 'About',
       route: 'about',
       flat: true
-    }
+    };
 
     return (
-      <div className='about'>
+      <div className="about">
         <SimplePage {...page} />
-        <div className='terms'>
-          <a href='/assets/nhba_tou.pdf'>Terms of Use</a>
+        <div className="terms">
+          <a href="/assets/nhba_tou.pdf">Terms of Use</a>
         </div>
       </div>
-    )
+    );
   }
 }

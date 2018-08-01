@@ -1,0 +1,60 @@
+/**
+* Confirm
+**/
+
+.confirm .modal {
+  width: 700px;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding-bottom: 60px;
+  cursor: auto;
+}
+
+/**
+  * Confirm header
+  **/
+
+.confirm .modal .header .brand {
+  width: 586px;
+}
+
+.confirm .modal .header .middle {
+  width: 90px;
+}
+
+/**
+  * Modal body
+  **/
+
+.confirm .modal .body h1 {
+  text-align: center;
+  margin: 0 0 15px 0;
+}
+
+.confirm .modal .modal-button-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.confirm .modal .modal-button {
+  background: #eda138;
+  padding: 8px 40px;
+  margin-right: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.confirm .modal .text {
+  text-align: center;
+  color: #666;
+  display: inline-block;
+  width: 90%;
+  margin: 14px;
+  vertical-align: top;
+}

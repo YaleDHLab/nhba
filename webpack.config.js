@@ -1,8 +1,7 @@
-const path = require('path')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const CompressionPlugin = require('compression-webpack-plugin')
-const config = require('./config')
+const path = require('path');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const config = require('./config');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -16,7 +15,6 @@ process.env.BABEL_ENV = TARGET;
 
 // Configuration options used in dev and prod environments
 const common = {
-
   entry: {
     app: PATHS.app
   },
@@ -47,9 +45,7 @@ const common = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
-            'file-loader?name=[name].[ext]',
-        ]
+        loaders: ['file-loader?name=[name].[ext]']
       },
       {
         test: /\.jsx?$/,
@@ -58,12 +54,11 @@ const common = {
       }
     ]
   }
-}
+};
 
 // Development configuration
-if(TARGET === 'start' || !TARGET) {
+if (TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
-    
     // Enable sourcemaps for debugging
     devtool: 'eval-source-map',
 
@@ -88,27 +83,23 @@ if(TARGET === 'start' || !TARGET) {
     },
 
     plugins: [
-
       // Use hot module replacement
       new webpack.HotModuleReplacementPlugin()
     ]
-  })
+  });
 }
 
 // Bundled development configuration
-if(TARGET === 'build' || !TARGET) {
+if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
-    plugins: [
-      new webpack.optimize.OccurrenceOrderPlugin()
-    ]
-  })
+    plugins: [new webpack.optimize.OccurrenceOrderPlugin()]
+  });
 }
 
 // Production configuration
-if(TARGET === 'compress' || !TARGET) {
+if (TARGET === 'compress' || !TARGET) {
   module.exports = merge(common, {
     plugins: [
-
       // Optimize React library for production
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"'
@@ -123,5 +114,5 @@ if(TARGET === 'compress' || !TARGET) {
 
       new webpack.optimize.OccurrenceOrderPlugin()
     ]
-  })
+  });
 }

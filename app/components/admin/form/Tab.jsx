@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 
 export default class Tab extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.getClass = this.getClass.bind(this)
-    this.changeTab = this.changeTab.bind(this)
+    this.getClass = this.getClass.bind(this);
+    this.changeTab = this.changeTab.bind(this);
   }
 
   getClass() {
     const tab = this.props.tab;
-    let tabClass = 'form-tab ' + tab.position;
+    let tabClass = `form-tab ${tab.position}`;
     if (tab.key == this.props.activeTab) {
       tabClass += ' active';
     }
@@ -18,12 +18,14 @@ export default class Tab extends React.Component {
   }
 
   changeTab() {
-    this.props.changeTab(this.props.tab.key)
+    this.props.changeTab(this.props.tab.key);
   }
 
   render() {
     return (
-      <div onClick={this.changeTab} className={this.getClass()}>{this.props.tab.label}</div>
-    )
+      <div onClick={this.changeTab} className={this.getClass()}>
+        {this.props.tab.label}
+      </div>
+    );
   }
 }

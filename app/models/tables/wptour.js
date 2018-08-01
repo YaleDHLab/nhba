@@ -1,19 +1,16 @@
-var mongoose = require('mongoose')
-var autoIncrement = require('mongoose-auto-increment')
-var mongoosePaginate = require('mongoose-paginate')
-var _ = require('lodash')
-mongoose.Promise = require('bluebird')
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
+const _ = require('lodash');
+mongoose.Promise = require('bluebird');
 
 // config
-var table = 'wptour'
-var db = require('../db')
-var config = require('../../../config')
-var capitalized = _.startCase(_.toLower(table))
-var schema = new mongoose.Schema(db[table])
+const table = 'wptour';
+const db = require('../db');
+
+const capitalized = _.startCase(_.toLower(table));
+const schema = new mongoose.Schema(db[table]);
 
 // autoincrement a new {{table}}Id field and add pagination
-autoIncrement.initialize(mongoose.createConnection('mongodb://localhost/' + config.db))
-schema.plugin(autoIncrement.plugin, {model: capitalized, field: table + 'Id'})
-schema.plugin(mongoosePaginate)
+schema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model(capitalized, schema, table + 's')
+module.exports = mongoose.model(capitalized, schema, `${table}s`);

@@ -1,18 +1,18 @@
-import React from 'react'
-import BuildingOverlay from './BuildingOverlay'
-import BuildingCircle from './BuildingCircle'
+import React from 'react';
+import BuildingOverlay from './BuildingOverlay';
+import BuildingCircle from './BuildingCircle';
 
 export default class MapMarker extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       hovered: false
-    }
+    };
 
-    this.isIe = this.isIe.bind(this)
-    this.handleMouseOver = this.handleMouseOver.bind(this)
-    this.handleMouseOut = this.handleMouseOut.bind(this)
+    this.isIe = this.isIe.bind(this);
+    this.handleMouseOver = this.handleMouseOver.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
   }
 
   isIe() {
@@ -21,32 +21,32 @@ export default class MapMarker extends React.Component {
   }
 
   handleMouseOver() {
-    if (!this.isIe()) this.setState({hovered: true})
+    if (!this.isIe()) this.setState({ hovered: true });
   }
 
   handleMouseOut() {
-    if (!this.isIe()) this.setState({hovered: false})
+    if (!this.isIe()) this.setState({ hovered: false });
   }
 
   render() {
-    const overlay = this.state.hovered ?
-        <BuildingOverlay
-          lat={this.props.lat}
-          lng={this.props.lng}
-          building={this.props.building} />        
-      : null;
-
     return (
-      <div className='marker-container'>
+      <div className="marker-container">
         <BuildingCircle
           lat={this.props.lat}
           lng={this.props.lng}
           building={this.props.building}
           handleMouseOver={this.handleMouseOver}
           handleMouseOut={this.handleMouseOut}
-          tourNameToIndex={this.props.tourNameToIndex} />
-        {overlay}
+          tourNameToIndex={this.props.tourNameToIndex}
+        />
+        {this.state.hovered && (
+          <BuildingOverlay
+            lat={this.props.lat}
+            lng={this.props.lng}
+            building={this.props.building}
+          />
+        )}
       </div>
-    )
+    );
   }
-} 
+}

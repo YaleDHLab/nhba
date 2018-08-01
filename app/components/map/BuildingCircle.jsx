@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { browserHistory } from 'react-router';
-import { Marker } from 'react-google-maps'
+import { Marker } from 'react-google-maps';
 
 const config = {
   icon: {
@@ -11,7 +11,8 @@ const config = {
     scale: 0.3
   },
 
-  colors: [ // d3.category20b scale
+  colors: [
+    // d3.category20b scale
     '#393b79',
     '#5254a3',
     '#6b6ecf',
@@ -32,34 +33,35 @@ const config = {
     '#ad494a',
     '#d6616b',
     '#e7969c'
-  ],
-}
+  ]
+};
 
-const handleMarkerClick = (building) => {
-  browserHistory.push('/building?id=' + building._id);
-}
+const handleMarkerClick = building => {
+  browserHistory.push(`/building?id=${building._id}`);
+};
 
 // fetch an icon to represent the current building
 const getIcon = (building, tourNameToIndex) => {
   if (!tourNameToIndex) return;
 
-  const tourIndex = building.tours && building.tours.length ?
-      tourNameToIndex[ building.tours[0] ]
-    : config.colors.length -1;
+  const tourIndex =
+    building.tours && building.tours.length
+      ? tourNameToIndex[building.tours[0]]
+      : config.colors.length - 1;
 
   let color = config.colors[tourIndex % config.colors.length - 1];
-  color = color ? color : '#a55194';
+  color = color || '#a55194';
 
   // set the icon colors
-  let markerIcon = Object.assign({}, config.icon);
+  const markerIcon = Object.assign({}, config.icon);
   markerIcon.strokeColor = color;
   markerIcon.fillColor = color;
   return markerIcon;
-}
+};
 
 export default class BuildingCircle extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -68,11 +70,14 @@ export default class BuildingCircle extends React.Component {
         icon={getIcon(this.props.building, this.props.tourNameToIndex)}
         onMouseOver={this.props.handleMouseOver}
         onMouseOut={this.props.handleMouseOut}
-        onClick={() => {handleMarkerClick(this.props.building)}}
+        onClick={() => {
+          handleMarkerClick(this.props.building);
+        }}
         position={{
           lat: this.props.lat,
           lng: this.props.lng
-        }} />
-    )
+        }}
+      />
+    );
   }
-} 
+}

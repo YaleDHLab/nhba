@@ -1,48 +1,49 @@
-var request = require('superagent')
-var config = {}
+const request = require('superagent');
 
-/***
-* Static
-***/
+const config = {};
+
+/** *
+ * Static
+ ** */
 
 config.api = {
   protocol: 'http',
   host: 'localhost',
   port: 8080,
   prefix: 'api'
-}
+};
 
-config.endpoint = ''
-config.endpoint += config.api.protocol + '://'
-config.endpoint += config.api.host + ':'
-config.endpoint += config.api.port + '/'
-config.endpoint += config.api.prefix + '/'
+config.endpoint = '';
+config.endpoint += `${config.api.protocol}://`;
+config.endpoint += `${config.api.host}:`;
+config.endpoint += `${config.api.port}/`;
+config.endpoint += `${config.api.prefix}/`;
 
-/***
-* Namespace
-***/
+/** *
+ * Namespace
+ ** */
 
-config.db = 'nhba'
-config.brand = 'nhba'
+config.db = 'nhba';
+config.brand = 'nhba';
 
-/***
-* Methods
-***/
+/** *
+ * Methods
+ ** */
 
-config.get = function(route, callback) {
+config.get = function getConfig(route, callback) {
   request
     .get(config.endpoint + route)
     .set('Accept', 'application/json')
-    .end(callback)
-}
+    .end(callback);
+};
 
-/***
-* Certificates
-***/
+/** *
+ * Certificates
+ ** */
 
 config.ssl = {
   key: 'tls/privkey.pem',
   cert: 'tls/fullchain.pem'
-}
+};
 
-module.exports = config
+module.exports = config;

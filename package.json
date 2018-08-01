@@ -12,6 +12,8 @@
     "start": "webpack-dev-server",
     "build": "webpack",
     "compress": "webpack",
+    "precommit": "eslint --ext jsx . --fix",
+    "dev": "npm run build && node server.js",
     "production": "source ~/.bash_profile && npm run build && node server.js",
     "migrate": "python app/models/migrations/migrate-wp.py",
     "resize": "node server/resize-all.js",
@@ -30,13 +32,14 @@
     "es5-shim": "^4.5.9",
     "es6-shim": "^0.35.3",
     "express": "^4.14.0",
+    "express-mongo-sanitize": "^1.3.2",
+    "express-sanitizer": "^1.0.3",
     "express-session": "^1.14.1",
     "glob": "^7.1.1",
     "lodash": "^4.17.4",
     "method-override": "^2.3.6",
     "moment": "^2.18.1",
     "mongoose": "^4.9.2",
-    "mongoose-auto-increment": "^5.0.1",
     "mongoose-paginate": "^5.0.3",
     "morgan": "^1.7.0",
     "multer": "^1.3.0",
@@ -48,29 +51,38 @@
     "react-dnd-html5-backend": "^2.3.0",
     "react-dom": "^15.3.2",
     "react-google-maps": "^6.0.1",
+    "react-quill": "^1.2.3",
     "react-router": "^3.0.2",
     "serve-favicon": "^2.4.0",
-    "sharp": "^0.17.3",
+    "sharp": "^0.19.0",
     "superagent": "^3.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
+    "babel-eslint": "^8.2.1",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-hmre": "^1.1.1",
-    "compression-webpack-plugin": "^0.3.1",
     "css-loader": "^0.25.0",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.6.1",
     "faker": "^4.1.0",
     "file-loader": "^0.10.1",
     "image-webpack-loader": "^3.3.0",
     "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
+    "prettier": "^1.10.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2",
     "webpack-merge": "^0.14.1"
-  }, 
+  },
   "babel": {
     "presets": [
       "es2015",
@@ -83,6 +95,8 @@
         ]
       }
     },
-    "plugins":["transform-decorators-legacy"]
+    "plugins": [
+      "transform-decorators-legacy"
+    ]
   }
 }

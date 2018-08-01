@@ -1,15 +1,17 @@
-import React from 'react'
-import { findDOMNode } from 'react-dom'
-import { DragSource, DropTarget } from 'react-dnd'
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import { DragSource, DropTarget } from 'react-dnd';
+
+import Confirm from '../../Confirm';
 
 const imageSource = {
   beginDrag(props) {
     return {
       id: props.id,
-      index: props.index,
-    }
-  },
-}
+      index: props.index
+    };
+  }
+};
 
 const imageTarget = {
   hover(props, monitor, component) {
@@ -39,12 +41,12 @@ const imageTarget = {
 
     // Dragging downwards
     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      return
+      return;
     }
 
     // Dragging upwards
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      return
+      return;
     }
 
     // Time to actually perform the action
@@ -55,56 +57,63 @@ const imageTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex;
-  },
-}
+  }
+};
 
 @DropTarget('image', imageTarget, connect => ({
-  connectDropTarget: connect.dropTarget(),
+  connectDropTarget: connect.dropTarget()
 }))
-
 @DragSource('image', imageSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging(),
+  isDragging: monitor.isDragging()
 }))
-
 export default class ImageGridItem extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.getStyle = this.getStyle.bind(this)
-    this.deleteImage = this.deleteImage.bind(this)
-    this.selectFileToRecaption = this.selectFileToRecaption.bind(this)
+    this.getStyle = this.getStyle.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
+    this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
   }
 
   getStyle(image) {
     return {
-      backgroundImage: 'url(' + image + ')'
-    }
+      backgroundImage: `url(${image})`
+    };
   }
 
   deleteImage(e) {
-    e.preventDefault()
-    e.stopPropagation()
-    this.props.deleteImage(this.props.index)
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.deleteImage(this.props.index);
   }
 
   selectFileToRecaption() {
-    this.props.selectFileToRecaption(this.props.index)
+    this.props.selectFileToRecaption(this.props.index);
   }
 
   render() {
-    const { text, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { connectDragSource, connectDropTarget } = this.props;
 
-    return connectDragSource(connectDropTarget(
-      <div className='image-grid-item'
-        onClick={this.selectFileToRecaption}>
-        <div className='grid-item-delete-button'
-          onClick={this.deleteImage}>
-          <div className='grid-item-delete-icon' />
+    return connectDragSource(
+      connectDropTarget(
+        <div className="image-grid-item" onClick={this.selectFileToRecaption}>
+          <Confirm
+            title="Confirm Delete"
+            bodyText="Are you sure you want to delete this image?"
+            confirmText="Delete"
+            onConfirm={this.deleteImage}
+          >
+            <div className="grid-item-delete-button">
+              <div className="grid-item-delete-icon" />
+            </div>
+          </Confirm>
+          <div
+            className="grid-item background-image"
+            style={this.getStyle(this.props.image)}
+          />
         </div>
-        <div className='grid-item background-image'
-          style={this.getStyle(this.props.image)} />
-      </div>
-    ))
+      )
+    );
   }
 }

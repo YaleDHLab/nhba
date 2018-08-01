@@ -1,5 +1,5 @@
-import React from 'react'
-import Tab from './Tab'
+import React from 'react';
+import Tab from './Tab';
 
 const tabs = [
   {
@@ -13,24 +13,22 @@ const tabs = [
     position: 'center'
   },
   {
-    key: 'image-gallery',
-    label: 'Image Gallery',
+    key: 'multimedia-gallery',
+    label: 'Multimedia Gallery',
     position: 'right'
-  },
-]
+  }
+];
 
 export default class Tabs extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
     return (
-      <div className='form-tabs'>    
-        {tabs.map((tab, i) => {
-          return <Tab key={i} {...this.props} tab={tab} />
-        })}
+      <div className="form-tabs">
+        {tabs.map((tab, i) => <Tab key={i} {...this.props} tab={tab} />)}
       </div>
-    )
+    );
   }
 }

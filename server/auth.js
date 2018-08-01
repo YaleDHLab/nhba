@@ -1,53 +1,52 @@
 // auth.js
-var bcrypt = require('bcryptjs')
-var models = require('../app/models/models')
-var mailer = require('./mailer')
-var _ = require('lodash')
+const bcrypt = require('bcryptjs');
+const models = require('../app/models/models');
+const mailer = require('./mailer');
+const _ = require('lodash');
 
 // specify the encryption level
-var saltWorkFactor = parseInt(process.env['NHBA_SALT_WORK_FACTOR']) || 10
+const saltWorkFactor = parseInt(process.env.NHBA_SALT_WORK_FACTOR, 10) || 10;
 
-module.exports = function(app) {
-
+module.exports = function auth(app) {
   /**
-  * Identify the messages delievered by the auth middleware to client
-  **/
+   * Identify the messages delievered by the auth middleware to client
+   * */
 
-  var messages = {
-    'emailTaken': 'Sorry, the requested email address is already taken.',
-    'checkEmail': 'Success! Please check your email for further instructions.',
-    'loginSuccess': 'Success! You are now logged in.',
-    'loginFail': 'An incorrect username or password was entered. Please try again.',
-    'logoutSuccess': 'Success! You are now logged out.',
-    'logoutFail': 'Sorry, we could not log out out. Please try again.',
-    'emailMissing': 'Sorry, this email address does not have any account information.',
-    'passwordUpdated': 'Success! Your password has been updated.',
-    'error': 'Sorry, we could not process your request. \
-              Please contact an administrator for help.',
+  const messages = {
+    emailTaken: 'Sorry, the requested email address is already taken.',
+    checkEmail: 'Success! Please check your email for further instructions.',
+    loginSuccess: 'Success! You are now logged in.',
+    loginFail:
+      'An incorrect username or password was entered. Please try again.',
+    logoutSuccess: 'Success! You are now logged out.',
+    logoutFail: 'Sorry, we could not log out out. Please try again.',
+    emailMissing:
+      'Sorry, this email address does not have any account information.',
+    passwordUpdated: 'Success! Your password has been updated.',
+    error:
+      'Sorry, we could not process your request. Please contact an administrator for help.'
   };
 
   /**
-  * Register new users
-  **/
+   * Create a new secure token for account validation
+   * */
 
-  // request made by client when attempting to add a user to the db
-  app.post('/api/register', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
-      initializeUserPassword(err, doc, req, res)
-    })
-  })
+  const getToken = () => {
+    const salt = bcrypt.genSaltSync(saltWorkFactor);
+    return bcrypt.hashSync('B4c0//', salt);
+  };
 
   /**
-  * Create and email a token to a user's email for account verification
-  *
-  * @args:
-  *   err: an error object from a mongoose query for a user
-  *   doc: the result of a mongoose query for a user
-  *   req: a request object from express
-  *   res: a response object from express
-  **/
+   * Create and email a token to a user's email for account verification
+   *
+   * @args:
+   *   err: an error object from a mongoose query for a user
+   *   doc: the result of a mongoose query for a user
+   *   req: a request object from express
+   *   res: a response object from express
+   * */
 
-  var initializeUserPassword = (err, doc, req, res) => {
+  const initializeUserPassword = (err, doc, req, res, next) => {
     // if the requested email address is used, inform the client
     if (doc.length > 0) {
       return res.status(200).send({
@@ -56,232 +55,162 @@ module.exports = function(app) {
     }
 
     // else, create a new user with that email address
-    var user = new models.user(req.body);
+    const user = new models.user(req.body);
 
-    bcrypt.genSalt(saltWorkFactor, (err, salt) => {
-      if (err) return next(err);
+    bcrypt.genSalt(saltWorkFactor, (err2, salt) => {
+      if (err2) return next(err2);
 
       // hash the password and the new salt
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) return next(err);
+      bcrypt.hash(user.password, salt, (err3, hash) => {
+        if (err3) return next(err3);
 
         // store the salted password, not the cleartext password
-        user.password = hash
-        user.token = getToken()
-        user.validated = false
-        user.admin = false
-        user.superadmin = false
+        user.password = hash;
+        user.token = getToken();
+        user.validated = false;
+        user.admin = false;
+        user.superadmin = false;
 
         // email the user a validation token
-        mailer.send(user.email, user.token, null)
+        mailer.send(user.email, user.token, null);
 
-        user.save((err, doc) => {
-          if (err) return res.status(500).send({cause: err});
+        user.save(err4 => {
+          if (err4) {
+            return res.status(500).send({ cause: err4 });
+          }
           return res.status(200).send({
             message: messages.checkEmail
           });
-        })
-      })
-    })
-  }
-
-  /**
-  * Validate the account token emailed to user
-  **/
-
-  app.post('/api/validate', (req, res, next) => {
-    var query = {
-      email: req.body.email,
-      token: req.body.token,
-    }
-
-    // find and validate the user
-    models.user.find(query, (err, doc) => {
-      authenticateUser(err, doc, req, res)
-    })
-  })
-
-  /**
-  * Create a new secure token for account validation
-  **/
-
-  var getToken = () => {
-    var salt = bcrypt.genSaltSync(saltWorkFactor);
-    return bcrypt.hashSync('B4c0/\/', salt);
-  }
-
-  /**
-  * High level authentication check wrapper
-  *
-  * @args:
-  *   err: an error object from a mongoose query for a user
-  *   doc: the result of a mongoose query for a user
-  *   req: a request object from express
-  *   res: a response object from express
-  **/
-
-  var authenticateUser = (err, doc, req, res) => {
-    if (err || doc.length == 0) {
-      return res.status(200).send({
-        message: messages.error
-      });
-    }
-
-    var user = doc[0];
-
-    bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
-      if (err) return res.status(500).send({
-        message: messages.error
-      });
-
-      // validate the user, update their credentials, and log them in
-      if (isMatch) {
-        validateUser(user, req, res)
-      } else {
-        return res.status(403).send({
-          message: messages.loginFail
         });
-      }
-    })
-  }
+      });
+    });
+  };
 
   /**
-  * Validate a user and update their status if they're included in
-  * the admin environment variable
-  *
-  * @args:
-  *   {user}: an instance of the User table
-  *   {req}: the current Express request
-  *   {res}: the current Express response
-  **/
+   * Store the user's authentication status in the session data
+   *
+   * @args:
+   *   {obj} user: the result of a query for the current user
+   *   {obj} req: the current request object
+   * */
 
-  var validateUser = (user, req, res) => {
-    var adminEmails = process.env['NHBA_ADMIN_EMAILS'];
-    var superadminEmails = process.env['NHBA_SUPERADMIN_EMAILS'];
+  const loginSessionData = (user, req) => {
+    req.session.authenticated = true;
+    if (user.admin) req.session.admin = true;
+    if (user.superadmin) req.session.superadmin = true;
+    req.session.userId = user._id;
+
+    req.session.save(err => {
+      if (err) console.warn('could not save session', err);
+    });
+  };
+
+  /**
+   * Validate a user and update their status if they're included in
+   * the admin environment variable
+   *
+   * @args:
+   *   {user}: an instance of the User table
+   *   {req}: the current Express request
+   *   {res}: the current Express response
+   * */
+
+  const validateUser = (user, req, res) => {
+    let adminEmails = process.env.NHBA_ADMIN_EMAILS;
+    let superadminEmails = process.env.NHBA_SUPERADMIN_EMAILS;
+    const userCopy = user;
     adminEmails = adminEmails ? adminEmails.split(' ') : [];
     superadminEmails = superadminEmails ? superadminEmails.split(' ') : [];
 
     if (_.includes(adminEmails, user.email)) {
-      user.admin = true;
-    };
+      userCopy.admin = true;
+    }
 
     if (_.includes(superadminEmails, user.email)) {
-      user.superadmin = true;
-    };
+      userCopy.superadmin = true;
+    }
 
-    user.validated = true;
+    userCopy.validated = true;
 
-    models.user.update({_id: user._id}, {$set: user},
-      {overwrite: true}, (err, data) => {
+    models.user.update(
+      { _id: user._id },
+      { $set: user },
+      { overwrite: true },
+      err => {
         if (err) console.warn(err);
 
         // update the user's session state
-        loginSessionData(user, req);
+        loginSessionData(userCopy, req);
 
         // inform the user they're logged in
         return res.status(200).send({
           message: messages.loginSuccess
         });
-    })
-  }
+      }
+    );
+  };
 
   /**
-  * Store the user's authentication status in the session data
-  *
-  * @args:
-  *   {obj} user: the result of a query for the current user
-  *   {obj} req: the current request object
-  **/
+   * High level authentication check wrapper
+   *
+   * @args:
+   *   err: an error object from a mongoose query for a user
+   *   doc: the result of a mongoose query for a user
+   *   req: a request object from express
+   *   res: a response object from express
+   * */
 
-  var loginSessionData = (user, req) => {
-    req.session.authenticated = true;
-    if (user.admin) req.session.admin = true;
-    if (user.superadmin) req.session.superadmin = true;
+  const authenticateUser = (err, doc, req, res) => {
+    if (err)
+      return res.status(500).send({
+        message: messages.error
+      });
 
-    req.session.save((err) => {
-      if (err) console.warn('could not save session', err)
-    })
-  }
+    if (doc.length === 0) {
+      return res.status(403).send({
+        message: messages.loginFail
+      });
+    }
 
-  /**
-  *
-  * Log in a user
-  *
-  **/
+    const user = doc[0];
 
-  app.post('/api/login', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
-      authenticateUser(err, doc, req, res)
-    })
-  })
-
-  /**
-  *
-  * Make server-side session data available to client
-  *
-  **/
-
-  app.get('/api/session', (req, res, next) => {
-    return res.status(200).send({
-      session: req.session
-    });
-  })
-
-  /**
-  *
-  * Log a user out of their current session
-  *
-  **/
-
-  app.get('/api/logout', (req, res, next) => {
-    req.session.authenticated = false
-    req.session.admin = false
-    req.session.superadmin = false
-    req.session.save((err) => {
-      if (err) {
+    bcrypt.compare(req.body.password, user.password, (err2, isMatch) => {
+      if (err2)
         return res.status(500).send({
-          message: messages.logoutFail
+          message: messages.error
         });
+
+      // validate the user, update their credentials, and log them in
+      if (isMatch) {
+        validateUser(user, req, res);
       } else {
-        return res.status(200).send({
-          message: messages.logoutSuccess
+        return res.status(403).send({
+          message: messages.loginFail
         });
       }
-    })
-  })
+    });
+  };
 
   /**
-  *
-  * Allow users to reset their password via an email
-  *
-  **/
+   *
+   * Send an email to users so they can reset their password
+   *
+   * @args:
+   *   err: an error object from a mongoose query for a user
+   *   doc: the result of a mongoose query for a user
+   *   req: a request object from express
+   *   res: a response object from express
+   *
+   * */
 
-  app.post('/api/forgotPassword', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
-      requestPasswordReset(err, doc, req, res)
-    })
-  })
-
-  /**
-  *
-  * Send an email to users so they can reset their password
-  *
-  * @args:
-  *   err: an error object from a mongoose query for a user
-  *   doc: the result of a mongoose query for a user
-  *   req: a request object from express
-  *   res: a response object from express
-  *
-  **/
-
-  var requestPasswordReset = (err, doc, req, res) => {
+  const requestPasswordReset = (err, doc, req, res) => {
     if (err) {
       return res.status(500).send({
         message: messages.error
       });
     }
 
-    var user = doc[0];
+    const user = doc[0];
 
     if (!user) {
       return res.status(200).send({
@@ -293,45 +222,33 @@ module.exports = function(app) {
     user.validated = false;
 
     // email the user a new validation token
-    mailer.send(user.email, user.token, '&resetPassword=true')
+    mailer.send(user.email, user.token, '&resetPassword=true');
 
-    var query = {
+    const query = {
       email: user.email
-    }
+    };
 
-    models.user.findOneAndUpdate(query, user, {upsert: true}, (err, doc) => {
-      if (err) return res.status(500).send({cause: err})
+    models.user.findOneAndUpdate(query, user, { upsert: true }, err2 => {
+      if (err2) return res.status(500).send({ cause: err2 });
       return res.status(200).send({
         message: messages.checkEmail
       });
-    })
-  }
+    });
+  };
 
-  /**
-  *
-  * Save a new password for the user
-  *
-  **/
-
-  app.post('/api/resetPassword', (req, res, next) => {
-    models.user.find({email: req.body.email}, (err, doc) => {
-      resetPassword(err, doc, req, res)
-    })
-  })
-
-  var resetPassword = (err, doc, req, res) => {
+  const resetPassword = (err, doc, req, res, next) => {
     if (err) {
       return res.status(500).send({
         message: messages.error
-      })
+      });
     }
 
-    var user = doc[0];
+    const user = doc[0];
 
     if (!user) {
       return res.status(403).send({
         message: messages.loginFail
-      })
+      });
     }
 
     // authenticate the user in the session store
@@ -339,47 +256,145 @@ module.exports = function(app) {
 
     user.password = req.body.password;
 
-    bcrypt.genSalt(saltWorkFactor, (err, salt) => {
-      if (err) return next(err);
+    bcrypt.genSalt(saltWorkFactor, (err2, salt) => {
+      if (err2) return next(err2);
 
       // hash the password and the new salt
-      bcrypt.hash(user.password, salt, (err, hash) => {
-        if (err) return next(err);
+      bcrypt.hash(user.password, salt, (err3, hash) => {
+        if (err3) return next(err3);
 
         // store the salted password, not the cleartext password
         user.password = hash;
         user.validated = true;
 
-        var query = {
+        const query = {
           email: user.email,
           token: user.token
         };
 
-        models.user.findOneAndUpdate(query, user, {upsert: true}, (err, doc) => {
-          if (err) return res.status(500).send({cause: err})
+        models.user.findOneAndUpdate(query, user, { upsert: true }, err4 => {
+          if (err4) return res.status(500).send({ cause: err4 });
           return res.status(200).send({
             message: messages.passwordUpdated
           });
-        })
-      })
-    })
-  }
+        });
+      });
+    });
+  };
 
   /**
-  * Middleware that only allows authenticated users to access /admin;
-  * NB: This middleware is only loaded in production environments
-  **/
+   * Register new users
+   * */
 
-  if (process.env['NHBA_ENVIRONMENT'] === 'production') {
+  // request made by client when attempting to add a user to the db
+  app.post('/api/register', (req, res, next) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
+      initializeUserPassword(err, doc, req, res, next);
+    });
+  });
+
+  /**
+   * Validate the account token emailed to user
+   * */
+
+  app.post('/api/validate', (req, res) => {
+    const query = {
+      email: req.body.email,
+      token: req.body.token
+    };
+
+    // find and validate the user
+    models.user.find(query, (err, doc) => {
+      authenticateUser(err, doc, req, res);
+    });
+  });
+
+  /**
+   *
+   * Log in a user
+   *
+   * */
+
+  app.post('/api/login', (req, res) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
+      authenticateUser(err, doc, req, res);
+    });
+  });
+
+  /**
+   *
+   * Make server-side session data available to client
+   *
+   * */
+
+  app.get('/api/session', (req, res) =>
+    res.status(200).send({
+      session: req.session
+    })
+  );
+
+  /**
+   *
+   * Log a user out of their current session
+   *
+   * */
+
+  app.get('/api/logout', (req, res) => {
+    req.session.authenticated = false;
+    req.session.admin = false;
+    req.session.superadmin = false;
+    req.session.save(err => {
+      if (err) {
+        return res.status(500).send({
+          message: messages.logoutFail
+        });
+      }
+      return res.status(200).send({
+        message: messages.logoutSuccess
+      });
+    });
+  });
+
+  /**
+   *
+   * Allow users to reset their password via an email
+   *
+   * */
+
+  app.post('/api/forgotPassword', (req, res) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
+      requestPasswordReset(err, doc, req, res);
+    });
+  });
+
+  /**
+   *
+   * Save a new password for the user
+   *
+   * */
+
+  app.post('/api/resetPassword', (req, res, next) => {
+    models.user.find({ email: req.body.email }, (err, doc) => {
+      resetPassword(err, doc, req, res, next);
+    });
+  });
+
+  /**
+   * Middleware that only allows authenticated users to access /admin;
+   * NB: This middleware is only loaded in production environments
+   * */
+
+  if (process.env.NHBA_ENVIRONMENT === 'production') {
     app.use((req, res, next) => {
       if (req.url.includes('/admin')) {
-        req.session && req.session.authenticated && req.session.admin ?
-            next()
-          : res.redirect('/?authenticated=false')
+        if (req.session && req.session.authenticated) {
+          next();
+        } else {
+          res.redirect('/?authenticated=false');
+        }
       } else {
-        next()
+        next();
       }
-    })
+    });
   }
-
-}
+};

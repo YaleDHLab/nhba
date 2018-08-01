@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 export default class FilePicker extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -12,35 +12,29 @@ export default class FilePicker extends React.Component {
     const filelabel = this.props.file ? this.props.file[textField] : '';
 
     return (
-      <div className='file-picker'>
-        <div className='label' />
-        <div className='file-picker-content'>
-
-          <div className='file-picker-row'>
-            <div className='label'>{this.props.topLabel}</div>
-            <input
-              className='file-name-input'
-              value={filename || ''} />
-            <div className='file-name-button-container'>
-              <div className='file-name-button'>
+      <div className="file-picker">
+        <div className="label" />
+        <div className="file-picker-content">
+          <div className="file-picker-row">
+            <div className="label">{this.props.topLabel}</div>
+            <input className="file-name-input" value={filename || ''} />
+            <div className="file-name-button-container">
+              <div className="file-name-button">
                 <span>Select File</span>
-                <input
-                  onChange={this.props.handleFile}
-                  type='file'
-                  multiple />
+                <input onChange={this.props.handleFile} type="file" multiple />
               </div>
             </div>
           </div>
-          <div className='file-picker-row'>
-            <div className='label'>{this.props.bottomLabel}</div>
+          <div className="file-picker-row">
+            <div className="label">{this.props.bottomLabel}</div>
             <input
-              className='file-display-name-input'
+              className="file-display-name-input"
               value={filelabel || ''}
-              onChange={this.props.handleTextChange} />
+              onChange={this.props.handleTextChange}
+            />
           </div>
-
         </div>
       </div>
-    )
+    );
   }
 }

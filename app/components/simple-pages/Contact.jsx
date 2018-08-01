@@ -1,5 +1,5 @@
-import React from 'react'
-import SimplePage from './SimplePage'
+import React from 'react';
+import SimplePage from './SimplePage';
 
 export default class Contact extends React.Component {
   render() {
@@ -8,12 +8,12 @@ export default class Contact extends React.Component {
       title: 'Contact',
       route: 'contact',
       flat: true
-    }
+    };
 
     return (
-      <div className='contact'>
+      <div className="contact">
         <SimplePage {...page} />
       </div>
-    )
+    );
   }
 }
