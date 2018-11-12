@@ -53,7 +53,6 @@ export default class MapContainer extends Component {
     };
 
     this.handleMapMounted = this.handleMapMounted.bind(this);
-    this.updateCenter = this.updateCenter.bind(this);
   }
 
   handleMapMounted(map) {
