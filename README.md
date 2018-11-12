@@ -22,12 +22,12 @@ git clone https://github.com/duhaime/nhba
 cd nhba
 
 # load database
-wget https://goo.gl/ru2NOA -O nhba.archive
+wget https://s3-us-west-2.amazonaws.com/lab-apps/nhba/archives/nhba-11-12-08.archive -O nhba.archive
 mongo nhba --eval "db.dropDatabase()"
 mongorestore --db nhba --archive=nhba.archive
 
 # obtain images
-wget https://goo.gl/JNxVDa -O build.tar.gz
+wget https://s3-us-west-2.amazonaws.com/lab-apps/nhba/archives/build.tar.gz -O build.tar.gz
 tar -zxf build.tar.gz
 
 # install dependencies
