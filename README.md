@@ -88,6 +88,9 @@ Let's Encrypt allows users to obtain free SSL certificates for bound domain addr
 Once this is done, one can download and run the Let's Encrypt client with the following commands:
 
 ```
+# install server deps
+yum install python-devel python-pip python-tools python-virtualenv
+
 # get Let's Encrypt client
 wget https://dl.eff.org/certbot-auto
 chmod a+x certbot-auto
