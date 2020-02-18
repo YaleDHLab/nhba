@@ -118,8 +118,11 @@ export default class SignUp extends React.Component {
           <div className="agreement">
             <input type="checkbox" />
             <div className="text">
-              By submitting this form you agree to the terms and conditions of
-              this website
+              By submitting this form, you acknowledge that your contribution to
+              this digital publication, the New Haven Building Archive, is voluntary and will not be graded.
+              Entries are subject to review by site administrators who may make or suggest edits and corrections.
+              Think of your entry as a founding document that may be amended and/or appended over time.
+              The idea is a living archive. Please publish under your own name.
             </div>
           </div>
         </div>

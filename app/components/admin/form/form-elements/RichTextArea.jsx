@@ -13,7 +13,10 @@ export default class RichTextArea extends React.Component {
   getClass() {
     const width = this.props.width || '';
     const position = this.props.position || '';
-    return ['rich-text-area', width, position].join(' ');
+    const missing = this.props.missingFields.includes(this.props.field)
+      ? 'missing'
+      : '';
+    return ['rich-text-area', width, position, missing].join(' ');
   }
 
   updateField(value, delta, source) {

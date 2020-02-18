@@ -134,14 +134,14 @@ export default class Overview extends React.Component {
           {...this.props}
           width="half-width"
           position="right"
-          label="Researcher*"
+          label="Researcher"
           field="researcher"
         />
 
         <RichTextArea
           {...this.props}
           width="full-width"
-          label="Overview Description"
+          label="Overview Description*"
           field="overview_description"
           placeholder="A pithy description of what a visitor to the building sees or should look for.  Summarize basic physical features, say something about its current use, and suggest some narrative or significance of the building.  Tone is engaging and conversational."
           height={250}

@@ -154,7 +154,7 @@ export default class Form extends React.Component {
     }
 
     // sets autosave interval if no missing fields
-    const requiredFields = ['address', 'current_uses', 'researcher'];
+    const requiredFields = ['address', 'current_uses', 'overview_description'];
     let autoSaveInterval = null;
     if (requiredFields.every(field => this.state.building[field])) {
       // checks if an autosave interval already exists, if not, set 5 second autosave interval
@@ -212,11 +212,12 @@ export default class Form extends React.Component {
 
   saveBuilding() {
     if (this.state.unsavedChanges) {
-      const requiredFields = ['address', 'current_uses', 'researcher'];
+      const requiredFields = ['address', 'current_uses', 'overview_description'];
       this.setState(
         {
           missingFields: requiredFields.filter(
             field =>
+              this.state.building[field] == "<p><br></p>" ||
               !this.state.building[field] ||
               (Array.isArray(this.state.building[field]) &&
                 this.state.building[field].length === 0)
@@ -344,7 +345,11 @@ export default class Form extends React.Component {
         <div className="form-content">
           {header}
           <div className="instructions">
-            <p>Edit record for this building.</p>
+            <p>
+              Edit record for this building. The fields of "Address," "Current Use," 
+              "Overview Description," and one image in the Multimedia Gallery are
+              required to create a new entry.
+            </p>
             {this.state.missingFields.length > 0 ? (
               <p className="missing">
                 You are missing the following fields:{' '}
