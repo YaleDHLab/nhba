@@ -127,7 +127,7 @@ export default class Building extends React.Component {
         label: 'Physical Description',
         button: { label: 'Physical Description', icon: 'building' },
         href: 'physical-description',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['physical_description'],
         component: (
           <BuildingTextBox
@@ -140,7 +140,7 @@ export default class Building extends React.Component {
         label: 'Urban Setting',
         button: { label: 'Urban Setting', icon: 'building' },
         href: 'urban-setting',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['urban_setting'],
         component: (
           <BuildingTextBox
@@ -153,7 +153,7 @@ export default class Building extends React.Component {
         label: 'Social History',
         button: { label: 'Social History', icon: 'building' },
         href: 'social-history',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['social_history'],
         component: (
           <BuildingTextBox
@@ -166,7 +166,7 @@ export default class Building extends React.Component {
         label: 'Site History',
         button: { label: 'Site History', icon: 'building' },
         href: 'site-history',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['site_history'],
         component: (
           <BuildingTextBox title="Site History" text={building.site_history} />
@@ -176,7 +176,7 @@ export default class Building extends React.Component {
         label: 'Past Tenants',
         button: { label: 'Past Tenants', icon: 'building' },
         href: 'past-tenants',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['past_tenants'],
         component: (
           <BuildingTextBox title="Past Tenants" text={building.past_tenants} />
