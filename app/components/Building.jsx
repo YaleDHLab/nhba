@@ -275,7 +275,6 @@ export default class Building extends React.Component {
                     toggleLayout={this.toggleLayout}
                     layout={this.state.layout}
                   />
-                  <BuildingButtons fields={fields} {...this.props} />
                   <BuildingEditButton
                     admin={this.props.admin}
                     creator={this.state.creator}
