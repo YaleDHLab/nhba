@@ -1,7 +1,34 @@
 import React from 'react';
+import Lightbox from './BuildingLightboxContribution';
 import { Link } from 'react-router';
 
 export default class SuggestEdit extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showLightbox: false
+    };
+
+    // show/hide the lightbox
+    this.toggleLightbox = this.toggleLightbox.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
+  }
+
+  /* Show/Hide the lightbox */
+
+  toggleLightbox() {
+    console.log("inside toggle lightbox?")
+    const lightbox = this.state.showLightbox;
+    console.log("lightbox state: ", lightbox);
+    this.setState({ showLightbox: !lightbox }, () => console.log("how about now?", this.state.showLightbox));
+    // console.log("lightbox state now: ", this.state.showLightbox);
+  }
+
+  closeLightbox() {
+    this.setState({ showLightbox: false });
+  }
+
   render() {
     const adminButton = (
       <div className="suggest-edit">
@@ -21,21 +48,33 @@ export default class SuggestEdit extends React.Component {
           <b>Have something to add?</b> Contribute a fun fact or image to this
           building.
         </div>
-        <a href="mailto:nhba@yale.edu" target="_top">
-          Suggest an Edit
-        </a>
-        <a href="">
-          Add an image
-        </a>
-        <a href="">
-          Add a comment
-        </a>
+        <div className="suggest-edit button">
+          <a href="mailto:nhba@yale.edu" target="_top">
+            Suggest an Edit
+          </a>
+        </div>
+        <div 
+          className="suggest-edit button"
+          onClick={this.toggleLightbox}
+        >
+            Add an Image
+        </div>
+        <div className="suggest-edit button">
+          Add a Comment
+        </div>
       </div>
     );
 
     const button =
       this.props.admin || this.props.creator ? adminButton : contributeButton;
 
-    return <span>{button}</span>;
+    const lightbox = this.state.showLightbox ? (
+      <Lightbox
+        building={this.props.building}
+        closeLightbox={this.closeLightbox}
+      />
+    ) : null;
+
+    return <span>{button}{lightbox}</span>;
   }
 }

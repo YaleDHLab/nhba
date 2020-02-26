@@ -8,7 +8,7 @@
   color: #888;
 }
 
-.building .suggest-edit a {
+.building .suggest-edit .button {
   display: inline-block;
   padding: 8px 21px;
   background: #EDA138;
@@ -17,6 +17,10 @@
   margin: 8px 0 1px;
   font-weight: 500;
   letter-spacing: .25px;
+}
+
+.building .suggest-edit .button a {
+  color: #fff;
 }
 
 .building .suggest-edit div {
