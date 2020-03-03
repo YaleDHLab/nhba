@@ -5,20 +5,29 @@ export default class BuildingCollapsible extends React.Component {
     super(props);
 
     this.state = {
-      collapsed: true
+      collapsed: true,
     };
 
     this.toggleCollapsed = this.toggleCollapsed.bind(this);
   }
 
   toggleCollapsed() {
-    this.setState({ collapsed: !this.state.collapsed });
+    if (this.props.expandedLabels.includes(this.props.label)) {
+      this.props.removeLabels(this.props.label);
+    } else {
+      this.setState({collapsed: !this.state.collapsed})
+    }
   }
 
   render() {
-    const containerClass = this.state.collapsed
+    let containerClass = null;
+    if (this.props.expandedLabels.includes(this.props.label)) {
+      containerClass = 'building-collapsible';
+    } else {
+      containerClass = this.state.collapsed
       ? 'building-collapsible collapsed'
       : 'building-collapsible';
+    }
 
     return (
       <div className={containerClass}>

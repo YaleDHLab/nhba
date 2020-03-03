@@ -27,10 +27,16 @@ export default class Building extends React.Component {
       creator: false,
 
       // tour data for mapping
-      tourNameToIndex: {}
+      tourNameToIndex: {},
+
+      // list of expanded labels
+      expandedLabels: [],
     };
 
     this.toggleLayout = this.toggleLayout.bind(this);
+
+    this.expandLabels = this.expandLabels.bind(this);
+    this.removeLabels = this.removeLabels.bind(this);
 
     // getter for the text fields for a building
     this.getTextFields = this.getTextFields.bind(this);
@@ -99,6 +105,22 @@ export default class Building extends React.Component {
     this.state.layout.left === 'Map'
       ? this.setState({ layout: { left: 'Gallery', right: 'Map' } })
       : this.setState({ layout: { left: 'Map', right: 'Gallery' } });
+  }
+
+  /**
+   * Expand collapsed section(s) of building description via quick-access menu
+   * */
+  expandLabels(label) {
+    if (this.state.expandedLabels.includes(label) == false) {
+      this.setState({ expandedLabels: this.state.expandedLabels.concat(label) });
+    }
+  }
+
+  /**
+   * Remove label from list of expandedLabels
+   * */
+  removeLabels(label) {
+    this.setState({ expandedLabels: this.state.expandedLabels.filter(el => el !== label) });
   }
 
   /**
@@ -275,6 +297,12 @@ export default class Building extends React.Component {
                     toggleLayout={this.toggleLayout}
                     layout={this.state.layout}
                   />
+                  <BuildingButtons 
+                    fields={fields}
+                    expandedLabels={this.state.expandedLabels}
+                    expandLabels={this.expandLabels}
+                    {...this.props}
+                    />
                   <BuildingEditButton
                     admin={this.props.admin}
                     creator={this.state.creator}
@@ -295,7 +323,12 @@ export default class Building extends React.Component {
                   </div>
                 )}
               <div className="top-right-bottom">
-                <BuildingText building={this.state.building} fields={fields} />
+                <BuildingText 
+                  building={this.state.building} 
+                  fields={fields} 
+                  expandedLabels={this.state.expandedLabels} 
+                  removeLabels={this.removeLabels}
+                />
               </div>
             </div>
           </div>

@@ -17,6 +17,8 @@ export default class BuildingText extends React.Component {
               <BuildingCollapsible
                 childComponent={field.component}
                 label={field.label}
+                expandedLabels={this.props.expandedLabels}
+                removeLabels={this.props.removeLabels}
               />
             </div>
           );

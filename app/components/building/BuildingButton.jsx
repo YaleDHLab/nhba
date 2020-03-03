@@ -4,13 +4,14 @@ import BuildingButtonIcon from './BuildingButtonIcon';
 export default class BuildingButton extends React.Component {
   constructor(props) {
     super(props);
-
     this.scrollToElem = this.scrollToElem.bind(this);
   }
 
   scrollToElem() {
     const elem = document.getElementById(this.props.field.href);
     window.scrollTo(0, elem.offsetTop - 20);
+    
+    this.props.expandLabels(this.props.field.label)
   }
 
   render() {
