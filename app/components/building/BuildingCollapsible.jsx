@@ -14,6 +14,9 @@ export default class BuildingCollapsible extends React.Component {
   toggleCollapsed() {
     if (this.props.expandedLabels.includes(this.props.label)) {
       this.props.removeLabels(this.props.label);
+      if (this.state.collapsed == false) {
+        this.setState({collapsed: true})
+      }
     } else {
       this.setState({collapsed: !this.state.collapsed})
     }
