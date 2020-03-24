@@ -18,11 +18,8 @@ export default class SuggestEdit extends React.Component {
   /* Show/Hide the lightbox */
 
   toggleLightbox() {
-    console.log("inside toggle lightbox?")
     const lightbox = this.state.showLightbox;
-    console.log("lightbox state: ", lightbox);
-    this.setState({ showLightbox: !lightbox }, () => console.log("how about now?", this.state.showLightbox));
-    // console.log("lightbox state now: ", this.state.showLightbox);
+    this.setState({ showLightbox: !lightbox });
   }
 
   closeLightbox() {

@@ -39,6 +39,14 @@
   position: relative;
 }
 
+.building-lightbox .modal .body-contribution {
+  height: 100%;
+  margin-top: 55px;
+  background: #fff;
+  opacity: 90%;
+  position: relative;
+}
+
 .building-lightbox .lightbox-image {
   max-height: 100%;
   max-width: 100%;

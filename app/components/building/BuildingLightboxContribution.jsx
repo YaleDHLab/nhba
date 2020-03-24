@@ -1,5 +1,4 @@
 import React from 'react';
-import BuildingLightboxCircles from './BuildingLightboxCircleButtons';
 
 export default class BuildingLightboxContribution extends React.Component {
   constructor(props) {
@@ -36,7 +35,8 @@ export default class BuildingLightboxContribution extends React.Component {
               Close
             </div>
           </div>
-          <div className="body">
+          <div className="body-contribution">
+          Inside the body div
           </div>
         </div>
       </div>
