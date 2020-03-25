@@ -3,11 +3,10 @@
 **/
 
 .shield {
-  position: fixed;
-  bottom: 15px;
-  right: 20px;
+  margin-top: 25px;
+  margin-left: 5px;
 }
 
 .shield img {
-  width: 40px;
+  width: 30px;
 }

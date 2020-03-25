@@ -157,9 +157,7 @@ export default class AppWrapper extends React.Component {
 
     const footer = isMobile ? (
       <MobileFooter location={this.props.location} />
-    ) : (
-      <Shield />
-    );
+    ) : null;
 
     return (
       <div className="app-container">

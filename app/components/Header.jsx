@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import Shield from './Shield';
+
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,7 @@ export default class Header extends React.Component {
           {/* Use a tag to trigger server request & auth check */}
           <a href="/admin">Admin</a>
           {link}
+          <Shield />
         </div>
       </header>
     );
