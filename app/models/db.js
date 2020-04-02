@@ -113,6 +113,16 @@ db.building = {
     }
   ],
 
+  contributed_media: [
+    {
+      filename: String,
+      caption: String,
+      contributor: String,
+      approved: Boolean,
+      submitted_at: Number,
+    }
+  ],
+
   // geospatial fields
   longitude: Number,
   latitude: Number,

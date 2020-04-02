@@ -30,7 +30,7 @@ export default class BuildingGallery extends React.Component {
    * */
 
   getStyle() {
-    const images = this.props.building.images;
+    const images = this.props.images;
     if (images) {
       const dir = '/assets/uploads/resized/large/';
       const image = dir + images[this.state.imageIndex].filename;
@@ -56,7 +56,7 @@ export default class BuildingGallery extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     const imageIndex = this.state.imageIndex;
-    const newIndex = (imageIndex + 1) % this.props.building.images.length;
+    const newIndex = (imageIndex + 1) % this.props.images.length;
     this.setState({ imageIndex: newIndex });
   }
 
@@ -65,7 +65,7 @@ export default class BuildingGallery extends React.Component {
     e.stopPropagation();
     const imageIndex = this.state.imageIndex;
     const newIndex =
-      imageIndex > 0 ? imageIndex - 1 : this.props.building.images.length - 1;
+      imageIndex > 0 ? imageIndex - 1 : this.props.images.length - 1;
     this.setState({ imageIndex: newIndex });
   }
 
@@ -92,10 +92,10 @@ export default class BuildingGallery extends React.Component {
 
   render() {
     const caption =
-      this.props.building.images &&
-      this.props.building.images[this.state.imageIndex].caption ? (
+      this.props.images &&
+      this.props.images[this.state.imageIndex].caption ? (
         <div className="image-caption">
-          {this.props.building.images[this.state.imageIndex].caption}
+          {this.props.images[this.state.imageIndex].caption}
         </div>
       ) : null;
 
@@ -109,9 +109,9 @@ export default class BuildingGallery extends React.Component {
     );
 
     let gallery = null;
-    if (this.props.building.images) {
+    if (this.props.images) {
       if (this.props.layout.right === 'Gallery') {
-        if (this.props.building.images.length > 1) {
+        if (this.props.images.length > 1) {
           gallery = (
             <div
               className="background-image"

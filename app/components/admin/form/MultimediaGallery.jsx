@@ -148,6 +148,7 @@ export default class MultimediaGallery extends React.Component {
       <div className="media-gallery">
         <ImageGrid
           {...this.props}
+          images={this.props.building.images}
           label="Image Gallery"
           selectFileToRecaption={this.selectFileToRecaption}
         />

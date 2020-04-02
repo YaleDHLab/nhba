@@ -205,6 +205,11 @@ module.exports = function routes(app) {
       queryTerms.push({ $where: 'this.images.length > 0' });
     }
 
+    // query for buildings with contributed media
+    if (req.query.contributedMedia && req.query.contributedMedia === 'true') {
+      queryTerms.push({ $where: 'this.contributed_media' });
+    }
+
     // query for fulltext
     if (req.query.fulltext) {
       queryTerms.push(getTextQuery(req));

@@ -34,7 +34,7 @@ export default class ImageGrid extends React.Component {
       <div className="image-grid">
         <div className="label">{this.props.label}</div>
         <div className="image-grid-content">
-          {this.props.building.images.map((image, i) => (
+          {this.props.images.map((image, i) => (
             <ImageGridItem
               key={image.filename}
               index={i}

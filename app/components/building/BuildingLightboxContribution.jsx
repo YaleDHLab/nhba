@@ -13,13 +13,16 @@ export default class BuildingLightboxContribution extends React.Component {
     this.state = {
       building: this.props.building,
       fileToRecaption: {},
-      fileToRelabel: {}
+      missingFields: false,
+      successfulSubmission: false,
     };
 
     this.handleImage = this.handleImage.bind(this);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
     this.updateField = this.updateField.bind(this);
+    this.submitForReview = this.submitForReview.bind(this);
+    this.replaceField =  this.replaceField.bind(this);
   }
 
   handleImage(e) {
@@ -36,7 +39,7 @@ export default class BuildingLightboxContribution extends React.Component {
     _.keys(files).map(k => {
       const req = request.post(`
         ${api.endpoint}upload?buildingId=${
-        this.props.building._id
+        this.state.building._id
       }&resize=true`);
       const filename = files[k].name.split(' ').join('-');
       req.attach('attachment', files[k], filename);
@@ -46,33 +49,46 @@ export default class BuildingLightboxContribution extends React.Component {
 
         const doc = {
           filename: res.body.file.name,
-          caption: ''
+          caption: '',
+          // contributor: req.session.userId,
+          approved: false,
+          decision: null,
+          submitted_at: Date.now() / 1000,
         };
 
-        this.updateField('images', doc);
+        this.updateField('contributed_media', doc);
       });
     });
   }
 
   handleCaptionChange(e) {
     const relabelCaptionIndex = this.state.fileToRecaption.index;
-    // TO-DO: Originally, the check was against 'null', why?
+
     if (relabelCaptionIndex !== 'null' || relabelCaptionIndex !== undefined) {
       const newCaption = e.target.value;
-      const { images } = this.props.building;
+      const { contributed_media } = this.state.building;
 
       // mutate a copy of the extant archive documents
-      const newImages = Object.assign([], images);
+      const newImages = Object.assign([], contributed_media);
       newImages[relabelCaptionIndex].caption = newCaption;
 
       // use the replaceField method to quash the old archive documents
-      this.props.replaceField('images', newImages);
+      this.replaceField('contributed_media', newImages);
     }
   }
 
+  replaceField(field, value) {
+    const building = Object.assign({}, this.state.building);
+    building[field] = value;
+    this.setState({
+      building,
+    });
+  }
+
+
   selectFileToRecaption(fileIndex) {
     if (fileIndex !== null) {
-      const fileToRecaption = this.props.building.images[fileIndex];
+      const fileToRecaption = this.state.building.contributed_media[fileIndex];
       fileToRecaption.index = fileIndex;
       this.setState({ fileToRecaption });
     } else {
@@ -94,7 +110,34 @@ export default class BuildingLightboxContribution extends React.Component {
       building[field] = value;
     }
 
-    this.setState({ building: building })
+    this.setState({ building: building }, () => {
+      console.log("building after: ", this.state.building);
+    })
+  }
+
+  submitForReview() {
+    var missingCaption = false;
+    for (var i = 0; i < this.state.building.contributed_media.length; i++) {
+      if (this.state.building.contributed_media[i].caption == "") {
+        missingCaption = true;
+        break;
+      }
+    }
+
+    this.setState({ missingFields: missingCaption }, 
+      () => {
+        if (this.state.missingFields == false) {
+          request
+            .post(`${api.endpoint}building/save`)
+            .send(this.state.building)
+            .set('Accept', 'application/json')
+            .end(err => {
+              if (err) console.warn(err);
+            });
+          this.setState({ successfulSubmission: true });
+        }
+      }
+    )
   }
 
   render() {
@@ -118,19 +161,34 @@ export default class BuildingLightboxContribution extends React.Component {
               <div className="form-content">
                 <ImageGrid
                   {...this.props}
+                  images={this.state.building.contributed_media}
                   label="Image Gallery"
                   selectFileToRecaption={this.selectFileToRecaption}
                 />
-                <div className="media-gallery">
-                  <FilePicker
-                    {...this.props}
-                    topLabel="Select Image"
-                    bottomLabel="Caption/Attribution (*Required)"
-                    handleFile={this.handleImage}
-                    file={this.state.fileToRecaption}
-                    textField="caption"
-                    handleTextChange={this.handleCaptionChange}
-                  />
+                <FilePicker
+                  {...this.props}
+                  topLabel="Select Image"
+                  bottomLabel="Caption/Attribution (*Required)"
+                  handleFile={this.handleImage}
+                  file={this.state.fileToRecaption}
+                  textField="caption"
+                  handleTextChange={this.handleCaptionChange}
+                />
+                {this.state.missingFields == true ? (
+                  <p className="missing">
+                    Please include a caption for every image.
+                  </p>
+                ) : null}
+                {this.state.successfulSubmission == true ? (
+                  <p className="successful">
+                    Your contribution request has been submitted for review. Thank you.
+                  </p>
+                ) : null}
+                <div 
+                  className="review-button yellow-button"
+                  onClick={this.submitForReview}
+                >
+                    Submit for Review
                 </div>
               </div>
             </div>

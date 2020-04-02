@@ -277,7 +277,11 @@ export default class Building extends React.Component {
     const layout = {
       Map: map,
       Gallery: (
-        <Gallery building={this.state.building} layout={this.state.layout} />
+        <Gallery 
+          building={this.state.building} 
+          images={this.state.building.images}
+          layout={this.state.layout} 
+        />
       )
     };
 

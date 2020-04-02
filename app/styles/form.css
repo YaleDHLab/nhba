@@ -15,6 +15,18 @@
   text-align: left;
 }
 
+.form .form-content .missing {
+  color: red;
+  padding-left: 135px;
+  padding-bottom: 12px;
+}
+
+.form .form-content .successful {
+  color: green;
+  padding-left: 135px;
+  padding-bottom: 12px;
+}
+
 .form .form-content > a {
   display: block;
 }
@@ -81,6 +93,10 @@
 
 .form .delete-button {
   margin-right: 13px;
+}
+
+.form .review-button {
+  float: right;
 }
 
 .form .save-button.unsaved-changes {
