@@ -15,10 +15,15 @@ export default class BuildingLightboxContribution extends React.Component {
       fileToRecaption: {},
       missingFields: false,
       successfulSubmission: false,
+      contributorName: '',
+      contributorContact: '',
+      new_media: [],
     };
 
     this.handleImage = this.handleImage.bind(this);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleContactChange = this.handleContactChange.bind(this);
     this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
     this.updateField = this.updateField.bind(this);
     this.submitForReview = this.submitForReview.bind(this);
@@ -50,15 +55,25 @@ export default class BuildingLightboxContribution extends React.Component {
         const doc = {
           filename: res.body.file.name,
           caption: '',
-          // contributor: req.session.userId,
-          approved: false,
+          contributor_name: this.state.contributorName,
+          contributor_contact: this.state.contributorContact,
           decision: null,
+          reviewed: false,
+          reviewed_at: null,
           submitted_at: Date.now() / 1000,
         };
 
-        this.updateField('contributed_media', doc);
+        this.updateField(doc);
       });
     });
+  }
+
+  handleNameChange(e) {
+    this.setState({ contributorName: e.target.value });
+  }
+
+  handleContactChange(e) {
+    this.setState({ contributorContact: e.target.value });
   }
 
   handleCaptionChange(e) {
@@ -66,14 +81,12 @@ export default class BuildingLightboxContribution extends React.Component {
 
     if (relabelCaptionIndex !== 'null' || relabelCaptionIndex !== undefined) {
       const newCaption = e.target.value;
-      const { contributed_media } = this.state.building;
 
       // mutate a copy of the extant archive documents
-      const newImages = Object.assign([], contributed_media);
+      const newImages = Object.assign([], this.state.new_media);
       newImages[relabelCaptionIndex].caption = newCaption;
 
-      // use the replaceField method to quash the old archive documents
-      this.replaceField('contributed_media', newImages);
+      this.setState({ new_media: newImages });
     }
   }
 
@@ -88,7 +101,7 @@ export default class BuildingLightboxContribution extends React.Component {
 
   selectFileToRecaption(fileIndex) {
     if (fileIndex !== null) {
-      const fileToRecaption = this.state.building.contributed_media[fileIndex];
+      const fileToRecaption = this.state.new_media[fileIndex];
       fileToRecaption.index = fileIndex;
       this.setState({ fileToRecaption });
     } else {
@@ -97,34 +110,37 @@ export default class BuildingLightboxContribution extends React.Component {
     }
   }
 
-  updateField(field, value) {
+  updateField(value) {
     // use Object.assign to avoid object mutations
-    const building = Object.assign({}, this.state.building);
+    var new_media = Object.assign([], this.state.new_media)
 
     // remove/add the selected value when users un/select values
-    if (Array.isArray(building[field])) {
-      _.includes(building[field], value)
-        ? _.pull(building[field], value)
-        : building[field].push(value);
+    if (Array.isArray(new_media)) {
+      _.includes(new_media, value)
+        ? _.pull(new_media, value)
+        : new_media.push(value);
     } else {
-      building[field] = value;
+      new_media = value;
     }
 
-    this.setState({ building: building }, () => {
-      console.log("building after: ", this.state.building);
-    })
+    this.setState({ new_media: new_media })
   }
 
   submitForReview() {
     var missingCaption = false;
-    for (var i = 0; i < this.state.building.contributed_media.length; i++) {
-      if (this.state.building.contributed_media[i].caption == "") {
+    for (var i = 0; i < this.state.new_media.length; i++) {
+      if (this.state.new_media[i].caption == "") {
         missingCaption = true;
         break;
       }
     }
 
-    this.setState({ missingFields: missingCaption }, 
+    const building = Object.assign({}, this.state.building);
+    for (var i = 0; i < this.state.new_media.length; i++) {
+      this.state.building.contributed_media.push(this.state.new_media[i]);
+    }
+
+    this.setState({ building: building, missingFields: missingCaption }, 
       () => {
         if (this.state.missingFields == false) {
           request
@@ -159,9 +175,23 @@ export default class BuildingLightboxContribution extends React.Component {
           <div className="body-contribution">
             <div className="form">
               <div className="form-content">
+              <div className="file-picker file-picker-content file-picker-row">
+                <div className="label">Name</div>
+                <input
+                  className="file-display-name-input"
+                  onChange={this.handleNameChange}
+                />
+              </div>
+              <div className="file-picker file-picker-content file-picker-row">
+                <div className="label">E-mail</div>
+                <input
+                  className="file-display-name-input"
+                  onChange={this.handleContactChange}
+                />
+              </div>
                 <ImageGrid
                   {...this.props}
-                  images={this.state.building.contributed_media}
+                  images={this.state.new_media}
                   label="Image Gallery"
                   selectFileToRecaption={this.selectFileToRecaption}
                 />

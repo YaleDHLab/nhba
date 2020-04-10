@@ -281,6 +281,7 @@ export default class Building extends React.Component {
           building={this.state.building} 
           images={this.state.building.images}
           layout={this.state.layout} 
+          mediaReview={false}
         />
       )
     };

@@ -117,8 +117,11 @@ db.building = {
     {
       filename: String,
       caption: String,
-      contributor: String,
-      approved: Boolean,
+      contributor_name: String,
+      contributor_contact: String,
+      decision: Boolean,
+      reviewed: Boolean,
+      reviewed_at: Number,
       submitted_at: Number,
     }
   ],

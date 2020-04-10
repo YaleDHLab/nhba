@@ -85,3 +85,84 @@
     display: none;
   }
 }
+
+/**
+* Building Contributed Media: Review Panel
+**/
+
+.review-contribution {
+  border: 2px solid #e4e4e4;
+  border-radius: 10%;
+  width: 33%;
+  height: 63%;
+  left: -36%;
+  position: absolute;
+  max-height: 72%;
+  color: #444;
+  background: #efefef;
+}
+
+.review-contribution .row {
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.review-contribution .title {
+  display: inline-block;
+  font-weight: 800;
+  padding: 8px 8px 8px 18px;
+}
+
+.review-contribution .button-accept-active {
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  letter-spacing: .25px;
+  cursor: pointer;
+  width: 120px;
+  margin: 14px 0 0 68px;
+  text-align: center;
+  background: #4BA845;
+  font-weight: 500;
+  color: #fff;
+}
+
+.review-contribution .button-accept-unactive {
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  letter-spacing: .25px;
+  width: 120px;
+  margin: 14px 0 0 68px;
+  text-align: center;
+  background: #88A886;
+  font-weight: 500;
+  color: #fff;
+}
+
+.review-contribution .button-reject-active {
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  letter-spacing: .25px;
+  cursor: pointer;
+  width: 120px;
+  margin: 14px 0 14px 68px;
+  text-align: center;
+  background: #E25046;
+  font-weight: 500;
+  color: #fff;
+}
+
+.review-contribution .button-reject-unactive {
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  letter-spacing: .25px;
+  width: 120px;
+  margin: 14px 0 14px 68px;
+  text-align: center;
+  background: #E2B8B5;
+  font-weight: 500;
+  color: #fff;
+}

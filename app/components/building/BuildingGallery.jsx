@@ -1,5 +1,6 @@
 import React from 'react';
 import Lightbox from './BuildingLightbox';
+import ReviewContribution from './BuildingReviewContribution';
 import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
 import _ from 'lodash';
 
@@ -155,7 +156,7 @@ export default class BuildingGallery extends React.Component {
       }
     }
 
-    const lightbox = this.state.showLightbox ? (
+    const lightbox = !this.props.mediaReview && this.state.showLightbox ? (
       <Lightbox
         building={this.props.building}
         closeLightbox={this.closeLightbox}
@@ -166,8 +167,16 @@ export default class BuildingGallery extends React.Component {
       />
     ) : null;
 
+    const reviewbox = this.props.mediaReview ? (
+      <ReviewContribution
+        building={this.props.building}
+        imageIndex={this.state.imageIndex}
+      />
+    ): null;
+
     return (
       <div className="building-gallery">
+        {reviewbox}
         {gallery}
         {lightbox}
       </div>
