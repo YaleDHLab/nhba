@@ -134,6 +134,9 @@ export default class BuildingLightboxContribution extends React.Component {
         break;
       }
     }
+    if (this.state.contributorName == "" || this.state.contributorContact == "") {
+      missingCaption = true;
+    }
 
     const building = Object.assign({}, this.state.building);
     for (var i = 0; i < this.state.new_media.length; i++) {
@@ -176,14 +179,14 @@ export default class BuildingLightboxContribution extends React.Component {
             <div className="form">
               <div className="form-content">
               <div className="file-picker file-picker-content file-picker-row">
-                <div className="label">Name</div>
+                <div className="label">Name (*Required)</div>
                 <input
                   className="file-display-name-input"
                   onChange={this.handleNameChange}
                 />
               </div>
               <div className="file-picker file-picker-content file-picker-row">
-                <div className="label">E-mail</div>
+                <div className="label">E-mail (*Required)</div>
                 <input
                   className="file-display-name-input"
                   onChange={this.handleContactChange}
@@ -206,7 +209,7 @@ export default class BuildingLightboxContribution extends React.Component {
                 />
                 {this.state.missingFields == true ? (
                   <p className="missing">
-                    Please include a caption for every image.
+                    Please fill in all required fields. Every image must include a caption.
                   </p>
                 ) : null}
                 {this.state.successfulSubmission == true ? (
