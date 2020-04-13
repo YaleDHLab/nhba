@@ -52,6 +52,8 @@ export default class ReviewContributedMedia extends React.Component {
 			                    			images={this.state.buildings[i].contributed_media}
 			                    			layout={this.state.layout} 
 			                    			mediaReview={true}
+			                    			disableModal={true}
+			                    			showExpandIcon={false}
 			                    		/>
 			                  		</div>
 			                  		)}

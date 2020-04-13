@@ -100,14 +100,14 @@ export default class BuildingGallery extends React.Component {
         </div>
       ) : null;
 
-    const expandIcon = (
+    const expandIcon = this.props.showExpandIcon ? (
       <div className="expand-image-icon-container">
         <img
           className="expand-image-icon"
           src="/assets/images/icon-expand.png"
         />
       </div>
-    );
+    ) : null;
 
     let gallery = null;
     if (this.props.images) {
@@ -156,7 +156,7 @@ export default class BuildingGallery extends React.Component {
       }
     }
 
-    const lightbox = !this.props.mediaReview && this.state.showLightbox ? (
+    const lightbox = !this.props.disableModal && this.state.showLightbox ? (
       <Lightbox
         building={this.props.building}
         closeLightbox={this.closeLightbox}

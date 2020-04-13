@@ -27,6 +27,11 @@
   padding-bottom: 12px;
 }
 
+.form .form-content .saved-message {
+  color: green;
+  padding-top: 12px;
+}
+
 .form .form-content > a {
   display: block;
 }

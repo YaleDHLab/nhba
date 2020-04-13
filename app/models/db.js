@@ -11,7 +11,14 @@ db.simplepage = {
 
 db.glossaryterm = {
   term: String,
-  definition: String
+  definition: String,
+  // image gallery
+  images: [
+    {
+      filename: String,
+      caption: String
+    }
+  ],
 };
 
 db.user = {

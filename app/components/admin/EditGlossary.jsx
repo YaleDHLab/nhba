@@ -1,20 +1,23 @@
 import React from 'react';
-import GlossaryItem from './GlossaryItem';
-import api from '../../../config';
 import request from 'superagent';
 import _ from 'lodash';
+
+import api from '../../../config';
+import GlossaryItem from './GlossaryItem';
 
 export default class EditSimplePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      glossaryItems: []
+      glossaryItems: [],
+      savedUpdates: false,
     };
 
     // getters and setters for glossary data
     this.handleApiResponse = this.handleApiResponse.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
 
     // button callbacks to add new items & save all items
     this.addNewItem = this.addNewItem.bind(this);
@@ -39,13 +42,19 @@ export default class EditSimplePage extends React.Component {
   }
 
   /**
-   * Event listeners for text changes
+   * Event listeners for text/image changes
    * */
 
   handleTextChange(e, field, termIndex) {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
     glossaryItems[termIndex][field] = e.target.value;
-    this.setState({ glossaryItems: this.sortItems(glossaryItems) });
+    this.setState({ glossaryItems: glossaryItems, savedUpdates: false });
+  }
+
+  handleImageUpload(termIndex, images) {
+    const glossaryItems = Object.assign([], this.state.glossaryItems);
+    glossaryItems[termIndex]["images"] = images;
+    this.setState({ glossaryItems: glossaryItems });
   }
 
   /**
@@ -56,7 +65,7 @@ export default class EditSimplePage extends React.Component {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
     glossaryItems.push({});
 
-    this.setState({ glossaryItems: this.sortItems(glossaryItems) });
+    this.setState({ glossaryItems: glossaryItems, savedUpdates: false });
   }
 
   /**
@@ -67,7 +76,7 @@ export default class EditSimplePage extends React.Component {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
     const filtered = _.remove(glossaryItems, (d, i) => i != idx);
 
-    this.setState({ glossaryItems: this.sortItems(filtered) }, () => {
+    this.setState({ glossaryItems: filtered }, () => {
       this.saveGlossary();
     });
   }
@@ -86,6 +95,7 @@ export default class EditSimplePage extends React.Component {
 
   saveGlossary() {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
+    this.sortItems(glossaryItems);
 
     request
       .post(`${api.endpoint}glossary/save`)
@@ -94,25 +104,33 @@ export default class EditSimplePage extends React.Component {
       .end(err => {
         if (err) console.warn(err);
       });
+
+    this.setState({ savedUpdates : true })
   }
 
   render() {
+    const savedMessage = this.state.savedUpdates ?
+      <div className="saved-message">Changes have been successfully saved.</div>
+      : null;
+
     return (
       <div className="form edit-glossary">
         <div className="form-content">
           <h1>Glossary</h1>
           <div className="instructions">
-            {'Add definitions....style guide and directions here.'}
+            {'Add vocabulary, definitions, and illustrative examples here.'}
           </div>
           {this.state.glossaryItems.map((item, idx) => (
-            <GlossaryItem
-              key={idx}
-              item={item}
-              index={idx}
-              handleTextChange={this.handleTextChange}
-              deleteItem={this.deleteItem}
-            />
+              <GlossaryItem
+                key={idx}
+                item={item}
+                index={idx}
+                handleTextChange={this.handleTextChange}
+                deleteItem={this.deleteItem}
+                handleImageUpload={this.handleImageUpload}
+              />
           ))}
+          {savedMessage}
           <div className="yellow-button" onClick={this.saveGlossary}>
             Save
           </div>

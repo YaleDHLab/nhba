@@ -31,3 +31,15 @@
 .terms a:visited {
   color:#4F6077;
 }
+
+.body-text .term {
+  font-size: 24px;
+  padding-top: 8px;
+}
+
+.body-text .definition {
+  border-bottom: 1px solid #444;
+  width: 820px;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+}
