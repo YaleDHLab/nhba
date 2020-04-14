@@ -104,6 +104,11 @@
   float: right;
 }
 
+.form .review-button-1 {
+  margin-top: 16px;
+  float: right;
+}
+
 .form .save-button.unsaved-changes {
   opacity: 1;
 }

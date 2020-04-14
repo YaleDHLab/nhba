@@ -33,7 +33,7 @@ export default class RichTextArea extends React.Component {
         <ReactQuill
           onChange={this.updateField}
           placeholder={this.props.placeholder || ''}
-          value={this.props.building[this.props.field] || ''}
+          defaultValue={this.props.building[this.props.field] || ''}
         >
           <div style={{ height: this.props.height }} />
         </ReactQuill>

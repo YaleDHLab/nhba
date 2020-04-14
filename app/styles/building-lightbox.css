@@ -47,6 +47,14 @@
   position: relative;
 }
 
+.building-lightbox .modal .body-discussion {
+  height: 140%;
+  margin-top: 55px;
+  background: #fff;
+  opacity: 90%;
+  position: relative;
+}
+
 .building-lightbox .lightbox-image {
   max-height: 100%;
   max-width: 100%;

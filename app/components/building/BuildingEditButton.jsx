@@ -1,5 +1,6 @@
 import React from 'react';
-import Lightbox from './BuildingLightboxContribution';
+import ContributionLightbox from './BuildingLightboxContribution';
+import DiscussionLightbox from './BuildingLightboxDiscussion';
 import { Link } from 'react-router';
 
 export default class SuggestEdit extends React.Component {
@@ -7,23 +8,29 @@ export default class SuggestEdit extends React.Component {
     super(props);
 
     this.state = {
-      showLightbox: false
+      showContributionLightbox: false,
+      showDiscussionLightbox: false
     };
 
     // show/hide the lightbox
-    this.toggleLightbox = this.toggleLightbox.bind(this);
+    this.toggleContributionLightbox = this.toggleContributionLightbox.bind(this);
+    this.toggleDiscussionLightbox = this.toggleDiscussionLightbox.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
   }
 
   /* Show/Hide the lightbox */
+  toggleContributionLightbox() {
+    const lightbox = this.state.showContributionLightbox;
+    this.setState({ showContributionLightbox: !lightbox });
+  }
 
-  toggleLightbox() {
-    const lightbox = this.state.showLightbox;
-    this.setState({ showLightbox: !lightbox });
+  toggleDiscussionLightbox() {
+    const lightbox = this.state.showDiscussionLightbox;
+    this.setState({ showDiscussionLightbox: !lightbox });
   }
 
   closeLightbox() {
-    this.setState({ showLightbox: false });
+    this.setState({ showContributionLightbox: false, showDiscussionLightbox: false });
   }
 
   render() {
@@ -52,11 +59,14 @@ export default class SuggestEdit extends React.Component {
         </div>
         <div 
           className="suggest-edit button"
-          onClick={this.toggleLightbox}
+          onClick={this.toggleContributionLightbox}
         >
             Add an Image
         </div>
-        <div className="suggest-edit button">
+        <div 
+          className="suggest-edit button"
+          onClick={this.toggleDiscussionLightbox}
+        >
           Add a Comment
         </div>
       </div>
@@ -65,12 +75,18 @@ export default class SuggestEdit extends React.Component {
     const button =
       this.props.admin || this.props.creator ? adminButton : contributeButton;
 
-    const lightbox = this.state.showLightbox ? (
-      <Lightbox
-        building={this.props.building}
-        closeLightbox={this.closeLightbox}
-      />
-    ) : null;
+    var lightbox = null;
+    if (this.state.showContributionLightbox) {
+      lightbox = <ContributionLightbox
+                  building={this.props.building}
+                  closeLightbox={this.closeLightbox}
+                />;
+    } else if (this.state.showDiscussionLightbox) {
+      lightbox = <DiscussionLightbox
+                building={this.props.building}
+                closeLightbox={this.closeLightbox}
+              />;
+    }
 
     return <span>{button}{lightbox}</span>;
   }

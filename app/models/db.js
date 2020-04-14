@@ -133,6 +133,19 @@ db.building = {
     }
   ],
 
+  // contributed comments
+  comments: [
+    {
+      comment: String,
+      contributor_name: String,
+      contributor_contact: String,
+      decision: Boolean,
+      reviewed: Boolean,
+      reviewed_at: Number,
+      submitted_at: Number,
+    }
+  ],
+
   // geospatial fields
   longitude: Number,
   latitude: Number,
