@@ -1,8 +1,9 @@
 import React from 'react';
+import _ from 'lodash';
+
+import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
 import Lightbox from './BuildingLightbox';
 import ReviewContribution from './BuildingReviewContribution';
-import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
-import _ from 'lodash';
 
 export default class BuildingGallery extends React.Component {
   constructor(props) {
@@ -170,7 +171,9 @@ export default class BuildingGallery extends React.Component {
     const reviewbox = this.props.mediaReview ? (
       <ReviewContribution
         building={this.props.building}
-        imageIndex={this.state.imageIndex}
+        media={this.props.building.contributed_media}
+        images={true}
+        index={this.state.imageIndex}
       />
     ): null;
 

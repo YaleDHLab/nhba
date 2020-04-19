@@ -210,6 +210,11 @@ module.exports = function routes(app) {
       queryTerms.push({ $where: 'this.contributed_media' });
     }
 
+    // query for buildings with discussion comments
+    if (req.query.comments && req.query.comments === 'true') {
+      queryTerms.push({ $where: 'this.comments' });
+    }
+
     // query for fulltext
     if (req.query.fulltext) {
       queryTerms.push(getTextQuery(req));

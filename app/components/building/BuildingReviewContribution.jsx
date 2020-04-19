@@ -17,16 +17,16 @@ export default class BuildingReviewContribution extends React.Component {
 
 	acceptSubmission() {
 		const building = Object.assign({}, this.state.building);
-		building["contributed_media"][this.props.imageIndex].decision = true;
-		building["contributed_media"][this.props.imageIndex].reviewed = true;
-		building["contributed_media"][this.props.imageIndex].reviewed_at = Date.now() / 1000;
+		this.props.media[this.props.index].decision = true;
+		this.props.media[this.props.index].reviewed = true;
+		this.props.media[this.props.index].reviewed_at = Date.now() / 1000;
 
-		building["images"].push({
-			filename: building["contributed_media"][this.props.imageIndex].filename,
-			// TO-DO: Edit caption to include contributor name tag
-			caption: building["contributed_media"][this.props.imageIndex].caption
-		})
-
+		if (this.props.images) {
+			building["images"].push({
+				filename: building["contributed_media"][this.props.index].filename,
+				caption: building["contributed_media"][this.props.index].caption
+			})
+		}
 
 		this.setState({ building: building }, () => {
 			request
@@ -41,9 +41,9 @@ export default class BuildingReviewContribution extends React.Component {
 
 	rejectSubmission() {
 		const building = Object.assign({}, this.state.building);
-		building["contributed_media"][this.props.imageIndex].decision = false;
-		building["contributed_media"][this.props.imageIndex].reviewed = true;
-		building["contributed_media"][this.props.imageIndex].reviewed_at = Date.now() / 1000;
+		this.props.media[this.props.index].decision = false;
+		this.props.media[this.props.index].reviewed = true;
+		this.props.media[this.props.index].reviewed_at = Date.now() / 1000;
 
 		this.setState({ building: building }, () => {
 			request
@@ -58,19 +58,19 @@ export default class BuildingReviewContribution extends React.Component {
 
 	render () {
 		// Dates of Submission / Review
-		let submitted_date = new Date(this.props.building.contributed_media[this.props.imageIndex].submitted_at * 1000).toDateString();
-		let reviewed_time = this.props.building.contributed_media[this.props.imageIndex].reviewed_at;
+		let submitted_date = new Date(this.props.media[this.props.index].submitted_at * 1000).toDateString();
+		let reviewed_time = this.props.media[this.props.index].reviewed_at;
 		let reviewed_date = (reviewed_time == null) ? 
 			"N/A" : 
 			new Date(reviewed_time * 1000).toDateString();
 
 		// Status of Review 
-		let reviewed_state = this.props.building.contributed_media[this.props.imageIndex].reviewed;
+		let reviewed_state = this.props.media[this.props.index].reviewed;
 		let active_button_style = reviewed_state ? 'button-accept-unactive' : 'button-accept-active ';
 		let reject_button_style = reviewed_state ? 'button-reject-unactive' : 'button-reject-active ';
 		let status = 'Not Yet Reviewed'
 		if (reviewed_state) {
-			status = this.props.building.contributed_media[this.props.imageIndex].decision ? 
+			status = this.props.media[this.props.index].decision ? 
 				'Accepted' : 
 				'Rejected';
 		}
@@ -79,11 +79,11 @@ export default class BuildingReviewContribution extends React.Component {
 			<div className="review-contribution">
 				<div className="row"> 
 					<div className="title">Contributor: </div>
-					{this.props.building.contributed_media[this.props.imageIndex].contributor_name}
+					{this.props.media[this.props.index].contributor_name}
 				</div>
 				<div className="row"> 
 					<div className="title">Contact: </div>
-					{this.props.building.contributed_media[this.props.imageIndex].contributor_contact}
+					{this.props.media[this.props.index].contributor_contact}
 				</div>
 				<div className="row"> 
 					<div className="title">Date: </div>

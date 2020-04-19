@@ -23,7 +23,7 @@
   background-repeat: no-repeat;
   background-position: 60% 35%;
   cursor: pointer;
-  display: none;
+  /*display: none;*/
 }
 
 .building .image-index-button.decrement {

@@ -15,6 +15,7 @@ import BuildingText from './building/BuildingText';
 import BuildingTextBox from './building/BuildingTextBox';
 import BuildingStructuralData from './building/BuildingStructuralData';
 import BuildingResources from './building/BuildingResources';
+import BuildingDiscussionForum from './building/BuildingDiscussionForum';
 
 export default class Building extends React.Component {
   constructor(props) {
@@ -232,6 +233,20 @@ export default class Building extends React.Component {
         contentFields: ['archive_documents', 'sources']
       }
     ];
+
+    if (building.comments && building.comments.length > 0) {
+      fields.push(
+        {
+          label: 'Discussion Forum',
+          button: { label: 'Discussion Forum' },
+          href: 'discussionForum',
+          collapsible: true,
+          contentFields: ['comments'],
+          component:  
+            <BuildingDiscussionForum building={building} />
+        }
+      )
+    }
 
     // only return fields if one or more of their contentFields are populated
     // in the current building
