@@ -25,6 +25,7 @@ export default class GlossaryItem extends React.Component {
     this.updateField = this.updateField.bind(this);
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.replaceField = this.replaceField.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   handleTermChange(e) {
@@ -37,6 +38,13 @@ export default class GlossaryItem extends React.Component {
 
   deleteItem() {
     this.props.deleteItem(this.props.index);
+  }
+
+  deleteImage(imageIndex) {
+    const images = Object.assign([], this.props.item.images);
+    const newImages = _.filter(images, (img, idx) => idx !== imageIndex);
+    this.replaceField('images', newImages);
+    this.props.handleImageUpload(this.props.index, newImages);
   }
 
   selectFileToRecaption(fileIndex) {
@@ -132,6 +140,7 @@ export default class GlossaryItem extends React.Component {
           images={this.state.item.images ? this.state.item.images : [] }
           label="Image Gallery"
           selectFileToRecaption={this.selectFileToRecaption}
+          deleteImage={this.deleteImage}
         />
       <FilePicker
           {...this.props}

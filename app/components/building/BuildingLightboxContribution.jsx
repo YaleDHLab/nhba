@@ -28,6 +28,7 @@ export default class BuildingLightboxContribution extends React.Component {
     this.updateField = this.updateField.bind(this);
     this.submitForReview = this.submitForReview.bind(this);
     this.replaceField =  this.replaceField.bind(this);
+    this.deleteImage = this.deleteImage.bind(this);
   }
 
   handleImage(e) {
@@ -67,6 +68,11 @@ export default class BuildingLightboxContribution extends React.Component {
       });
     });
   }
+
+  deleteImage(imageIndex) {
+    const images = Object.assign([], this.state.new_media);
+    const newImages = _.filter(images, (img, idx) => idx !== imageIndex);
+    this.setState({ new_media: newImages })  }
 
   handleNameChange(e) {
     this.setState({ contributorName: e.target.value });
@@ -197,6 +203,7 @@ export default class BuildingLightboxContribution extends React.Component {
                   images={this.state.new_media}
                   label="Image Gallery"
                   selectFileToRecaption={this.selectFileToRecaption}
+                  deleteImage={this.deleteImage}
                 />
                 <FilePicker
                   {...this.props}
