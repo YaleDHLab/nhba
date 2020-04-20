@@ -35,26 +35,31 @@ export default class SimplePage extends React.Component {
       ? this.state.text
       : this.state.glossaryterms.map((t, i) => (
           <div key={i}>
-          {t.images && t.images.length > 0 && (
-            <div className="building">
-              <div className="building-content">
-                  <div className="top">
-                    <div className="right">
-                        <div className="top-right-top">
-                          <Gallery 
-                            images={t.images}
-                            layout={this.state.layout} 
-                            mediaReview={false}
-                            disableModal={true}
-                            showExpandIcon={false}
-                          />
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>)}
             <div className="term"><b>{t.term}</b></div>
-            <div className="definition"><p>{t.definition}</p></div>
+            <div 
+              className="definition" 
+              dangerouslySetInnerHTML={getNewlineMarkup(t.definition)}
+            />
+            {t.images && t.images.length > 0 && (
+              <div className="building">
+                <div className="building-content">
+                    <div className="top">
+                      <div className="right">
+                          <div className="top-right-top-glossary">
+                            <Gallery 
+                              images={t.images}
+                              layout={this.state.layout} 
+                              mediaReview={false}
+                              disableModal={true}
+                              showExpandIcon={false}
+                            />
+                          </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            )}
+            <div className="glossary-divider"></div>
           </div>
         ));
 

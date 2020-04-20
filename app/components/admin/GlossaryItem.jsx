@@ -5,6 +5,7 @@ import _ from 'lodash';
 import api from '../../../config';
 import ImageGrid from './form/form-elements/ImageGrid';
 import FilePicker from './form/form-elements/FilePicker';
+import RichTextArea from '../admin/form/form-elements/RichTextArea';
 
 export default class GlossaryItem extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class GlossaryItem extends React.Component {
     this.state = {
       item: this.props.item,
       fileToRecaption: {},
+      missingFields: [],
     }
 
     this.deleteItem = this.deleteItem.bind(this);
@@ -26,11 +28,11 @@ export default class GlossaryItem extends React.Component {
   }
 
   handleTermChange(e) {
-    this.props.handleTextChange(e, 'term', this.props.index);
+    this.props.handleTextChange(e.target.value, 'term', this.props.index);
   }
 
-  handleDefinitionChange(e) {
-    this.props.handleTextChange(e, 'definition', this.props.index);
+  handleDefinitionChange(field, value) {
+    this.props.handleTextChange(value, 'definition', this.props.index);
   }
 
   deleteItem() {
@@ -127,7 +129,6 @@ export default class GlossaryItem extends React.Component {
     return (
       <div>
        <ImageGrid
-          // {...this.props}
           images={this.state.item.images ? this.state.item.images : [] }
           label="Image Gallery"
           selectFileToRecaption={this.selectFileToRecaption}
@@ -149,13 +150,17 @@ export default class GlossaryItem extends React.Component {
             placeholder="Term name"
             value={this.props.item.term}
           />
-          <textarea
-            className="custom-textarea edit-glossary-definition"
-            onChange={this.handleDefinitionChange}
-            rows={rows}
-            placeholder="Term definition"
-            value={this.props.item.definition}
-          />
+          <div className="custom-textarea edit-glossary-definition">
+            <RichTextArea
+              {...this.props}
+              width="full-width"
+              missingFields={this.state.missingFields}
+              updateField={this.handleDefinitionChange}
+              placeholder="Term Definition"
+              height={150}
+              defaultValue={this.props.item.definition}
+            />
+          </div>
           <img
             className="delete-icon"
             src="/assets/images/delete-icon.png"

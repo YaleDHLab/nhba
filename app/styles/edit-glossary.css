@@ -12,9 +12,9 @@
 }
 
 .edit-glossary .edit-glossary-term {
+  height: 150px;
   width: 140px;
   display: inline-block;
-  margin: 3px 0;
 }
 
 .edit-glossary .edit-glossary-definition {

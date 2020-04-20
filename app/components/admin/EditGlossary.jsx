@@ -45,9 +45,9 @@ export default class EditSimplePage extends React.Component {
    * Event listeners for text/image changes
    * */
 
-  handleTextChange(e, field, termIndex) {
+  handleTextChange(value, field, termIndex) {
     const glossaryItems = Object.assign([], this.state.glossaryItems);
-    glossaryItems[termIndex][field] = e.target.value;
+    glossaryItems[termIndex][field] = value;
     this.setState({ glossaryItems: glossaryItems, savedUpdates: false });
   }
 

@@ -34,12 +34,16 @@
 
 .body-text .term {
   font-size: 24px;
-  padding-top: 8px;
+  margin-bottom: 8px;
 }
 
 .body-text .definition {
-  border-bottom: 1px solid #444;
   width: 820px;
   margin-bottom: 24px;
-  padding-bottom: 8px;
+}
+
+.glossary-divider {
+  border-bottom: 2px solid #aaa;
+  width: 820px;
+  margin: 24px 0 24px 0;
 }

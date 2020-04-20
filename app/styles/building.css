@@ -96,6 +96,14 @@
   position: relative;
 }
 
+
+.building .top .right .top-right-top-glossary {
+  height: 440px;
+  width: 100%;
+  background: #aaa;
+  position: relative;
+}
+
 .building .top .right .top-right-bottom {
   height: auto;
   width: 100%;
