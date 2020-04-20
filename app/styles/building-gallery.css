@@ -44,6 +44,42 @@
   transform: rotate(270deg);
 }
 
+.building .image-index-button-review {
+  width: 70px;
+  height: 70px;
+  background: #ccc;
+  position: absolute;
+  top: 90%;
+  margin-top: -35px;
+  background-image: url('/assets/images/caret-white.png');
+  background-size: 90px;
+  background-repeat: no-repeat;
+  background-position: 60% 35%;
+  cursor: pointer;
+}
+
+.building .image-index-button-review.decrement {
+  left: 0px;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.building .image-index-button-review.increment {
+  right: 0px;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.building .comment-content {
+  padding: 0 12px 0 12px;
+}
+
 .building .image-caption {
   position: absolute;
   bottom: 0;
@@ -94,10 +130,9 @@
   border: 2px solid #e4e4e4;
   border-radius: 10%;
   width: 33%;
-  height: 63%;
+  height: 310px;
   left: -36%;
   position: absolute;
-  max-height: 72%;
   color: #444;
   background: #efefef;
 }

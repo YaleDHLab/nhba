@@ -46,14 +46,14 @@ export default class BuildingGalleryDiscussion extends React.Component {
 		        	index={this.state.commentIndex}
 		      	/>
 				<div
-                className="image-index-button decrement"
+                className="image-index-button-review decrement"
                 onClick={this.decrementCommentIndex}
               	/>
               	<div
-                className="image-index-button increment"
+                className="image-index-button-review increment"
                 onClick={this.incrementCommentIndex}
               	/>
-				<p dangerouslySetInnerHTML =
+				<div className="comment-content" dangerouslySetInnerHTML =
 					{getNewlineMarkup(this.props.comments[this.state.commentIndex].comment)} 
 				/>
 			</div>

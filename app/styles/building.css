@@ -104,6 +104,16 @@
   position: relative;
 }
 
+.building .top .right .top-right-top-discussion {
+  border-top: 2px solid #aaa;
+  background: #eee;
+  margin-top: 12px;
+  min-height: 350px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
 .building .top .right .top-right-bottom {
   height: auto;
   width: 100%;

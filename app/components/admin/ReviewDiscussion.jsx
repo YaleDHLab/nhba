@@ -42,8 +42,11 @@ export default class ReviewDiscussion extends React.Component {
 			            		<div className="left">
 			            		</div>
 			            		<div className="right">
-			            			<h1 className="address">{this.state.buildings[i].building_name}</h1>
-			                 		 <div className="top-right-top">
+			            			<h1 className="address">
+			            				{this.state.buildings[i].building_name} {" "}
+			            				({this.state.buildings[i].comments.length} Comments)
+			            			</h1>
+			                 		 <div className="top-right-top-discussion">
 			                    		<Gallery 
 			                    			building={this.state.buildings[i]} 
 			                    			comments={this.state.buildings[i].comments}
