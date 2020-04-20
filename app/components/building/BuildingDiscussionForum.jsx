@@ -33,19 +33,21 @@ export default class BuildingDiscussionForum extends React.Component {
 		const thread = []
 		if (this.props.building.comments && this.props.building.comments.length > 0) {
 			for (var i = 0; i < this.props.building.comments.length; i++) {
-				let submitted_date = new Date(this.props.building.comments[i].submitted_at * 1000).toDateString();
-				thread.push(
-					<div key={i} className="comment-row">
-						<div className="contact">
-							<div className="name"> {this.props.building.comments[i].contributor_name} </div>
-							<div className="details"> {submitted_date} </div>
-							<div className="details"> {this.props.building.comments[i].contributor_contact} </div>
+				if (this.props.building.comments[i].decision == true) {
+					let submitted_date = new Date(this.props.building.comments[i].submitted_at * 1000).toDateString();
+					thread.push(
+						<div key={i} className="comment-row">
+							<div className="contact">
+								<div className="name"> {this.props.building.comments[i].contributor_name} </div>
+								<div className="details"> {submitted_date} </div>
+								<div className="details"> {this.props.building.comments[i].contributor_contact} </div>
+							</div>
+							<div className="content" dangerouslySetInnerHTML={getNewlineMarkup(
+								this.props.building.comments[i].comment)
+							} />
 						</div>
-						<div className="content" dangerouslySetInnerHTML={getNewlineMarkup(
-							this.props.building.comments[i].comment)
-						} />
-					</div>
-				)
+					)
+				}
 			}
 		}
 		return (

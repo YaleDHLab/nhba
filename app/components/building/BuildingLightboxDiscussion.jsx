@@ -13,6 +13,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 			building: this.props.building,
 			contributorName: '',
 			contributorContact: '',
+			contributorConfirmContact: '',
 			contributorComment: '',
 			missingFields: [],
 			errorMessage: false,
@@ -21,6 +22,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handleContactChange = this.handleContactChange.bind(this);
+		this.handleConfirmContactChange = this.handleConfirmContactChange.bind(this);
 		this.updateField = this.updateField.bind(this);
 		this.submitForReview = this.submitForReview.bind(this);
 	}
@@ -33,6 +35,10 @@ export default class BuildingLightboxDiscussion extends React.Component {
 		this.setState({ contributorContact: e.target.value });
 	}
 
+	handleConfirmContactChange(e) {
+		this.setState({ contributorConfirmContact: e.target.value})
+	}
+
 	updateField(field, value) {
 		this.setState({ contributorComment: value })
 	}
@@ -41,30 +47,35 @@ export default class BuildingLightboxDiscussion extends React.Component {
 		var missingFields = false;
 		if (this.state.contributorName == "" || 
 			this.state.contributorContact == "" ||
+			this.state.contributorConfirmContact == "" ||
 			this.state.contributorComment == "") {
-	      missingFields = true;
+	      	missingFields = true;
+	    }
+	    if (this.state.contributorContact != this.state.contributorConfirmContact) {
+	    	missingFields = true;
 	    }
 
-	    const doc = {
-	      comment: this.state.contributorComment,
-          contributor_name: this.state.contributorName,
-          contributor_contact: this.state.contributorContact,
-          decision: null,
-          reviewed: false,
-          reviewed_at: null,
-          submitted_at: Date.now() / 1000,
-        };
-
-        const building = Object.assign({}, this.state.building);
-        if (Array.isArray(building.comments)) {
-        	building.comments.push(doc);
-        } else {
-        	building.comments = doc;
-        }
-
-	    this.setState({ building: building, errorMessage: missingFields }, 
+	    this.setState({ errorMessage: missingFields }, 
 	    	() => {
 	    		if (this.state.errorMessage == false) {
+	    			// Create data entry for the comment
+	    			const doc = {
+				      comment: this.state.contributorComment,
+			          contributor_name: this.state.contributorName,
+			          contributor_contact: this.state.contributorContact,
+			          decision: null,
+			          reviewed: false,
+			          reviewed_at: null,
+			          submitted_at: Date.now() / 1000,
+			        };
+			        // Add entry to the building's list of comments
+			        const building = Object.assign({}, this.state.building);
+			        if (Array.isArray(building.comments)) {
+			        	building.comments.push(doc);
+			        } else {
+			        	building.comments = doc;
+			        }
+			        // Send request
 	    			request
 	    				.post(`${api.endpoint}building/save`)
 	    				.send(this.state.building)
@@ -72,7 +83,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 	    				.end(err => {
 			              if (err) console.warn(err);
 			            });
-			        this.setState({ successfulSubmission: true });
+			        this.setState({ building: building, successfulSubmission: true });
 	    		}
 	    	});
 	}
@@ -110,6 +121,13 @@ export default class BuildingLightboxDiscussion extends React.Component {
 	                  onChange={this.handleContactChange}
 	                />
 	              </div>
+	              <div className="file-picker file-picker-content file-picker-row">
+	                <div className="label">Confirm E-mail (*Required)</div>
+	                <input
+	                  className="file-display-name-input"
+	                  onChange={this.handleConfirmContactChange}
+	                />
+	              </div>
 	              	<RichTextArea
 			          {...this.props}
 			          width="full-width"
@@ -121,7 +139,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 			        />
 			        {this.state.errorMessage == true ? (
 	                  <p className="missing">
-	                    Please fill in all required fields.
+	                    Please fill in all required fields. Ensure the e-mails entered match.
 	                  </p>
 	                ) : null}
 	                {this.state.successfulSubmission == true ? (

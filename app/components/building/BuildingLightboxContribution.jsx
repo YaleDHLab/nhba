@@ -17,6 +17,7 @@ export default class BuildingLightboxContribution extends React.Component {
       successfulSubmission: false,
       contributorName: '',
       contributorContact: '',
+      contributorConfirmContact: '',
       new_media: [],
     };
 
@@ -24,6 +25,7 @@ export default class BuildingLightboxContribution extends React.Component {
     this.handleCaptionChange = this.handleCaptionChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleContactChange = this.handleContactChange.bind(this);
+    this.handleConfirmContactChange = this.handleConfirmContactChange.bind(this);
     this.selectFileToRecaption = this.selectFileToRecaption.bind(this);
     this.updateField = this.updateField.bind(this);
     this.submitForReview = this.submitForReview.bind(this);
@@ -82,6 +84,10 @@ export default class BuildingLightboxContribution extends React.Component {
     this.setState({ contributorContact: e.target.value });
   }
 
+  handleConfirmContactChange(e) {
+    this.setState({ contributorConfirmContact: e.target.value });
+  }
+
   handleCaptionChange(e) {
     const relabelCaptionIndex = this.state.fileToRecaption.index;
 
@@ -133,25 +139,38 @@ export default class BuildingLightboxContribution extends React.Component {
   }
 
   submitForReview() {
-    var missingCaption = false;
+    var missingFields = false;
+    // Check every uploaded image has caption
     for (var i = 0; i < this.state.new_media.length; i++) {
       if (this.state.new_media[i].caption == "") {
-        missingCaption = true;
+        missingFields = true;
         break;
       }
     }
-    if (this.state.contributorName == "" || this.state.contributorContact == "") {
-      missingCaption = true;
+    // Check at least one image is uploaded
+    if (this.state.new_media.length == 0) {
+      missingFields = true;
+    }
+    // Check every field is filled in
+    if (this.state.contributorName == "" || 
+        this.state.contributorContact == "" ||
+        this.state.contributorConfirmContact == "") {
+        missingFields = true;
+    }
+    // Check contact information matches
+    if (this.state.contributorContact != this.state.contributorConfirmContact) {
+      missingFields = true;
     }
 
-    const building = Object.assign({}, this.state.building);
-    for (var i = 0; i < this.state.new_media.length; i++) {
-      this.state.building.contributed_media.push(this.state.new_media[i]);
-    }
-
-    this.setState({ building: building, missingFields: missingCaption }, 
+    this.setState({ missingFields: missingFields }, 
       () => {
         if (this.state.missingFields == false) {
+          // Append images in new_media to building's contributed_media
+          const building = Object.assign({}, this.state.building);
+          for (var i = 0; i < this.state.new_media.length; i++) {
+            this.state.building.contributed_media.push(this.state.new_media[i]);
+          }
+          // Send request
           request
             .post(`${api.endpoint}building/save`)
             .send(this.state.building)
@@ -159,7 +178,7 @@ export default class BuildingLightboxContribution extends React.Component {
             .end(err => {
               if (err) console.warn(err);
             });
-          this.setState({ successfulSubmission: true });
+          this.setState({ building: building, successfulSubmission: true });
         }
       }
     )
@@ -198,6 +217,13 @@ export default class BuildingLightboxContribution extends React.Component {
                   onChange={this.handleContactChange}
                 />
               </div>
+              <div className="file-picker file-picker-content file-picker-row">
+                <div className="label">Confirm E-mail (*Required)</div>
+                <input
+                  className="file-display-name-input"
+                  onChange={this.handleConfirmContactChange}
+                />
+              </div>
                 <ImageGrid
                   {...this.props}
                   images={this.state.new_media}
@@ -216,7 +242,7 @@ export default class BuildingLightboxContribution extends React.Component {
                 />
                 {this.state.missingFields == true ? (
                   <p className="missing">
-                    Please fill in all required fields. Every image must include a caption.
+                    Please fill in all required fields. Every image must include a caption. Ensure the e-mails entered match.
                   </p>
                 ) : null}
                 {this.state.successfulSubmission == true ? (
