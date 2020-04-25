@@ -95,6 +95,12 @@ export default class ImageGridItem extends React.Component {
   render() {
     const { connectDragSource, connectDropTarget } = this.props;
 
+    const deleteButton = this.props.hideDeleteButton ?
+      <div></div> : 
+      <div className="grid-item-delete-button">
+          <div className="grid-item-delete-icon" />
+      </div>;
+
     return connectDragSource(
       connectDropTarget(
         <div className="image-grid-item" onClick={this.selectFileToRecaption}>
@@ -104,9 +110,7 @@ export default class ImageGridItem extends React.Component {
             confirmText="Delete"
             onConfirm={this.deleteImage}
           >
-            <div className="grid-item-delete-button">
-              <div className="grid-item-delete-icon" />
-            </div>
+            {deleteButton}
           </Confirm>
           <div
             className="grid-item background-image"

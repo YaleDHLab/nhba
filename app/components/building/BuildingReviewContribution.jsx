@@ -20,11 +20,21 @@ export default class BuildingReviewContribution extends React.Component {
 		this.props.media[this.props.index].decision = true;
 		this.props.media[this.props.index].reviewed = true;
 		this.props.media[this.props.index].reviewed_at = Date.now() / 1000;
+		const submission_date = new Date(this.props.media[this.props.index].submitted_at * 1000).toDateString();
 
 		if (this.props.images) {
+			var caption = building["contributed_media"][this.props.index].caption 
+							+ " Image contributed by "
+							+ this.props.media[this.props.index].contributor_name
+							+ " ("
+							+ this.props.media[this.props.index].contributor_contact
+							+ ")"
+							+ " on "
+							+ submission_date
+							+ ".";
 			building["images"].push({
 				filename: building["contributed_media"][this.props.index].filename,
-				caption: building["contributed_media"][this.props.index].caption
+				caption: caption,
 			})
 		}
 

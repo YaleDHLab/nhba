@@ -43,6 +43,7 @@ export default class ImageGrid extends React.Component {
               moveImage={this.moveImage}
               selectFileToRecaption={this.props.selectFileToRecaption}
               deleteImage={this.props.deleteImage ? this.props.deleteImage : this.deleteImage}
+              hideDeleteButton={this.props.hideDeleteButton ? true : false}
             />
           ))}
         </div>

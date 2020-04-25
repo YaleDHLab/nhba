@@ -239,6 +239,7 @@ export default class BuildingLightboxContribution extends React.Component {
                   label="Image Gallery"
                   selectFileToRecaption={this.selectFileToRecaption}
                   deleteImage={this.deleteImage}
+                  hideDeleteButton={true}
                 />
                 <FilePicker
                   {...this.props}
