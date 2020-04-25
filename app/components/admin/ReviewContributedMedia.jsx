@@ -33,7 +33,7 @@ export default class ReviewContributedMedia extends React.Component {
 	}
 
 	render() {
-		const buildingsToReview = [];
+		let buildingsToReview = [];
 		for (var i = 0; i < this.state.buildings.length; i++) {
 			if (this.state.buildings[i].contributed_media.length > 0) {
 				buildingsToReview.push(
@@ -43,7 +43,11 @@ export default class ReviewContributedMedia extends React.Component {
 			            		<div className="left">
 			            		</div>
 			            		<div className="right">
-			            			<h1 className="address">{this.state.buildings[i].building_name}</h1>
+			            			<h1 className="address">
+			            				{this.state.buildings[i].building_name}
+			            				{" "}
+			            				({this.state.buildings[i].contributed_media.length} Images)
+			            			</h1>
 			              			{this.state.buildings[i].images &&
 			               			 this.state.buildings[i].images.length > 0 && (
 			                 		 <div className="top-right-top">
@@ -63,6 +67,10 @@ export default class ReviewContributedMedia extends React.Component {
 			      	</div>
 				)
 			}
+		}
+
+		if (buildingsToReview.length == 0) {
+			buildingsToReview = <div>There are no pending images to review.</div>
 		}
 
 		return (

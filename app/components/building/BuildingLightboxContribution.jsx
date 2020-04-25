@@ -170,6 +170,10 @@ export default class BuildingLightboxContribution extends React.Component {
     if (this.state.contributorContact != this.state.contributorConfirmContact) {
       missingFields = true;
     }
+    // Check recaptcha is verified
+    if (this.state.verifiedRecaptcha == false) {
+      missingFields = true;
+    }
 
     this.setState({ missingFields: missingFields }, 
       () => {
@@ -177,6 +181,12 @@ export default class BuildingLightboxContribution extends React.Component {
           // Append images in new_media to building's contributed_media
           const building = Object.assign({}, this.state.building);
           for (var i = 0; i < this.state.new_media.length; i++) {
+            if (this.state.new_media[i].contributor_name == "") {
+              this.state.new_media[i].contributor_name = this.state.contributorName;
+            }
+            if (this.state.new_media[i].contributor_contact == "") {
+              this.state.new_media[i].contributor_contact = this.state.contributorContact;
+            }
             this.state.building.contributed_media.push(this.state.new_media[i]);
           }
           // Send request
