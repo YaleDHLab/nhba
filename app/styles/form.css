@@ -18,13 +18,13 @@
 .form .form-content .missing {
   color: red;
   padding-left: 135px;
-  padding-bottom: 12px;
+  float: right;
 }
 
 .form .form-content .successful {
   color: green;
   padding-left: 135px;
-  padding-bottom: 12px;
+  float: right;
 }
 
 .form .form-content .saved-message {
@@ -101,11 +101,6 @@
 }
 
 .form .review-button {
-  float: right;
-}
-
-.form .review-button-1 {
-  margin-top: 16px;
   float: right;
 }
 

@@ -4,6 +4,9 @@ import _ from 'lodash';
 
 import api from '../../../config';
 import RichTextArea from '../admin/form/form-elements/RichTextArea';
+import Reaptcha from "reaptcha";
+
+const RECAPTCHA_SITE_KEY = "6Le9-usUAAAAALzdWPHiloLB5BRE1asZOqX2__J6";
 
 export default class BuildingLightboxDiscussion extends React.Component {
 	constructor(props) {
@@ -18,6 +21,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 			missingFields: [],
 			errorMessage: false,
 			successfulSubmission: false,
+			verifiedRecaptcha: false,
 		}
 
 		this.handleNameChange = this.handleNameChange.bind(this);
@@ -25,6 +29,11 @@ export default class BuildingLightboxDiscussion extends React.Component {
 		this.handleConfirmContactChange = this.handleConfirmContactChange.bind(this);
 		this.updateField = this.updateField.bind(this);
 		this.submitForReview = this.submitForReview.bind(this);
+		this.onVerifyRecaptcha = this.onVerifyRecaptcha.bind(this);
+	}
+
+	onVerifyRecaptcha(){
+		this.setState({ verifiedRecaptcha: true });
 	}
 
 	handleNameChange(e) {
@@ -52,6 +61,9 @@ export default class BuildingLightboxDiscussion extends React.Component {
 	      	missingFields = true;
 	    }
 	    if (this.state.contributorContact != this.state.contributorConfirmContact) {
+	    	missingFields = true;
+	    }
+	    if (this.state.verifiedRecaptcha == false) {
 	    	missingFields = true;
 	    }
 
@@ -137,6 +149,12 @@ export default class BuildingLightboxDiscussion extends React.Component {
 			          placeholder="Enter your comment here."
 			          height={250}
 			        />
+			        <div className="recaptcha">
+				        <Reaptcha
+				        	sitekey={RECAPTCHA_SITE_KEY}
+				        	onVerify={this.onVerifyRecaptcha}
+				        />
+			        </div>
 			        {this.state.errorMessage == true ? (
 	                  <p className="missing">
 	                    Please fill in all required fields. Ensure the e-mails entered match.
@@ -148,7 +166,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 	                  </p>
 	                ) : null}
 	                <div 
-	                  className="review-button-1 yellow-button"
+	                  className="review-button yellow-button"
 	                  onClick={this.submitForReview}
 	                >
 	                    Submit for Review

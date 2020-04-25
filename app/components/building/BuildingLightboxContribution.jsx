@@ -5,6 +5,9 @@ import _ from 'lodash';
 import api from '../../../config';
 import ImageGrid from '../admin/form/form-elements/ImageGrid';
 import FilePicker from '../admin/form/form-elements/FilePicker';
+import Reaptcha from "reaptcha";
+
+const RECAPTCHA_SITE_KEY = "6Le9-usUAAAAALzdWPHiloLB5BRE1asZOqX2__J6";
 
 export default class BuildingLightboxContribution extends React.Component {
   constructor(props) {
@@ -19,6 +22,7 @@ export default class BuildingLightboxContribution extends React.Component {
       contributorContact: '',
       contributorConfirmContact: '',
       new_media: [],
+      verifiedRecaptcha: false,
     };
 
     this.handleImage = this.handleImage.bind(this);
@@ -31,6 +35,11 @@ export default class BuildingLightboxContribution extends React.Component {
     this.submitForReview = this.submitForReview.bind(this);
     this.replaceField =  this.replaceField.bind(this);
     this.deleteImage = this.deleteImage.bind(this);
+    this.onVerifyRecaptcha = this.onVerifyRecaptcha.bind(this);
+  }
+
+  onVerifyRecaptcha() {
+    this.setState({ verifiedRecaptcha: true });
   }
 
   handleImage(e) {
@@ -240,6 +249,12 @@ export default class BuildingLightboxContribution extends React.Component {
                   textField="caption"
                   handleTextChange={this.handleCaptionChange}
                 />
+                <div className="recaptcha">
+                  <Reaptcha
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onVerify={this.onVerifyRecaptcha}
+                  />
+                </div>
                 {this.state.missingFields == true ? (
                   <p className="missing">
                     Please fill in all required fields. Every image must include a caption. Ensure the e-mails entered match.
