@@ -118,7 +118,7 @@ export default class EditSimplePage extends React.Component {
         <div className="form-content">
           <h1>Glossary</h1>
           <div className="instructions">
-            {'Add vocabulary, definitions, and illustrative examples here.'}
+            {'Add vocabulary, definitions, and illustrative examples here. Make sure every term and definition is filled out or Glossary page will not load properly.'}
           </div>
           {this.state.glossaryItems.map((item, idx) => (
               <GlossaryItem
