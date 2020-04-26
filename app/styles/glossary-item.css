@@ -12,3 +12,8 @@
   top: 44px;
   right: -40px;
 }
+
+.glossary-item .border {
+	border-bottom: 2px dashed black;
+	margin-top: 12px;
+}

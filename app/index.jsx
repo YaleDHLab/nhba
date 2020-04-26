@@ -14,6 +14,8 @@ import Admin from './components/admin/Admin';
 import Form from './components/admin/form/Form';
 import EditSimplePage from './components/admin/EditSimplePage';
 import EditGlossary from './components/admin/EditGlossary';
+import ReviewContributedMedia from './components/admin/ReviewContributedMedia';
+import ReviewDiscussion from './components/admin/ReviewDiscussion';
 import './styles/styles';
 
 ReactDOM.render(
@@ -32,6 +34,9 @@ ReactDOM.render(
       <Route path="/admin/about" component={EditSimplePage} />
       <Route path="/admin/contact" component={EditSimplePage} />
       <Route path="/admin/glossary" component={EditGlossary} />
+      <Route path="/admin/review" component={ReviewContributedMedia} />
+      <Route path='/admin/discussion' component={ReviewDiscussion} />
+
     </Route>
   </Router>,
   document.getElementById('app')

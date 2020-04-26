@@ -1,7 +1,9 @@
 import React from 'react';
-import Lightbox from './BuildingLightbox';
-import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
 import _ from 'lodash';
+
+import getBackgroundImageStyle from '../lib/getBackgroundImageStyle';
+import Lightbox from './BuildingLightbox';
+import ReviewContribution from './BuildingReviewContribution';
 
 export default class BuildingGallery extends React.Component {
   constructor(props) {
@@ -30,7 +32,7 @@ export default class BuildingGallery extends React.Component {
    * */
 
   getStyle() {
-    const images = this.props.building.images;
+    const images = this.props.images;
     if (images) {
       const dir = '/assets/uploads/resized/large/';
       const image = dir + images[this.state.imageIndex].filename;
@@ -56,7 +58,7 @@ export default class BuildingGallery extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     const imageIndex = this.state.imageIndex;
-    const newIndex = (imageIndex + 1) % this.props.building.images.length;
+    const newIndex = (imageIndex + 1) % this.props.images.length;
     this.setState({ imageIndex: newIndex });
   }
 
@@ -65,7 +67,7 @@ export default class BuildingGallery extends React.Component {
     e.stopPropagation();
     const imageIndex = this.state.imageIndex;
     const newIndex =
-      imageIndex > 0 ? imageIndex - 1 : this.props.building.images.length - 1;
+      imageIndex > 0 ? imageIndex - 1 : this.props.images.length - 1;
     this.setState({ imageIndex: newIndex });
   }
 
@@ -92,26 +94,26 @@ export default class BuildingGallery extends React.Component {
 
   render() {
     const caption =
-      this.props.building.images &&
-      this.props.building.images[this.state.imageIndex].caption ? (
+      this.props.images &&
+      this.props.images[this.state.imageIndex].caption ? (
         <div className="image-caption">
-          {this.props.building.images[this.state.imageIndex].caption}
+          {this.props.images[this.state.imageIndex].caption}
         </div>
       ) : null;
 
-    const expandIcon = (
+    const expandIcon = this.props.showExpandIcon ? (
       <div className="expand-image-icon-container">
         <img
           className="expand-image-icon"
           src="/assets/images/icon-expand.png"
         />
       </div>
-    );
+    ) : null;
 
     let gallery = null;
-    if (this.props.building.images) {
+    if (this.props.images) {
       if (this.props.layout.right === 'Gallery') {
-        if (this.props.building.images.length > 1) {
+        if (this.props.images.length > 1) {
           gallery = (
             <div
               className="background-image"
@@ -155,7 +157,7 @@ export default class BuildingGallery extends React.Component {
       }
     }
 
-    const lightbox = this.state.showLightbox ? (
+    const lightbox = !this.props.disableModal && this.state.showLightbox ? (
       <Lightbox
         building={this.props.building}
         closeLightbox={this.closeLightbox}
@@ -166,8 +168,18 @@ export default class BuildingGallery extends React.Component {
       />
     ) : null;
 
+    const reviewbox = this.props.mediaReview ? (
+      <ReviewContribution
+        building={this.props.building}
+        media={this.props.building.contributed_media}
+        images={true}
+        index={this.state.imageIndex}
+      />
+    ): null;
+
     return (
       <div className="building-gallery">
+        {reviewbox}
         {gallery}
         {lightbox}
       </div>

@@ -15,6 +15,7 @@ import BuildingText from './building/BuildingText';
 import BuildingTextBox from './building/BuildingTextBox';
 import BuildingStructuralData from './building/BuildingStructuralData';
 import BuildingResources from './building/BuildingResources';
+import BuildingDiscussionForum from './building/BuildingDiscussionForum';
 
 export default class Building extends React.Component {
   constructor(props) {
@@ -27,10 +28,16 @@ export default class Building extends React.Component {
       creator: false,
 
       // tour data for mapping
-      tourNameToIndex: {}
+      tourNameToIndex: {},
+
+      // list of expanded labels
+      expandedLabels: [],
     };
 
     this.toggleLayout = this.toggleLayout.bind(this);
+
+    this.expandLabels = this.expandLabels.bind(this);
+    this.removeLabels = this.removeLabels.bind(this);
 
     // getter for the text fields for a building
     this.getTextFields = this.getTextFields.bind(this);
@@ -102,6 +109,22 @@ export default class Building extends React.Component {
   }
 
   /**
+   * Expand collapsed section(s) of building description via quick-access menu
+   * */
+  expandLabels(label) {
+    if (this.state.expandedLabels.includes(label) == false) {
+      this.setState({ expandedLabels: this.state.expandedLabels.concat(label) });
+    }
+  }
+
+  /**
+   * Remove label from list of expandedLabels
+   * */
+  removeLabels(label) {
+    this.setState({ expandedLabels: this.state.expandedLabels.filter(el => el !== label) });
+  }
+
+  /**
    * Retrieve the fields required for creating building table and action buttons
    * */
 
@@ -127,7 +150,7 @@ export default class Building extends React.Component {
         label: 'Physical Description',
         button: { label: 'Physical Description', icon: 'building' },
         href: 'physical-description',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['physical_description'],
         component: (
           <BuildingTextBox
@@ -140,7 +163,7 @@ export default class Building extends React.Component {
         label: 'Urban Setting',
         button: { label: 'Urban Setting', icon: 'building' },
         href: 'urban-setting',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['urban_setting'],
         component: (
           <BuildingTextBox
@@ -153,7 +176,7 @@ export default class Building extends React.Component {
         label: 'Social History',
         button: { label: 'Social History', icon: 'building' },
         href: 'social-history',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['social_history'],
         component: (
           <BuildingTextBox
@@ -166,7 +189,7 @@ export default class Building extends React.Component {
         label: 'Site History',
         button: { label: 'Site History', icon: 'building' },
         href: 'site-history',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['site_history'],
         component: (
           <BuildingTextBox title="Site History" text={building.site_history} />
@@ -176,7 +199,7 @@ export default class Building extends React.Component {
         label: 'Past Tenants',
         button: { label: 'Past Tenants', icon: 'building' },
         href: 'past-tenants',
-        collapsible: false,
+        collapsible: true,
         contentFields: ['past_tenants'],
         component: (
           <BuildingTextBox title="Past Tenants" text={building.past_tenants} />
@@ -210,6 +233,20 @@ export default class Building extends React.Component {
         contentFields: ['archive_documents', 'sources']
       }
     ];
+
+    if (building.comments && building.comments.length > 0) {
+      fields.push(
+        {
+          label: 'Discussion Forum',
+          button: { label: 'Discussion Forum' },
+          href: 'discussionForum',
+          collapsible: true,
+          contentFields: ['comments'],
+          component:  
+            <BuildingDiscussionForum building={building} />
+        }
+      )
+    }
 
     // only return fields if one or more of their contentFields are populated
     // in the current building
@@ -255,7 +292,14 @@ export default class Building extends React.Component {
     const layout = {
       Map: map,
       Gallery: (
-        <Gallery building={this.state.building} layout={this.state.layout} />
+        <Gallery 
+          building={this.state.building} 
+          images={this.state.building.images}
+          layout={this.state.layout} 
+          disableModal={false}
+          mediaReview={false}
+          showExpandIcon={true}
+        />
       )
     };
 
@@ -275,7 +319,12 @@ export default class Building extends React.Component {
                     toggleLayout={this.toggleLayout}
                     layout={this.state.layout}
                   />
-                  <BuildingButtons fields={fields} {...this.props} />
+                  <BuildingButtons 
+                    fields={fields}
+                    expandedLabels={this.state.expandedLabels}
+                    expandLabels={this.expandLabels}
+                    {...this.props}
+                    />
                   <BuildingEditButton
                     admin={this.props.admin}
                     creator={this.state.creator}
@@ -296,7 +345,12 @@ export default class Building extends React.Component {
                   </div>
                 )}
               <div className="top-right-bottom">
-                <BuildingText building={this.state.building} fields={fields} />
+                <BuildingText 
+                  building={this.state.building} 
+                  fields={fields} 
+                  expandedLabels={this.state.expandedLabels} 
+                  removeLabels={this.removeLabels}
+                />
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ export default class ImageGrid extends React.Component {
       <div className="image-grid">
         <div className="label">{this.props.label}</div>
         <div className="image-grid-content">
-          {this.props.building.images.map((image, i) => (
+          {this.props.images.map((image, i) => (
             <ImageGridItem
               key={image.filename}
               index={i}
@@ -42,7 +42,8 @@ export default class ImageGrid extends React.Component {
               image={`/assets/uploads/resized/small/${image.filename}`}
               moveImage={this.moveImage}
               selectFileToRecaption={this.props.selectFileToRecaption}
-              deleteImage={this.deleteImage}
+              deleteImage={this.props.deleteImage ? this.props.deleteImage : this.deleteImage}
+              hideDeleteButton={this.props.hideDeleteButton ? true : false}
             />
           ))}
         </div>

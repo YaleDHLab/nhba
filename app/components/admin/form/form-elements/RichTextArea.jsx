@@ -27,13 +27,23 @@ export default class RichTextArea extends React.Component {
   }
 
   render() {
+    var defaultValue = '';
+    if (this.props.building && this.props.building[this.props.field]) {
+      defaultValue = this.props.building[this.props.field];
+    } else if (this.props.defaultValue) {
+      defaultValue = this.props.defaultValue;
+    }
+    
+    let label = this.props.label ? 
+      <div className="label">{this.props.label}</div> : null;
+
     return (
       <div className={this.getClass()}>
-        <div className="label">{this.props.label}</div>
+        {label}
         <ReactQuill
           onChange={this.updateField}
           placeholder={this.props.placeholder || ''}
-          value={this.props.building[this.props.field] || ''}
+          defaultValue={defaultValue}
         >
           <div style={{ height: this.props.height }} />
         </ReactQuill>

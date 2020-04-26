@@ -11,7 +11,14 @@ db.simplepage = {
 
 db.glossaryterm = {
   term: String,
-  definition: String
+  definition: String,
+  // image gallery
+  images: [
+    {
+      filename: String,
+      caption: String
+    }
+  ],
 };
 
 db.user = {
@@ -110,6 +117,32 @@ db.building = {
     {
       filename: String,
       caption: String
+    }
+  ],
+
+  contributed_media: [
+    {
+      filename: String,
+      caption: String,
+      contributor_name: String,
+      contributor_contact: String,
+      decision: Boolean,
+      reviewed: Boolean,
+      reviewed_at: Number,
+      submitted_at: Number,
+    }
+  ],
+
+  // contributed comments
+  comments: [
+    {
+      comment: String,
+      contributor_name: String,
+      contributor_contact: String,
+      decision: Boolean,
+      reviewed: Boolean,
+      reviewed_at: Number,
+      submitted_at: Number,
     }
   ],
 

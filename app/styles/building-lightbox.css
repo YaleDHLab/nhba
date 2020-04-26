@@ -39,6 +39,26 @@
   position: relative;
 }
 
+.building-lightbox .modal .body-contribution {
+  height: 170%;
+  margin-top: 55px;
+  background: #fff;
+  opacity: 90%;
+  position: relative;
+}
+
+.building-lightbox .modal .body-discussion {
+  height: 180%;
+  margin-top: 55px;
+  background: #fff;
+  opacity: 90%;
+  position: relative;
+}
+
+.building-lightbox .modal .recaptcha {
+  padding: 8px 0 8px 380px;
+}
+
 .building-lightbox .lightbox-image {
   max-height: 100%;
   max-width: 100%;

@@ -31,3 +31,19 @@
 .terms a:visited {
   color:#4F6077;
 }
+
+.body-text .term {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.body-text .definition {
+  width: 820px;
+  margin-bottom: 24px;
+}
+
+.glossary-divider {
+  border-bottom: 2px solid #aaa;
+  width: 820px;
+  margin: 24px 0 24px 0;
+}
