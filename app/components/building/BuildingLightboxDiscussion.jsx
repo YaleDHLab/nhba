@@ -155,6 +155,7 @@ export default class BuildingLightboxDiscussion extends React.Component {
 				        	onVerify={this.onVerifyRecaptcha}
 				        />
 			        </div>
+			        
 			        {this.state.errorMessage == true ? (
 	                  <p className="missing">
 	                    Please fill in all required fields. Ensure the e-mails entered match.
