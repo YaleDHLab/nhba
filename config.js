@@ -42,6 +42,8 @@ config.get = function getConfig(route, callback) {
  ** */
 
 config.ssl = {
+  // key: 'tls/privkey.pem',
+  // cert: 'tls/fullchain.pem'
   key: 'tls/privkey.pem',
   cert: 'tls/fullchain.pem'
 };
