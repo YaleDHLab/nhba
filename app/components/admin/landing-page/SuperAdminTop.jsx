@@ -17,6 +17,14 @@ const pages = [
   {
     label: 'Glossary',
     route: '/admin/glossary'
+  },
+  {
+    label: 'Review Contributed Media',
+    route: '/admin/review'
+  },
+  {
+    label: 'Review Contributed Comments',
+    route: '/admin/discussion'
   }
 ];
 
