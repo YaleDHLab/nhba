@@ -30,6 +30,13 @@ mongorestore --db nhba --archive=nhba.archive
 wget https://s3-us-west-2.amazonaws.com/lab-apps/nhba/archives/build.tar.gz -O build.tar.gz
 tar -zxf build.tar.gz
 
+# install nvm, e.g. with brew
+brew install nvm
+
+# install node compatible with this library
+nvm install v10.24.1
+nvm use v10.24.1
+
 # install dependencies
 npm install --no-optional
 
