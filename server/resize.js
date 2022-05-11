@@ -28,8 +28,8 @@ const resizeImage = (file, width, height, outputdir) =>
     sharp(file)
       .resize(
         {
-          width: 200,
-          height: 200,
+          width: width,
+          height: height,
           fit: sharp.fit.inside,
           position: sharp.strategy.entropy
         })
