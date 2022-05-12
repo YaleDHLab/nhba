@@ -26,8 +26,13 @@ const sizes = {
 const resizeImage = (file, width, height, outputdir) =>
   new Promise((resolve, reject) => {
     sharp(file)
-      .resize(width, height)
-      .min()
+      .resize(
+        {
+          width: width,
+          height: height,
+          fit: sharp.fit.inside,
+          position: sharp.strategy.entropy
+        })
       .toFile(outputdir, err => {
         if (err) {
           reject();

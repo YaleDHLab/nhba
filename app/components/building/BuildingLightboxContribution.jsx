@@ -251,6 +251,8 @@ export default class BuildingLightboxContribution extends React.Component {
                   deleteImage={this.deleteImage}
                   hideDeleteButton={true}
                 />
+                <p>Once uploaded, click on the image that you would like to submit.</p>
+
                 <FilePicker
                   {...this.props}
                   topLabel="Select Image"
