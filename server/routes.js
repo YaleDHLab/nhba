@@ -433,6 +433,9 @@ module.exports = function routes(app) {
     }
 
     const building = req.body;
+    console.log("Building Routes.js: ") 
+    console.log(building)
+
     geocoder.geocode(building._id, building.address, (geoErr, geoRes) => {
       if (geoErr) {
         return res.status(500).send({ cause: geoErr });
