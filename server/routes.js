@@ -11,7 +11,7 @@ const _ = require('lodash');
  *
  * */
 
-const mongoOptions = { useMongoClient: true };
+const mongoOptions = { };
 mongoose.connect(`mongodb://localhost/${config.db}`, mongoOptions);
 mongoose.connection.on('error', err => {
   console.warn(err);
