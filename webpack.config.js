@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge')
 const config = require('./config');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -37,19 +38,24 @@ const common = {
 
   // Include loaders for styles and jsx
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
-        include: [PATHS.app, PATHS.node_modules]
+         test: /\.(scss|css)$/,
+         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+         include: [PATHS.app, PATHS.node_modules]
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['file-loader?name=[name].[ext]']
+        test: /\.(jpe?g|png|gif|svg)$/i,    
+        type: 'asset/resource'
       },
       {
         test: /\.jsx?$/,
-        loaders: ['babel?cacheDirectory'],
+        use: {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true
+            }
+        },
         include: PATHS.app
       }
     ]
@@ -92,7 +98,7 @@ if (TARGET === 'start' || !TARGET) {
 // Bundled development configuration
 if (TARGET === 'build' || !TARGET) {
   module.exports = merge(common, {
-    plugins: [new webpack.optimize.OccurrenceOrderPlugin()]
+     mode: "development"
   });
 }
 
@@ -103,16 +109,11 @@ if (TARGET === 'compress' || !TARGET) {
       // Optimize React library for production
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"'
-      }),
-
-      // Squash uglify warnings like 'Condition always true'
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      }),
-
-      new webpack.optimize.OccurrenceOrderPlugin()
-    ]
+      })
+    ],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    }
   });
 }
