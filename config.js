@@ -7,9 +7,9 @@ const config = {};
  ** */
 
 config.api = {
-  protocol: 'http',
-  host: 'localhost',
-  port: 8080,
+  protocol: 'https',
+  host: 'nhba.yale.edu',
+  port: 8081,
   prefix: 'api'
 };
 
@@ -44,8 +44,8 @@ config.get = function getConfig(route, callback) {
 config.ssl = {
   // key: 'tls/privkey.pem',
   // cert: 'tls/fullchain.pem'
-  key: 'tls/privkey.pem',
-  cert: 'tls/fullchain.pem'
+  key: '/etc/letsencrypt/live/nhba.yale.edu/privkey.pem',
+  cert: '/etc/letsencrypt/live/nhba.yale.edu/fullchain.pem'
 };
 
 module.exports = config;
