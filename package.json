@@ -31,7 +31,7 @@
     "cookie-parser": "^1.4.3",
     "es5-shim": "^4.5.9",
     "es6-shim": "^0.35.3",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "express-mongo-sanitize": "^1.3.2",
     "express-sanitizer": "^1.0.3",
     "express-session": "^1.14.1",
